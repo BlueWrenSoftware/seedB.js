@@ -7,7 +7,5 @@ node_modules/
 /plugins/
 /platforms/
 
-# Experimental IndexedDB
-seed_db_experiments/
 
 

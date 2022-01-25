@@ -1,6 +1,7 @@
+// Update object with Id = 1 in objectStore
+// Use only in version 3
 let db;
-
-let request = window.indexedDB.open('seedB_3', 1);
+let request = window.indexedDB.open('seedB_3', 3);
 request.onupgradeneeded = function(event) {
     // handle the upgradeneeded event
     db = event.target.result;
