@@ -1,13 +1,26 @@
-// Create data for db version 1. However:
-// seed_3v2.js will create db version 3 and the data
-let db;
-let request = window.indexedDB.open('seedB_3', 1);
-request.onupgradeneeded = function(event) {
-    // handle the upgradeneeded event
-    db = event.target.result;
-    //db.createObjectStore('packets', {keyPath:"Id", autoIncrement: true});
+// Create IndexedDB schema with db name seedB_3
+// Implement version 3 as the current version
+let request = window.indexedDB.open('seedB_3', 4);
+request.onupgradeneeded = function (event) {
+    let db = event.target.result;
+    db.onerror = function(event) {
+        console.error('Database error: ' + event.target.errorCode);
+    };
+    if (event.oldVersion < 1) {
+        // Create schema if db does not exist
+        let store = db.createObjectStore('entity', { keyPath: 'Id', autoIncrement: true });
+        store.createIndex('variety', 'variety', { unique: false });
+        store.createIndex('store', 'store', { unique: false });
+        store.createIndex('seedGroup', 'metadata.group', { unique: false });
+    };
+    if (event.oldVersion < 3) {
+        // Create an additional key on objectStore created in version 1
+        request.transaction.objectStore('entity').createIndex('recordType', 'metadata.recordtype');
+        db.createObjectStore('equipment', { keyPath: 'Id', autoIncrement: true });
+    };
 };
 
+// Create data for db
 request.onsuccess = function(event) {
     db = event.target.result;
     db.onerror = function(event) {
@@ -86,4 +99,5 @@ request.onsuccess = function(event) {
     transaction.oncomplete = ()=>{
         db.close();
     }
+
 };
