@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en-au" dir="ltr">
+
+<head>
+  <title>Form Enter Data</title>
+  <link rel="stylesheet" href="./styles/styles.css">
+</head>
+
+<body>
+  <div class="pages">
+    <!-- Menu settings -->
+    <section class="js-menu-hamburger">
+      <img class="menu-hamburger" src="./images/hamburger_icon.svg">
+      <div class="js-menu-hamburger--black">
+        <img class="menu-hamburger" src="./images/hamburger_active.svg">
+        <nav class="menu-hamburger--show">
+          <ul class="menu-hamburger__list">
+            <li><a href="./index.html">Home Page - Seed List</a></li>
+            <li><a href="./about.html">About</a></li>
+          </ul>
+        </nav>
+      </div>
+    </section>
+    <!-- End menu settings -->
+    <section>
+      <header>
+        <img class="page-header__h1--logo" src="./images/bettong-june.svg" height="42">
+        <h1 class="page-header__h1">
+          SeedB - Seed Data Base
+        </h1>
+      </header>
+    </section>
+    <section>
+      <header>
+        <h2 class="chapter--h2">
+          Seed Collection
+        </h2>
+      </header>
+      <form>
+        <input type="text" id="js-search-input-seeds" onkeyup="searchFunction('search-seeds')"
+          placeholder="Search Seed Variety..">
+      </form>
+      <h3 class="chapter--h3">
+        Table of Records
+      </h3>
+      <table class="table-seeds table-seeds__row-color" id="">
+        <caption>List of Seeds in Storage</caption>
+        <thead>
+          <tr>
+            <th>Seed<br>Group</th>
+            <th id="search-seeds">Seed<br>Variety</th>
+            <th>Seed<br>Packet<br>Id</th>
+            <th>Seed<br>Count</th>
+            <th>Seed<br>Grams</th>
+            <th>Edit</th>
+          </tr>
+        </thead>
+        <tr>
+          <td></td>
+          <td></td>
+          <td class="table-seeds__col--center"></td>
+          <td class="table-seeds__col--center"></td>
+          <td class="table-seeds__col--center"></td>
+          <td>
+            <a href="">
+              <img src="./images/pencil.png" rel="noreferrer noopener">
+            </a>
+          </td>
+        </tr>
+      </table>
+      </form>
+  </div>
+  <div id="js-page--to-top" onclick="topFunction()" title="Go to Top"></div>
+
+  <section>
+    <footer id="page-footer">
+      <p>Designed by Betong Applications</p>
+    </footer>
+  </section>
+  <script src="./js/menu.js"></script>
+  <script src="./js/to-top.js"></script>
+  <script src="./js/search-table.js"> </script>
+
+  </div>
+</body>
+
+</html>
