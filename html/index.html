@@ -2,11 +2,15 @@
 <html lang="en-au" dir="ltr">
 
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" contnet="wdth-device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">  
   <title>Form Enter Data</title>
   <link rel="stylesheet" href="./styles/styles.css">
 </head>
 
 <body>
+
   <div class="pages">
     <!-- Menu settings -->
     <section class="js-menu-hamburger">
@@ -21,7 +25,7 @@
         </nav>
       </div>
     </section>
-    <!-- End menu settings -->
+    <!-- Header -->
     <section>
       <header>
         <img class="page-header__h1--logo" src="./images/bettong-june.svg" height="42">
@@ -30,16 +34,41 @@
         </h1>
       </header>
     </section>
-    <section>
+    <section id="insert-alerts">
       <header>
         <h2 class="chapter--h2">
           Seed Collection
         </h2>
+        <h3 class="chapter--h3">
+          Enter Seed Packets
+        </h3>
       </header>
-      <form>
-        <input type="text" id="js-search-input-seeds" onkeyup="searchFunction('search-seeds')"
-          placeholder="Search Seed Variety..">
+      <form id="seed-entry">
+        <div>
+          <label>Seed Group: </label>
+          <input type="text" id="seedGroup">
+        </div>
+        <div>
+          <label>Variety: </label>
+          <input type="text" id="variety">
+        </div>
+        <div>
+          <label>Seed Packet: </label>
+          <input type="number" id="id" value=0>
+        </div>
+        <div>
+          <label>Seed Count: </label>
+          <input type="number" id="seedNumbers" value=0>
+        </div>
+        <div>
+          <label>Seed Grams: </label>
+          <input type="number" id="seedWeight"value=0>
+        </div>
+        
+        <input type="submit" value="Add Variety">
+        
       </form>
+      <div id="messages"></div>
       <h3 class="chapter--h3">
         Table of Records
       </h3>
@@ -48,40 +77,28 @@
         <thead>
           <tr>
             <th>Seed<br>Group</th>
-            <th id="search-seeds">Seed<br>Variety</th>
+            <th>Seed<br>Variety</th>
             <th>Seed<br>Packet<br>Id</th>
             <th>Seed<br>Count</th>
             <th>Seed<br>Grams</th>
             <th>Edit</th>
+            <th>Del</th>
           </tr>
         </thead>
-        <tr>
-          <td></td>
-          <td></td>
-          <td class="table-seeds__col--center"></td>
-          <td class="table-seeds__col--center"></td>
-          <td class="table-seeds__col--center"></td>
-          <td>
-            <a href="">
-              <img src="./images/pencil.png" rel="noreferrer noopener">
-            </a>
-          </td>
-        </tr>
+        <tbody id="seed-list"></tbody>
       </table>
-      </form>
+    </section>
   </div>
   <div id="js-page--to-top" onclick="topFunction()" title="Go to Top"></div>
-
   <section>
     <footer id="page-footer">
       <p>Designed by Betong Applications</p>
     </footer>
   </section>
+  </div>
   <script src="./js/menu.js"></script>
   <script src="./js/to-top.js"></script>
-  <script src="./js/search-table.js"> </script>
-
-  </div>
+  <script src="./js/add-indexeddb.js"> </script>
 </body>
 
 </html>

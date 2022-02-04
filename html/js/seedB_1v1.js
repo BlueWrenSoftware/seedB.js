@@ -2,7 +2,7 @@
 // Implement version 3 as the current version
 let request = window.indexedDB.open('seedB-test-1', 1);
 request.onupgradeneeded = function (event) {
-  let db = event.target.result;
+  let db = event.target.result; 
   db.onerror = function (event) {
     console.error('Database error: ' + event.target.errorCode);
   };
