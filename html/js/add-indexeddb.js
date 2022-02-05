@@ -65,7 +65,7 @@ class UI {
     }
   }
 
-  static showAlert(message, className) {
+   static showAlert(message, className) {
     const div = document.createElement('div');
     div.className = `alert ${className}`;
     //div.className = `alert ${className}`;
@@ -73,10 +73,14 @@ class UI {
     const messages = document.querySelector('#messages');
     const section = document.querySelector('#insert-alerts');
     section.insertBefore(div, messages);
-
+    
     // Vanish in 3 seconds
-    setTimeout(() => document.querySelector('.alert').remove(), 3000);
-  }
+    if(className === 'success' || className === 'warning') {
+      setTimeout(() => document.querySelector('.alert').remove(), 2000);
+    } else {
+      setTimeout(() => document.querySelector('.alert').remove(), 0);
+    }
+  } 
 
   static clearFields() {
     document.querySelector('#seedGroup').value = '';
