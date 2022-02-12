@@ -103,8 +103,8 @@ a:active {
 }
 
 .pages {
-  width: 760px;
-  min-width: 400px;
+  width: 450px;
+  /*min-width: 400px;*/
   margin: 0 auto;
   position: relative;
 }
@@ -185,7 +185,7 @@ section.section--paragraph p {
   right: 0.625em;
   top: calc(1.5em + 0.625em);
   padding: 0.5em;
-  width: calc(760px * 3 / 4);
+  width: calc(400px * 1 / 2);
   background-color: #f8f8f8;
   border: 0.025em solid #CCCCCC;
   z-index: 90;
@@ -195,6 +195,7 @@ section.section--paragraph p {
 .menu-hamburger__list {
   list-style-type: none;
   font-size: 90%;
+  text-align: right;
 }
 
 .js-menu-hamburger--black {
@@ -222,6 +223,7 @@ section.section--paragraph p {
   display: block;
   position: relative;
   padding: 0.5em 0 0.5em 0;
+  
 }
 
 .page-menu {
@@ -233,6 +235,7 @@ section.section--paragraph p {
 
 .page-menu__list {
   list-style-type: none;
+  text-align: right;
   /*font-size: 100%;*/
 }
 
@@ -245,8 +248,6 @@ table.table-seeds__row-color tr:nth-child(odd) {
 }
 
 table.table-seeds {
-  margin-left: auto;
-  margin-right: auto; 
   caption-side: top;
   border-collapse: collapse;
   font-family: VuSans, sans-serif;
@@ -255,33 +256,7 @@ table.table-seeds {
   border: 1px solid #000000;
   margin-bottom: 20px;
   table-layout: auto;
-  /*width: 100%;*/
 }
-
-table.table__fixed {
-  width: 120%;
-  margin-left: -10%;
-}
-
-/*table.table__overflow {
-    margin-left: -40px;
-}*/
-.col__10 {
-  width: 10%;
-}
-
-.col__15 {
-  width: 15%
-}
-
-.col__20 {
-  width: 20%;
-}
-
-.col__40 {
-  width: 40%;
-}
-
 
 table td.table-seeds__col--center {
   text-align: center;
@@ -302,7 +277,7 @@ th {
   border: 1px solid #000000;
   background-color: #F6DA74;
   text-align: center;
-  font-size: 90%;
+  font-size: 70%;
 }
 
 tr.row__bottom-line {
@@ -314,17 +289,17 @@ tr.row__color {
 }
 
 td {
-  padding: 2px 5px 2px 10px;
-  margin: 0px;
+  padding:0.2em;
   border-left: 1px solid #000000;
-  line-height: 200%;
+  line-height: normal;
+  font-size: 80%;
 }
 
 #page-footer {
   clear: both;
   border-top: 0.025em solid #CCCCCC;
   border-bottom: 0.025em solid #C'
-  padding-bottom: 0.5em;
+padding-bottom: 0.5em;
   text-align: center;
 }
 
@@ -351,7 +326,7 @@ td {
   z-index: 99;
   width: 30px;
   height: 55px;
-  margin-right: calc(((100vw - 700px) / 2) - (100vw - 100%));
+  margin-right: calc(((100vw - 400px) / 2) - (100vw - 100%));
   border: none;
   outline: none;
   background-image: url(../images/to_top_word_icon_fat.png);
@@ -369,53 +344,9 @@ td {
   background-position: center center;
 }
 
-/*.form--input {
-    text-align: center;
-}
-.form--text-size {
-    font-size: 100%;
-}*/
-/*
-input[type='number'] {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  text-align: center;
-  padding-right: 1px;
-  border: none;
-  background: #FFFFFF;
-  font-size: 100%;
-  width: 100%;
-}
-
-select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  border: none;
-  background: #FFFFFF;
-  font-size: 100%;
-  width: 100%;
-}
-
-select.select-value__background {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  border: none;
-  background: #E8E8E8;
-  font-size: 100%;
-  width: 100%;
-}
-
-input.enter-value__background {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  border: none;
-  background: #E8E8E8;
-  font-size: 100%;
-  width: 100%;
-}
-*/
+/* Latest changes - might have to rename classes according to BEM */
 input[type=text], select {
-  width: 30%;
+  width: 100%;
   padding: 8px 20px;
   margin: 2px 0;
   display: inline-block;
@@ -423,8 +354,9 @@ input[type=text], select {
   border-radius: 4px;
   box-sizing: border-box;
 }
+
 input[type=number], select {
-  width: 30%;
+  width: 100%;
   text-align: left;
   padding: 8px 20px;
   margin: 2px 0;
@@ -433,8 +365,9 @@ input[type=number], select {
   border-radius: 4px;
   box-sizing: border-box;
 }
+
 input[type=submit] {
-  width: 46%;
+  width: 100%;
   background-color: #4CAF50;
   color: white;
   padding: 10px 10px;
@@ -444,19 +377,20 @@ input[type=submit] {
   cursor: pointer;
   font-size: 100%;
 }
+
 label {
-  display: inline-block;
-  width: 15%;
-  text-align: right;
-  font-size: 90%;
+  /*display: inline-block;*/
+  width: 0%;
+  text-align: left;
+  font-size: 80%;
 }
 
 form {
-  text-align: center;
+  /*text-align: center;*/
 }
 
 .edit {
-  background-image: url(../images/pencil.png);
+  background-image: url(../images/penciledit4.svg);
   background-repeat: no-repeat;
   background-position: center center;
 }
@@ -464,6 +398,19 @@ form {
 .delete {
   font-weight: bolder;
 }
+
+.undelete {
+  font-weight: bolder;
+}
+.strike{
+  text-decoration: line-through;
+}
+
+.warningtext {
+  color: red;
+  font-style: italic;
+}
+
 
 .change-link a:link {
   color: orange;
@@ -482,11 +429,12 @@ form {
 .change-link a:active {
   color: red;
 }
+
 div.alert {
   display: block;
   text-align: center;
   font-weight: bolder;
-  width: 40%;
+  width: 100%;
   color: white;
   border: none;
   border-radius: 4px;
@@ -495,8 +443,26 @@ div.alert {
   padding: 5px 5px;
 }
 
-.warning  {
+.warning {
   background-color: red;
 }
+
 .success {
   background-color: green;
+}
+
+.format {
+    display: block;
+    text-align: center;
+    font-weight: bolder;
+    font-size: 100%;
+    width: 100%;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px 5px;
+    background-color: green;
+    cursor: pointer;
+}

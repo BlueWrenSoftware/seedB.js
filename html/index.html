@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" contnet="wdth-device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">  
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Form Enter Data</title>
   <link rel="stylesheet" href="./styles/styles.css">
 </head>
@@ -19,9 +19,9 @@
         <img class="menu-hamburger" src="./images/hamburger_active.svg">
         <nav class="menu-hamburger--show">
           <ul class="menu-hamburger__list">
-            <li><a href="./index.html">Home Page - Seed List</a></li>
-            <li><a href="./about.html">About</a></li>
-          </ul>
+            <li><a href="#home">Home Page - Seed List</a></li>
+            <li><a href="#edit">Edit</a></li>
+            <li><a href="#instructions">Instructions</a></li>
         </nav>
       </div>
     </section>
@@ -34,7 +34,7 @@
         </h1>
       </header>
     </section>
-    <section id="insert-alerts">
+    <section id="edit-page">
       <header>
         <h2 class="chapter--h2">
           Seed Collection
@@ -53,25 +53,33 @@
           <input type="text" id="variety">
         </div>
         <div>
-          <label>Seed Packet: </label>
-          <input type="number" id="id" value=0>
+          <label>Seed Packet:<br>
+          <span class="warningtext">Must be unique. For example: 341 Curly Kale</span></label>
+          <input type="text" id="pktId">
         </div>
         <div>
-          <label>Seed Count: </label>
-          <input type="number" id="seedNumbers" value=0>
+          <label>Seed Count:<br>
+          <span class="warningtext">Must be a number. Use the number 0 if not known.</span></label>
+          <input type="number" id="seedNumbers">
         </div>
         <div>
-          <label>Seed Grams: </label>
-          <input type="number" id="seedWeight"value=0>
+          <label>Seed Grams:<br>
+            <span class="warningtext">Must be a number. Use the number 0 if not known.</span></label>
+          <input type="number" id="seedWeight">
         </div>
-        
+
         <input type="submit" value="Add Variety">
-        
+
       </form>
-      <div id="messages"></div>
+      <mark  id="insert-form-alerts"><strong id="pkt-message"></strong></mark>
+      </section>
+      
+      <section id="home-page">
       <h3 class="chapter--h3">
         Table of Records
+        <mark id="insert-seed-list-alerts"><strong id="seed-list-message"></strong></mark>
       </h3>
+      <a href="#" id="add-data">Add Data </a>
       <table class="table-seeds table-seeds__row-color" id="">
         <caption>List of Seeds in Storage</caption>
         <thead>
@@ -83,6 +91,7 @@
             <th>Seed<br>Grams</th>
             <th>Edit</th>
             <th>Del</th>
+            <th>Un<br>Del</th>
           </tr>
         </thead>
         <tbody id="seed-list"></tbody>
@@ -96,9 +105,31 @@
     </footer>
   </section>
   </div>
-  <script src="./js/menu.js"></script>
+  <script src="./js/app.js"> </script>
+  <script src="./js/menu.js"></scriptsrc></script>
   <script src="./js/to-top.js"></script>
-  <script src="./js/add-indexeddb.js"> </script>
+  <script>
+    function homePage() {
+      location.hash = "#home";
+      document.querySelector("#home-page").style.display = "";
+      document.querySelector("#edit-page").style.display = "none";
+    }
+    function pages(callback) {
+      if (location.hash === "#home") {
+        console.log(location.hash);
+        document.querySelector("#home-page").style.display = "";
+        document.querySelector("#edit-page").style.display = "none";
+      }
+      if (location.hash === "#edit") {
+        console.log(location.hash);
+        document.querySelector("#home-page").style.display = "none";
+        document.querySelector("#edit-page").style.display = "";
+      }
+      
+    }
+    window.addEventListener("hashchange", pages);
+    document.addEventListener('DOMContentLoaded', homePage);
+  </script>
 </body>
 
 </html>
