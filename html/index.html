@@ -10,7 +10,8 @@
 </head>
 
 <body>
-
+  <div id="js-page--to-bottom" onclick="bottomFunction()" title="Go To Bottom"></div>
+  
   <div class="pages">
     <!-- Menu settings -->
     <section class="js-menu-hamburger">
@@ -25,6 +26,7 @@
         </nav>
       </div>
     </section>
+
     <!-- Header -->
     <section>
       <header>
@@ -34,6 +36,8 @@
         </h1>
       </header>
     </section>
+
+    <!-- Data Entry Page -->
     <section id="edit-page">
       <header>
         <h2 class="chapter--h2">
@@ -53,35 +57,30 @@
           <input type="text" id="variety">
         </div>
         <div>
-          <label>Seed Packet:<br>
-          <span class="warningtext">Must be unique. For example: 341 Curly Kale</span></label>
+          <label>Seed Packet:</label>
           <input type="text" id="pktId">
         </div>
         <div>
-          <label>Seed Count:<br>
-          <span class="warningtext">Must be a number. Use the number 0 if not known.</span></label>
+          <label>Seed Count:</label>
           <input type="number" id="seedNumbers">
         </div>
         <div>
-          <label>Seed Grams:<br>
-            <span class="warningtext">Must be a number. Use the number 0 if not known.</span></label>
+          <label>Seed Grams:</label>
           <input type="number" id="seedWeight">
         </div>
-
         <input type="submit" value="Add Variety">
-
       </form>
-      <mark  id="insert-form-alerts"><strong id="pkt-message"></strong></mark>
+      <div id="insert-form-alerts"><strong id="pkt-message"></strong></div>
       </section>
       
+      <!-- Home Page -->
       <section id="home-page">
       <h3 class="chapter--h3">
-        Table of Records
-        <mark id="insert-seed-list-alerts"><strong id="seed-list-message"></strong></mark>
+        <!-- Table of Records -->
+        <div id="insert-seed-list-alerts"><strong id="seed-list-message"></strong></div>
       </h3>
       <a href="#" id="add-data">Add Data </a>
       <table class="table-seeds table-seeds__row-color" id="">
-        <caption>List of Seeds in Storage</caption>
         <thead>
           <tr>
             <th>Seed<br>Group</th>
@@ -98,6 +97,8 @@
       </table>
     </section>
   </div>
+
+  <!-- Footer and got to top -->
   <div id="js-page--to-top" onclick="topFunction()" title="Go to Top"></div>
   <section>
     <footer id="page-footer">
@@ -106,30 +107,6 @@
   </section>
   </div>
   <script src="./js/app.js"> </script>
-  <script src="./js/menu.js"></scriptsrc></script>
   <script src="./js/to-top.js"></script>
-  <script>
-    function homePage() {
-      location.hash = "#home";
-      document.querySelector("#home-page").style.display = "";
-      document.querySelector("#edit-page").style.display = "none";
-    }
-    function pages(callback) {
-      if (location.hash === "#home") {
-        console.log(location.hash);
-        document.querySelector("#home-page").style.display = "";
-        document.querySelector("#edit-page").style.display = "none";
-      }
-      if (location.hash === "#edit") {
-        console.log(location.hash);
-        document.querySelector("#home-page").style.display = "none";
-        document.querySelector("#edit-page").style.display = "";
-      }
-      
-    }
-    window.addEventListener("hashchange", pages);
-    document.addEventListener('DOMContentLoaded', homePage);
-  </script>
-</body>
-
+ </body>
 </html>

@@ -60,6 +60,30 @@ class UI {
     document.querySelector('#seedNumbers').value = '';
     document.querySelector('#seedWeight').value = '';
   }
+
+  static defaultPage() {
+    location.hash = "#home";
+    document.querySelector("#home-page").style.display = "";
+    document.querySelector("#edit-page").style.display = "none";
+  }
+
+  static selectPages() {
+    if (location.hash === "#home") {
+      console.log(location.hash);
+      document.querySelector("#home-page").style.display = "";
+      document.querySelector("#edit-page").style.display = "none";
+    }
+    if (location.hash === "#edit") {
+      console.log(location.hash);
+      document.querySelector("#home-page").style.display = "none";
+      document.querySelector("#edit-page").style.display = "";
+    }
+  }
+
+  static menu() {
+    let getMenu = document.querySelector(".js-menu-hamburger--black");
+    getMenu.classList.toggle("js-menu-hamburger--red");
+  } 
 }
 
 // Store Class: Handles Storage 
@@ -201,6 +225,13 @@ document.querySelector('#add-data').addEventListener('click', () => {
   Store.addData(seedData);
   UI.displaySeeds(seedData);
 });
+
+// Event Select Pages (hash change event)
+window.addEventListener("hashchange", UI.selectPages);
+document.addEventListener('DOMContentLoaded', UI.defaultPage);
+
+// Event Menu
+document.querySelector(".js-menu-hamburger").addEventListener("click", UI.menu);
 
 
 
