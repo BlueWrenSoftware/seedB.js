@@ -83,7 +83,33 @@ class UI {
   static menu() {
     let getMenu = document.querySelector(".js-menu-hamburger--black");
     getMenu.classList.toggle("js-menu-hamburger--red");
-  } 
+  }
+
+  static scrollToBottom() {
+    if (document.documentElement.scrollHeight > document.documentElement.clientHeight) {
+      tobottom.style.display = "none"
+      // get the scroll height of the window
+      const scrollHeight = document.body.scrollHeight;
+      // scroll to the bottom of webpage
+      window.scrollTo(0, scrollHeight);
+    }
+  }
+
+  static scrollToTop() {
+    tobottom = document.getElementById("js-page--to-bottom");
+    tobottom.style.display = "block"
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+  }
+
+  static scrollEvent() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+      totop.style.display = "block";
+    } else {
+      totop.style.display = "none";
+      tobottom.style.display = "block";
+    }
+  }
 }
 
 // Store Class: Handles Storage 
@@ -176,8 +202,15 @@ let seedData = [
 // Event Open DB
 document.addEventListener('DOMContentLoaded', Store.openDB);
 
-// Event: Displays Seeds
-//document.addEventListener('DOMContentLoaded', UI.displaySeeds(seedData));
+// Event Open Home Page
+document.addEventListener('DOMContentLoaded', UI.defaultPage);
+
+//Get the buttons:
+let totop = document.getElementById("js-page--to-top");
+let tobottom = document.getElementById("js-page--to-bottom");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll =  ()=> { UI.scrollEvent() };
 
 // Event:Add Seed Packet
 document.querySelector('#seed-entry').addEventListener('submit', (e) => {
@@ -228,12 +261,6 @@ document.querySelector('#add-data').addEventListener('click', () => {
 
 // Event Select Pages (hash change event)
 window.addEventListener("hashchange", UI.selectPages);
-document.addEventListener('DOMContentLoaded', UI.defaultPage);
 
 // Event Menu
 document.querySelector(".js-menu-hamburger").addEventListener("click", UI.menu);
-
-
-
-
-
