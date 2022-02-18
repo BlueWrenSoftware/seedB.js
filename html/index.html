@@ -10,8 +10,6 @@
 </head>
 
 <body>
-  <div id="js-page--to-bottom" onclick="UI.scrollToBottom()" title="Go To Bottom"></div>
-  
   <div class="pages">
     <!-- Menu settings -->
     <section class="js-menu-hamburger">
@@ -21,7 +19,7 @@
         <nav class="menu-hamburger--show">
           <ul class="menu-hamburger__list">
             <li><a href="#home">Home Page - Seed List</a></li>
-            <li><a href="#edit">Edit</a></li>
+            <li><a href="#edit">Enter New Seed Packet</a></li>
             <li><a href="#instructions">Instructions</a></li>
         </nav>
       </div>
@@ -46,35 +44,35 @@
         <h3 class="chapter--h3">
           Enter Seed Packets
         </h3>
-      </header>
-      <form id="seed-entry">
-        <div>
-          <label>Seed Group: </label>
-          <input type="text" id="seedGroup">
-        </div>
-        <div>
-          <label>Variety: </label>
-          <input type="text" id="variety">
-        </div>
-        <div>
-          <label>Seed Packet:</label>
-          <input type="text" id="pktId">
-        </div>
-        <div>
-          <label>Seed Count:</label>
-          <input type="number" id="seedNumbers">
-        </div>
-        <div>
-          <label>Seed Grams:</label>
-          <input type="number" id="seedWeight">
-        </div>
-        <input type="submit" value="Add Variety">
-      </form>
+        </header>
+        <form id="seed-entry">
+          <div>
+            <label>Seed Group: </label>
+            <input type="text" id="seedGroup">
+          </div>
+          <div>
+            <label>Variety: </label>
+            <input type="text" id="variety">
+          </div>
+          <div>
+            <label>Seed Packet:</label>
+            <input type="text" id="pktId">
+          </div>
+          <div>
+            <label>Seed Count:</label>
+            <input type="number" id="seedNumbers">
+          </div>
+          <div>
+            <label>Seed Grams:</label>
+            <input type="number" id="seedWeight">
+          </div>
+          <input type="submit" value="Add Variety">
+        </form>
       <div id="insert-form-alerts"><strong id="pkt-message"></strong></div>
-      </section>
+    </section>
       
-      <!-- Home Page -->
-      <section id="home-page">
+    <!-- Home Page -->
+    <section id="home-page">
       <h3 class="chapter--h3">
         <!-- Table of Records -->
         <div id="insert-seed-list-alerts"><strong id="seed-list-message"></strong></div>
@@ -96,17 +94,29 @@
         <tbody id="seed-list"></tbody>
       </table>
     </section>
+
+    <!-- Instructions Page -->
+    <section id="instructions-page">
+      <br>
+      <p>Instructions to be completed</p>
+      <br>
+    </section>
+  
+    <!-- Footer -->
+    <section>
+      <footer id="page-footer">
+        
+        <p>Designed by Betong Applications</p>
+      </footer>
+    </section>
+
+    <!-- Go to bottom of page -->
+    <div id="js-page--to-bottom" onclick="UI.scrollToBottom()" title="Go To Bottom"></div>
+
+    <!-- Go to top of page-->
+    <div id="js-page--to-top" onclick="UI.scrollToTop()" title="Go to Top"></div>
   </div>
 
-  <!-- Footer and got to top -->
-  <div id="js-page--to-top" onclick="UI.scrollToTop()" title="Go to Top"></div>
-  <section>
-    <footer id="page-footer">
-      <p>Designed by Betong Applications</p>
-    </footer>
-  </section>
-  </div>
   <script src="./js/app.js"> </script>
-  <!-- <script src="./js/to-top.js"></script> -->
  </body>
 </html>

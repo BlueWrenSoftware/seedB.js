@@ -65,6 +65,7 @@ class UI {
     location.hash = "#home";
     document.querySelector("#home-page").style.display = "";
     document.querySelector("#edit-page").style.display = "none";
+    document.querySelector("#instructions-page").style.display = "none";
   }
 
   static selectPages() {
@@ -72,11 +73,19 @@ class UI {
       console.log(location.hash);
       document.querySelector("#home-page").style.display = "";
       document.querySelector("#edit-page").style.display = "none";
+      document.querySelector("#instructions-page").style.display = "none";
     }
     if (location.hash === "#edit") {
       console.log(location.hash);
       document.querySelector("#home-page").style.display = "none";
       document.querySelector("#edit-page").style.display = "";
+      document.querySelector("#instructions-page").style.display = "none";
+    }
+    if (location.hash === "#instructions") {
+      console.log(location.hash);
+      document.querySelector("#home-page").style.display = "none";
+      document.querySelector("#edit-page").style.display = "none";
+      document.querySelector("#instructions-page").style.display = "";
     }
   }
 
@@ -87,9 +96,9 @@ class UI {
 
   static scrollToBottom() {
     if (document.documentElement.scrollHeight > document.documentElement.clientHeight) {
-      tobottom.style.display = "none"
+      //tobottom.style.display = "none"
       // get the scroll height of the window
-      const scrollHeight = document.body.scrollHeight;
+      const scrollHeight = document.documentElement.scrollHeight;
       // scroll to the bottom of webpage
       window.scrollTo(0, scrollHeight);
     }
@@ -107,7 +116,7 @@ class UI {
       totop.style.display = "block";
     } else {
       totop.style.display = "none";
-      tobottom.style.display = "block";
+      //tobottom.style.display = "block";
     }
   }
 }
