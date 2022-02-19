@@ -142,6 +142,7 @@ class Store {
       console.log('The new database version number is = ' + event.newVersion);
     }
   }
+      
   static addData(records) {
     const request = window.indexedDB.open('seedB', 1);
     request.onsuccess = (event) => {
@@ -162,7 +163,7 @@ class Store {
         console.log('finished transaction');
         db.close();
       }
-    };
+    }
   }
 }
 
@@ -273,3 +274,37 @@ window.addEventListener("hashchange", UI.selectPages);
 
 // Event Menu
 document.querySelector(".js-menu-hamburger").addEventListener("click", UI.menu);
+
+function openDbPromise() {
+  return new Promise((resolve, reject) => {
+    let request = window.indexedDB.open('seedB', 1);
+    request.onsuccess = (event) => {
+      resolve(event.target.result);
+    }
+    request.onerror = (event) => {
+      reject(event.target.errorCode);
+    }
+  });
+}
+    
+window.onload = () => {
+  openDbPromise().then(
+      db => {
+        return new Promise((resolve, reject) => {
+          request = db.transaction('entity').objectStore('entity').openCursor();
+          records = [];
+          request.onsuccess = event => {
+            let cursor = event.target.result;
+            if(cursor) {
+              records.push(cursor.value);
+              cursor.continue();
+            }
+            else {
+             resolve(records);
+          }
+        }
+      })
+  }).then(records => {
+    UI.displaySeeds(records);
+  });
+}
