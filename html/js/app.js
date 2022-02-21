@@ -289,22 +289,25 @@ function openDbPromise() {
     
 window.onload = () => {
   openDbPromise().then(
-      db => {
-        return new Promise((resolve, reject) => {
-          request = db.transaction('entity').objectStore('entity').openCursor();
-          records = [];
-          request.onsuccess = event => {
-            let cursor = event.target.result;
-            if(cursor) {
-              records.push(cursor.value);
-              cursor.continue();
-            }
-            else {
-             resolve(records);
+    db => {
+      return new Promise((resolve, reject) => {
+        request = db.transaction('entity').objectStore('entity').openCursor();
+        records = [];
+        request.onsuccess = event => {
+          let cursor = event.target.result;
+          if (cursor) {
+            records.push(cursor.value);
+            cursor.continue();
+          }
+          else {
+            resolve(records);
           }
         }
+        request.onerror = (event) => {
+          reject(event.target.errorCode);
+        }
       })
-  }).then(records => {
-    UI.displaySeeds(records);
-  });
+    }).then(records => {
+      UI.displaySeeds(records);
+    });
 }
