@@ -210,10 +210,52 @@ let seedData = [
 ];
 
 // Event Open DB
-document.addEventListener('DOMContentLoaded', Store.openDB);
+//document.addEventListener('DOMContentLoaded', Store.openDB);
+document.addEventListener('DOMContetLoaded', loadDataOnOpen())   
 
 // Event Open Home Page
 document.addEventListener('DOMContentLoaded', UI.defaultPage);
+
+//document.querySelector('#home-page').addEventListener('focus', loadDataOnOpen());
+
+
+function openDbPromise() {
+  return new Promise((resolve, reject) => {
+    let request = window.indexedDB.open('seedB', 1);
+    request.onsuccess = (event) => {
+      resolve(event.target.result);
+    }
+    request.onerror = (event) => {
+      reject(event.target.errorCode);
+    }
+  });
+}
+ 
+//window.onload = () => 
+function loadDataOnOpen() {
+  openDbPromise().then(
+    db => {
+      return new Promise((resolve, reject) => {
+        request = db.transaction('entity').objectStore('entity').openCursor();
+        records = [];
+        request.onsuccess = event => {
+          let cursor = event.target.result;
+          if (cursor) {
+            records.push(cursor.value);
+            cursor.continue();
+          }
+          else {
+            resolve(records);
+          }
+        }
+        request.onerror = (event) => {
+          reject(event.target.errorCode);
+        }
+      })
+    }).then(records => {
+      UI.displaySeeds(records);
+    });
+}
 
 //Get the buttons:
 let totop = document.getElementById("js-page--to-top");
@@ -242,9 +284,24 @@ document.querySelector('#seed-entry').addEventListener('submit', (e) => {
   else {
     // Instantiate seed
     const seed = new Seed(seedGroup, variety, pktId, seedNumbers, seedWeight);
+    console.log(seed);
 
     // Add seed entry to UI
-    UI.addSeedToList(seed);
+    //UI.addSeedToList(seed);
+
+    // Add SeedPkt to IndexedDB
+    const request = window.indexedDB.open('seedB', 1);
+    request.onsuccess = (event) => {
+      console.log('request success');
+      const db = event.target.result;
+      db.onerror = function(event) {
+        // Generic error handler for all errors targeted at this database's requests!
+        console.log("Database error: " + event.target.errorCode);
+      };
+      const transaction = db.transaction('entity', 'readwrite');
+      const store = transaction.objectStore('entity');
+      store.put(seed);
+    };
 
     // Show success message
     UI.showAlert('Seed Packet Added', 'success', '#pkt-message', '#insert-form-alerts');
@@ -275,39 +332,5 @@ window.addEventListener("hashchange", UI.selectPages);
 // Event Menu
 document.querySelector(".js-menu-hamburger").addEventListener("click", UI.menu);
 
-function openDbPromise() {
-  return new Promise((resolve, reject) => {
-    let request = window.indexedDB.open('seedB', 1);
-    request.onsuccess = (event) => {
-      resolve(event.target.result);
-    }
-    request.onerror = (event) => {
-      reject(event.target.errorCode);
-    }
-  });
-}
-    
-window.onload = () => {
-  openDbPromise().then(
-    db => {
-      return new Promise((resolve, reject) => {
-        request = db.transaction('entity').objectStore('entity').openCursor();
-        records = [];
-        request.onsuccess = event => {
-          let cursor = event.target.result;
-          if (cursor) {
-            records.push(cursor.value);
-            cursor.continue();
-          }
-          else {
-            resolve(records);
-          }
-        }
-        request.onerror = (event) => {
-          reject(event.target.errorCode);
-        }
-      })
-    }).then(records => {
-      UI.displaySeeds(records);
-    });
-}
+
+
