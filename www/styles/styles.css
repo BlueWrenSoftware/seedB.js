@@ -182,7 +182,8 @@ section.section--paragraph p {
   z-index: 70;
 }
 .menu-hamburger:hover {
-  background-color: lightcyan;
+  background-color: #00CCFF;
+  ;
 }
 
 .menu-hamburger--show {
