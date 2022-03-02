@@ -20,10 +20,10 @@ class UI {
     while(table.rows.length > 0) {
       table.deleteRow(0);
     };
-     seedTable.forEach((row) => UI.addSeedToList(row));
+     seedTable.forEach((row) => UI.addSeedToTable(row));
   }
 
-  static addSeedToList(seedPkt) {
+  static addSeedToTable(seedPkt) {
     const list = document.querySelector('#seed-list');
     const row = document.createElement('tr');
 
@@ -263,9 +263,6 @@ document.querySelector('#seed-entry').addEventListener('submit', (e) => {
     const timeStamp = Date.now();
     const seed = new Seed(seedGroup, variety, pktId, seedNumbers, seedWeight, seedDatePacked, seedNotes, timeStamp);
     console.log(seed);
-
-    // Add seed entry to UI
-    //UI.addSeedToList(seed);
 
     // Add SeedPkt to IndexedDB
     const request = window.indexedDB.open('seedB', 1);
