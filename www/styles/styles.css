@@ -51,6 +51,8 @@ body {
 
 a {
   text-decoration: none;
+  color: #0000EE;
+  cursor: pointer;
 }
 
 a:link {
@@ -103,7 +105,7 @@ a:active {
 }
 
 .pages {
-  width: 450px;
+  width: 500px;
   /*min-width: 400px;*/
   margin: 0 auto;
   position: relative;
@@ -176,7 +178,11 @@ section.section--paragraph p {
   top: 0.625rem;
   right: 40px;
   height: 22px;
+  width: 17px;
   z-index: 70;
+}
+.menu-hamburger:hover {
+  background-color: lightcyan;
 }
 
 .menu-hamburger--show {
@@ -251,7 +257,7 @@ table.table-seeds {
   caption-side: top;
   border-collapse: collapse;
   font-family: VuSans, sans-serif;
-  font-size: 95%;
+  font-size: 100%;
   font-weight: normal;
   border: 1px solid #000000;
   margin-bottom: 20px;
@@ -277,7 +283,7 @@ th {
   border: 1px solid #000000;
   background-color: #F6DA74;
   text-align: center;
-  font-size: 70%;
+  font-size: 80%;
 }
 
 tr.row__bottom-line {
@@ -327,13 +333,12 @@ td {
   z-index: 99;
   width: 30px;
   height: 55px;
-  margin-right: calc(((100vw - 400px) / 2) - (100vw - 100%));
+  margin-right: calc(((100vw - 450px) / 2) - (100vw - 100%));
   border: none;
   outline: none;
   background-image: url(../images/to_top_icon.svg);
   background-repeat: no-repeat;
   background-position: center center;
-  /*background-color:  #d3d3d3;*/
   cursor: pointer;
   padding: 15px;
   border-radius: 4px;
@@ -348,50 +353,64 @@ td {
 
 
 /* Latest changes - might have to rename classes according to BEM */
-input[type=text], select {
-  width: 100%;
-  padding: 8px 20px;
-  margin: 2px 0;
+input[type=text] {
+  width: 30%; 
+  padding: 2px;
+  margin: 2px;
   display: inline-block;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
 }
-
-input[type=number], select {
-  width: 100%;
-  text-align: left;
-  padding: 8px 20px;
-  margin: 2px 0;
+input[type=number] {
+  width: 20%; 
+  padding: 2px;
+  margin: 2px;
   display: inline-block;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
 }
-
-input[type=submit] {
-  width: 100%;
+input[type=date] {
+  width: 30%; 
+  padding: 2px;
+  margin: 2px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.selected {
+  display: inline-block;
   background-color: #4CAF50;
   color: white;
-  padding: 10px 10px;
-  margin: 8px 0;
+  padding: 2px;
+  margin: 5px 5px 10px 5px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 100%;
+  font-size: 90%;
+}
+.selected:hover {
+  background-color:#FF0000;
 }
 
 label {
-  /*display: inline-block;*/
-  width: 0%;
-  text-align: left;
+  display: inline-block;
+  width: 30%;
+  text-align: right;
   font-size: 80%;
-}
+} 
+
+label.notes {
+  vertical-align: top;
+} 
 
 .edit {
   background-image: url(../images/penciledit4.svg);
   background-repeat: no-repeat;
   background-position: center center;
+  cursor: pointer;
 }
 
 .delete {
@@ -431,14 +450,14 @@ label {
 div.alert {
   display: block;
   text-align: center;
-  font-weight: bolder;
-  width: 100%;
+  font-size: 90%;
   color: white;
   border: none;
   border-radius: 4px;
   margin-left: auto;
   margin-right: auto;
-  padding: 5px 5px;
+  padding: 2px;
+  width: auto;
 }
 
 .warning {
@@ -449,22 +468,6 @@ div.alert {
   background-color: green;
 }
 
-.format {
-    display: block;
-    text-align: center;
-    font-weight: bolder;
-    font-size: 100%;
-    width: 100%;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 5px 5px;
-    background-color: green;
-    cursor: pointer;
-}
-
 #js-page--to-bottom {
   display: block;
   position: fixed;
@@ -473,7 +476,7 @@ div.alert {
   z-index: 30;
   width: 30px;
   height: 55px;
-  margin-right: calc(((100vw - 400px) / 2) - (100vw - 100%));
+  margin-right: calc(((100vw - 450px) / 2) - (100vw - 100%));
   border: none;
   outline: none;
   background-image: url(../images/to_bottom_icon.svg);
@@ -488,3 +491,29 @@ div.alert {
   background-repeat: no-repeat;
   background-position: center center;
 }
+th.sort{
+  cursor: pointer;
+}
+
+textarea {
+  display: inline-block;
+  font-size: 100%;
+  width: 30%;
+  text-align: left;
+  padding: 2px;
+  margin: 2px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.flex-item {
+  flex: none;
+}
+

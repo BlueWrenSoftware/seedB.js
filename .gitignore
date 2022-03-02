@@ -7,5 +7,5 @@ node_modules/
 /plugins/
 /platforms/
 
-
-
+# VSCode setting
+/www/edit-app.code-workspace

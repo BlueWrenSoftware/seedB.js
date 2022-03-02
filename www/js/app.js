@@ -1,37 +1,41 @@
 // Seed Class: Represents a Seed Packet
 class Seed {
-  constructor(seedGroup, variety, pktId, seedNumbers, seedWeight) {
+  constructor(seedGroup, variety, pktId, seedNumbers, seedWeight, seedDatePacked, seedNotes, timeStamp) {
     this.seedGroup = seedGroup;
     this.variety = variety;
     this.pktId = pktId;
     this.seedNumbers = seedNumbers;
     this.seedWeight = seedWeight;
+    this.seedDatePacked = seedDatePacked;
+    this.seedNotes = seedNotes;
+    this.timeStamp = timeStamp;
   }
 }
 
-// UI Class: Handle UI Tasks
+// UI Class: Handle UI Tasks sd
 class UI {
+
   static displaySeeds(seedTable) {
+    const table = document.querySelector('#seed-list');
+    while(table.rows.length > 0) {
+      table.deleteRow(0);
+    };
      seedTable.forEach((row) => UI.addSeedToList(row));
   }
 
   static addSeedToList(seedPkt) {
     const list = document.querySelector('#seed-list');
-
     const row = document.createElement('tr');
 
     row.innerHTML = `
       <td>${seedPkt.seedGroup}</td>
       <td>${seedPkt.variety}</td>
       <td>${seedPkt.pktId}</td>
+      <td class="table-seeds__col--center">${(seedPkt.seedDatePacked).substring(2)}</td>
       <td class="table-seeds__col--center">${seedPkt.seedNumbers}</td>
       <td class="table-seeds__col--center">${seedPkt.seedWeight}</td>
-      <td class="edit"></td>
-      <td class="change-link table-seeds__col--center"><a href="#" class="delete">X</a></td>
-      <td class="change-link table-seeds__col--center strike">
-      <a href="" class="undelete">Un</a></td>
+      <td class="edit" onclick="editSeedPkt('${seedPkt.pktId}')"></td>
     `;
-
     list.appendChild(row);
   }
 
@@ -50,7 +54,7 @@ class UI {
     section.insertBefore(div, messages);
 
     // Vanish in 3 seconds
-    setTimeout(() => document.querySelector('.alert').remove(), 2000);
+    setTimeout(() => document.querySelector('.alert').remove(), 1000);
   }
 
   static clearFields() {
@@ -59,30 +63,24 @@ class UI {
     document.querySelector('#pktId').value = '';
     document.querySelector('#seedNumbers').value = '';
     document.querySelector('#seedWeight').value = '';
+    document.querySelector('#seedDatePacked').value = '';
+    document.querySelector('#seedNotes').value = '';
   }
 
-  static defaultPage() {
-    location.hash = "#home";
-    document.querySelector("#home-page").style.display = "";
-    document.querySelector("#edit-page").style.display = "none";
-    document.querySelector("#instructions-page").style.display = "none";
-  }
-
-  static selectPages() {
-    if (location.hash === "#home") {
-      console.log(location.hash);
+  static selectPages(pageSelected) {
+    if (pageSelected === "homePage") {
+      loadData('variety');
       document.querySelector("#home-page").style.display = "";
       document.querySelector("#edit-page").style.display = "none";
       document.querySelector("#instructions-page").style.display = "none";
     }
-    if (location.hash === "#edit") {
-      console.log(location.hash);
+    if (pageSelected === "editPage") {
+      UI.clearFields();
       document.querySelector("#home-page").style.display = "none";
       document.querySelector("#edit-page").style.display = "";
       document.querySelector("#instructions-page").style.display = "none";
     }
-    if (location.hash === "#instructions") {
-      console.log(location.hash);
+    if (pageSelected === "instructionsPage") {
       document.querySelector("#home-page").style.display = "none";
       document.querySelector("#edit-page").style.display = "none";
       document.querySelector("#instructions-page").style.display = "";
@@ -96,7 +94,7 @@ class UI {
 
   static scrollToBottom() {
     if (document.documentElement.scrollHeight > document.documentElement.clientHeight) {
-      //tobottom.style.display = "none"
+      //tobottom.style.display = "200none"
       // get the scroll height of the window
       const scrollHeight = document.documentElement.scrollHeight;
       // scroll to the bottom of webpage
@@ -119,24 +117,25 @@ class UI {
       //tobottom.style.display = "block";
     }
   }
+  // Should be in Store Class?
+  static editSeed(record, editPage) {
+    UI.selectPages(editPage);
+    Object.keys(record).forEach(key => {
+      document.querySelector('#' + key).value = record[key];
+    });
+  }
 }
 
 // Store Class: Handles Storage 
 class Store {
   static openDB() {
     const request = window.indexedDB.open('seedB', 1 );
-    /* request.onerror = function(e){              // Listen for execution when connection database fails
-      console.log('Failure to connect database');
-    }
-    request.onsuccess = function(e) {            // Listen for execution when the connection database is successful
-      console.log('Successful connection to database');
-    } */
-    
     request.onupgradeneeded = function(event) {
       const db = event.target.result;
       const store = db.createObjectStore('entity', {keyPath: 'pktId'});
       store.createIndex('variety', 'variety', {unique: false});
       store.createIndex('seedGroup', 'seedGroup', {unique: false});
+      store.createIndex('seedDatePacked', 'seedDatePacked', {unique: false});
       store.createIndex('timeStamp', 'timeStamp', {unique: false});
       console.log('Index Creation Successful');
       console.log('The new database version number is = ' + event.newVersion);
@@ -154,7 +153,6 @@ class Store {
       };
       const transaction = db.transaction('entity', 'readwrite');
       const store = transaction.objectStore('entity');
-
       records.forEach(record => {
         store.put(record);
       });
@@ -167,58 +165,7 @@ class Store {
   }
 }
 
-// Seed Data
-const time = Date.now();
-const startDate = new Date(time).toLocaleString();
-let seedData = [
-  {
-    pktId: "9-red-tulip",
-    seedGroup: "Bulbs",
-    variety: "Tulip Red",
-    seedWeight: 2000,
-    seedNumbers: 10,
-    timeStamp: time,
-    date: startDate,
-    qrCode: ""
-  },
-  {
-    pktId: "10-curly-kale",
-    seedGroup: "Vegetables",
-    variety: "Curly Kale",
-    seedWeight: 30,
-    seedNumbers: 100,
-    timeStamp: time
-  },
-  {
-    pktId: "11-carrots",
-    seedGroup: "Vegetables",
-    variety: "Carrots",
-    seedWeight: 140,
-    seedNumbers: 1000,
-    timeStamp: time
-  },
-  {
-    pktId: "1-danish-poppy",
-    seedGroup: "Drugs",
-    variety: "Danish Poppy",
-    seedWeight: 20,
-    seedNumbers: 10,
-    timeStamp: time,
-    date: startDate,
-    qrCode: ""
-  }
-];
-
-// Event Open DB
-//document.addEventListener('DOMContentLoaded', Store.openDB);
-document.addEventListener('DOMContetLoaded', loadDataOnOpen())   
-
-// Event Open Home Page
-document.addEventListener('DOMContentLoaded', UI.defaultPage);
-
-//document.querySelector('#home-page').addEventListener('focus', loadDataOnOpen());
-
-
+// Functions and events
 function openDbPromise() {
   return new Promise((resolve, reject) => {
     let request = window.indexedDB.open('seedB', 1);
@@ -231,14 +178,23 @@ function openDbPromise() {
   });
 }
  
-//window.onload = () => 
-function loadDataOnOpen() {
+function loadData(sortOn = 'variety', sortOrder = 'next') {
+  //sortOn = 'variety';
   openDbPromise().then(
     db => {
       return new Promise((resolve, reject) => {
-        request = db.transaction('entity').objectStore('entity').openCursor();
+        //request = db.transaction('entity').objectStore('entity').openCursor();
+        const transaction = db.transaction(['entity'], "readonly");
+        const store = transaction.objectStore('entity');
+        let cursorRequest;
+        if (sortOn === 'pktId') {
+          cursorRequest = store.openCursor(null, sortOrder);
+        } else {
+          const index = store.index(sortOn);
+          cursorRequest = index.openCursor(null, sortOrder); //sort by variety name
+        }
         records = [];
-        request.onsuccess = event => {
+        cursorRequest.onsuccess = event => {
           let cursor = event.target.result;
           if (cursor) {
             records.push(cursor.value);
@@ -248,7 +204,7 @@ function loadDataOnOpen() {
             resolve(records);
           }
         }
-        request.onerror = (event) => {
+        cursorRequest.onerror = (event) => {
           reject(event.target.errorCode);
         }
       })
@@ -256,6 +212,24 @@ function loadDataOnOpen() {
       UI.displaySeeds(records);
     });
 }
+
+let oldSortOn ='';
+let oldSortOrder = 'prev';
+
+function refreshTable(sortOn) {
+  let invertSort = sortOn === oldSortOn;
+  let sortOrder = 'next';
+  if ((oldSortOrder === sortOrder) && invertSort) {
+    sortOrder = 'prev';
+  }
+  oldSortOn = sortOn;
+  oldSortOrder = sortOrder;
+  const table = document.getElementById('seed-list');
+  loadData(sortOn, sortOrder);
+}
+
+// Event Open DB
+document.addEventListener('DOMContetLoaded', UI.selectPages("homePage"));   
 
 //Get the buttons:
 let totop = document.getElementById("js-page--to-top");
@@ -275,15 +249,19 @@ document.querySelector('#seed-entry').addEventListener('submit', (e) => {
   const pktId = document.querySelector('#pktId').value;
   const seedNumbers = document.querySelector('#seedNumbers').value;
   const seedWeight = document.querySelector('#seedWeight').value;
+  const seedDatePacked = document.querySelector('#seedDatePacked').value;
+  const seedNotes = document.querySelector('#seedNotes').value;
 
   // Validate
-  if (seedGroup === '' || variety === '' || pktId === '' || seedNumbers === '' || seedWeight === '') {
+  if (seedGroup === '' || variety === '' || pktId === '' || seedNumbers === '' || seedWeight === '' || seedDatePacked === '') {
+    
     UI.showAlert('Please fill in all fields', 'warning', '#pkt-message', '#insert-form-alerts');
 
   }
   else {
     // Instantiate seed
-    const seed = new Seed(seedGroup, variety, pktId, seedNumbers, seedWeight);
+    const timeStamp = Date.now();
+    const seed = new Seed(seedGroup, variety, pktId, seedNumbers, seedWeight, seedDatePacked, seedNotes, timeStamp);
     console.log(seed);
 
     // Add seed entry to UI
@@ -308,29 +286,38 @@ document.querySelector('#seed-entry').addEventListener('submit', (e) => {
 
     // Clear form fields
     UI.clearFields();
+    
+    //Refresh table
+    refreshTable('pktId');
+
   }
 });
-
-// Event: Remove Seed Packet
-document.querySelector('#seed-list').addEventListener('click', (e) => {
-  //console.log(e.target);
-  UI.deleteSeed(e.target);
-
-  // Show success message
-  UI.showAlert('Seed Packet Removed', 'warning', '#seed-list-message', '#insert-seed-list-alerts');
-});
-
-// Event Add Data
-document.querySelector('#add-data').addEventListener('click', () => {
-  Store.addData(seedData);
-  UI.displaySeeds(seedData);
-});
-
-// Event Select Pages (hash change event)
-window.addEventListener("hashchange", UI.selectPages);
 
 // Event Menu
 document.querySelector(".js-menu-hamburger").addEventListener("click", UI.menu);
 
+// Event get pktId from table
+function editSeedPkt(pktId) {
+  console.log(pktId);
+  openDbPromise().then(
+    db => {
+      return new Promise((resolve, reject) => {
+        //request = db.transaction('entity').objectStore('entity').openCursor();
+        const transaction = db.transaction(['entity'], "readwrite");
+        const store = transaction.objectStore('entity');
+        const request = store.get(pktId);
+        request.onsuccess = event => {
+          let record = event.target.result;
+          resolve(record)
+        }
+        request.onerror = (event) => {
+          reject(event.target.errorCode);
+        }
+      })
+    }).then(record => {
+      console.log(record);
+      UI.editSeed(record, 'editPage')
+    });
+}
 
-
+// function deleteSeedPkt

@@ -1,73 +1,123 @@
 <!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
+<html lang="en-au" dir="ltr">
 
-    http://www.apache.org/licenses/LICENSE-2.0
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" contnet="wdth-device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Form Enter Data</title>
+  <link rel="stylesheet" href="./styles/styles.css">
+</head>
 
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
-<html>
-    <head>
-        <meta charset="utf-8">
-        <!--
-        Customize this policy to fit your own app's needs. For more guidance, see:
-            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
-        Some notes:
-            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-                * Enable inline JS: add 'unsafe-inline' to default-src
-        -->
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
-        <meta name="format-detection" content="telephone=no">
-        <meta name="msapplication-tap-highlight" content="no">
-        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
-        <meta name="color-scheme" content="light dark">
-        <link rel="stylesheet" href="css/index.css">
-        <title>seedB</title>
-    </head>
-    <body>
-<div id="app">
-          <header>
-            <img class="page-header__h1--logo" src="./img/bettong-june.svg" height="42">
-            <h1 class="page-header__h1">
-              SeedB - Seed Data Base
-            </h1>
-	 </header>
-  <table class="table-seeds table-seeds__row-color"
-	 id="js-search-table-seeds">
-    <caption>List of Seeds in Storage</caption>
-    <thead>
-      <tr>
-	<th>Seed<br>Group</th>
-	<th id="search-seeds">Seed<br>Variety</th>
-	<th>Total<br>Seed<br>Packets</th>
-	<th>Total<br>Seed<br>Count</th>
-	<th>Total<br>Seed<br>Gram</th><th>Edit</th>
-      </tr>
-    </thead>
-    <tr v-for="seed_group in seed_groups">
-      <td>{{ seed_group }}</td>
-    </tr>
-  </table>
-</div>
-<div class="app">
-        <div class="pages">
-        </div>
+<body>
+  <div class="pages">
+    <!-- Menu settings -->
+    <section class="js-menu-hamburger">
+      <img class="menu-hamburger" src="./images/hamburger_icon.svg">
+      <div class="js-menu-hamburger--black">
+        <img class="menu-hamburger" src="./images/hamburger_active.svg">
+        <nav class="menu-hamburger--show">
+          <ul class="menu-hamburger__list">
+            <li><a onclick="UI.selectPages('homePage')">Home Page - Seed List</a></li>
+            <li><a onclick="UI.selectPages('editPage')">Enter New Seed Packet</a></li>
+            <li><a onclick="UI.selectPages('instructionsPage')">Instructions</a></li>
+        </nav>
       </div>
-      <script src="cordova.js"></script>
-      <script src="../node_modules/vue/dist/vue.js"></script>
-      <script src="js/index.js"></script>
-    </body>
+    </section>
+
+    <!-- Header -->
+    <section>
+      <header>
+        <img class="page-header__h1--logo" src="./images/bettong-june.svg" height="42">
+        <h1 class="page-header__h1">
+          SeedB - Seed Data Base
+        </h1>
+      </header>
+    </section>
+
+    <!-- Home Page -->
+    <section id="home-page">
+      <h3 class="chapter--h3">
+        <!-- Table of Records -->
+        <div id="insert-seed-list-alerts"><strong id="seed-list-message"></strong></div>
+      </h3>
+      <table class="table-seeds table-seeds__row-color" id="mytable">
+        <thead>
+          <tr>
+            <th class="sort" onclick="refreshTable('seedGroup')">Seed<br>Group</th>
+            <th class="sort" onclick="refreshTable('variety')">Seed<br>Variety</th>
+            <th class="sort" onclick="refreshTable('pktId')">Seed<br>Packet Id</th>
+            <th class="sort" onclick="refreshTable('seedDatePacked')">Date<br>Packed</th>
+            <th>Seed<br>Count</th>
+            <th>Seed<br>Grams</th>
+            <th>Edit</th>
+          </tr>
+        </thead>
+        <tbody id="seed-list"></tbody>
+      </table>
+    </section>
+
+    <!-- Data Entry Page -->
+    <section id="edit-page">
+      <header>
+        <h2 class="chapter--h2">
+          Seed Collection
+        </h2>
+        <h3 class="chapter--h3">
+          Enter Seed Packets
+        </h3>
+        </header>
+        <form id="seed-entry">
+          <label>*&nbsp;Input&nbsp;Required.</label>
+          <br><br>
+          <label for="seedGroup">*&nbsp;Seed&nbsp;Group: </label>
+          <input type="text" id="seedGroup"><br>
+          <label for="variety">*&nbsp;Variety: </label>
+          <input type="text" id="variety"><br>
+          <label for="pktId">*&nbsp;Seed&nbsp;Packet:</label>
+          <input type="text" id="pktId"><br>
+          <label for="seedNumbers">*&nbsp;Seed&nbsp;Count:</label>
+          <input type="number" id="seedNumbers"><br>
+          <label for="seedWeight">*&nbsp;Seed &nbsp;Grams:</label>
+          <input type="number" id="seedWeight"><br>
+          <label for="seedDatePacked">*&nbsp;Date&nbsp;Packaged:</label>
+          <input type="date" id="seedDatePacked"><br> <br>
+          <label class="notes" for="seedNotes">Notes:</label>
+          <textarea rows="2" id="seedNotes"></textarea>
+          <br>
+          <div class="wrapper">
+            <input class="selected flex-item" type="submit" value="Submit Record">
+            <input class="selected flex-item" type="reset" value="Cancel">
+            <button class="selected flex-item" type="button" onclick="">Delete Record</button>
+            <button class="selected flex-item" type="button" onclick="UI.selectPages('homePage')">Return to List</button>
+          </div>
+        </form>
+        
+      <div id="insert-form-alerts"><p id="pkt-message"></p></div>
+    </section>
+
+    <!-- Instructions Page -->
+    <section id="instructions-page">
+      <br>
+      <p>Instructions to be completed</p>
+      <br>
+    </section>
+  
+    <!-- Footer -->
+    <section>
+      <footer id="page-footer">
+        
+        <p>Designed by Betong Applications</p>
+      </footer>
+    </section>
+
+    <!-- Go to bottom of page -->
+    <div id="js-page--to-bottom" onclick="UI.scrollToBottom()" title="Go To Bottom"></div>
+
+    <!-- Go to top of page-->
+    <div id="js-page--to-top" onclick="UI.scrollToTop()" title="Go to Top"></div>
+  </div>
+
+  <script src="./js/app.js"> </script>
+ </body>
 </html>
