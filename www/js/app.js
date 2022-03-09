@@ -14,6 +14,7 @@ class Seed {
 
 // UI Class: Handle UI Tasks
 class UI {
+
   // Delete rows first before entering updated data
   static displaySeeds(seedTable) {
     const table = document.querySelector('#seed-list');
@@ -116,6 +117,18 @@ class UI {
     }
   }
 
+  static refreshTable(sortOn) {
+    let invertSort = sortOn === oldSortOn;
+    let sortOrder = 'next';
+    if ((oldSortOrder === sortOrder) && invertSort) {
+      sortOrder = 'prev';
+    }
+    oldSortOn = sortOn;
+    oldSortOrder = sortOrder;
+    const table = document.getElementById('seed-list');
+    loadData(sortOn, sortOrder);
+  }
+
   // Should be in Store Class?
   static editSeed(record, editPage) {
     UI.selectPages(editPage);
@@ -179,8 +192,30 @@ class Store {
       // Clear form fields
       UI.clearFields();
       //Refresh table
-      refreshTable('pktId');
+      UI.refreshTable('pktId');
     }
+  }
+
+  static deleteRecord() {
+    const pktId = document.querySelector('#pktId').value;
+    const request = window.indexedDB.open('seedB', 1);
+    request.onsuccess = (event) => {
+      console.log('request success');
+      const db = event.target.result;
+      db.onerror = function (event) {
+        // Generic error handler for all errors targeted at this database's requests!
+        console.log("Database error: " + event.target.errorCode);
+      };
+      const transaction = db.transaction('entity', 'readwrite');
+      const store = transaction.objectStore('entity');
+      store.delete(pktId);
+    };
+    // Show success message
+    UI.showAlert('Seed Packet Deleted', 'warning', '#pkt-message', '#insert-form-alerts');
+    // Clear form fields
+    UI.clearFields();
+    //Refresh table
+    UI.refreshTable('pktId');
   }
       
   static addData(records) {
@@ -205,6 +240,7 @@ class Store {
     }
   }
 }
+
 
 // Functions and events
 function openDbPromise() {
@@ -257,18 +293,6 @@ function loadData(sortOn = 'variety', sortOrder = 'next') {
 let oldSortOn ='';
 let oldSortOrder = 'prev';
 
-function refreshTable(sortOn) {
-  let invertSort = sortOn === oldSortOn;
-  let sortOrder = 'next';
-  if ((oldSortOrder === sortOrder) && invertSort) {
-    sortOrder = 'prev';
-  }
-  oldSortOn = sortOn;
-  oldSortOrder = sortOrder;
-  const table = document.getElementById('seed-list');
-  loadData(sortOn, sortOrder);
-}
-
 // Event Open DB
 document.addEventListener('DOMContetLoaded', UI.selectPages("homePage"));   
 
@@ -278,58 +302,6 @@ let tobottom = document.getElementById("js-page--to-bottom");
 
 // When the user scrolls down 20px from the top of the document, show the button
 window.onscroll =  ()=> { UI.scrollEvent() };
-
-// Event:Add Seed Packet
-//document.querySelector('#seed-entry').addEventListener('submit', (e) => {
-  // Prevent actual submit
-  //e.preventDefault();
-function editAddRecord() {
-  // Get form values
-  const seedGroup = document.querySelector('#seedGroup').value;
-  const variety = document.querySelector('#variety').value;
-  const pktId = document.querySelector('#pktId').value;
-  const seedNumbers = document.querySelector('#seedNumbers').value;
-  const seedWeight = document.querySelector('#seedWeight').value;
-  const seedDatePacked = document.querySelector('#seedDatePacked').value;
-  const seedNotes = document.querySelector('#seedNotes').value;
-
-  // Validate
-  if (seedGroup === '' || variety === '' || pktId === '' || seedNumbers === '' || seedWeight === '' || seedDatePacked === '') {
-    
-    UI.showAlert('Please fill in all fields', 'warning', '#pkt-message', '#insert-form-alerts');
-
-  }
-  else {
-    // Instantiate seed
-    const timeStamp = Date.now();
-    const seed = new Seed(seedGroup, variety, pktId, seedNumbers, seedWeight, seedDatePacked, seedNotes, timeStamp);
-    console.log(seed);
-
-    // Add SeedPkt to IndexedDB
-    const request = window.indexedDB.open('seedB', 1);
-    request.onsuccess = (event) => {
-      console.log('request success');
-      const db = event.target.result;
-      db.onerror = function(event) {
-        // Generic error handler for all errors targeted at this database's requests!
-        console.log("Database error: " + event.target.errorCode);
-      };
-      const transaction = db.transaction('entity', 'readwrite');
-      const store = transaction.objectStore('entity');
-      store.put(seed);
-    };
-
-    // Show success message
-    UI.showAlert('Seed Packet Added', 'success', '#pkt-message', '#insert-form-alerts');
-
-    // Clear form fields
-    UI.clearFields();
-    
-    //Refresh table
-    refreshTable('pktId');
-
-  }
-};
 
 // Event Menu
 document.querySelector(".js-menu-hamburger").addEventListener("click", UI.menu);
@@ -357,5 +329,3 @@ function editSeedPkt(pktId) {
       UI.editSeed(record, 'editPage')
     });
 }
-
-// function deleteSeedPkt

@@ -44,10 +44,10 @@
       <table class="table-seeds table-seeds__row-color" id="mytable">
         <thead>
           <tr>
-            <th class="sort" onclick="refreshTable('seedGroup')">Seed<br>Group</th>
-            <th class="sort" onclick="refreshTable('variety')">Seed<br>Variety</th>
-            <th class="sort" onclick="refreshTable('pktId')">Seed<br>Packet Id</th>
-            <th class="sort" onclick="refreshTable('seedDatePacked')">Date<br>Packed</th>
+            <th class="sort" onclick="UI.refreshTable('seedGroup')">Seed<br>Group</th>
+            <th class="sort" onclick="UI.refreshTable('variety')">Seed<br>Variety</th>
+            <th class="sort" onclick="UI.refreshTable('pktId')">Seed<br>Packet Id</th>
+            <th class="sort" onclick="UI.refreshTable('seedDatePacked')">Date<br>Packed</th>
             <th>Seed<br>Count</th>
             <th>Seed<br>Grams</th>
             <th>Edit</th>
@@ -88,7 +88,7 @@
           <div class="wrapper">
             <button class="selected flex-item" type="button" onclick="Store.editAddRecord()">Submit Current Record</button>
             <input class="selected flex-item" type="reset" value="Cancel">
-            <button class="selected flex-item" type="button" onclick="">Delete Current Record</button>
+            <button class="selected flex-item" type="button" onclick="Store.deleteRecord()">Delete Current Record</button>
             <button class="selected flex-item" type="button" onclick="UI.selectPages('homePage')">Return to Seed List</button>
           </div>
         </form>
