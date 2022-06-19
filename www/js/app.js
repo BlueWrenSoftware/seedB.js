@@ -38,12 +38,6 @@ class UI {
     `;
     list.appendChild(row);
   }
-  //needs re-writing
-  static deleteSeed(el) {
-    if (el.classList.contains('delete')) {
-      el.parentElement.parentElement.remove();
-    }
-  }
 
   static showAlert(message, className, idMessage, idLocation) {
     const div = document.createElement('div');
@@ -63,7 +57,9 @@ class UI {
     document.querySelector('#seedNumbers').value = '';
     document.querySelector('#seedWeight').value = '';
     document.querySelector('#seedDatePacked').value = '';
+    document.querySelector('#timeStamp').value = '';
     document.querySelector('#seedNotes').value = '';
+    
   }
 
   static selectPages(pageSelected) {
@@ -133,6 +129,8 @@ class UI {
   static editSeed(record, editPage) {
     UI.selectPages(editPage);
     Object.keys(record).forEach(key => {
+      console.log(key);
+      console.log(record[key]);
       document.querySelector('#' + key).value = record[key];
     });
   }
@@ -202,13 +200,17 @@ class Store {
     request.onsuccess = (event) => {
       console.log('request success');
       const db = event.target.result;
+      const transaction = db.transaction('entity', 'readwrite');
+      const store = transaction.objectStore('entity');
+      let deleted = store.get(pktId);
+      console.log(pktId);
+      console.log("After push: " + deleted);
+      //store.delete(pktId);
       db.onerror = function (event) {
         // Generic error handler for all errors targeted at this database's requests!
         console.log("Database error: " + event.target.errorCode);
       };
-      const transaction = db.transaction('entity', 'readwrite');
-      const store = transaction.objectStore('entity');
-      store.delete(pktId);
+      
     };
     // Show success message
     UI.showAlert('Seed Packet Deleted', 'warning', '#pkt-message', '#insert-form-alerts');
@@ -240,7 +242,14 @@ class Store {
     }
   }
 }
+// End of Classes
 
+// Global variables
+let oldSortOn ='';
+let oldSortOrder = 'prev';
+let totop = document.getElementById("js-page--to-top"); //Get the button
+let tobottom = document.getElementById("js-page--to-bottom"); //Get the button
+let deletedPkts = []; // session storage of deleted seed packets
 
 // Functions and events
 function openDbPromise() {
@@ -290,15 +299,8 @@ function loadData(sortOn = 'variety', sortOrder = 'next') {
     });
 }
 
-let oldSortOn ='';
-let oldSortOrder = 'prev';
-
 // Event Open DB
 document.addEventListener('DOMContetLoaded', UI.selectPages("homePage"));   
-
-//Get the buttons:
-let totop = document.getElementById("js-page--to-top");
-let tobottom = document.getElementById("js-page--to-bottom");
 
 // When the user scrolls down 20px from the top of the document, show the button
 window.onscroll =  ()=> { UI.scrollEvent() };
