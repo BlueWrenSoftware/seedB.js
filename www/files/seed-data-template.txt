@@ -1,0 +1,10 @@
+{
+  seedGroup: "",
+  variety: "",
+  pktId: "",
+  seedNumbers: "",
+  seedWeight: "",
+  seedDatePacked: "",
+  seedNotes: "",
+  timeStamp: ""
+}

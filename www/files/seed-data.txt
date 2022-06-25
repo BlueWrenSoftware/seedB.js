@@ -1,0 +1,60 @@
+{
+  seedGroup: "Drugs",
+  variety: "Cocaine",
+  pktId: "cocaine-1",
+  seedNumbers: 200,
+  seedWeight: 52,
+  seedDatePacked: "2022-01-05",
+  seedNotes: "",
+  timeStamp: ""
+},
+{
+  seedGroup: "Drugs",
+  variety: "Cocaine",
+  pktId: "cocaine-2",
+  seedNumbers: 200,
+  seedWeight: 52,
+  seedDatePacked: "2022-01-05",
+  seedNotes: "",
+  timeStamp: ""
+},
+{
+  seedGroup: "Drugs",
+  variety: "Poppy",
+  pktId: "poppy-1",
+  seedNumbers: 200,
+  seedWeight: 52,
+  seedDatePacked: "2022-01-05",
+  seedNotes: "",
+  timeStamp: ""
+},
+{
+  seedGroup: "Drugs",
+  variety: "Poppy",
+  pktId: "poppy-2",
+  seedNumbers: 200,
+  seedWeight: 52,
+  seedDatePacked: "2022-01-05",
+  seedNotes: "",
+  timeStamp: ""
+},
+{
+  seedGroup: "Drugs",
+  variety: "Poppy",
+  pktId: "poppy-3",
+  seedNumbers: 200,
+  seedWeight: 52,
+  seedDatePacked: "2022-01-05",
+  seedNotes: "",
+  timeStamp: ""
+},
+{
+  seedGroup: "Drugs",
+  variety: "Poppy",
+  pktId: "poppy-4",
+  seedNumbers: 200,
+  seedWeight: 52,
+  seedDatePacked: "2022-01-05",
+  seedNotes: "",
+  timeStamp: ""
+},
