@@ -20,6 +20,7 @@
           <ul class="menu-hamburger__list">
             <li><a onclick="UI.selectPages('homePage')">Home Page - Seed List</a></li>
             <li><a onclick="UI.selectPages('editPage')">Enter New Seed Packet</a></li>
+            <li><a onclick="UI.selectPages('readWritePage')">Read Write Data Files</a></li>
             <li><a onclick="UI.selectPages('instructionsPage')">Instructions</a></li>
         </nav>
       </div>
@@ -104,11 +105,19 @@
       <p>Instructions to be completed</p>
       <br>
     </section>
+
+    <!-- Read Write Files Page-->
+    <section id="read-write-page">
+      <!-- <input type="file" value="Choose TXT File" id="demoPickA"
+           accept="text/plain" onchange="readFileA()"/>
+      <div id="demoShowA"></div> -->
+      <input type="file" name="file" id="file" />
+
+    </section>
   
     <!-- Footer -->
     <section>
       <footer id="page-footer">
-        
         <p>Designed by Betong Applications</p>
       </footer>
     </section>
@@ -121,5 +130,71 @@
   </div>
 
   <script src="./js/app.js"> </script>
+ <!--  <script>
+    function readFileA () {
+      // (A) GET SELECTED FILE
+      let selected = document.getElementById("demoPickA").files[0];
+
+
+      // (B) READ SELECTED FILE
+      let reader = new FileReader();
+      reader.addEventListener("loadend", () => {
+        document.getElementById("demoShowA").innerHTML = reader.result;
+      });
+      
+      reader.readAsText(selected);
+    }
+    </script> -->
+    <script>
+      document.getElementById('file').onchange = function () {
+        var file = this.files[0];
+        var reader = new FileReader();
+        reader.onload = function (progressEvent) {
+          console.log(this.result);
+          //let dataFile = this.result;
+          //console.log(dataFile);
+          var dataFile = JSON.parse(this.result);
+          console.log(dataFile);
+        };
+        reader.readAsText(file);
+      };
+      const request = window.indexedDB.open('seedB', 1);
+      request.onsuccess = (event) => {
+        console.log('request success');
+        const db = event.target.result;
+        db.onerror = function (event) {
+          // Generic error handler for all errors targeted at this database's requests!
+          console.log("Database error: " + event.target.errorCode);
+        };
+        const transaction = db.transaction('entity', 'readwrite');
+        const store = transaction.objectStore('entity');
+        const getAllData = store.getAll();
+        console.log(getAllData);
+        //let jsonFile = JSON.stringify(getAllData);
+        transaction.oncomplete = () => {
+          console.log('finished transaction');
+          db.close();
+        }
+      }
+    </script>
+    <script>
+      /* const request = window.indexedDB.open('seedB', 1);
+      request.onsuccess = (event) => {
+        console.log('request success');
+        const db = event.target.result;
+        db.onerror = function (event) {
+          // Generic error handler for all errors targeted at this database's requests!
+          console.log("Database error: " + event.target.errorCode);
+        };
+        const transaction = db.transaction('entity', 'readwrite');
+        const store = transaction.objectStore('entity');
+        const getAllData = store.getAll();
+        console.log(getAllData);
+        transaction.oncomplete = () => {
+          console.log('finished transaction');
+          db.close();
+        }
+      } */
+    </script>
  </body>
 </html>

@@ -67,17 +67,26 @@ class UI {
       loadData('variety');
       document.querySelector("#home-page").style.display = "";
       document.querySelector("#edit-page").style.display = "none";
+      document.querySelector("#read-write-page").style.display = "none";
       document.querySelector("#instructions-page").style.display = "none";
     }
     if (pageSelected === "editPage") {
       UI.clearFields();
       document.querySelector("#home-page").style.display = "none";
       document.querySelector("#edit-page").style.display = "";
+      document.querySelector("#read-write-page").style.display = "none";
+      document.querySelector("#instructions-page").style.display = "none";
+    }
+    if (pageSelected === "readWritePage") {
+      document.querySelector("#home-page").style.display = "none";
+      document.querySelector("#edit-page").style.display = "none";
+      document.querySelector("#read-write-page").style.display = "";
       document.querySelector("#instructions-page").style.display = "none";
     }
     if (pageSelected === "instructionsPage") {
       document.querySelector("#home-page").style.display = "none";
       document.querySelector("#edit-page").style.display = "none";
+      document.querySelector("#read-write-page").style.display = "none";
       document.querySelector("#instructions-page").style.display = "";
     }
   }
