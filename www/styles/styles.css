@@ -44,7 +44,7 @@ html:focus {
 }
 
 body {
-  font-family: VuSerif, serif;
+  font-family: VuSans, sans-serif;
   font-size: 100%;
   font-weight: normal;
 }
@@ -113,10 +113,10 @@ a:active {
 
 .page-header__h1 {
   display: inline-block;
-  padding-top: 0.4em;
+  padding-top: 0.6em;
   padding-bottom: 0.8em;
   font-family: VuSerif, serif;
-  font-size: 1.345em;
+  font-size: 1.2em;
   font-weight: normal;
   text-align: left;
   padding-left: 0.625em;
@@ -130,7 +130,7 @@ a:active {
 
 .chapter--h2 {
   font-family: VuSans, sans-serif;
-  font-size: 1.245em;
+  font-size: 1em;
   font-weight: normal;
   padding-bottom: 0.4em;
   /* padding-top: 0.8em;*/
@@ -140,7 +140,7 @@ a:active {
 
 .chapter--h3 {
   font-family: VuSans, sans-serif;
-  font-size: 1.15em;
+  font-size: 0.9em;
   font-weight: normal;
   /* padding-top: 0em;*/
   padding-bottom: 0.4em;
@@ -351,8 +351,6 @@ td {
   background-position: center center;
 }
 
-
-
 /* Latest changes - might have to rename classes according to BEM */
 input[type=text] {
   width: 30%; 
@@ -377,7 +375,9 @@ input[type=number].timestamp {
   font-size: 65%;
 }
 input[type=date] {
-  width: 30%; 
+  font-family: VuSans, sans-serif;
+  font-size: 90%;
+  width: 20%; 
   padding: 2px;
   margin: 2px;
   display: inline-block;
@@ -516,8 +516,9 @@ th.sort{
 }
 
 textarea {
+  font-family: VuSans, sans-serif;
   display: inline-block;
-  /* font-size: 100%; */
+  font-size: 90%;
   width: 30%;
   text-align: left;
   padding: 2px;

@@ -18,10 +18,10 @@ class UI {
   // Delete rows first before entering updated data
   static displaySeeds(seedTable) {
     const table = document.querySelector('#seed-list');
-    while(table.rows.length > 0) {
+    while (table.rows.length > 0) {
       table.deleteRow(0);
     };
-     seedTable.forEach((row) => UI.addSeedToTable(row));
+    seedTable.forEach((row) => UI.addSeedToTable(row));
   }
 
   static addSeedToTable(seedPkt) {
@@ -59,7 +59,7 @@ class UI {
     document.querySelector('#seedDatePacked').value = '';
     document.querySelector('#timeStamp').value = '';
     document.querySelector('#seedNotes').value = '';
-    
+
   }
 
   static selectPages(pageSelected) {
@@ -148,14 +148,14 @@ class UI {
 // Store Class: Handles Storage 
 class Store {
   static openDB() {
-    const request = window.indexedDB.open('seedB', 1 );
-    request.onupgradeneeded = function(event) {
+    const request = window.indexedDB.open('seedB', 1);
+    request.onupgradeneeded = function (event) {
       const db = event.target.result;
-      const store = db.createObjectStore('entity', {keyPath: 'pktId'});
-      store.createIndex('variety', 'variety', {unique: false});
-      store.createIndex('seedGroup', 'seedGroup', {unique: false});
-      store.createIndex('seedDatePacked', 'seedDatePacked', {unique: false});
-      store.createIndex('timeStamp', 'timeStamp', {unique: false});
+      const store = db.createObjectStore('entity', { keyPath: 'pktId' });
+      store.createIndex('variety', 'variety', { unique: false });
+      store.createIndex('seedGroup', 'seedGroup', { unique: false });
+      store.createIndex('seedDatePacked', 'seedDatePacked', { unique: false });
+      store.createIndex('timeStamp', 'timeStamp', { unique: false });
       console.log('Index Creation Successful');
       console.log('The new database version number is = ' + event.newVersion);
     }
@@ -169,12 +169,12 @@ class Store {
     const seedWeight = document.querySelector('#seedWeight').value;
     const seedDatePacked = document.querySelector('#seedDatePacked').value;
     const seedNotes = document.querySelector('#seedNotes').value;
-  
+
     // Validate
     if (seedGroup === '' || variety === '' || pktId === '' || seedNumbers === '' || seedWeight === '' || seedDatePacked === '') {
-      
+
       UI.showAlert('Please fill in all fields', 'warning', '#pkt-message', '#insert-form-alerts');
-  
+
     }
     else {
       // Instantiate seed
@@ -186,7 +186,7 @@ class Store {
       request.onsuccess = (event) => {
         console.log('request success');
         const db = event.target.result;
-        db.onerror = function(event) {
+        db.onerror = function (event) {
           // Generic error handler for all errors targeted at this database's requests!
           console.log("Database error: " + event.target.errorCode);
         };
@@ -214,12 +214,12 @@ class Store {
       let deleted = store.get(pktId);
       console.log(pktId);
       console.log("After push: " + deleted);
-      //store.delete(pktId);
+      store.delete(pktId);
       db.onerror = function (event) {
         // Generic error handler for all errors targeted at this database's requests!
         console.log("Database error: " + event.target.errorCode);
       };
-      
+
     };
     // Show success message
     UI.showAlert('Seed Packet Deleted', 'warning', '#pkt-message', '#insert-form-alerts');
@@ -228,13 +228,13 @@ class Store {
     //Refresh table
     UI.refreshTable('pktId');
   }
-      
+
   static addData(records) {
     const request = window.indexedDB.open('seedB', 1);
     request.onsuccess = (event) => {
       console.log('request success');
       const db = event.target.result;
-      db.onerror = function(event) {
+      db.onerror = function (event) {
         // Generic error handler for all errors targeted at this database's requests!
         console.log("Database error: " + event.target.errorCode);
       };
@@ -243,7 +243,7 @@ class Store {
       records.forEach(record => {
         store.put(record);
       });
-      
+
       transaction.oncomplete = () => {
         console.log('finished transaction');
         db.close();
@@ -254,7 +254,7 @@ class Store {
 // End of Classes
 
 // Global variables
-let oldSortOn ='';
+let oldSortOn = '';
 let oldSortOrder = 'prev';
 let totop = document.getElementById("js-page--to-top"); //Get the button
 let tobottom = document.getElementById("js-page--to-bottom"); //Get the button
@@ -272,7 +272,7 @@ function openDbPromise() {
     }
   });
 }
- 
+
 function loadData(sortOn = 'variety', sortOrder = 'next') {
   //sortOn = 'variety';
   openDbPromise().then(
@@ -309,10 +309,10 @@ function loadData(sortOn = 'variety', sortOrder = 'next') {
 }
 
 // Event Open DB
-document.addEventListener('DOMContetLoaded', UI.selectPages("homePage"));   
+document.addEventListener('DOMContetLoaded', UI.selectPages("homePage"));
 
 // When the user scrolls down 20px from the top of the document, show the button
-window.onscroll =  ()=> { UI.scrollEvent() };
+window.onscroll = () => { UI.scrollEvent() };
 
 // Event Menu
 document.querySelector(".js-menu-hamburger").addEventListener("click", UI.menu);
@@ -340,3 +340,99 @@ function editSeedPkt(pktId) {
       UI.editSeed(record, 'editPage')
     });
 }
+
+// Latest code for downloading and uploading seedB data
+
+// Extract all data from seedB and save to array of objects
+let records = []; //used globally for the functions
+function extractAllRecords() {
+  openDbPromise().then(
+    db => {
+      return new Promise((resolve, reject) => {
+        //request = db.transaction('entity').objectStore('entity').openCursor();
+        const transaction = db.transaction(['entity'], "readonly");
+        const store = transaction.objectStore('entity');
+        let cursorRequest;
+        cursorRequest = store.openCursor();
+        records = [];
+        cursorRequest.onsuccess = event => {
+          let cursor = event.target.result;
+          if (cursor) {
+            records.push(cursor.value);
+            cursor.continue();
+          }
+          else {
+            resolve(records);
+          }
+        }
+        cursorRequest.onerror = (event) => {
+          reject(event.target.errorCode);
+        }
+      })
+    }).then(records => {
+      console.log(records)
+      document.getElementById("result").innerHTML = JSON.stringify(records, null, 2);
+    });
+};
+
+//
+function fileTime() {
+  const date = new Date();
+  const year = date.getFullYear().toString();
+  const month = "0" + (date.getMonth() + 1).toString();
+  const day = "0" + (date.getDay() + 1).toString();
+  const hours = "0" + date.getHours();
+  const minutes = "0" + date.getMinutes();
+  //const seconds = "0" + date.getSeconds();
+  const formattedTime = `${year.slice(-2)}${month.slice(-2)}${day.slice(-2)}-${hours.slice(-2)}${minutes.slice(-2)}`;
+  return formattedTime;
+};
+
+function retrieveData() {
+  openDbPromise().then(
+    db => {
+      return new Promise((resolve, reject) => {
+        //request = db.transaction('entity').objectStore('entity').openCursor();
+        const transaction = db.transaction(['entity'], "readonly");
+        const store = transaction.objectStore('entity');
+        let cursorRequest;
+        cursorRequest = store.openCursor();
+
+        cursorRequest.onsuccess = event => {
+          let cursor = event.target.result;
+          if (cursor) {
+            records.push(cursor.value);
+            cursor.continue();
+          }
+          else {
+            resolve(records);
+          }
+        }
+        cursorRequest.onerror = (event) => {
+          reject(event.target.errorCode);
+        }
+      })
+    })
+     .then(records => {
+      //return records;
+      //console.log(records)
+      var text = JSON.stringify(records, null, 2);
+      let time = fileTime() + ".txt";
+      var filename = "seedB-" + time;
+      download(filename, text);
+    });
+};
+// Create backup file
+function download(filename, textInput) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8, ' + encodeURIComponent(textInput));
+  element.setAttribute('download', filename);
+  document.body.appendChild(element);
+  element.click();
+  document.body.removeChild(element);
+};
+
+
+
+
+

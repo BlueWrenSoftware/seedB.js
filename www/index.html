@@ -56,6 +56,7 @@
         </thead>
         <tbody id="seed-list"></tbody>
       </table>
+      <pre id="demo"></pre>
     </section>
 
     <!-- Data Entry Page -->
@@ -67,36 +68,59 @@
         <h3 class="chapter--h3">
           Enter Seed Packets
         </h3>
-        </header>
-        <form id="seed-entry">
-          <label>*&nbsp;Input&nbsp;Required.</label>
-          <br><br>
-          <label for="seedGroup">*&nbsp;Seed&nbsp;Group: </label>
-          <input type="text" id="seedGroup"><br>
-          <label for="variety">*&nbsp;Variety: </label>
-          <input type="text" id="variety"><br>
-          <label for="pktId">*&nbsp;Seed&nbsp;Packet:</label>
-          <input type="text" id="pktId"><br>
-          <label for="seedNumbers">*&nbsp;Seed&nbsp;Count:</label>
-          <input type="number" id="seedNumbers"><br>
-          <label for="seedWeight">*&nbsp;Seed &nbsp;Grams:</label>
-          <input type="number" id="seedWeight"><br>
-          <label for="seedDatePacked">*&nbsp;Date&nbsp;Packaged:</label>
-          <input type="date" id="seedDatePacked"><br>
-          <label for="timeStamp">Timestamp:</label>
-          <input type="number" readonly="readonly" class="timestamp" id="timeStamp"><br>
-          <label class="notes" for="seedNotes">Notes:</label>
-          <textarea rows="2" id="seedNotes"></textarea>
-          <br>
-          <div class="wrapper">
-            <button class="selected flex-item" type="button" onclick="Store.editAddRecord()">Submit Current Record</button>
-            <input class="selected flex-item" type="reset" value="Cancel">
-            <button class="select-delete flex-item" type="button" onclick="Store.deleteRecord()">Delete Current Record</button>
-            <button class="selected flex-item" type="button" onclick="UI.selectPages('homePage')">Return to Seed List</button>
-          </div>
-        </form>
-        
-      <div id="insert-form-alerts"><p id="pkt-message"></p></div>
+      </header>
+      <form id="seed-entry">
+        <label>*&nbsp;Input&nbsp;Required.</label>
+        <br><br>
+        <label for="seedGroup">*&nbsp;Seed&nbsp;Group: </label>
+        <input type="text" id="seedGroup"><br>
+        <label for="variety">*&nbsp;Variety: </label>
+        <input type="text" id="variety"><br>
+        <label for="pktId">*&nbsp;Seed&nbsp;Packet:</label>
+        <input type="text" id="pktId"><br>
+        <label for="seedNumbers">*&nbsp;Seed&nbsp;Count:</label>
+        <input type="number" id="seedNumbers"><br>
+        <label for="seedWeight">*&nbsp;Seed &nbsp;Grams:</label>
+        <input type="number" id="seedWeight"><br>
+        <label for="seedDatePacked">*&nbsp;Date&nbsp;Packaged:</label>
+        <input type="date" id="seedDatePacked"><br>
+        <label for="timeStamp">Timestamp:</label>
+        <input type="number" readonly="readonly" class="timestamp" id="timeStamp"><br>
+        <label class="notes" for="seedNotes">Notes:</label>
+        <textarea rows="2" id="seedNotes"></textarea>
+        <br>
+        <div class="wrapper">
+          <button class="selected flex-item" type="button" onclick="Store.editAddRecord()">Submit Current
+            Record</button>
+          <input class="selected flex-item" type="reset" value="Cancel">
+          <button class="select-delete flex-item" type="button" onclick="Store.deleteRecord()">Delete Current
+            Record</button>
+          <button class="selected flex-item" type="button" onclick="UI.selectPages('homePage')">Return to Seed
+            List</button>
+        </div>
+      </form>
+
+      <div id="insert-form-alerts">
+        <p id="pkt-message"></p>
+      </div>
+    </section>
+
+    <!-- Read Write Files Page-->
+    <section id="read-write-page">
+      <header>
+        <h2 class="chapter--h2">
+          Backup and Restore
+        </h2>
+        <h3 class="chapter--h3">
+          Restore Data from Text File
+        </h3>
+      </header>
+      <input type="file" name="file" id="fileElem" style="display:none">
+      <button id="fileSelect" class="select-delete">Select Backup Text File</button>
+      <h3 class="chapter--h3">
+        Create Backup File
+      </h3>
+      <button class="selected" onclick="retrieveData()">Retrieve All Data from SeedB and Save as Text File</button> 
     </section>
 
     <!-- Instructions Page -->
@@ -106,15 +130,8 @@
       <br>
     </section>
 
-    <!-- Read Write Files Page-->
-    <section id="read-write-page">
-      <!-- <input type="file" value="Choose TXT File" id="demoPickA"
-           accept="text/plain" onchange="readFileA()"/>
-      <div id="demoShowA"></div> -->
-      <input type="file" name="file" id="file" />
 
-    </section>
-  
+
     <!-- Footer -->
     <section>
       <footer id="page-footer">
@@ -130,71 +147,31 @@
   </div>
 
   <script src="./js/app.js"> </script>
- <!--  <script>
-    function readFileA () {
-      // (A) GET SELECTED FILE
-      let selected = document.getElementById("demoPickA").files[0];
 
+  <script>
+    const fileSelect = document.getElementById("fileSelect"),
+      fileElem = document.getElementById("fileElem");
 
-      // (B) READ SELECTED FILE
-      let reader = new FileReader();
-      reader.addEventListener("loadend", () => {
-        document.getElementById("demoShowA").innerHTML = reader.result;
-      });
-      
-      reader.readAsText(selected);
-    }
-    </script> -->
-    <script>
-      document.getElementById('file').onchange = function () {
-        var file = this.files[0];
-        var reader = new FileReader();
-        reader.onload = function (progressEvent) {
-          console.log(this.result);
-          //let dataFile = this.result;
-          //console.log(dataFile);
-          var dataFile = JSON.parse(this.result);
-          console.log(dataFile);
-        };
-        reader.readAsText(file);
-      };
-      const request = window.indexedDB.open('seedB', 1);
-      request.onsuccess = (event) => {
-        console.log('request success');
-        const db = event.target.result;
-        db.onerror = function (event) {
-          // Generic error handler for all errors targeted at this database's requests!
-          console.log("Database error: " + event.target.errorCode);
-        };
-        const transaction = db.transaction('entity', 'readwrite');
-        const store = transaction.objectStore('entity');
-        const getAllData = store.getAll();
-        console.log(getAllData);
-        //let jsonFile = JSON.stringify(getAllData);
-        transaction.oncomplete = () => {
-          console.log('finished transaction');
-          db.close();
-        }
+    fileSelect.addEventListener("click", function (e) {
+      if (fileElem) {
+        fileElem.click();
       }
-    </script>
-    <script>
-      /* const request = window.indexedDB.open('seedB', 1);
-      request.onsuccess = (event) => {
-        console.log('request success');
-        const db = event.target.result;
-        db.onerror = function (event) {
-          // Generic error handler for all errors targeted at this database's requests!
-          console.log("Database error: " + event.target.errorCode);
-        };
-        const transaction = db.transaction('entity', 'readwrite');
-        const store = transaction.objectStore('entity');
-        const getAllData = store.getAll();
-        console.log(getAllData);
-        transaction.oncomplete = () => {
-          console.log('finished transaction');
-          db.close();
-        }
-      } */
-    </script>
- </body>
+    }, false);
+
+    document.getElementById('fileElem').onchange = function () {
+      let dataFile = [];
+      var file = this.files[0];
+      var reader = new FileReader();
+      reader.onload = function (progressEvent) {
+        //console.log(this.result);
+        dataFile = JSON.parse(this.result);
+        console.log(dataFile);
+        Store.addData(dataFile);
+        //console.log(dataFile[4]);
+      };
+      reader.readAsText(file);
+    };
+  </script>
+</body>
+
 </html>
