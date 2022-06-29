@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    let db;
+    const request = indexedDB.open("seedB");
+    request.onerror = event => {
+      console.log("No IndexedDB!");
+    };
+    request.onsuccess = event => {
+      db = event.target.result;
+      const transaction = db.transaction(['entity'], "readonly");
+      const store = transaction.objectStore('entity');
+      const selectIndex = store.index('timeStamp');
+      selectIndex.openKeyCursor().onsuccess = function(event) {
+        const cursor = event.target.result;
+        if (cursor) {
+          console.log(cursor.key);
+          console.log(cursor.primaryKey);
+          cursor.continue();
+        } else {
+          console.log('All last names displayed.');
+        }
+      }
+    };
+  </script>
+</body>
+</html>

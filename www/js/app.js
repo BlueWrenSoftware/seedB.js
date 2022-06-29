@@ -309,7 +309,7 @@ function fetchDataPromise(db, sortOn='variety', sortOrder='next') {
 async function loadData(sortOn = 'variety', sortOrder = 'next') {
   const db = await openDbPromise();
   const records = await fetchDataPromise(db,sortOn,sortOrder);
-  await UI.displaySeeds(records);
+  UI.displaySeeds(records); // According to VS Code await is not needed here
 }
 
 // Event Open DB
@@ -458,8 +458,3 @@ document.getElementById('fileElem').onchange = function () {
   };
   reader.readAsText(file);
 };
-
-
-
-
-

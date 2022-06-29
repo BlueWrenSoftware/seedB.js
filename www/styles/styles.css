@@ -120,7 +120,7 @@ a:active {
   display: inline-block;
   padding-top: 0.6em;
   padding-bottom: 0.8em;
-  font-family: VuSerif, serif;
+  font-family: VuSerif, sans-serif;
   font-size: 1.2em;
   font-weight: normal;
   text-align: left;
@@ -317,7 +317,7 @@ td {
 
 #page-footer p {
   padding-top: 0.55em;
-  font-size: 0.85em;
+  font-size: 0.75em;
 }
 
 #js-search-input-seeds {
