@@ -215,6 +215,10 @@ class Store {
       console.log(pktId);
       console.log("After push: " + deleted);
       store.delete(pktId);
+      transaction.oncomplete = () => {
+        console.log('finished transaction');
+        db.close();
+      }
       db.onerror = function (event) {
         // Generic error handler for all errors targeted at this database's requests!
         console.log("Database error: " + event.target.errorCode);
@@ -413,7 +417,7 @@ function retrieveData() {
         }
       })
     })
-     .then(records => {
+    .then(records => {
       //return records;
       //console.log(records)
       var text = JSON.stringify(records, null, 2);
@@ -430,6 +434,30 @@ function download(filename, textInput) {
   document.body.appendChild(element);
   element.click();
   document.body.removeChild(element);
+};
+
+// Upload backup data to seedB
+const fileSelect = document.getElementById("fileSelect"),
+  fileElem = document.getElementById("fileElem");
+
+fileSelect.addEventListener("click", function (e) {
+  if (fileElem) {
+    fileElem.click();
+  }
+}, false);
+
+document.getElementById('fileElem').onchange = function () {
+  let dataFile = [];
+  var file = this.files[0];
+  var reader = new FileReader();
+  reader.onload = function (progressEvent) {
+    //console.log(this.result);
+    dataFile = JSON.parse(this.result);
+    console.log(dataFile);
+    Store.addData(dataFile);
+    //console.log(dataFile[4]);
+  };
+  reader.readAsText(file);
 };
 
 

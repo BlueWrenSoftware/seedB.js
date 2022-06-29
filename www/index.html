@@ -121,7 +121,7 @@
       <h3 class="chapter--h3">
         Create Backup File
       </h3>
-      <button class="selected" onclick="retrieveData()">Retrieve All Data from SeedB and Save as Text File</button> 
+      <button class="selected" onclick="retrieveData()">Retrieve All Data from SeedB and Save as Text File</button>
     </section>
 
     <!-- Instructions Page -->
@@ -130,8 +130,6 @@
       <p>Instructions to be completed</p>
       <br>
     </section>
-
-
 
     <!-- Footer -->
     <section>
@@ -149,30 +147,6 @@
 
   <script src="./js/app.js"> </script>
 
-  <script>
-    const fileSelect = document.getElementById("fileSelect"),
-      fileElem = document.getElementById("fileElem");
-
-    fileSelect.addEventListener("click", function (e) {
-      if (fileElem) {
-        fileElem.click();
-      }
-    }, false);
-
-    document.getElementById('fileElem').onchange = function () {
-      let dataFile = [];
-      var file = this.files[0];
-      var reader = new FileReader();
-      reader.onload = function (progressEvent) {
-        //console.log(this.result);
-        dataFile = JSON.parse(this.result);
-        console.log(dataFile);
-        Store.addData(dataFile);
-        //console.log(dataFile[4]);
-      };
-      reader.readAsText(file);
-    };
-  </script>
 </body>
 
 </html>
