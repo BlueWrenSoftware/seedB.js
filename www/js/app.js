@@ -348,7 +348,6 @@ function editSeedPkt(pktId) {
 // Latest code for downloading and uploading seedB data
 
 // Extract all data from seedB and save to array of objects
-let records = []; //used globally for the functions
 function extractAllRecords() {
   openDbPromise().then(
     db => {
@@ -358,7 +357,7 @@ function extractAllRecords() {
         const store = transaction.objectStore('entity');
         let cursorRequest;
         cursorRequest = store.openCursor();
-        records = [];
+        let records = [];
         cursorRequest.onsuccess = event => {
           let cursor = event.target.result;
           if (cursor) {
