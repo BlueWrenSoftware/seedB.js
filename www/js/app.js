@@ -277,10 +277,7 @@ function openDbPromise() {
   });
 }
 
-function loadData(sortOn = 'variety', sortOrder = 'next') {
-  //sortOn = 'variety';
-  openDbPromise().then(
-    db => {
+function fetchDataPromise(db, sortOn='variety', sortOrder='next') {
       return new Promise((resolve, reject) => {
         //request = db.transaction('entity').objectStore('entity').openCursor();
         const transaction = db.transaction(['entity'], "readonly");
@@ -307,9 +304,12 @@ function loadData(sortOn = 'variety', sortOrder = 'next') {
           reject(event.target.errorCode);
         }
       })
-    }).then(records => {
-      UI.displaySeeds(records);
-    });
+}
+
+async function loadData(sortOn = 'variety', sortOrder = 'next') {
+  const db = await openDbPromise();
+  const records = await fetchDataPromise(db,sortOn,sortOrder);
+  await UI.displaySeeds(records);
 }
 
 // Event Open DB
