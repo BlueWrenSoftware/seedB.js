@@ -9,27 +9,31 @@
 </head>
 <body>
   <script>
-    let db;
-    const request = indexedDB.open("seedB");
-    request.onerror = event => {
-      console.log("No IndexedDB!");
-    };
-    request.onsuccess = event => {
-      db = event.target.result;
-      const transaction = db.transaction(['entity'], "readonly");
-      const store = transaction.objectStore('entity');
-      const selectIndex = store.index('timeStamp');
-      selectIndex.openKeyCursor().onsuccess = function(event) {
-        const cursor = event.target.result;
-        if (cursor) {
-          console.log(cursor.key);
-          console.log(cursor.primaryKey);
-          cursor.continue();
-        } else {
-          console.log('All last names displayed.');
+    function keyCursor(keyOption) {
+      let db;
+      const request = indexedDB.open("seedB");
+      request.onerror = event => {
+        console.log("No IndexedDB!");
+      };
+      request.onsuccess = event => {
+        db = event.target.result;
+        const transaction = db.transaction(['entity'], "readonly");
+        const store = transaction.objectStore('entity');
+        const selectIndex = store.index(keyOption);
+        selectIndex.openKeyCursor().onsuccess = function (event) {
+          const cursor = event.target.result;
+          if (cursor) {
+            console.log(cursor.key);
+            console.log(cursor.primaryKey);
+            console.log(store.get(keyOption));
+            cursor.continue();
+          } else {
+            console.log('All last names displayed.');
+          }
         }
-      }
+      };
     };
+    keyCursor('timeStamp');
   </script>
-</body>
+  </body>
 </html>

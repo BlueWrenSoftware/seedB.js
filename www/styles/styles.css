@@ -79,7 +79,7 @@ a:active {
 }
 
 /* DejaVu font settings */
-@font-face {
+/* @font-face {
   font-family: VuSerif;
   src: url("../fonts/DejaVuSerif.ttf") format("truetype");
   font-style: normal;
@@ -89,7 +89,7 @@ a:active {
   font-family: VuSerif;
   src: url("../fonts/DejaVuSerif-Italic.ttf") format("truetype");
   font-style: italic;
-}
+} */
 
 @font-face {
   font-family: VuSans;
@@ -97,7 +97,7 @@ a:active {
   font-style: normal;
 }
 
-@font-face {
+/* @font-face {
   font-family: VuMono;
   src: url("../fonts/DejaVuSansMono.ttf") format("truetype");
   font-style: normal;
@@ -107,7 +107,7 @@ a:active {
   font-family: VuItalic;
   src: url("../fonts/DejaVuSerif-Italic.ttf") format("truetype");
   font-style: normal;
-}
+} */
 
 .pages {
   width: 500px;
@@ -120,7 +120,7 @@ a:active {
   display: inline-block;
   padding-top: 0.6em;
   padding-bottom: 0.8em;
-  font-family: VuSerif, sans-serif;
+  font-family: VuSans, sans-serif;
   font-size: 1.2em;
   font-weight: normal;
   text-align: left;
@@ -184,7 +184,7 @@ section.section--paragraph p {
   right: 40px;
   height: 22px;
   width: 17px;
-  z-index: 70;
+  z-index: 30; /* was 70 */
 }
 .menu-hamburger:hover {
   background-color: #00CCFF;
@@ -200,7 +200,7 @@ section.section--paragraph p {
   width: calc(400px * 1 / 2);
   background-color: #f8f8f8;
   border: 0.025em solid #CCCCCC;
-  z-index: 90;
+  z-index: 40; /* was 90 */
   font-family: VuSans, sans-serif;
 }
 
@@ -220,7 +220,7 @@ section.section--paragraph p {
   width: 760px;
   height: 100%;
   right: 0;
-  z-index: 70;
+  z-index: 30; /* was 70 */
 }
 
 .js-display-instructions {
@@ -336,7 +336,7 @@ td {
   position: fixed;
   bottom: 5px;
   right: -30px;
-  z-index: 99;
+  z-index: 50; /*was 99*/
   width: 30px;
   height: 55px;
   margin-right: calc(((100vw - 450px) / 2) - (100vw - 100%));
@@ -498,7 +498,7 @@ div.alert {
   position: fixed;
   top: -0.5em;
   right: -30px;
-  z-index: 30;
+  z-index: 20; /* was 30 */
   width: 30px;
   height: 55px;
   margin-right: calc(((100vw - 450px) / 2) - (100vw - 100%));
@@ -542,7 +542,9 @@ textarea {
 .flex-item {
   flex: none;
 }
-
+div.center {
+  text-align: center;
+}
 form {
   font-size: 80%;
 }

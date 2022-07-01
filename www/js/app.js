@@ -348,37 +348,7 @@ function editSeedPkt(pktId) {
 // Latest code for downloading and uploading seedB data
 
 // Extract all data from seedB and save to array of objects
-function extractAllRecords() {
-  openDbPromise().then(
-    db => {
-      return new Promise((resolve, reject) => {
-        //request = db.transaction('entity').objectStore('entity').openCursor();
-        const transaction = db.transaction(['entity'], "readonly");
-        const store = transaction.objectStore('entity');
-        let cursorRequest;
-        cursorRequest = store.openCursor();
-        let records = [];
-        cursorRequest.onsuccess = event => {
-          let cursor = event.target.result;
-          if (cursor) {
-            records.push(cursor.value);
-            cursor.continue();
-          }
-          else {
-            resolve(records);
-          }
-        }
-        cursorRequest.onerror = (event) => {
-          reject(event.target.errorCode);
-        }
-      })
-    }).then(records => {
-      console.log(records)
-      document.getElementById("result").innerHTML = JSON.stringify(records, null, 2);
-    });
-};
 
-//
 function fileTime() {
   const date = new Date();
   const year = date.getFullYear().toString();
