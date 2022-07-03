@@ -210,11 +210,11 @@ section.section--paragraph p {
   text-align: right;
 }
 
-.js-menu-hamburger--black {
+.js-menu-hamburger--closed { /*closes menu*/
   display: none;
 }
 
-.js-menu-hamburger--red {
+.js-menu-hamburger--opened { /*opens menu*/
   display: block;
   position: absolute;
   width: 760px;
@@ -309,6 +309,7 @@ td {
 
 #page-footer {
   clear: both;
+  margin-top: 0.5em;
   border-top: 0.025em solid #CCCCCC;
   border-bottom: 0.025em solid;
   padding-bottom: 0.5em;
@@ -395,7 +396,7 @@ input[type=date] {
   background-color: #64991e;
   color: white;
   padding: 2px;
-  margin: 5px 5px 10px 5px;
+  margin: 2.5px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -410,7 +411,7 @@ input[type=date] {
   background-color: #cf2e2e;
   color: white;
   padding: 2px;
-  margin: 5px 5px 10px 5px;
+  margin: 2.5px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -548,4 +549,14 @@ div.center {
 form {
   font-size: 80%;
 }
+
+.js-edit-seed-pkt--closed {
+  display: none;
+}
+
+.js-edit-seed-pkt--opened {
+  display: block;
+}
+
+
 

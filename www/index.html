@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" contnet="wdth-device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Form Enter Data</title>
+  <title>SeedB</title>
   <link rel="stylesheet" href="./styles/styles.css">
 </head>
 
@@ -14,7 +14,7 @@
     <!-- Menu settings -->
     <section class="js-menu-hamburger">
       <img class="menu-hamburger" src="./images/hamburger_icon.svg">
-      <div class="js-menu-hamburger--black">
+      <div class="js-menu-hamburger--closed">
         <img class="menu-hamburger" src="./images/hamburger_active.svg">
         <nav class="menu-hamburger--show">
           <ul class="menu-hamburger__list">
@@ -38,10 +38,10 @@
 
     <!-- Home Page -->
     <section id="home-page">
-      <h3 class="chapter--h3">
-        <!-- Table of Records -->
+    <!-- Table of Records -->
+<!--       <h3 class="chapter--h3">
         <div id="insert-seed-list-alerts"><strong id="seed-list-message"></strong></div>
-      </h3>
+      </h3> -->
       <table class="table-seeds table-seeds__row-color" id="mytable">
         <thead>
           <tr>
@@ -96,7 +96,9 @@
           <input class="selected flex-item" type="reset" value="Cancel">
           <button class="select-delete flex-item" type="button" onclick="Store.deleteRecord()">Delete Current
             Record</button>
-          <button class="selected flex-item" type="button" onclick="UI.selectPages('homePage')">Return to Seed
+        </div>
+        <div class="center">
+          <button class="selected" type="button" onclick="UI.selectPages('homePage')">Return to Seed
             List</button>
         </div>
       </form>

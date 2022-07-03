@@ -65,6 +65,7 @@ class UI {
   static selectPages(pageSelected) {
     if (pageSelected === "homePage") {
       loadData('variety');
+      document.title="SeedB Blue Wren";
       document.querySelector("#home-page").style.display = "";
       document.querySelector("#edit-page").style.display = "none";
       document.querySelector("#read-write-page").style.display = "none";
@@ -72,18 +73,21 @@ class UI {
     }
     if (pageSelected === "editPage") {
       UI.clearFields();
+      document.title="Enter/Edit Data";
       document.querySelector("#home-page").style.display = "none";
       document.querySelector("#edit-page").style.display = "";
       document.querySelector("#read-write-page").style.display = "none";
       document.querySelector("#instructions-page").style.display = "none";
     }
     if (pageSelected === "readWritePage") {
+      document.title="Backup";
       document.querySelector("#home-page").style.display = "none";
       document.querySelector("#edit-page").style.display = "none";
       document.querySelector("#read-write-page").style.display = "";
       document.querySelector("#instructions-page").style.display = "none";
     }
     if (pageSelected === "instructionsPage") {
+      document.title="Instructions";
       document.querySelector("#home-page").style.display = "none";
       document.querySelector("#edit-page").style.display = "none";
       document.querySelector("#read-write-page").style.display = "none";
@@ -92,8 +96,8 @@ class UI {
   }
 
   static menu() {
-    let getMenu = document.querySelector(".js-menu-hamburger--black");
-    getMenu.classList.toggle("js-menu-hamburger--red");
+    let getMenu = document.querySelector(".js-menu-hamburger--closed");
+    getMenu.classList.toggle("js-menu-hamburger--opened");
   }
 
   static scrollToBottom() {
@@ -348,7 +352,6 @@ function editSeedPkt(pktId) {
 // Latest code for downloading and uploading seedB data
 
 // Extract all data from seedB and save to array of objects
-
 function fileTime() {
   const date = new Date();
   const year = date.getFullYear().toString();
@@ -395,6 +398,7 @@ function retrieveData() {
       download(filename, text);
     });
 };
+
 // Create backup file
 function download(filename, textInput) {
   var element = document.createElement('a');
