@@ -17,7 +17,7 @@ class UI {
 
   // Delete rows first before entering updated data
   static displaySeeds(seedTable) {
-    const table = document.querySelector('#seed-list');
+      const table = document.querySelector('#seed-list');
     while (table.rows.length > 0) {
       table.deleteRow(0);
     };
@@ -47,7 +47,7 @@ class UI {
     const section = document.querySelector(`${idLocation}`);
     section.insertBefore(div, messages);
     // Vanish in 3 seconds
-    setTimeout(() => document.querySelector('.alert').remove(), 1000);
+    setTimeout(() => document.querySelector('.alert').remove(), 3000);
   }
 
   static clearFields() {
@@ -65,33 +65,60 @@ class UI {
   static selectPages(pageSelected) {
     if (pageSelected === "homePage") {
       loadData('variety');
-      document.title="SeedB Blue Wren";
+      document.title = "SeedB Blue Wren";
       document.querySelector("#home-page").style.display = "";
       document.querySelector("#edit-page").style.display = "none";
       document.querySelector("#read-write-page").style.display = "none";
       document.querySelector("#instructions-page").style.display = "none";
     }
-    if (pageSelected === "editPage") {
+    else if (pageSelected === "editSeedPkt") {
       UI.clearFields();
-      document.title="Enter/Edit Data";
+      document.title = "Edit Seed Pkt";
+      document.querySelector("#edit-pkt-buttons").style.display = "";
+      document.querySelector("#new-pkt-buttons").style.display = "none";
       document.querySelector("#home-page").style.display = "none";
       document.querySelector("#edit-page").style.display = "";
       document.querySelector("#read-write-page").style.display = "none";
       document.querySelector("#instructions-page").style.display = "none";
     }
-    if (pageSelected === "readWritePage") {
-      document.title="Backup";
+    else if (pageSelected === "newPktPage") {
+      UI.clearFields();
+      document.title = "New Seed Pkt";
+      document.querySelector("#new-pkt-buttons").style.display = "";
+      document.querySelector("#edit-pkt-buttons").style.display = "none";
+      document.querySelector("#home-page").style.display = "none";
+      document.querySelector("#edit-page").style.display = "";
+      document.querySelector("#read-write-page").style.display = "none";
+      document.querySelector("#instructions-page").style.display = "none";
+      //document.querySelector("#dbError").style.display = "none"
+    }
+    else if (pageSelected === "readWritePage") {
+      document.title = "Backup";
+      document.querySelector("#js-db-error").style.display = "none";
+      document.querySelector("#retrieve-data-button").style.display = "";
       document.querySelector("#home-page").style.display = "none";
       document.querySelector("#edit-page").style.display = "none";
       document.querySelector("#read-write-page").style.display = "";
       document.querySelector("#instructions-page").style.display = "none";
+      //document.querySelector("#dbError").style.display = "none"
     }
-    if (pageSelected === "instructionsPage") {
-      document.title="Instructions";
+    else if (pageSelected === "instructionsPage") {
+      document.title = "Instructions";
       document.querySelector("#home-page").style.display = "none";
       document.querySelector("#edit-page").style.display = "none";
       document.querySelector("#read-write-page").style.display = "none";
       document.querySelector("#instructions-page").style.display = "";
+      //document.querySelector("#dbError").style.display = "none"
+    }
+    else if (pageSelected === "dbError") {
+      document.title = "Error";
+      document.querySelector("#retrieve-data-button").style.display = "none";
+      document.querySelector("#home-page").style.display = "none";
+      document.querySelector("#edit-page").style.display = "none";
+      document.querySelector("#read-write-page").style.display = "none";
+      document.querySelector("#instructions-page").style.display = "none";
+      document.querySelector("#read-write-page").style.display = "";
+      
     }
   }
 
@@ -136,21 +163,48 @@ class UI {
     oldSortOrder = sortOrder;
     const table = document.getElementById('seed-list');
     loadData(sortOn, sortOrder);
+    sortState[0] = sortOn;
+    sortState[1] = sortOrder;
+    console.log(sortState);
   }
 
   // Should be in Store Class?
   static editSeed(record, editPage) {
+    UI.clearFields();
     UI.selectPages(editPage);
-    Object.keys(record).forEach(key => {
-      console.log(key);
-      console.log(record[key]);
-      document.querySelector('#' + key).value = record[key];
+    Object.keys(record).forEach(field => {
+      console.log(field);
+      console.log(record[field]);
+      document.querySelector('#' + field).value = record[field];
     });
   }
 }
 
 // Store Class: Handles Storage 
 class Store {
+  static corruptDB() {
+    const req = indexedDB.deleteDatabase('seedB');
+    req.onsuccess = function () {
+      console.log("Deleted database successfully");
+      const msg = document.getElementById('js-msg');
+      msg.insertAdjacentHTML('beforeend',
+      '<br>Deleted database successfully');
+      Store.openDB();
+    };
+    req.onerror = function () {
+      console.log("Couldn't delete database");
+      const msg = document.getElementById('js-msg');
+      msg.insertAdjacentHTML('beforeend',
+      '<br>Could not delete database');
+    };
+    req.onblocked = function () {
+      console.log("Couldn't delete database due to the operation being blocked");
+      const msg = document.getElementById('js-msg');
+      msg.insertAdjacentHTML('beforeend',
+      '<br>Could not delete database due to the operation being blocked');
+    };
+  }
+
   static openDB() {
     const request = window.indexedDB.open('seedB', 1);
     request.onupgradeneeded = function (event) {
@@ -162,9 +216,17 @@ class Store {
       store.createIndex('timeStamp', 'timeStamp', { unique: false });
       console.log('Index Creation Successful');
       console.log('The new database version number is = ' + event.newVersion);
+      const msg = document.getElementById('js-msg');
+      msg.insertAdjacentHTML('beforeend',
+      '<br>SeedB created');
+      const version = ('The new database version number is = ' + event.newVersion);
+      msg.insertAdjacentHTML('beforeend',
+      '<br>' + version);
     }
   }
-  static editAddRecord() {
+ 
+  static editAddRecord(mode) {
+    console.log(mode);
     // Get form values
     const seedGroup = document.querySelector('#seedGroup').value;
     const variety = document.querySelector('#variety').value;
@@ -184,7 +246,9 @@ class Store {
       // Instantiate seed
       const timeStamp = Date.now();
       const seed = new Seed(seedGroup, variety, pktId, seedNumbers, seedWeight, seedDatePacked, seedNotes, timeStamp);
+      const id = new Seed(pktId);
       console.log(seed);
+      console.log(seed['pktId']);
       // Add SeedPkt to IndexedDB
       const request = window.indexedDB.open('seedB', 1);
       request.onsuccess = (event) => {
@@ -198,13 +262,17 @@ class Store {
         const store = transaction.objectStore('entity');
         store.put(seed);
       };
+
       // Show success message
       UI.showAlert('Seed Packet Added', 'success', '#pkt-message', '#insert-form-alerts');
       // Clear form fields
       UI.clearFields();
-      //Refresh table
-      UI.refreshTable('pktId');
-    }
+      if (mode === 'editSeedPkt') {
+        UI.selectPages('homePage');
+      } else if (mode === 'newPktPage') {
+        UI.selectPages('newPktPage');
+      };
+    };
   }
 
   static deleteRecord() {
@@ -251,13 +319,75 @@ class Store {
       records.forEach(record => {
         store.put(record);
       });
-
       transaction.oncomplete = () => {
         console.log('finished transaction');
         db.close();
       }
     }
   }
+} 
+
+// Data
+class Data {
+  static retrieveAll() {
+    openDbPromise().then(
+      db => {
+        return new Promise((resolve, reject) => {
+          //request = db.transaction('entity').objectStore('entity').openCursor();
+          const transaction = db.transaction(['entity'], "readonly");
+          const store = transaction.objectStore('entity');
+          let cursorRequest;
+          let records = [];
+          cursorRequest = store.openCursor();
+  
+          cursorRequest.onsuccess = event => {
+            let cursor = event.target.result;
+            if (cursor) {
+              let primaryKey = cursor.primaryKey; //new
+              let value = cursor.value;
+              let key = cursor.key;
+              console.log(key, value);
+              records.push(value);
+              cursor.continue();
+            }
+            else {
+              resolve(records);
+            }
+          }
+          cursorRequest.onerror = (event) => {
+            reject(event.target.errorCode);
+          }
+        })
+      })
+      .then(records => {
+        //return records;
+        console.log(records)
+        const text = JSON.stringify(records, null, 2);
+        console.log(text);
+        let time = Data.fileTime() + ".txt";
+        var filename = "seedB-" + time;
+        Data.download(filename, text);
+      });
+  };
+  static download(filename, textInput) {
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8, ' + encodeURIComponent(textInput));
+    element.setAttribute('download', filename);
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  };
+  static fileTime() {
+    const date = new Date();
+    const year = date.getFullYear().toString();
+    const month = "0" + (date.getMonth() + 1).toString();
+    const day = "0" + (date.getDay() + 1).toString();
+    const hours = "0" + date.getHours();
+    const minutes = "0" + date.getMinutes();
+    //const seconds = "0" + date.getSeconds();
+    const formattedTime = `${year.slice(-2)}${month.slice(-2)}${day.slice(-2)}-${hours.slice(-2)}${minutes.slice(-2)}`;
+    return formattedTime;
+  };
 }
 // End of Classes
 
@@ -267,6 +397,7 @@ let oldSortOrder = 'prev';
 let totop = document.getElementById("js-page--to-top"); //Get the button
 let tobottom = document.getElementById("js-page--to-bottom"); //Get the button
 let deletedPkts = []; // session storage of deleted seed packets
+let sortState = []; //trying to keep track of sort config befor edit of record
 
 // Functions and events
 function openDbPromise() {
@@ -279,48 +410,51 @@ function openDbPromise() {
       reject(event.target.errorCode);
     }
   });
-}
+};
 
-function fetchDataPromise(db, sortOn='variety', sortOrder='next') {
-      return new Promise((resolve, reject) => {
-        //request = db.transaction('entity').objectStore('entity').openCursor();
-        const transaction = db.transaction(['entity'], "readonly");
-        const store = transaction.objectStore('entity');
-        let cursorRequest;
-        if (sortOn === 'pktId') {
-          cursorRequest = store.openCursor(null, sortOrder);
-        } else {
-          const index = store.index(sortOn);
-          cursorRequest = index.openCursor(null, sortOrder); //sort by variety name
-        }
-        records = [];
-        cursorRequest.onsuccess = event => {
-          let cursor = event.target.result;
-          if (cursor) {
-            records.push(cursor.value);
-            cursor.continue();
-          }
-          else {
-            resolve(records);
-          }
-        }
-        cursorRequest.onerror = (event) => {
-          reject(event.target.errorCode);
-        }
-      })
-}
+function fetchDataPromise(db, sortOn = 'variety', sortOrder = 'next') {
+  return new Promise((resolve, reject) => {
+    //request = db.transaction('entity').objectStore('entity').openCursor();
+    const transaction = db.transaction(['entity'], "readonly");
+    const store = transaction.objectStore('entity');
+    let cursorRequest;
+    if (sortOn === 'pktId') {
+      cursorRequest = store.openCursor(null, sortOrder);
+    } else {
+      const index = store.index(sortOn);
+      cursorRequest = index.openCursor(null, sortOrder); //sort by variety name
+    }
+    records = [];
+    cursorRequest.onsuccess = event => {
+      let cursor = event.target.result;
+      if (cursor) {
+        records.push(cursor.value);
+        cursor.continue();
+      }
+      else {
+        resolve(records);
+      }
+    }
+    cursorRequest.onerror = (event) => {
+      reject(event.target.errorCode); 
+    }
+  })
+};
 
 async function loadData(sortOn = 'variety', sortOrder = 'next') {
   const db = await openDbPromise();
-  const records = await fetchDataPromise(db,sortOn,sortOrder);
+  const records = await fetchDataPromise(db, sortOn, sortOrder);
   UI.displaySeeds(records); // According to VS Code await is not needed here
-}
+};
+
+
 
 // Event Open DB
 document.addEventListener('DOMContetLoaded', UI.selectPages("homePage"));
 
 // When the user scrolls down 20px from the top of the document, show the button
 window.onscroll = () => { UI.scrollEvent() };
+window.onload = () => {dbExist()};
 
 // Event Menu
 document.querySelector(".js-menu-hamburger").addEventListener("click", UI.menu);
@@ -345,81 +479,24 @@ function editSeedPkt(pktId) {
       })
     }).then(record => {
       console.log(record);
-      UI.editSeed(record, 'editPage')
+      UI.editSeed(record, 'editSeedPkt');
     });
-}
+};
 
 // Latest code for downloading and uploading seedB data
-
-// Extract all data from seedB and save to array of objects
-function fileTime() {
-  const date = new Date();
-  const year = date.getFullYear().toString();
-  const month = "0" + (date.getMonth() + 1).toString();
-  const day = "0" + (date.getDay() + 1).toString();
-  const hours = "0" + date.getHours();
-  const minutes = "0" + date.getMinutes();
-  //const seconds = "0" + date.getSeconds();
-  const formattedTime = `${year.slice(-2)}${month.slice(-2)}${day.slice(-2)}-${hours.slice(-2)}${minutes.slice(-2)}`;
-  return formattedTime;
-};
-
-function retrieveData() {
-  openDbPromise().then(
-    db => {
-      return new Promise((resolve, reject) => {
-        //request = db.transaction('entity').objectStore('entity').openCursor();
-        const transaction = db.transaction(['entity'], "readonly");
-        const store = transaction.objectStore('entity');
-        let cursorRequest;
-        cursorRequest = store.openCursor();
-
-        cursorRequest.onsuccess = event => {
-          let cursor = event.target.result;
-          if (cursor) {
-            records.push(cursor.value);
-            cursor.continue();
-          }
-          else {
-            resolve(records);
-          }
-        }
-        cursorRequest.onerror = (event) => {
-          reject(event.target.errorCode);
-        }
-      })
-    })
-    .then(records => {
-      //return records;
-      //console.log(records)
-      var text = JSON.stringify(records, null, 2);
-      let time = fileTime() + ".txt";
-      var filename = "seedB-" + time;
-      download(filename, text);
-    });
-};
-
-// Create backup file
-function download(filename, textInput) {
-  var element = document.createElement('a');
-  element.setAttribute('href', 'data:text/plain;charset=utf-8, ' + encodeURIComponent(textInput));
-  element.setAttribute('download', filename);
-  document.body.appendChild(element);
-  element.click();
-  document.body.removeChild(element);
-};
-
+// code for creating backup files is now in Data Class
 // Upload backup data to seedB
-const fileSelect = document.getElementById("fileSelect"),
-  fileElem = document.getElementById("fileElem");
+const fileSelect = document.getElementById("js-file-select");
+const extractFileData = document.getElementById("js-input-file-data");
 
 fileSelect.addEventListener("click", function (e) {
-  if (fileElem) {
-    fileElem.click();
+  if (extractFileData) {
+    extractFileData.click();
   }
 }, false);
 
-document.getElementById('fileElem').onchange = function () {
+//document.getElementById('js-input-file-data').onchange = function () {
+extractFileData.onchange = function () {
   let dataFile = [];
   var file = this.files[0];
   var reader = new FileReader();
@@ -432,3 +509,4 @@ document.getElementById('fileElem').onchange = function () {
   };
   reader.readAsText(file);
 };
+

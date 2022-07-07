@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" contnet="wdth-device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>SeedB</title>
+  <title>Copy SeedB</title>
   <link rel="stylesheet" href="./styles/styles.css">
 </head>
 
@@ -19,7 +19,7 @@
         <nav class="menu-hamburger--show">
           <ul class="menu-hamburger__list">
             <li><a onclick="UI.selectPages('homePage')">Home Page - Seed List</a></li>
-            <li><a onclick="UI.selectPages('editPage')">Enter New Seed Packet</a></li>
+            <li><a onclick="UI.selectPages('newPktPage')">Enter New Seed Packet</a></li>
             <li><a onclick="UI.selectPages('readWritePage')">Read Write Data Files</a></li>
             <li><a onclick="UI.selectPages('instructionsPage')">Instructions</a></li>
         </nav>
@@ -35,13 +35,10 @@
         </h1>
       </header>
     </section>
-
+    
     <!-- Home Page -->
     <section id="home-page">
-    <!-- Table of Records -->
-<!--       <h3 class="chapter--h3">
-        <div id="insert-seed-list-alerts"><strong id="seed-list-message"></strong></div>
-      </h3> -->
+      <!-- Table of Records -->
       <table class="table-seeds table-seeds__row-color" id="mytable">
         <thead>
           <tr>
@@ -56,7 +53,6 @@
         </thead>
         <tbody id="seed-list"></tbody>
       </table>
-      <pre id="demo"></pre>
     </section>
 
     <!-- Data Entry Page -->
@@ -90,19 +86,23 @@
         <label class="notes" for="seedNotes">Notes:</label>
         <textarea rows="2" id="seedNotes"></textarea>
         <br>
-        <div class="wrapper">
-          <button class="selected flex-item" type="button" onclick="Store.editAddRecord()">Submit Current
+        <div id="edit-pkt-buttons" class="wrapper">
+          <button class="selected flex-item" type="button" onclick="Store.editAddRecord('editSeedPkt')">Submit Current
             Record</button>
           <input class="selected flex-item" type="reset" value="Cancel">
           <button class="select-delete flex-item" type="button" onclick="Store.deleteRecord()">Delete Current
             Record</button>
+          <button class="selected flex-item" type="button" onclick="UI.selectPages('homePage')">Return to Seed
+            List</button>
         </div>
-        <div class="center">
-          <button class="selected" type="button" onclick="UI.selectPages('homePage')">Return to Seed
+        <div id="new-pkt-buttons" class="wrapper">
+          <button class="selected flex-item" type="button" onclick="Store.editAddRecord('newPktPage')">Submit New
+            Record</button>
+          <input class="selected flex-item" type="reset" value="Clear Form (Data Not Saved)">
+          <button class="selected flex-item" type="button" onclick="UI.selectPages('homePage')">Return to Seed
             List</button>
         </div>
       </form>
-
       <div id="insert-form-alerts">
         <p id="pkt-message"></p>
       </div>
@@ -114,23 +114,31 @@
         <h2 class="chapter--h2">
           Backup and Restore
         </h2>
+      </header><br>
+      <div id="retrieve-data-button">
         <h3 class="chapter--h3">
-          Restore Data from Text File
+          Create Backup Text File
         </h3>
-      </header>
-      <input type="file" name="file" id="fileElem" style="display:none">
-      <button id="fileSelect" class="select-delete">Select Backup Text File</button>
+        <button class="selected" onclick="Data.retrieveAll()">Retrieve All Data from SeedB and Save as Text File</button><br><br>
+      </div>
+      <aside id="js-db-error"></aside>
       <h3 class="chapter--h3">
-        Create Backup File
+        Restore Data from Backup Text File
       </h3>
-      <button class="selected" onclick="retrieveData()">Retrieve All Data from SeedB and Save as Text File</button>
+      <input type="file" name="file" id="js-input-file-data" style="display:none">
+      <button id="js-file-select" class="select-delete">Upload Backup Text File Restoring All Data</button><br>
+      <p id='js-msg'></p>
+      
     </section>
 
     <!-- Instructions Page -->
-    <section id="instructions-page">
+    <section id="instructions-page" class="section--paragraph">
+      <!-- <br>
+      <p>The instruction below is a hack for the moment when the SeedB is not installed or the browser's chache was reset - deleting the SeedB.</p>
+      <p>IndexedDB is not working properly after a reset of the browser?<br> 
+      Click the Reinstall IndexedDB seedB button below.</p>
       <br>
-      <p>Instructions to be completed</p>
-      <br>
+      <button onclick="Store.openDB()">Reinstall IndexedDB seedB</button> -->
     </section>
 
     <!-- Footer -->
@@ -147,5 +155,36 @@
     <div id="js-page--to-top" onclick="UI.scrollToTop()" title="Go to Top"></div>
   </div>
   <script src="./js/app.js"> </script>
+  <script>
+    function dbExist() {
+      const dbexist = false;
+      const request = window.indexedDB.open("seedB");
+      request.onsuccess = function(e) {
+        db = e.target.result;
+        if (!db.objectStoreNames.contains('entity')) {
+          db.close();
+          //console.log("SeedB data is corrupted");
+          const errorMsg = document.getElementById("js-db-error");
+          errorMsg.insertAdjacentHTML("afterbegin",
+          "<h3 class='chapter--h3'>SeedB missing or not working properly!</h3>" +
+            "<ul>" +
+              "<li>Possible cause:</li>" +
+              "<li>&nbsp;&nbsp;- Browser cache was reset.</li>" +
+              "<li>&nbsp;&nbsp;- Database was deleted.</li>" +
+              "<li>&nbsp;&nbsp;- All records are missing</li>" +
+            "</ul>" + 
+            "<ul>Solution:" +
+              "<li>&nbsp;&nbsp;- Reinstall SeedB.<li>" +
+              "<li>&nbsp;&nbsp;- Upload backup restoring all data.<li>" +
+            "</ul><br>" +
+            "<h3 class='chapter--h3'>Restore Data from Backup Text File</h3>" +
+            "<button  class='select-delete' onclick='Store.corruptDB()'>Reinstall SeedB</button><br><br>"
+          )
+          UI.selectPages("dbError");
+        }
+      }
+    }
+    //dbExist();
+  </script>
 </body>
 </html>

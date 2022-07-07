@@ -395,8 +395,9 @@ input[type=date] {
   display: inline-block;
   background-color: #64991e;
   color: white;
-  padding: 2px;
-  margin: 2.5px;
+  font-weight: bold;
+  padding: 3px;
+  margin: 5px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -410,8 +411,9 @@ input[type=date] {
   display: inline-block;
   background-color: #cf2e2e;
   color: white;
-  padding: 2px;
-  margin: 2.5px;
+  font-weight: bold;
+  padding: 3px;
+  margin: 5px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -537,7 +539,8 @@ textarea {
 
 .wrapper {
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
+  text-align: center;
   width: 100%;
 }
 .flex-item {
@@ -545,6 +548,12 @@ textarea {
 }
 div.center {
   text-align: center;
+}
+div.right {
+  float: right;
+}
+div.left {
+  float: left;
 }
 form {
   font-size: 80%;
@@ -556,6 +565,13 @@ form {
 
 .js-edit-seed-pkt--opened {
   display: block;
+}
+.clear {
+  clear: both;
+}
+ul {
+  list-style-type: none;
+  font-size: 80%;
 }
 
 
