@@ -20,7 +20,7 @@
           <ul class="menu-hamburger__list">
             <li><a onclick="UI.selectPages('homePage')">Home Page - Seed List</a></li>
             <li><a onclick="UI.selectPages('newPktPage')">Enter New Seed Packet</a></li>
-            <li><a onclick="UI.selectPages('readWritePage')">Read Write Data Files</a></li>
+            <li><a onclick="UI.selectPages('readWritePage')">Backup and Restore</a></li>
             <li><a onclick="UI.selectPages('instructionsPage')">Instructions</a></li>
         </nav>
       </div>
@@ -94,7 +94,7 @@
             Record</button>
           <button class="selected flex-item" type="button" onclick="UI.selectPages('homePage')">Return to Seed
             List</button>
-        </div>
+        </div>Backup
         <div id="new-pkt-buttons" class="wrapper">
           <button class="selected flex-item" type="button" onclick="Store.editAddRecord('newPktPage')">Submit New
             Record</button>
@@ -119,14 +119,15 @@
         <h3 class="chapter--h3">
           Create Backup Text File
         </h3>
-        <button class="selected" onclick="Data.retrieveAll()">Retrieve All Data from SeedB and Save as Text File</button><br><br>
+        <button class="selected" onclick="Data.retrieveAll()">Retrieve All Data for Backup and Save as Text File</button><br><br>
       </div>
       <aside id="js-db-error"></aside>
       <h3 class="chapter--h3">
         Restore Data from Backup Text File
       </h3>
       <input type="file" name="file" id="js-input-file-data" style="display:none">
-      <button id="js-file-select" class="select-delete">Upload Backup Text File Restoring All Data</button><br>
+      <button id="js-file-select" class="select-delete">Upload Backup Text File Restoring All Data</button><br><br>
+      <button class="selected flex-item" type="button" onclick="UI.selectPages('homePage')">Return to Seed List</button><br>
       <p id='js-msg'></p>
       
     </section>
@@ -161,7 +162,7 @@
       const request = window.indexedDB.open("seedB");
       request.onsuccess = function(e) {
         db = e.target.result;
-        if (!db.objectStoreNames.contains('entity')) {
+        if (!db.objectStoreNames.contains('collection')) {
           db.close();
           //console.log("SeedB data is corrupted");
           const errorMsg = document.getElementById("js-db-error");
@@ -179,7 +180,7 @@
             "</ul><br>" +
             "<h3 class='chapter--h3'>Restore Data from Backup Text File</h3>" +
             "<button  class='select-delete' onclick='Store.corruptDB()'>Reinstall SeedB</button><br><br>"
-          )
+          );
           UI.selectPages("dbError");
         }
       }

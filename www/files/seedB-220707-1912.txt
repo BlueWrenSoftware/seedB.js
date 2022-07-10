@@ -3,41 +3,51 @@
     "seedGroup": "Vegetables",
     "variety": "Artichoke",
     "pktId": "artichoke-1",
-    "seedNumbers": "1",
-    "seedWeight": "1",
+    "seedNumbers": "100",
+    "seedWeight": "200",
     "seedDatePacked": "2021-11-19",
     "seedNotes": "cropping very well. Planted in the large area of the garden.",
-    "timeStamp": 1657174843415
+    "timeStamp": 1657344938281
   },
   {
     "seedGroup": "Vegetables",
     "variety": "Artichoke",
     "pktId": "artichoke-2",
-    "seedNumbers": "1200",
-    "seedWeight": "1200",
+    "seedNumbers": "11",
+    "seedWeight": "12",
     "seedDatePacked": "2022-02-01",
     "seedNotes": "",
-    "timeStamp": 1657175259509
+    "timeStamp": 1657291196734
   },
   {
     "seedGroup": "Vegetables",
     "variety": "Artichoke",
     "pktId": "artichoke-3",
-    "seedNumbers": "500",
+    "seedNumbers": "10",
     "seedWeight": "10",
     "seedDatePacked": "2022-07-04",
     "seedNotes": "",
-    "timeStamp": 1656918362288
+    "timeStamp": 1657345534337
+  },
+  {
+    "seedGroup": "Vegetable",
+    "variety": "Artichoke",
+    "pktId": "artichoke-4",
+    "seedNumbers": "100",
+    "seedWeight": "100",
+    "seedDatePacked": "2022-07-08",
+    "seedNotes": "blah",
+    "timeStamp": 1657288996540
   },
   {
     "seedGroup": "Vegetables",
     "variety": "Carrot",
     "pktId": "carrot-1",
     "seedNumbers": "10",
-    "seedWeight": "1000",
+    "seedWeight": "1",
     "seedDatePacked": "2020-05-05",
     "seedNotes": "from garden.\nDoing better then commercial seeds",
-    "timeStamp": 1656934883424
+    "timeStamp": 1657290087714
   },
   {
     "seedGroup": "Vegetables",

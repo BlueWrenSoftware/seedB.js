@@ -1,3 +1,4 @@
+'use strict';
 // Seed Class: Represents a Seed Packet
 class Seed {
   constructor(seedGroup, variety, pktId, seedNumbers, seedWeight, seedDatePacked, seedNotes, timeStamp) {
@@ -129,7 +130,7 @@ class UI {
 
   static scrollToBottom() {
     if (document.documentElement.scrollHeight > document.documentElement.clientHeight) {
-      //tobottom.style.display = "200none"
+      //toBottom.style.display = "200none"
       // get the scroll height of the window
       const scrollHeight = document.documentElement.scrollHeight;
       // scroll to the bottom of webpage
@@ -138,18 +139,18 @@ class UI {
   }
 
   static scrollToTop() {
-    tobottom = document.getElementById("js-page--to-bottom");
-    tobottom.style.display = "block"
+    toBottom = document.getElementById("js-page--to-bottom");
+    toBottom.style.display = "block"
     document.body.scrollTop = 0; // For Safari
     document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
   }
 
   static scrollEvent() {
-    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-      totop.style.display = "block";
+    if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
+      toTop.style.display = "block";
     } else {
-      totop.style.display = "none";
-      //tobottom.style.display = "block";
+      toTop.style.display = "none";
+      //toBottom.style.display = "block";
     }
   }
 
@@ -188,7 +189,7 @@ class Store {
       console.log("Deleted database successfully");
       const msg = document.getElementById('js-msg');
       msg.insertAdjacentHTML('beforeend',
-      '<br>Deleted database successfully');
+      '<br>Deleted corrupted database.');
       Store.openDB();
     };
     req.onerror = function () {
@@ -209,7 +210,7 @@ class Store {
     const request = window.indexedDB.open('seedB', 1);
     request.onupgradeneeded = function (event) {
       const db = event.target.result;
-      const store = db.createObjectStore('entity', { keyPath: 'pktId' });
+      const store = db.createObjectStore('collection', { keyPath: 'pktId' });
       store.createIndex('variety', 'variety', { unique: false });
       store.createIndex('seedGroup', 'seedGroup', { unique: false });
       store.createIndex('seedDatePacked', 'seedDatePacked', { unique: false });
@@ -218,8 +219,8 @@ class Store {
       console.log('The new database version number is = ' + event.newVersion);
       const msg = document.getElementById('js-msg');
       msg.insertAdjacentHTML('beforeend',
-      '<br>SeedB created');
-      const version = ('The new database version number is = ' + event.newVersion);
+      '<br>New SeedB created.');
+      const version = ('The new database version number is ' + event.newVersion + '.');
       msg.insertAdjacentHTML('beforeend',
       '<br>' + version);
     }
@@ -246,7 +247,6 @@ class Store {
       // Instantiate seed
       const timeStamp = Date.now();
       const seed = new Seed(seedGroup, variety, pktId, seedNumbers, seedWeight, seedDatePacked, seedNotes, timeStamp);
-      const id = new Seed(pktId);
       console.log(seed);
       console.log(seed['pktId']);
       // Add SeedPkt to IndexedDB
@@ -258,8 +258,8 @@ class Store {
           // Generic error handler for all errors targeted at this database's requests!
           console.log("Database error: " + event.target.errorCode);
         };
-        const transaction = db.transaction('entity', 'readwrite');
-        const store = transaction.objectStore('entity');
+        const transaction = db.transaction('collection', 'readwrite');
+        const store = transaction.objectStore('collection');
         store.put(seed);
       };
 
@@ -281,8 +281,8 @@ class Store {
     request.onsuccess = (event) => {
       console.log('request success');
       const db = event.target.result;
-      const transaction = db.transaction('entity', 'readwrite');
-      const store = transaction.objectStore('entity');
+      const transaction = db.transaction('collection', 'readwrite');
+      const store = transaction.objectStore('collection');
       let deleted = store.get(pktId);
       console.log(pktId);
       console.log("After push: " + deleted);
@@ -314,8 +314,8 @@ class Store {
         // Generic error handler for all errors targeted at this database's requests!
         console.log("Database error: " + event.target.errorCode);
       };
-      const transaction = db.transaction('entity', 'readwrite');
-      const store = transaction.objectStore('entity');
+      const transaction = db.transaction('collection', 'readwrite');
+      const store = transaction.objectStore('collection');
       records.forEach(record => {
         store.put(record);
       });
@@ -333,9 +333,9 @@ class Data {
     openDbPromise().then(
       db => {
         return new Promise((resolve, reject) => {
-          //request = db.transaction('entity').objectStore('entity').openCursor();
-          const transaction = db.transaction(['entity'], "readonly");
-          const store = transaction.objectStore('entity');
+          //request = db.transaction('collection').objectStore('collection').openCursor();
+          const transaction = db.transaction(['collection'], "readonly");
+          const store = transaction.objectStore('collection');
           let cursorRequest;
           let records = [];
           cursorRequest = store.openCursor();
@@ -394,15 +394,15 @@ class Data {
 // Global variables
 let oldSortOn = '';
 let oldSortOrder = 'prev';
-let totop = document.getElementById("js-page--to-top"); //Get the button
-let tobottom = document.getElementById("js-page--to-bottom"); //Get the button
+let toTop = document.getElementById("js-page--to-top"); //Get the button
+let toBottom = document.getElementById("js-page--to-bottom"); //Get the button
 let deletedPkts = []; // session storage of deleted seed packets
-let sortState = []; //trying to keep track of sort config befor edit of record
+let sortState = []; //trying to keep track of sort config before edit of record
 
 // Functions and events
 function openDbPromise() {
   return new Promise((resolve, reject) => {
-    let request = window.indexedDB.open('seedB', 1);
+    const request = window.indexedDB.open('seedB', 1);
     request.onsuccess = (event) => {
       resolve(event.target.result);
     }
@@ -412,11 +412,11 @@ function openDbPromise() {
   });
 };
 
-function fetchDataPromise(db, sortOn = 'variety', sortOrder = 'next') {
+function fetchSortDataPromise(db, sortOn = 'variety', sortOrder = 'next') {
   return new Promise((resolve, reject) => {
-    //request = db.transaction('entity').objectStore('entity').openCursor();
-    const transaction = db.transaction(['entity'], "readonly");
-    const store = transaction.objectStore('entity');
+    //request = db.transaction('collection').objectStore('collection').openCursor();
+    const transaction = db.transaction(['collection'], "readonly");
+    const store = transaction.objectStore('collection');
     let cursorRequest;
     if (sortOn === 'pktId') {
       cursorRequest = store.openCursor(null, sortOrder);
@@ -424,7 +424,7 @@ function fetchDataPromise(db, sortOn = 'variety', sortOrder = 'next') {
       const index = store.index(sortOn);
       cursorRequest = index.openCursor(null, sortOrder); //sort by variety name
     }
-    records = [];
+    const records = [];
     cursorRequest.onsuccess = event => {
       let cursor = event.target.result;
       if (cursor) {
@@ -443,14 +443,14 @@ function fetchDataPromise(db, sortOn = 'variety', sortOrder = 'next') {
 
 async function loadData(sortOn = 'variety', sortOrder = 'next') {
   const db = await openDbPromise();
-  const records = await fetchDataPromise(db, sortOn, sortOrder);
+  const records = await fetchSortDataPromise(db, sortOn, sortOrder);
   UI.displaySeeds(records); // According to VS Code await is not needed here
 };
 
 
 
 // Event Open DB
-document.addEventListener('DOMContetLoaded', UI.selectPages("homePage"));
+document.addEventListener('DOMContentLoaded', UI.selectPages("homePage"));
 
 // When the user scrolls down 20px from the top of the document, show the button
 window.onscroll = () => { UI.scrollEvent() };
@@ -465,9 +465,9 @@ function editSeedPkt(pktId) {
   openDbPromise().then(
     db => {
       return new Promise((resolve, reject) => {
-        //request = db.transaction('entity').objectStore('entity').openCursor();
-        const transaction = db.transaction(['entity'], "readwrite");
-        const store = transaction.objectStore('entity');
+        //request = db.transaction('collection').objectStore('collection').openCursor();
+        const transaction = db.transaction(['collection'], "readwrite");
+        const store = transaction.objectStore('collection');
         const request = store.get(pktId);
         request.onsuccess = event => {
           let record = event.target.result;
@@ -489,17 +489,16 @@ function editSeedPkt(pktId) {
 const fileSelect = document.getElementById("js-file-select");
 const extractFileData = document.getElementById("js-input-file-data");
 
-fileSelect.addEventListener("click", function (e) {
+fileSelect.addEventListener("click", function () {
   if (extractFileData) {
     extractFileData.click();
   }
 }, false);
 
-//document.getElementById('js-input-file-data').onchange = function () {
 extractFileData.onchange = function () {
   let dataFile = [];
-  var file = this.files[0];
-  var reader = new FileReader();
+  const file = this.files[0];
+  const reader = new FileReader();
   reader.onload = function (progressEvent) {
     //console.log(this.result);
     dataFile = JSON.parse(this.result);
