@@ -388,6 +388,29 @@ class Data {
     const formattedTime = `${year.slice(-2)}${month.slice(-2)}${day.slice(-2)}-${hours.slice(-2)}${minutes.slice(-2)}`;
     return formattedTime;
   };
+
+  static backUp() {
+    const fileSelect = document.getElementById("js-file-select");
+    const extractFileData = document.getElementById("js-input-file-data");
+    fileSelect.addEventListener("click", function () {
+      if (extractFileData) {
+        extractFileData.click();
+      }
+    }, false);
+    extractFileData.onchange = function () {
+      let dataFile = [];
+      const file = this.files[0];
+      const reader = new FileReader();
+      reader.onload = function (progressEvent) {
+        //console.log(this.result);
+        dataFile = JSON.parse(this.result);
+        console.log(dataFile);
+        Store.addData(dataFile);
+        //console.log(dataFile[4]);
+      };
+      reader.readAsText(file);
+    };
+  };
 }
 // End of Classes
 
@@ -400,6 +423,16 @@ let deletedPkts = []; // session storage of deleted seed packets
 let sortState = []; //trying to keep track of sort config before edit of record
 
 // Functions and events
+// Restore data from backup file
+Data.backUp();
+// Event Open DB
+document.addEventListener('DOMContentLoaded', UI.selectPages("homePage"));
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = () => { UI.scrollEvent() };
+window.onload = () => {dbExist()};
+// Event Menu
+document.querySelector(".js-menu-hamburger").addEventListener("click", UI.menu);
+
 function openDbPromise() {
   return new Promise((resolve, reject) => {
     const request = window.indexedDB.open('seedB', 1);
@@ -447,18 +480,6 @@ async function loadData(sortOn = 'variety', sortOrder = 'next') {
   UI.displaySeeds(records); // According to VS Code await is not needed here
 };
 
-
-
-// Event Open DB
-document.addEventListener('DOMContentLoaded', UI.selectPages("homePage"));
-
-// When the user scrolls down 20px from the top of the document, show the button
-window.onscroll = () => { UI.scrollEvent() };
-window.onload = () => {dbExist()};
-
-// Event Menu
-document.querySelector(".js-menu-hamburger").addEventListener("click", UI.menu);
-
 // Event get pktId from table
 function editSeedPkt(pktId) {
   console.log(pktId);
@@ -485,17 +506,18 @@ function editSeedPkt(pktId) {
 
 // Latest code for downloading and uploading seedB data
 // code for creating backup files is now in Data Class
-// Upload backup data to seedB
-const fileSelect = document.getElementById("js-file-select");
-const extractFileData = document.getElementById("js-input-file-data");
 
+// Upload backup data to seedB
+/* const fileSelect = document.getElementById("js-file-select");
+const extractFileData = document.getElementById("js-input-file-data");
 fileSelect.addEventListener("click", function () {
   if (extractFileData) {
     extractFileData.click();
   }
-}, false);
+}, false); */
 
-extractFileData.onchange = function () {
+
+/* extractFileData.onchange = function () {
   let dataFile = [];
   const file = this.files[0];
   const reader = new FileReader();
@@ -507,5 +529,5 @@ extractFileData.onchange = function () {
     //console.log(dataFile[4]);
   };
   reader.readAsText(file);
-};
+}; */
 
