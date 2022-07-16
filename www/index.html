@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="en-au" dir="ltr">
-
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" contnet="wdth-device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Copy SeedB</title>
   <link rel="stylesheet" href="./styles/styles.css">
 </head>
-
 <body>
   <div class="pages">
     <!-- Menu settings -->
@@ -18,10 +16,10 @@
         <img class="menu-hamburger" src="./images/hamburger_active.svg">
         <nav class="menu-hamburger--show">
           <ul class="menu-hamburger__list">
-            <li><a onclick="UI.selectPages('homePage')">Home Page - Seed List</a></li>
-            <li><a onclick="UI.selectPages('newPktPage')">Enter New Seed Packet</a></li>
-            <li><a onclick="UI.selectPages('readWritePage')">Backup and Restore</a></li>
-            <li><a onclick="UI.selectPages('instructionsPage')">Instructions</a></li>
+            <li><a id="eventHomePage">Home Page - Seed List</a></li>
+            <li><a id="eventPktPage">Enter New Seed Packet</a></li>
+            <li><a id="eventReadWritePage">Backup and Restore</a></li>
+            <li><a id="eventInstrPage">Instructions</a></li>
         </nav>
       </div>
     </section>
@@ -42,10 +40,10 @@
       <table class="table-seeds table-seeds__row-color" id="mytable">
         <thead>
           <tr>
-            <th class="sort" onclick="UI.refreshTable('seedGroup')">Seed<br>Group</th>
-            <th class="sort" onclick="UI.refreshTable('variety')">Seed<br>Variety</th>
-            <th class="sort" onclick="UI.refreshTable('pktId')">Seed<br>Packet Id</th>
-            <th class="sort" onclick="UI.refreshTable('seedDatePacked')">Date<br>Packed</th>
+            <th class="sort" id="sortSeedGroup">Seed<br>Group</th>
+            <th class="sort" id="sortVariety">Seed<br>Variety</th>
+            <th class="sort" id="sortPktId">Seed<br>Packet Id</th>
+            <th class="sort" id="sortDatePacked">Date<br>Packed</th>
             <th>Seed<br>Count</th>
             <th>Seed<br>Grams</th>
             <th>Edit</th>
@@ -87,20 +85,14 @@
         <textarea rows="2" id="seedNotes"></textarea>
         <br>
         <div id="edit-pkt-buttons" class="wrapper">
-          <button class="selected flex-item" type="button" onclick="Store.editAddRecord('editSeedPkt')">Submit Current
-            Record</button>
-          <input class="selected flex-item" type="reset" value="Cancel">
-          <button class="select-delete flex-item" type="button" onclick="Store.deleteRecord()">Delete Current
-            Record</button>
-          <button class="selected flex-item" type="button" onclick="UI.selectPages('homePage')">Return to Seed
-            List</button>
-        </div>Backup
+          <button class="selected flex-item" type="button" id="btnSubmitRecord">Submit Current Record</button>
+          <input class="selected flex-item btnHomePage" type="reset" value="Cancel">
+          <button class="select-delete flex-item" type="button" id="btnDeleteRecord">Delete Current Record</button>
+        </div>
         <div id="new-pkt-buttons" class="wrapper">
-          <button class="selected flex-item" type="button" onclick="Store.editAddRecord('newPktPage')">Submit New
-            Record</button>
+          <button class="selected flex-item" type="button" id="btnNewRecord">Submit New Record</button>
           <input class="selected flex-item" type="reset" value="Clear Form (Data Not Saved)">
-          <button class="selected flex-item" type="button" onclick="UI.selectPages('homePage')">Return to Seed
-            List</button>
+          <button class="selected flex-item btnHomePage" type="button">Return to Seed List</button>
         </div>
       </form>
       <div id="insert-form-alerts">
@@ -119,23 +111,37 @@
         <h3 class="chapter--h3">
           Create Backup Text File
         </h3>
-        <button class="selected" onclick="Data.retrieveAll()">Retrieve All Data for Backup and Save as Text File</button><br><br>
+        <button class="selected" type="button" id="btnRetrieveData">Retrieve All Data for Backup and Save as Text File</button>
+        <ul id="fileNotifications"></ul><br>
       </div>
-      <aside id="js-db-error"></aside>
+      <div id="dbError">
+        <h3 class='chapter--h3'>SeedB missing or not working properly!</h3>
+        <ul>
+          <li>Possible cause:</li>
+          <li>&nbsp;&nbsp;=> Browser cache was reset.</li>
+          <li>&nbsp;&nbsp;=> Database was deleted.</li>
+          <li>&nbsp;&nbsp;=> All records are missing</li>
+          <li>Solution:</li>
+          <li>&nbsp;&nbsp;=> Reinstall SeedB.<li>
+          <li>&nbsp;&nbsp;=> Upload backup restoring all data.<li>
+        </ul><br>   
+        <h3 class='chapter--h3'>Install latest SeedB</h3>
+        <button id="btnReinstall"  class='select-delete'>Reinstall SeedB</button><br>
+        <ul id="installDbMsg"></ul><br>
+      </div>
       <h3 class="chapter--h3">
         Restore Data from Backup Text File
       </h3>
       <input type="file" name="file" id="js-input-file-data" style="display:none">
-      <button id="js-file-select" class="select-delete">Upload Backup Text File Restoring All Data</button><br><br>
-      <button class="selected" type="button" onclick="UI.selectPages('homePage')">Return to Seed List</button><br>
-      <p id='js-msg'></p>
-      
+      <button id="js-file-select" class="select-delete">Upload Backup Text File Restoring All Data</button>
+      <ul id="backupNotifications"></ul><br>
+      <button id="findBtnHomePage" class="selected btnHomePage" type="button">Return to Seed List</button>
     </section>
 
     <!-- Instructions Page -->
     <section id="instructions-page" class="section--paragraph">
       <!-- <br>
-      <p>The instruction below is a hack for the moment when the SeedB is not installed or the browser's chache was reset - deleting the SeedB.</p>
+      <p>The instruction below is a hack for the moment when the SeedB is not installed or the browser's cache was reset - deleting the SeedB.</p>
       <p>IndexedDB is not working properly after a reset of the browser?<br> 
       Click the Reinstall IndexedDB seedB button below.</p>
       <br>
@@ -150,42 +156,11 @@
     </section>
 
     <!-- Go to bottom of page -->
-    <div id="js-page--to-bottom" onclick="UI.scrollToBottom()" title="Go To Bottom"></div>
+    <div id="js-page--to-bottom" title="Go To Bottom"></div>
 
     <!-- Go to top of page-->
-    <div id="js-page--to-top" onclick="UI.scrollToTop()" title="Go to Top"></div>
+    <div id="js-page--to-top" title="Go to Top"></div>
   </div>
   <script src="./js/app.js"> </script>
-  <script>
-    function dbExist() {
-      const dbexist = false;
-      const request = window.indexedDB.open("seedB");
-      request.onsuccess = function(e) {
-        db = e.target.result;
-        if (!db.objectStoreNames.contains('collection')) {
-          db.close();
-          //console.log("SeedB data is corrupted");
-          const errorMsg = document.getElementById("js-db-error");
-          errorMsg.insertAdjacentHTML("afterbegin",
-          "<h3 class='chapter--h3'>SeedB missing or not working properly!</h3>" +
-            "<ul>" +
-              "<li>Possible cause:</li>" +
-              "<li>&nbsp;&nbsp;- Browser cache was reset.</li>" +
-              "<li>&nbsp;&nbsp;- Database was deleted.</li>" +
-              "<li>&nbsp;&nbsp;- All records are missing</li>" +
-            "</ul>" + 
-            "<ul>Solution:" +
-              "<li>&nbsp;&nbsp;- Reinstall SeedB.<li>" +
-              "<li>&nbsp;&nbsp;- Upload backup restoring all data.<li>" +
-            "</ul><br>" +
-            "<h3 class='chapter--h3'>Restore Data from Backup Text File</h3>" +
-            "<button  class='select-delete' onclick='Store.corruptDB()'>Reinstall SeedB</button><br><br>"
-          );
-          UI.selectPages("dbError");
-        }
-      }
-    }
-    //dbExist();
-  </script>
 </body>
 </html>
