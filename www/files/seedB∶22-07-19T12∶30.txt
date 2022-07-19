@@ -1,6 +1,26 @@
  [
   {
     "seedGroup": "Vegetables",
+    "variety": "Carrot",
+    "pktId": "Karrot-1",
+    "seedNumbers": "526",
+    "seedWeight": "10",
+    "seedDatePacked": "2020-05-05",
+    "seedNotes": "from garden.\nDoing better then commercial seeds",
+    "timeStamp": 1658164772403
+  },
+  {
+    "seedGroup": "Vegetables",
+    "variety": "Turnip",
+    "pktId": "Turnip-1",
+    "seedNumbers": "100",
+    "seedWeight": "100",
+    "seedDatePacked": "2020-11-29",
+    "seedNotes": "from garden",
+    "timeStamp": 1658196256095
+  },
+  {
+    "seedGroup": "Vegetables",
     "variety": "Artichoke",
     "pktId": "artichoke-1",
     "seedNumbers": "100",
@@ -41,13 +61,23 @@
   },
   {
     "seedGroup": "Vegetables",
+    "variety": "Artichoke",
+    "pktId": "bartichoke-1",
+    "seedNumbers": "100",
+    "seedWeight": "200",
+    "seedDatePacked": "2021-11-19",
+    "seedNotes": "cropping very well. Planted in the large area of the garden.",
+    "timeStamp": 1658164394757
+  },
+  {
+    "seedGroup": "Vegetables",
     "variety": "Carrot",
     "pktId": "carrot-1",
-    "seedNumbers": "10",
-    "seedWeight": "1",
+    "seedNumbers": "526",
+    "seedWeight": "10",
     "seedDatePacked": "2020-05-05",
     "seedNotes": "from garden.\nDoing better then commercial seeds",
-    "timeStamp": 1657290087714
+    "timeStamp": 1658164632699
   },
   {
     "seedGroup": "Vegetables",
@@ -90,6 +120,16 @@
     "timeStamp": 1657143767792
   },
   {
+    "seedGroup": "Vegetables",
+    "variety": "Carrot",
+    "pktId": "carrot-6",
+    "seedNumbers": "2",
+    "seedWeight": "2",
+    "seedDatePacked": "2022-07-07",
+    "seedNotes": "",
+    "timeStamp": 1658063433367
+  },
+  {
     "seedGroup": "Trees",
     "variety": "Cox",
     "pktId": "cox-1",
@@ -103,21 +143,31 @@
     "seedGroup": "Trees",
     "variety": "Crofton",
     "pktId": "crofton-2",
-    "seedNumbers": "5",
+    "seedNumbers": "5000",
     "seedWeight": "0",
     "seedDatePacked": "2022-07-13",
     "seedNotes": "",
-    "timeStamp": 1657608094739
+    "timeStamp": 1658164582534
+  },
+  {
+    "seedGroup": "Vegetables",
+    "variety": "Carrot",
+    "pktId": "karrot-1",
+    "seedNumbers": "526",
+    "seedWeight": "10",
+    "seedDatePacked": "2020-05-05",
+    "seedNotes": "from garden.\nDoing better then commercial seeds",
+    "timeStamp": 1658164823268
   },
   {
     "seedGroup": "Potatoes",
     "variety": "Kipler",
     "pktId": "kipler-1",
-    "seedNumbers": "20",
+    "seedNumbers": "200",
     "seedWeight": "0",
     "seedDatePacked": "2022-07-01",
     "seedNotes": "",
-    "timeStamp": 1656720682996
+    "timeStamp": 1658158208664
   },
   {
     "seedGroup": "Potatoes",
@@ -183,11 +233,11 @@
     "seedGroup": "Trees",
     "variety": "Pink Lady",
     "pktId": "pink-lady-1",
-    "seedNumbers": "4",
+    "seedNumbers": "5",
     "seedWeight": "0",
     "seedDatePacked": "2022-07-12",
     "seedNotes": "",
-    "timeStamp": 1657607449910
+    "timeStamp": 1658158905411
   },
   {
     "seedGroup": "Drugs",
@@ -263,11 +313,11 @@
     "seedGroup": "Vegetables",
     "variety": "Turnip",
     "pktId": "turnip-2",
-    "seedNumbers": "100",
+    "seedNumbers": "1000",
     "seedWeight": "0",
     "seedDatePacked": "2022-03-10",
     "seedNotes": "from garden",
-    "timeStamp": 1646864384665
+    "timeStamp": 1658158281924
   },
   {
     "seedGroup": "Vegetables",
@@ -277,16 +327,26 @@
     "seedWeight": "2",
     "seedDatePacked": "2022-07-07",
     "seedNotes": "",
-    "timeStamp": 1657152091661
+    "timeStamp": 1658161734748
   },
   {
     "seedGroup": "Vegetables",
     "variety": "Turnip",
     "pktId": "turnip-4",
-    "seedNumbers": "1",
+    "seedNumbers": "11111",
     "seedWeight": "1",
     "seedDatePacked": "2022-07-01",
     "seedNotes": "",
-    "timeStamp": 1657174544850
+    "timeStamp": 1658158876416
+  },
+  {
+    "seedGroup": "Vegetables",
+    "variety": "Artichoke",
+    "pktId": "xartichoke-1",
+    "seedNumbers": "100",
+    "seedWeight": "200",
+    "seedDatePacked": "2021-11-19",
+    "seedNotes": "cropping very well. Planted in the large area of the garden.",
+    "timeStamp": 1658164417023
   }
 ]

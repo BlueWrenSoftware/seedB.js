@@ -109,7 +109,7 @@ a:active {
   font-style: normal;
 } */
 
-.pages {
+.screen {
   width: 500px;
   /*min-width: 400px;*/
   margin: 0 auto;
@@ -574,5 +574,9 @@ ul {
   font-size: 80%;
 }
 
-
-
+.js-all-pages--opened {
+  display: block;
+}
+.js-all-pages--none {
+  display: none;
+}
