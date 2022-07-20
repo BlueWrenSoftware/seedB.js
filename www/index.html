@@ -18,6 +18,7 @@
           <ul class="menu-hamburger__list">
             <li><a id="eventHomePage">Home Page - Seed List</a></li>
             <li><a id="eventPktPage">Enter New Seed Packet</a></li>
+            <li><a id="eventScrollPage">Scroll Seed Packets</a></li>
             <li><a id="eventReadWritePage">Backup and Restore</a></li>
             <li><a id="eventInstrPage">Instructions</a></li>
         </nav>
@@ -37,6 +38,7 @@
    <div id="showHide" class="js-all-pages--none">
       <!-- Home Page -->
       <section id="home-page">
+        <br><button type="button" onclick="">through records</button><br><br>
         <!-- Table of Records -->
         <table class="table-seeds table-seeds__row-color" id="mytable">
           <thead>
@@ -61,12 +63,14 @@
             Seed Collection
           </h2>
           <h3 class="chapter--h3">
-            Enter Seed Packets
+            Seed Packet
           </h3>
         </header>
-        <p>*&emsp;Input required.</p>
-        <p>**&ensp;Seed Packet Id must be unique!</p>
+        <button class="selected left" type="button">&ensp;⮜&ensp;</button>
+        <button class="selected right" type="button">&ensp;⮞&ensp;</button>
         <form id="seed-entry">
+          <p >*&emsp;Input required.</p>
+          <p>**&ensp;Seed Packet Id must be unique!</p>
           <br>
           <label for="seedGroup">*&nbsp;Seed&nbsp;Group: </label>
           <input type="text" id="seedGroup"><br>
@@ -87,13 +91,21 @@
           <br>
           <div id="edit-pkt-buttons" class="wrapper">
             <button class="selected flex-item" type="button" id="btnSubmitRecord">Submit Current Record</button>
-            <input class="selected flex-item btnHomePage" type="reset" value="Cancel">
+            <input class="selected flex-item btnHomePage" type="reset" value="Cancel: Back to Seed List">
             <button class="select-delete flex-item" type="button" id="btnDeleteRecord">Delete Current Record</button>
           </div>
           <div id="new-pkt-buttons" class="wrapper">
             <button class="selected flex-item" type="button" id="btnNewRecord">Submit New Record</button>
             <input class="selected flex-item" type="reset" value="Clear Form (Data Not Saved)">
             <button class="selected flex-item btnHomePage" type="button">Return to Seed List</button>
+          </div>
+          <div id="scrollRecordsButtons">
+            
+            <div style="clear: both;">
+              <button class="selected flex-item" type="button" id="">Submit Current Record</button> <!-- change id to class -->
+              <button class="selected flex-item btnHomePage" type="button">Return to Seed List </button>
+              <button class="select-delete flex-item" type="button" id="">Delete Current Record</button>
+            </div>
           </div>
         </form>
         <div id="insert-form-alerts">

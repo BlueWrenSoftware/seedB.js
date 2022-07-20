@@ -80,6 +80,7 @@ class UI { // Handles UI Tasks
       document.title = "Edit Seed Pkt";
       document.querySelector("#edit-pkt-buttons").style.display = "";
       document.querySelector("#new-pkt-buttons").style.display = "none";
+      document.querySelector("#scrollRecordsButtons").style.display = "none";
       document.querySelector("#home-page").style.display = "none";
       document.querySelector("#edit-page").style.display = "";
       document.querySelector("#read-write-page").style.display = "none";
@@ -90,6 +91,18 @@ class UI { // Handles UI Tasks
       document.title = "New Seed Pkt";
       document.querySelector("#new-pkt-buttons").style.display = "";
       document.querySelector("#edit-pkt-buttons").style.display = "none";
+      document.querySelector("#scrollRecordsButtons").style.display = "none";
+      document.querySelector("#home-page").style.display = "none";
+      document.querySelector("#edit-page").style.display = "";
+      document.querySelector("#read-write-page").style.display = "none";
+      document.querySelector("#instructions-page").style.display = "none";
+    }
+    else if (pageSelected === "scrollRecords") { //=> edit/add page for new seed packet entry
+      UI.clearFields();
+      document.title = "Scroll Pkt Records";
+      document.querySelector("#new-pkt-buttons").style.display = "none";
+      document.querySelector("#edit-pkt-buttons").style.display = "none";
+      document.querySelector("#scrollRecordsButtons").style.display = "";
       document.querySelector("#home-page").style.display = "none";
       document.querySelector("#edit-page").style.display = "";
       document.querySelector("#read-write-page").style.display = "none";
@@ -468,6 +481,7 @@ document.querySelector(".js-menu-hamburger").addEventListener("click", UI.menu);
 // Menu selection events
 htmlId('eventHomePage').addEventListener('click', () => { UI.selectPages('homePage') }, false);
 htmlId('eventPktPage').addEventListener('click', () => { UI.selectPages('newPktPage') }, false);
+htmlId('eventScrollPage').addEventListener('click', () => { UI.selectPages('scrollRecords') }, false)
 htmlId('eventReadWritePage').addEventListener('click', () => { UI.selectPages('readWritePage') }, false);
 htmlId('eventInstrPage').addEventListener('click', () => { UI.selectPages('instructionsPage') }, false);
 
@@ -495,7 +509,7 @@ document.querySelectorAll('.btnHomePage')
          convert all to sync await protocol
          create universal open db promise 
 */
-  function openDbPromise() {
+function openDbPromise() {
   return new Promise((resolve, reject) => {
     const request = window.indexedDB.open('seedB', 1);
     request.onsuccess = (event) => {
@@ -565,3 +579,64 @@ function editSeedPkt(pktId) {
       UI.editSeed(record, 'editSeedPkt');
     });
 };
+
+//=> Design Scroll pages
+
+function fetchSeedPktKey(db) {
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(['collection'], "readonly");
+    const store = transaction.objectStore('collection');
+    const countRequest = store.count();
+    countRequest.onsuccess = () => { const recordCounts =  countRequest.result;};
+    const cursorRequest = store.openKeyCursor(null, 'next');
+    const keys = [];
+    cursorRequest.onsuccess = (event) => {
+      const cursor = event.target.result;
+      if (cursor) {
+        keys.push(cursor.key);
+        cursor.continue();
+      } else {
+        resolve(keys);
+      }
+    }
+    cursorRequest.onerror = (event) => {
+      reject(event.target.errorCode);
+    }
+  })
+};
+
+function fetchSeedPktRecord(db) {
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(['collection'], "readonly");
+    const store = transaction.objectStore('collection');
+    const cursorRequest = store.openCursor(null, 'next');
+    const records = [];
+    cursorRequest.onsuccess = (event) => {
+      const cursor = event.target.result;
+      if (cursor) {
+        records.push(cursor.value);
+        cursor.continue();
+      } else {
+        resolve(records);
+      }
+    }
+    cursorRequest.onerror = (event) => {
+      reject(event.target.errorCode);
+    }
+  })
+};
+
+async function printMe() {
+  const db = await openDbPromise()
+  const keys = await fetchSeedPktKey(db)
+  const records = await fetchSeedPktRecord(db);
+  console.log(keys);
+  console.log(records);
+  console.log('hello"');
+}
+
+printMe();
+
+/* fetchSeedPktKey();
+fetchSeedPktRecord();
+printMe(); */

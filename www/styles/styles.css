@@ -5,7 +5,7 @@
    -- followed by a modifier
 
    Cascading is kept to a minimum and naming of classes are supporting
-   the symantic structure of the HTML5.
+   the semantic structure of the HTML5.
    Names indicating a format are avoided and as not to confuse the semantic
    HTML5 tags.
    
@@ -47,6 +47,7 @@ body {
   font-family: VuSans, sans-serif;
   font-size: 100%;
   font-weight: normal;
+  background-color: #fdfdf0;
 }
 
 p {
@@ -256,7 +257,7 @@ table.table-seeds__row-color tr:nth-child(even) {
 }
 
 table.table-seeds__row-color tr:nth-child(odd) {
-  background: #FFF;
+  background: #fdfdf0;
 }
 
 table.table-seeds {
@@ -296,9 +297,9 @@ tr.row__bottom-line {
   border-bottom: 1px solid #000000;
 }
 
-tr.row__color {
+/* tr.row__color {
   background: #E8E8E8;
-}
+} */
 
 td {
   padding:0.2em;
@@ -549,13 +550,20 @@ textarea {
 div.center {
   text-align: center;
 }
-div.right {
+button.right {
   float: right;
+  padding: unset;
+  margin: unset;
+  padding-top: 3px;
 }
-div.left {
+button.left {
   float: left;
+  padding: unset;
+  margin: unset;
+  padding-top: 3px; 
 }
 form {
+  clear:both;
   font-size: 80%;
 }
 
@@ -579,4 +587,9 @@ ul {
 }
 .js-all-pages--none {
   display: none;
+}
+
+form#seed-entry > p {
+  font-size: unset;
+  padding-left: 50px;
 }
