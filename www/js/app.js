@@ -167,16 +167,16 @@ class UI { // Handles UI Tasks
   }
 
   static refreshTable(sortOn) { //=> refresh table on selected column for sort
-    console.log('1 ' + oldSortOn);
-    console.log('2 ' + sortOn);
+    //console.log('1 ' + oldSortOn);
+    //console.log('2 ' + sortOn);
     let invertSort = sortOn === oldSortOn; //=> false if not the same
-    console.log('3 ' + invertSort);
+    //console.log('3 ' + invertSort);
     let sortOrder = 'next';
     let invertOrder = sortOrder === oldSortOrder; //=> false if not the same
-    console.log('4 ' + invertOrder);
+    //console.log('4 ' + invertOrder);
     if (invertOrder && invertSort) { //=> true - change sort order
       sortOrder = 'prev';
-      console.log('5 if was selected');
+      //console.log('5 if was selected');
     }
     oldSortOn = sortOn;         //=> assign present sort column to variable ->
     oldSortOrder = sortOrder;  //-> and assign present sort order to variable
@@ -311,7 +311,7 @@ class Store {//=> Handles all DB operations
       const store = transaction.objectStore('collection');
       let deleted = store.get(pktId);
       //console.log(pktId);
-      console.log("After push: " + deleted);      //TO DO: Create this as a user message
+      //console.log("After push: " + deleted);      //TO DO: Create this as a user message
       store.delete(pktId);
       transaction.oncomplete = () => {
         //console.log('finished transaction');
@@ -339,8 +339,8 @@ class Data { //=> Handles data files for backup and restore
     const minutes = "0" + date.getMinutes();
     //const seconds = "0" + date.getSeconds();
     const formattedTime = `${year.slice(-2)}-${month.slice(-2)}-${day.slice(-2)}T${hours.slice(-2)}∶${minutes.slice(-2)}`;
-    console.log(date, day, month, year); //=> Time format to UTC standard. Colons not accepted in filenames. ->
-    console.log(formattedTime); //-> used math ratio symbol U2236 instead and truncated year to 2 digits
+    //console.log(date, day, month, year); //=> Time format to UTC standard. Colons not accepted in filenames. ->
+    //console.log(formattedTime); //-> used math ratio symbol U2236 instead and truncated year to 2 digits
     return formattedTime;
   }
   
@@ -411,7 +411,7 @@ class Data { //=> Handles data files for backup and restore
       backupNotes.innerHTML += '<li>=> Backup file used:  '+file.name+'</li>';
       backupNotes.innerHTML += '<li>=> Backup file was created on:  '+ file.lastModifiedDate.toString().slice(0, 24) + '</li>';
       backupNotes.innerHTML += '<li>=> Backup file now merged with seed list already in db</li>';
-      //const reader = new FileReader();
+      const reader = new FileReader();
       reader.onload = function (progressEvent) {
         //console.log(this.result);
         dataFile = JSON.parse(this.result);
@@ -558,7 +558,7 @@ async function loadData(sortOn = 'variety', sortOrder = 'next') {
 
 // Event get pktId from table
 function editSeedPkt(pktId) {
-  console.log(pktId);
+  //console.log(pktId);
   openDbPromise().then(
     db => {
       return new Promise((resolve, reject) => {
@@ -582,12 +582,10 @@ function editSeedPkt(pktId) {
 
 //=> Design Scroll pages
 
-function fetchSeedPktKey(db) {
+/* function fetchPrimKey(db) {
   return new Promise((resolve, reject) => {
     const transaction = db.transaction(['collection'], "readonly");
     const store = transaction.objectStore('collection');
-    const countRequest = store.count();
-    countRequest.onsuccess = () => { const recordCounts =  countRequest.result;};
     const cursorRequest = store.openKeyCursor(null, 'next');
     const keys = [];
     cursorRequest.onsuccess = (event) => {
@@ -603,9 +601,59 @@ function fetchSeedPktKey(db) {
       reject(event.target.errorCode);
     }
   })
+}; */
+
+function fetchSelKeyPrimKey(db) {
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(['collection'], "readonly");
+    const store = transaction.objectStore('collection');
+    const selIndex = store.index('seedDatePacked')
+    const selKey = [];
+    const pktIds = [];
+    //const data = [];
+    const keysData = {};
+    selIndex.openCursor().onsuccess = (event) => {
+      const cursor = event.target.result;
+      if(cursor) {
+        selKey.push(cursor.key);
+        //pktIds.push(cursor.primaryKey);
+        cursor.continue();
+      }
+      else {
+        /* data = pktIds.map((value, index) => ({[value]: selKey[index]}));
+        resolve(data); */
+        /* pktIds.forEach((pktId, i) => keysData[pktId] = selKey[i]);
+        resolve(keysData); */
+        resolve(selKey);
+        //console.log('finished');
+      }
+    }
+    selIndex.openCursor().onerror = (event) => {
+      reject(event.target.errorCode);
+    }
+  })
 };
 
-function fetchSeedPktRecord(db) {
+function fetchOnlyPrimKey(db) {
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(['collection'], "readonly");
+    const store = transaction.objectStore('collection');
+    const selIndex = store.index('seedDatePacked');
+    const getAllKeyReq = selIndex.getAllKeys();
+    getAllKeyReq.onsuccess = (event) => {
+      const allKeyData = event.target.result;
+      //console.log(allKeyData);
+      //console.log(getAllKeyReq.result);
+      console.log(allKeyData[34]);
+      resolve(allKeyData);
+    }
+    getAllKeyReq.onerror = (event) => {
+      reject(event.target.errorCode);
+    }
+  })
+};
+
+/* function fetchSeedPktRecord(db) {
   return new Promise((resolve, reject) => {
     const transaction = db.transaction(['collection'], "readonly");
     const store = transaction.objectStore('collection');
@@ -624,19 +672,25 @@ function fetchSeedPktRecord(db) {
       reject(event.target.errorCode);
     }
   })
-};
+}; */
 
 async function printMe() {
-  const db = await openDbPromise()
-  const keys = await fetchSeedPktKey(db)
-  const records = await fetchSeedPktRecord(db);
+  const db = await openDbPromise();
+  //const primKey = await fetchPrimKey(db);
+  const values = await fetchSelKeyPrimKey(db);
+  const keys = await fetchOnlyPrimKey(db, 'seedDatePacked');
+  //const records = await fetchSeedPktRecord(db);
+  //console.log(primKey);
   console.log(keys);
-  console.log(records);
+  console.log(values);
+  const data = {};
+  //keys.forEach((key, i) => data[key] = selected[i]);
+  for (let i = 0; i < keys.length; i++) {
+    data[keys[i]] = values[i];
+  }
+  console.log(data)
+  //console.log(records);
   console.log('hello"');
 }
 
 printMe();
-
-/* fetchSeedPktKey();
-fetchSeedPktRecord();
-printMe(); */
