@@ -345,7 +345,7 @@ class Data { //=> Handles data files for backup and restore
   }
   
   static retrieveAll() { //=> Collects all data records from DB
-    openDbPromise().then( //=> open DB
+    Data.openDbPromise().then( //=> open DB
       db => {
         return new Promise((resolve, reject) => {
           const transaction = db.transaction(['collection'], "readonly");
@@ -445,6 +445,18 @@ class Data { //=> Handles data files for backup and restore
       }
     }
   }
+  
+    static openDbPromise() {
+	return new Promise((resolve, reject) => {
+	    const request = window.indexedDB.open('seedB', 1);
+	    request.onsuccess = (event) => {
+		resolve(event.target.result);
+	    }
+	    request.onerror = (event) => {
+		reject(event.target.errorCode);
+	    }
+	});
+    }
 }
 /* TO DO: wherever a the db is opened in a Store or Data static functions 
           should change that to one only function to open a db
@@ -509,17 +521,6 @@ document.querySelectorAll('.btnHomePage')
          convert all to sync await protocol
          create universal open db promise 
 */
-function openDbPromise() {
-  return new Promise((resolve, reject) => {
-    const request = window.indexedDB.open('seedB', 1);
-    request.onsuccess = (event) => {
-      resolve(event.target.result);
-    }
-    request.onerror = (event) => {
-      reject(event.target.errorCode);
-    }
-  });
-};
 
 function fetchSortDataPromise(db, sortOn = 'variety', sortOrder = 'next') {
   return new Promise((resolve, reject) => {
@@ -551,7 +552,7 @@ function fetchSortDataPromise(db, sortOn = 'variety', sortOrder = 'next') {
 };
 
 async function loadData(sortOn = 'variety', sortOrder = 'next') {
-  const db = await openDbPromise();
+  const db = await Data.openDbPromise();
   const records = await fetchSortDataPromise(db, sortOn, sortOrder);
   UI.displaySeeds(records); // According to VS Code await is not needed here
 };
@@ -559,7 +560,7 @@ async function loadData(sortOn = 'variety', sortOrder = 'next') {
 // Event get pktId from table
 function editSeedPkt(pktId) {
   //console.log(pktId);
-  openDbPromise().then(
+  Data.openDbPromise().then(
     db => {
       return new Promise((resolve, reject) => {
         //request = db.transaction('collection').objectStore('collection').openCursor();
@@ -675,7 +676,7 @@ function fetchOnlyPrimKey(db) {
 }; */
 
 async function printMe() {
-  const db = await openDbPromise();
+  const db = await Data.openDbPromise();
   //const primKey = await fetchPrimKey(db);
   const values = await fetchSelKeyPrimKey(db);
   const keys = await fetchOnlyPrimKey(db, 'seedDatePacked');
