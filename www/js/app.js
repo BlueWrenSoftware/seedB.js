@@ -327,7 +327,43 @@ class Store {//=> Handles all DB operations
     UI.clearFields(); //=> Clear form fields
     UI.refreshTable('pktId'); //=> Refresh seed table sorted on pktId 
   }
+
+    
+  static addRecords(file) { //=> add te records extracted from the backup file.
+    const request = window.indexedDB.open('seedB', 1);
+    request.onsuccess = (event) => {
+      //console.log('request success');
+      const db = event.target.result;
+      db.onerror = function (event) {
+        // Generic error handler for all errors targeted at this database's requests!
+        //console.log("Database error: " + event.target.errorCode);
+        event.target.errorCode
+      };
+      const transaction = db.transaction('collection', 'readwrite');
+      const store = transaction.objectStore('collection');
+      file.forEach(record => { //=> cycle through each record oject and merge in the object store
+        store.put(record);
+      });
+      transaction.oncomplete = () => {
+        //console.log('finished transaction');
+        db.close();
+      }
+    }
+  }
+  
+    static openDbPromise() {
+	return new Promise((resolve, reject) => {
+	    const request = window.indexedDB.open('seedB', 1);
+	    request.onsuccess = (event) => {
+		resolve(event.target.result);
+	    }
+	    request.onerror = (event) => {
+		reject(event.target.errorCode);
+	    }
+	});
+    }
 }
+
 
 class Data { //=> Handles data files for backup and restore
   static fileTime() {  //=> Timestamp for file names
@@ -345,7 +381,7 @@ class Data { //=> Handles data files for backup and restore
   }
   
   static retrieveAll() { //=> Collects all data records from DB
-    Data.openDbPromise().then( //=> open DB
+    Store.openDbPromise().then( //=> open DB
       db => {
         return new Promise((resolve, reject) => {
           const transaction = db.transaction(['collection'], "readonly");
@@ -416,7 +452,7 @@ class Data { //=> Handles data files for backup and restore
         //console.log(this.result);
         dataFile = JSON.parse(this.result);
         //console.log(dataFile);
-        Data.addRecords(dataFile);
+        Store.addRecords(dataFile);
         //console.log(dataFile[4]);
       };
       reader.readAsText(file);
@@ -424,39 +460,6 @@ class Data { //=> Handles data files for backup and restore
   } /* TO DO: all the events have to be taken out!
               better documentation need for this function */
 
-  static addRecords(file) { //=> add te records extracted from the backup file.
-    const request = window.indexedDB.open('seedB', 1);
-    request.onsuccess = (event) => {
-      //console.log('request success');
-      const db = event.target.result;
-      db.onerror = function (event) {
-        // Generic error handler for all errors targeted at this database's requests!
-        //console.log("Database error: " + event.target.errorCode);
-        event.target.errorCode
-      };
-      const transaction = db.transaction('collection', 'readwrite');
-      const store = transaction.objectStore('collection');
-      file.forEach(record => { //=> cycle through each record oject and merge in the object store
-        store.put(record);
-      });
-      transaction.oncomplete = () => {
-        //console.log('finished transaction');
-        db.close();
-      }
-    }
-  }
-  
-    static openDbPromise() {
-	return new Promise((resolve, reject) => {
-	    const request = window.indexedDB.open('seedB', 1);
-	    request.onsuccess = (event) => {
-		resolve(event.target.result);
-	    }
-	    request.onerror = (event) => {
-		reject(event.target.errorCode);
-	    }
-	});
-    }
 }
 /* TO DO: wherever a the db is opened in a Store or Data static functions 
           should change that to one only function to open a db
@@ -552,7 +555,7 @@ function fetchSortDataPromise(db, sortOn = 'variety', sortOrder = 'next') {
 };
 
 async function loadData(sortOn = 'variety', sortOrder = 'next') {
-  const db = await Data.openDbPromise();
+  const db = await Store.openDbPromise();
   const records = await fetchSortDataPromise(db, sortOn, sortOrder);
   UI.displaySeeds(records); // According to VS Code await is not needed here
 };
@@ -560,7 +563,7 @@ async function loadData(sortOn = 'variety', sortOrder = 'next') {
 // Event get pktId from table
 function editSeedPkt(pktId) {
   //console.log(pktId);
-  Data.openDbPromise().then(
+  Store.openDbPromise().then(
     db => {
       return new Promise((resolve, reject) => {
         //request = db.transaction('collection').objectStore('collection').openCursor();
@@ -676,7 +679,7 @@ function fetchOnlyPrimKey(db) {
 }; */
 
 async function printMe() {
-  const db = await Data.openDbPromise();
+  const db = await Store.openDbPromise();
   //const primKey = await fetchPrimKey(db);
   const values = await fetchSelKeyPrimKey(db);
   const keys = await fetchOnlyPrimKey(db, 'seedDatePacked');
