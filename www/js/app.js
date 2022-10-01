@@ -136,6 +136,7 @@ class UI { // Handles UI Tasks
       document.querySelector("#read-write-page").style.display = "none";
       document.querySelector("#instructions-page").style.display = "none";
       document.querySelector("#read-write-page").style.display = "";
+      //document.querySelector("#dbError").style.display = ""
     }
   }
 
@@ -217,8 +218,8 @@ class Store {//=> Handles all DB operations
       //console.log('db is open');
       if (!db.objectStoreNames.contains('collection')) { // -> verifies that Store exists ->
         //console.log('no object store');
+        //db.close();
         UI.selectPages("dbError");                       // -> if not opens error page ->
-        db.close();
       }
       else if (db.objectStoreNames.contains('collection')) { // -> opens app
         //console.log('Object store is named collection');
@@ -498,6 +499,7 @@ htmlId('eventHomePage').addEventListener('click', () => { UI.selectPages('homePa
 htmlId('eventPktPage').addEventListener('click', () => { UI.selectPages('newPktPage') }, false);
 htmlId('eventScrollPage').addEventListener('click', () => { UI.selectPages('scrollRecords') }, false)
 htmlId('eventReadWritePage').addEventListener('click', () => { UI.selectPages('readWritePage') }, false);
+htmlId('eventErrorPage').addEventListener('click', () => { UI.selectPages('dbError') }, false);
 htmlId('eventInstrPage').addEventListener('click', () => { UI.selectPages('instructionsPage') }, false);
 
 //=> Sort table columns events
