@@ -24,11 +24,11 @@ class Db {
         this.version = null;
     }
     
-    openDbPromise(version) {
+    open(version) {
 	      return new Promise((resolve, reject) => {
 	          const request = window.indexedDB.open('seedB', version);    
             request.onupgradeneeded = function (event) {
-                const db = event.target.result;
+                this.db = event.target.result;
                 const store = db.createObjectStore('collection', { keyPath: 'pktId' });
                 store.createIndex('variety', 'variety', { unique: false });
                 store.createIndex('seedGroup', 'seedGroup', { unique: false });
@@ -37,6 +37,10 @@ class Db {
             }
 
 	          request.onsuccess = (event) => {
+                this.db = event.target.result;
+                this.transaction = this.db.transaction(['collection'], "readwrite");
+                this.store = this.transaction.objectStore('collection');
+                this.version = this.db.version;
 		            resolve(event.target.result);
 	          }
 
@@ -46,7 +50,7 @@ class Db {
 	      });
     }
 
-    deletePromise() {        
+    delete() {        
         return new Promise((resolve, reject) => {
             const req = window.indexedDB.deleteDatabase('seedB')
             req.onsuccess = function () {
@@ -64,7 +68,7 @@ class Db {
         });
     }
 
-    getRecordPromise(id) {        
+    getRecord(id) {        
         return new Promise((resolve, reject) => {
             const request = this.store.get(id);
             request.onsuccess = event => {
@@ -76,22 +80,34 @@ class Db {
             };
         });
     };
-
-    async open() {
-        this.db = await this.openDbPromise();
-        this.transaction = this.db.transaction(['collection'], "readwrite");
-        this.store = this.transaction.objectStore('collection');
-        this.version = this.db.version;
-        console.log('DB Opened');
+    
+    getAll(sortOn = 'variety', sortOrder = 'next') {
+        return new Promise((resolve, reject) => {
+            let cursorRequest;
+            if (sortOn === 'pktId') {
+                cursorRequest = this.store.openCursor(null, sortOrder);
+            } else {
+                const index = this.store.index(sortOn);
+                cursorRequest = index.openCursor(null, sortOrder);
+            }
+            const records = [];
+            cursorRequest.onsuccess = event => {
+                let cursor = event.target.result;
+                if (cursor) {
+                    records.push(cursor.value);
+                    cursor.continue();
+                }
+                else {
+                    resolve(records);
+                }
+            };
+            cursorRequest.onerror = (event) => {
+                reject(event.target.errorCode);
+            };
+        })
     };
 
-    async getRecord(id) {
-        return await this.getRecordPromise(id);
-    };
-
-    async delete() {
-        return await this.deletePromise();
-    }
+    
 };
 
 class View {
@@ -645,57 +661,21 @@ function fetchSortDataPromise(db, sortOn = 'variety', sortOrder = 'next') {
 };
 
 async function loadData(sortOn = 'variety', sortOrder = 'next') {
-  const db = await Store.openDbPromise();
-  const records = await fetchSortDataPromise(db, sortOn, sortOrder);
-  UI.displaySeeds(records); // According to VS Code await is not needed here
+    const db = new Db();
+    await db.open();    
+    const records = await db.getAll(sortOn, sortOrder);
+    UI.displaySeeds(records);
 };
 
 // Event get pktId from table
-function editSeedPkt(pktId) {
-  //console.log(pktId);
-  Store.openDbPromise().then(
-    db => {
-      return new Promise((resolve, reject) => {
-        //request = db.transaction('collection').objectStore('collection').openCursor();
-        const transaction = db.transaction(['collection'], "readwrite");
-        const store = transaction.objectStore('collection');
-        const request = store.get(pktId);
-        request.onsuccess = event => {
-          let record = event.target.result;
-          resolve(record)
-        }
-        request.onerror = (event) => {
-          reject(event.target.errorCode);
-        }
-      })
-    }).then(record => {
-      //console.log(record);
-      UI.editSeed(record, 'editSeedPkt');
-    });
+async function editSeedPkt(pktId) {
+    const db = new Db();
+    await db.open();
+    const record = await db.getRecord(pktId);
+    UI.editSeed(record, 'editSeedPkt');
 };
 
 //=> Design Scroll pages
-
-/* function fetchPrimKey(db) {
-  return new Promise((resolve, reject) => {
-    const transaction = db.transaction(['collection'], "readonly");
-    const store = transaction.objectStore('collection');
-    const cursorRequest = store.openKeyCursor(null, 'next');
-    const keys = [];
-    cursorRequest.onsuccess = (event) => {
-      const cursor = event.target.result;
-      if (cursor) {
-        keys.push(cursor.key);
-        cursor.continue();
-      } else {
-        resolve(keys);
-      }
-    }
-    cursorRequest.onerror = (event) => {
-      reject(event.target.errorCode);
-    }
-  })
-}; */
 
 function fetchSelKeyPrimKey(db) {
   return new Promise((resolve, reject) => {
@@ -747,44 +727,19 @@ function fetchOnlyPrimKey(db) {
   })
 };
 
-/* function fetchSeedPktRecord(db) {
-  return new Promise((resolve, reject) => {
-    const transaction = db.transaction(['collection'], "readonly");
-    const store = transaction.objectStore('collection');
-    const cursorRequest = store.openCursor(null, 'next');
-    const records = [];
-    cursorRequest.onsuccess = (event) => {
-      const cursor = event.target.result;
-      if (cursor) {
-        records.push(cursor.value);
-        cursor.continue();
-      } else {
-        resolve(records);
-      }
-    }
-    cursorRequest.onerror = (event) => {
-      reject(event.target.errorCode);
-    }
-  })
-}; */
-
 async function printMe() {
-  const db = await Store.openDbPromise();
-  //const primKey = await fetchPrimKey(db);
-  const values = await fetchSelKeyPrimKey(db);
-  const keys = await fetchOnlyPrimKey(db, 'seedDatePacked');
-  //const records = await fetchSeedPktRecord(db);
-  //console.log(primKey);
-  console.log(keys);
-  console.log(values);
-  const data = {};
-  //keys.forEach((key, i) => data[key] = selected[i]);
-  for (let i = 0; i < keys.length; i++) {
-    data[keys[i]] = values[i];
-  }
-  console.log(data)
-  //console.log(records);
-  console.log('hello"');
+    const db = new Db();
+    db.open();
+    const values = await fetchSelKeyPrimKey(db.db);
+    const keys = await fetchOnlyPrimKey(db.db);
+    console.log(keys);
+    console.log(values);
+    const data = {};
+
+    for (let i = 0; i < keys.length; i++) {
+        data[keys[i]] = values[i];
+    }
+    console.log(data)
 }
 
 // printMe();
