@@ -3,131 +3,41 @@
   -> Continuation of initial comment*/
 'use strict';
 
-class Seed { //=> Creates an instance of a seed packet for data upload
-  constructor(seedGroup, variety, pktId, seedNumbers, seedWeight, seedDatePacked, seedNotes, timeStamp) {
-    this.seedGroup = seedGroup;
-    this.variety = variety;
-    this.pktId = pktId;
-    this.seedNumbers = seedNumbers;
-    this.seedWeight = seedWeight;
-    this.seedDatePacked = seedDatePacked;
-    this.seedNotes = seedNotes;
-    this.timeStamp = timeStamp;
-  }
-};
-
-class Db {    
-    // responsible for Db access
-    constructor() {
-        this.newlyCreated = false;
-        this.db = null;
-        this.version = null;
-    }
-    
-    open(version) {
-	      return new Promise((resolve, reject) => {
-	          const request = window.indexedDB.open('seedB', version);    
-            request.onupgradeneeded = function (event) {
-                this.db = event.target.result;
-                const store = db.createObjectStore('collection', { keyPath: 'pktId' });
-                store.createIndex('variety', 'variety', { unique: false });
-                store.createIndex('seedGroup', 'seedGroup', { unique: false });
-                store.createIndex('seedDatePacked', 'seedDatePacked', { unique: false });
-                store.createIndex('timeStamp', 'timeStamp', { unique: false });
-            }
-
-	          request.onsuccess = (event) => {
-                this.db = event.target.result;
-                this.transaction = this.db.transaction(['collection'], "readwrite");
-                this.store = this.transaction.objectStore('collection');
-                this.version = this.db.version;
-		            resolve(event.target.result);
-	          }
-
-            request.onerror = (event) => {
-		            reject(event.target.errorCode);
-	          }
-	      });
-    }
-
-    delete() {        
-        return new Promise((resolve, reject) => {
-            const req = window.indexedDB.deleteDatabase('seedB')
-            req.onsuccess = function () {
-                //console.log("Deleted database successfully");
-                resolve('success');
-            };
-            req.onerror = function () {
-                //console.log("Couldn't delete database");
-                reject('error');
-            };
-            req.onblocked = function () {
-                //console.log("Couldn't delete database due to the operation being blocked");
-                reject('blocked')
-            };
-        });
-    }
-
-    getRecord(id) {        
-        return new Promise((resolve, reject) => {
-            const request = this.store.get(id);
-            request.onsuccess = event => {
-                let record = event.target.result;
-                resolve(record)
-            };
-            request.onerror = (event) => {
-                reject(event.target.errorCode);
-            };
-        });
-    };
-    
-    getAll(sortOn = 'variety', sortOrder = 'next') {
-        return new Promise((resolve, reject) => {
-            let cursorRequest;
-            if (sortOn === 'pktId') {
-                cursorRequest = this.store.openCursor(null, sortOrder);
-            } else {
-                const index = this.store.index(sortOn);
-                cursorRequest = index.openCursor(null, sortOrder);
-            }
-            const records = [];
-            cursorRequest.onsuccess = event => {
-                let cursor = event.target.result;
-                if (cursor) {
-                    records.push(cursor.value);
-                    cursor.continue();
-                }
-                else {
-                    resolve(records);
-                }
-            };
-            cursorRequest.onerror = (event) => {
-                reject(event.target.errorCode);
-            };
-        })
-    };
-
-    
-};
-
-class Control {
-    // Responsible for handling user input
-}
-
-class Model {
-    // manages the data model
-    constructor(controller, view) {
-        this.controller = controller;
-        this.view = view;
-    }
-}
-
 class View {
     // View is reponsible for presenting the model to the user
     // that is, updating the DOM.
     // It is not responsible for:
     //  - handling user input
     //  - updating the database
+    // It does not make requests of the Model
+    
+    constructor() {
+        
+    }
+    
+    addPacketToTable(seedPkt) {
+        // Adds a packet as a row to packet list
+        const list = document.querySelector('#seed-list');
+        const row = document.createElement('tr');
+        row.innerHTML =  `<td>${seedPkt.seedGroup}</td>
+                          <td>${seedPkt.variety}</td>
+                          <td>${seedPkt.pktId}</td>
+                          <td class="table-seeds__col--center">${(seedPkt.seedDatePacked).substring(2)}</td>
+                          <td class="table-seeds__col--center">${seedPkt.seedNumbers}</td>
+                          <td class="table-seeds__col--center">${seedPkt.seedWeight}</td>
+                          <td class="edit" onclick="editSeedPkt('${seedPkt.pktId}')"></td>`;
+        list.appendChild(row);
+    }
+    
+    displayPackets(packets) {
+        // Delete table rows first before entering updated data on home page
+        const table = document.querySelector('#seed-list');
+        while (table.rows.length > 0) {
+            table.deleteRow(0);
+        };
+        packets.forEach((packet) => this.addPacketToTable(packet));
+    }
+    
     static displaySeeds(seedTable) {
         // Delete table rows first before entering updated data on home page
         const table = document.querySelector('#seed-list');
@@ -285,7 +195,8 @@ class View {
     }
   }
 
-  static refreshTable(sortOn) { //=> refresh table on selected column for sort
+    static refreshTable(sortOn) {
+        //=> refresh table on selected column for sort
     //console.log('1 ' + oldSortOn);
     //console.log('2 ' + sortOn);
     let invertSort = sortOn === oldSortOn; //=> false if not the same
@@ -327,6 +238,158 @@ class View {
     });
   } //=> Should be in Store Class?
 }
+
+class Seed { //=> Creates an instance of a seed packet for data upload
+  constructor(seedGroup, variety, pktId, seedNumbers, seedWeight, seedDatePacked, seedNotes, timeStamp) {
+    this.seedGroup = seedGroup;
+    this.variety = variety;
+    this.pktId = pktId;
+    this.seedNumbers = seedNumbers;
+    this.seedWeight = seedWeight;
+    this.seedDatePacked = seedDatePacked;
+    this.seedNotes = seedNotes;
+    this.timeStamp = timeStamp;
+  }
+};
+
+class Db {    
+    // responsible for Db access
+    constructor(view = null) {
+        this.newlyCreated = false;
+        this.db = null;
+        this.version = null;
+        this.view = view;
+    }
+    
+    open(version) {
+	      return new Promise((resolve, reject) => {
+	          const request = window.indexedDB.open('seedB', version);    
+            request.onupgradeneeded = function (event) {
+                this.db = event.target.result;
+                const store = db.createObjectStore('collection', { keyPath: 'pktId' });
+                store.createIndex('variety', 'variety', { unique: false });
+                store.createIndex('seedGroup', 'seedGroup', { unique: false });
+                store.createIndex('seedDatePacked', 'seedDatePacked', { unique: false });
+                store.createIndex('timeStamp', 'timeStamp', { unique: false });
+            }
+
+	          request.onsuccess = (event) => {
+                this.db = event.target.result;
+                this.transaction = this.db.transaction(['collection'], "readwrite");
+                this.store = this.transaction.objectStore('collection');
+                this.version = this.db.version;
+		            resolve(event.target.result);
+	          }
+
+            request.onerror = (event) => {
+		            reject(event.target.errorCode);
+	          }
+	      });
+    }
+
+    delete() {        
+        return new Promise((resolve, reject) => {
+            const req = window.indexedDB.deleteDatabase('seedB')
+            req.onsuccess = function () {
+                //console.log("Deleted database successfully");
+                resolve('success');
+            };
+            req.onerror = function () {
+                //console.log("Couldn't delete database");
+                reject('error');
+            };
+            req.onblocked = function () {
+                //console.log("Couldn't delete database due to the operation being blocked");
+                reject('blocked')
+            };
+        });
+    }
+
+    getRecord(id) {        
+        return new Promise((resolve, reject) => {
+            const transaction = this.db.transaction('collection', "readonly");
+            const objectStore = transaction.objectStore('collection');
+            const request = objectStore.get(id);
+            request.onsuccess = event => {
+                let record = event.target.result;
+                resolve(record)
+            };
+            request.onerror = (event) => {
+                reject(event.target.errorCode);
+            };
+        });
+    };
+    
+    getAll(sortOn = 'variety', sortOrder = 'next') {
+        return new Promise((resolve, reject) => {
+            let cursorRequest;
+            const transaction = this.db.transaction('collection', "readonly");
+            const objectStore = transaction.objectStore('collection');
+            if (sortOn === 'pktId') {
+                cursorRequest = objectStore.openCursor(null, sortOrder);
+            } else {
+                const index = objectStore.index(sortOn);
+                cursorRequest = index.openCursor(null, sortOrder);
+            }
+            const records = [];
+            cursorRequest.onsuccess = event => {
+                let cursor = event.target.result;
+                if (cursor) {
+                    records.push(cursor.value);
+                    cursor.continue();
+                }
+                else {
+                    resolve(records);
+                }
+            };
+            cursorRequest.onerror = (event) => {
+                reject(event.target.errorCode);
+            };
+        })
+    };    
+};
+
+class Controller {
+    // Responsible for handling user input
+
+    constructor(model, view) {
+        this.model = model;
+        this.view = view;
+        // Packet sorting column
+        this.sortOn = 'variety';
+        // Sort 'next' or 'prev'
+        this.sortOrder = 'next';
+    }
+    
+    async sortSeedList(sortOn) {
+        // Refresh table on selected column for sort
+        // if the new sort column is not the same as the old,
+        // then we have changed the sorting
+        let sameSortColumn = sortOn === this.sortOn;
+
+        // default to sorting forward (next)
+        let sortOrder = 'next';
+        // if the old sort order is the same as the default
+        let sameSortOrder = sortOrder === this.sortOrder; 
+
+        // if the same column for sorting was requested
+        // and the sorting direction was already 'next'
+        // then we should change the sortOrder to 'prev'
+        // for all other cases, we will go with the default
+        // sort order
+        if (sameSortOrder && sameSortColumn) {
+            sortOrder = 'prev';
+        }
+        // save the new sorting order and column
+        this.sortOrder = sortOrder;
+        this.sortOn = sortOn;
+
+        // request the new data from the model
+        const records = await this.model.getAll(sortOn, sortOrder);
+        this.view.displayPackets(records);
+  }
+}
+
 
 class Store {
   //=> Handles all DB operations
@@ -435,8 +498,8 @@ class Store {
       };
     };
     View.showAlert('Seed Packet Deleted', 'warning', '#pkt-message', '#insert-form-alerts'); //=> Show success message
-    View.clearFields(); //=> Clear form fields
-    View.refreshTable('pktId'); //=> Refresh seed table sorted on pktId 
+      View.clearFields(); //=> Clear form fields
+      model.getAll();
   }
 
     
@@ -582,6 +645,11 @@ class Data { //=> Handles data files for backup and restore
 //=> End of Classes
 
 //=> Global variables
+const view = new View();
+const model = new Db();
+model.open();
+const controller = new Controller(model, view);
+
 let oldSortOn = 'variety'; //=> last sort configuration by user - table column
 let oldSortOrder = 'next'; //=> last sort configuration by user - sort order
 let toTop = document.getElementById("js-page--to-top"); //=> Get the button
@@ -613,10 +681,10 @@ htmlId('eventErrorPage').addEventListener('click', () => { View.selectPages('dbE
 htmlId('eventInstrPage').addEventListener('click', () => { View.selectPages('instructionsPage') }, false);
 
 //=> Sort table columns events
-htmlId('sortSeedGroup').addEventListener('click', () => { View.refreshTable('seedGroup') }, false);
-htmlId('sortVariety').addEventListener('click', () => { View.refreshTable('variety') }, false);
-htmlId('sortPktId').addEventListener('click', () => { View.refreshTable('pktId') }, false);
-htmlId('sortDatePacked').addEventListener('click', () => { View.refreshTable('seedDatePacked') }, false);
+htmlId('sortSeedGroup').addEventListener('click', () => { controller.sortSeedList('seedGroup') }, false);
+htmlId('sortVariety').addEventListener('click', () => { controller.sortSeedList('variety') }, false);
+htmlId('sortPktId').addEventListener('click', () => { controller.sortSeedList('pktId') }, false);
+htmlId('sortDatePacked').addEventListener('click', () => { controller.sortSeedList('seedDatePacked') }, false);
 
 //=> Button & input events
 htmlId('btnSubmitRecord').addEventListener('click', () => { Store.editAddRecord('editSeedPkt') }, false);
@@ -749,3 +817,4 @@ async function printMe() {
 }
 
 // printMe();
+
