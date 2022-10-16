@@ -110,12 +110,6 @@ class Db {
     
 };
 
-class View {
-    // Responsible for presenting the model to the user
-    constructor() {
-    }
-};
-
 class Control {
     // Responsible for handling user input
 }
@@ -128,13 +122,14 @@ class Model {
     }
 }
 
-class UI { // Handles UI Tasks
+class View {
+    // View is reponsible for updating the dom
   static displaySeeds(seedTable) { //=> Delete table rows first before entering updated data on home page
     const table = document.querySelector('#seed-list');
     while (table.rows.length > 0) {
       table.deleteRow(0);
     };
-    seedTable.forEach((row) => UI.addSeedToTable(row));
+    seedTable.forEach((row) => View.addSeedToTable(row));
   }
 
   static addSeedToTable(seedPkt) { //=> Add row to seeds list table with seed packet
@@ -188,7 +183,7 @@ class UI { // Handles UI Tasks
       loadData(initialSortOn, initialOrder);
     }
     else if (pageSelected === "editSeedPkt") { //=> edit/add page seed packet selected from the seed list
-      UI.clearFields();
+      View.clearFields();
       document.title = "Edit Seed Pkt";
       document.querySelector("#edit-pkt-buttons").style.display = "";
       document.querySelector("#new-pkt-buttons").style.display = "none";
@@ -199,7 +194,7 @@ class UI { // Handles UI Tasks
       document.querySelector("#instructions-page").style.display = "none";
     }
     else if (pageSelected === "newPktPage") { //=> edit/add page for new seed packet entry
-      UI.clearFields();
+      View.clearFields();
       document.title = "New Seed Pkt";
       document.querySelector("#new-pkt-buttons").style.display = "";
       document.querySelector("#edit-pkt-buttons").style.display = "none";
@@ -210,7 +205,7 @@ class UI { // Handles UI Tasks
       document.querySelector("#instructions-page").style.display = "none";
     }
     else if (pageSelected === "scrollRecords") { //=> edit/add page for new seed packet entry
-      UI.clearFields();
+      View.clearFields();
       document.title = "Scroll Pkt Records";
       document.querySelector("#new-pkt-buttons").style.display = "none";
       document.querySelector("#edit-pkt-buttons").style.display = "none";
@@ -308,12 +303,12 @@ class UI { // Handles UI Tasks
         backupNotes.innerHTML = "";
       }; 
       //console.log('Home Page selected');
-      UI.selectPages('homePage', oldSortOn, oldSortOrder);
+      View.selectPages('homePage', oldSortOn, oldSortOrder);
   } 
 
   static editSeed(record, editPage) { //=> opens the edit/add page ->
-    UI.clearFields();
-    UI.selectPages(editPage);
+    View.clearFields();
+    View.selectPages(editPage);
     Object.keys(record).forEach(field => { // -> with the requested seed pkt record for editing
       //console.log(field);
       //console.log(record[field]);
@@ -330,10 +325,10 @@ class Store {
       console.log(database);
       // check if DB exists and open home page, if not display error
       if (database.db.objectStoreNames.contains('collection')) {       
-        UI.selectPages('homePage');
+        View.selectPages('homePage');
       }
       else {
-        UI.selectPages("dbError");                       
+        View.selectPages("dbError");                       
       }
       // TO DO: need final comment screen must not have captured some other error!
   }
@@ -377,7 +372,7 @@ class Store {
     const seedNotes = document.querySelector('#seedNotes').value;
     if (seedGroup === '' || variety === '' || pktId === '' || seedNumbers === ''
      || seedWeight === '' || seedDatePacked === '') {
-      UI.showAlert('Please fill in all fields', 'warning', '#pkt-message', '#insert-form-alerts');
+      View.showAlert('Please fill in all fields', 'warning', '#pkt-message', '#insert-form-alerts');
     } //=> checks if all the fields are filled out, if not an error message sent.
     else { //=> instantiates new seed object from Seed Class
       const timeStamp = Date.now();
@@ -396,12 +391,12 @@ class Store {
         const store = transaction.objectStore('collection');
         store.put(seed); //=> adds record to collection. If pktID already exists, will update edited record.
       };
-      UI.showAlert('Seed Packet Added', 'success', '#pkt-message', '#insert-form-alerts'); //=> Show success message
-      UI.clearFields();  //=> Clear form fields 
+      View.showAlert('Seed Packet Added', 'success', '#pkt-message', '#insert-form-alerts'); //=> Show success message
+      View.clearFields();  //=> Clear form fields 
       if (mode === 'editSeedPkt') { //=> return to seed list
-        UI.selectPages('homePage', oldSortOn, oldSortOrder);
+        View.selectPages('homePage', oldSortOn, oldSortOrder);
       } else if (mode === 'newPktPage') { //=> Create new empty seed packet entry
-        UI.selectPages('newPktPage');
+        View.selectPages('newPktPage');
       };
     };
   }
@@ -428,9 +423,9 @@ class Store {
         event.target.errorCode
       };
     };
-    UI.showAlert('Seed Packet Deleted', 'warning', '#pkt-message', '#insert-form-alerts'); //=> Show success message
-    UI.clearFields(); //=> Clear form fields
-    UI.refreshTable('pktId'); //=> Refresh seed table sorted on pktId 
+    View.showAlert('Seed Packet Deleted', 'warning', '#pkt-message', '#insert-form-alerts'); //=> Show success message
+    View.clearFields(); //=> Clear form fields
+    View.refreshTable('pktId'); //=> Refresh seed table sorted on pktId 
   }
 
     
@@ -592,25 +587,25 @@ const msgInstallBb = document.getElementById('installDbMsg'); //=> alias for UI 
 Data.backup(); // TO DO: have to sort the events in that function
  
 //=> Events 
-window.onscroll = () => { UI.scrollEvent() }; //=> scrolls down 20px, show the up button
+window.onscroll = () => { View.scrollEvent() }; //=> scrolls down 20px, show the up button
 
 window.onload = () => { Store.dbExist() }; //=> Load IndexedDB and check for right store
 
 //=> Menu events
-document.querySelector(".js-menu-hamburger").addEventListener("click", UI.menu);
+document.querySelector(".js-menu-hamburger").addEventListener("click", View.menu);
 // Menu selection events
-htmlId('eventHomePage').addEventListener('click', () => { UI.selectPages('homePage') }, false);
-htmlId('eventPktPage').addEventListener('click', () => { UI.selectPages('newPktPage') }, false);
-htmlId('eventScrollPage').addEventListener('click', () => { UI.selectPages('scrollRecords') }, false)
-htmlId('eventReadWritePage').addEventListener('click', () => { UI.selectPages('readWritePage') }, false);
-htmlId('eventErrorPage').addEventListener('click', () => { UI.selectPages('dbError') }, false);
-htmlId('eventInstrPage').addEventListener('click', () => { UI.selectPages('instructionsPage') }, false);
+htmlId('eventHomePage').addEventListener('click', () => { View.selectPages('homePage') }, false);
+htmlId('eventPktPage').addEventListener('click', () => { View.selectPages('newPktPage') }, false);
+htmlId('eventScrollPage').addEventListener('click', () => { View.selectPages('scrollRecords') }, false)
+htmlId('eventReadWritePage').addEventListener('click', () => { View.selectPages('readWritePage') }, false);
+htmlId('eventErrorPage').addEventListener('click', () => { View.selectPages('dbError') }, false);
+htmlId('eventInstrPage').addEventListener('click', () => { View.selectPages('instructionsPage') }, false);
 
 //=> Sort table columns events
-htmlId('sortSeedGroup').addEventListener('click', () => { UI.refreshTable('seedGroup') }, false);
-htmlId('sortVariety').addEventListener('click', () => { UI.refreshTable('variety') }, false);
-htmlId('sortPktId').addEventListener('click', () => { UI.refreshTable('pktId') }, false);
-htmlId('sortDatePacked').addEventListener('click', () => { UI.refreshTable('seedDatePacked') }, false);
+htmlId('sortSeedGroup').addEventListener('click', () => { View.refreshTable('seedGroup') }, false);
+htmlId('sortVariety').addEventListener('click', () => { View.refreshTable('variety') }, false);
+htmlId('sortPktId').addEventListener('click', () => { View.refreshTable('pktId') }, false);
+htmlId('sortDatePacked').addEventListener('click', () => { View.refreshTable('seedDatePacked') }, false);
 
 //=> Button & input events
 htmlId('btnSubmitRecord').addEventListener('click', () => { Store.editAddRecord('editSeedPkt') }, false);
@@ -618,12 +613,12 @@ htmlId('btnDeleteRecord').addEventListener('click', () => { Store.deleteRecord()
 htmlId('btnNewRecord').addEventListener('click', () => { Store.editAddRecord('newPktPage') }, false);
 htmlId('btnRetrieveData').addEventListener('click', () => { Data.retrieveAll() }, false);
 htmlId('btnReinstall').addEventListener('click', () => { Store.corruptDB() }, false);
-htmlId('js-page--to-bottom').addEventListener('click', () => { UI.scrollToBottom() }, false);
-htmlId('js-page--to-top').addEventListener('click', () => { UI.scrollToTop() }, false);
+htmlId('js-page--to-bottom').addEventListener('click', () => { View.scrollToBottom() }, false);
+htmlId('js-page--to-top').addEventListener('click', () => { View.scrollToTop() }, false);
 
 // Buttons & inputs all opening Home Page (same class)
 document.querySelectorAll('.btnHomePage')
-  .forEach(btn => btn.addEventListener('click', (e) => { UI.locateBtnHomePage(e) }, false));
+  .forEach(btn => btn.addEventListener('click', (e) => { View.locateBtnHomePage(e) }, false));
 
 // Functions
 /*TO DO: make this functions static 
@@ -664,7 +659,7 @@ async function loadData(sortOn = 'variety', sortOrder = 'next') {
     const db = new Db();
     await db.open();    
     const records = await db.getAll(sortOn, sortOrder);
-    UI.displaySeeds(records);
+    View.displaySeeds(records);
 };
 
 // Event get pktId from table
@@ -672,7 +667,7 @@ async function editSeedPkt(pktId) {
     const db = new Db();
     await db.open();
     const record = await db.getRecord(pktId);
-    UI.editSeed(record, 'editSeedPkt');
+    View.editSeed(record, 'editSeedPkt');
 };
 
 //=> Design Scroll pages
