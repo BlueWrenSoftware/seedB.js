@@ -11,11 +11,7 @@ class View {
     //  - updating the database
     // It does not make requests of the Model
     
-    constructor() {
-        
-    }
-    
-    addPacketToTable(seedPkt) {
+    static addPacketToTable(seedPkt) {
         // Adds a packet as a row to packet list
         const list = document.querySelector('#seed-list');
         const row = document.createElement('tr');
@@ -29,43 +25,15 @@ class View {
         list.appendChild(row);
     }
     
-    displayPackets(packets) {
+    static displayPackets(packets) {
         // Delete table rows first before entering updated data on home page
         const table = document.querySelector('#seed-list');
         while (table.rows.length > 0) {
             table.deleteRow(0);
         };
-        packets.forEach((packet) => this.addPacketToTable(packet));
+        packets.forEach((packet) => View.addPacketToTable(packet));
     }
     
-    static displaySeeds(seedTable) {
-        // Delete table rows first before entering updated data on home page
-        const table = document.querySelector('#seed-list');
-        while (table.rows.length > 0) {
-            table.deleteRow(0);
-        };
-        seedTable.forEach((row) => View.addSeedToTable(row));
-    }
-
-    static addSeedToTable(seedPkt) {
-        //=> Add row to seeds list table with seed packet
-        const list = document.querySelector('#seed-list');
-        const row = document.createElement('tr');
-
-        //  This is a template for each row
-        row.innerHTML = `
-      <td>${seedPkt.seedGroup}</td>
-      <td>${seedPkt.variety}</td>
-      <td>${seedPkt.pktId}</td>
-      <td class="table-seeds__col--center">${(seedPkt.seedDatePacked).substring(2)}</td>
-      <td class="table-seeds__col--center">${seedPkt.seedNumbers}</td>
-      <td class="table-seeds__col--center">${seedPkt.seedWeight}</td>
-      <td class="edit" onclick="editSeedPkt('${seedPkt.pktId}')"></td>
-    `;
-        
-        list.appendChild(row);
-    }
-
     static showAlert(message, className, idMessage, idLocation) {
         //=> Creating warning msg when entering data
         const div = document.createElement('div');
@@ -88,6 +56,18 @@ class View {
         document.querySelector('#seedDatePacked').value = '';
         document.querySelector('#timeStamp').value = '';
         document.querySelector('#seedNotes').value = '';
+    }
+
+    static showHomePage() {
+        if (document.getElementById("showHide").classList.contains("js-all-pages--none")) {
+                document.getElementById("showHide").classList.add("js-all-pages--opened");
+                document.getElementById("showHide").classList.remove("js-all-pages--none");
+            }
+        document.title = "SeedB Blue Wren"; //=> Page at startup being the seed list
+        document.querySelector("#home-page").style.display = "";
+        document.querySelector("#edit-page").style.display = "none";
+        document.querySelector("#read-write-page").style.display = "none";
+        document.querySelector("#instructions-page").style.display = "none";
     }
 
     static selectPages(pageSelected, initialSortOn, initialOrder) {  //=> Selects the pages from menu and other buttons
@@ -225,7 +205,7 @@ class View {
         backupNotes.innerHTML = "";
       }; 
       //console.log('Home Page selected');
-      View.selectPages('homePage', oldSortOn, oldSortOrder);
+      View.showHomePage();
   } 
 
   static editSeed(record, editPage) { //=> opens the edit/add page ->
@@ -352,16 +332,15 @@ class Db {
 class Controller {
     // Responsible for handling user input
 
-    constructor(model, view) {
+    constructor(model) {
         this.model = model;
-        this.view = view;
         // Packet sorting column
         this.sortOn = 'variety';
         // Sort 'next' or 'prev'
         this.sortOrder = 'next';
     }
     
-    async sortSeedList(sortOn) {
+    async getSortedPacketList(sortOn) {
         // Refresh table on selected column for sort
         // if the new sort column is not the same as the old,
         // then we have changed the sorting
@@ -386,7 +365,7 @@ class Controller {
 
         // request the new data from the model
         const records = await this.model.getAll(sortOn, sortOrder);
-        this.view.displayPackets(records);
+        View.displayPackets(records);
   }
 }
 
@@ -399,7 +378,7 @@ class Store {
       console.log(database);
       // check if DB exists and open home page, if not display error
       if (database.db.objectStoreNames.contains('collection')) {       
-        View.selectPages('homePage');
+        View.showHomePage();
       }
       else {
         View.selectPages("dbError");                       
@@ -645,10 +624,6 @@ class Data { //=> Handles data files for backup and restore
 //=> End of Classes
 
 //=> Global variables
-const view = new View();
-const model = new Db();
-model.open();
-const controller = new Controller(model, view);
 
 let oldSortOn = 'variety'; //=> last sort configuration by user - table column
 let oldSortOrder = 'next'; //=> last sort configuration by user - sort order
@@ -668,12 +643,17 @@ Data.backup(); // TO DO: have to sort the events in that function
 //=> Events 
 window.onscroll = () => { View.scrollEvent() }; //=> scrolls down 20px, show the up button
 
-window.onload = () => { Store.dbExist() }; //=> Load IndexedDB and check for right store
+window.onload = async () => {
+    const model = new Db();
+    await model.open();
+    const controller = new Controller(model);
+    controller.getSortedPacketList();
+}
 
 //=> Menu events
 document.querySelector(".js-menu-hamburger").addEventListener("click", View.menu);
 // Menu selection events
-htmlId('eventHomePage').addEventListener('click', () => { View.selectPages('homePage') }, false);
+htmlId('eventHomePage').addEventListener('click', () => { View.showHomePage() }, false);
 htmlId('eventPktPage').addEventListener('click', () => { View.selectPages('newPktPage') }, false);
 htmlId('eventScrollPage').addEventListener('click', () => { View.selectPages('scrollRecords') }, false)
 htmlId('eventReadWritePage').addEventListener('click', () => { View.selectPages('readWritePage') }, false);
@@ -681,10 +661,10 @@ htmlId('eventErrorPage').addEventListener('click', () => { View.selectPages('dbE
 htmlId('eventInstrPage').addEventListener('click', () => { View.selectPages('instructionsPage') }, false);
 
 //=> Sort table columns events
-htmlId('sortSeedGroup').addEventListener('click', () => { controller.sortSeedList('seedGroup') }, false);
-htmlId('sortVariety').addEventListener('click', () => { controller.sortSeedList('variety') }, false);
-htmlId('sortPktId').addEventListener('click', () => { controller.sortSeedList('pktId') }, false);
-htmlId('sortDatePacked').addEventListener('click', () => { controller.sortSeedList('seedDatePacked') }, false);
+htmlId('sortSeedGroup').addEventListener('click', () => { controller.getSortedPacketList('seedGroup') }, false);
+htmlId('sortVariety').addEventListener('click', () => { controller.getSortedPacketList('variety') }, false);
+htmlId('sortPktId').addEventListener('click', () => { controller.getSortedPacketList('pktId') }, false);
+htmlId('sortDatePacked').addEventListener('click', () => { controller.getSortedPacketList('seedDatePacked') }, false);
 
 //=> Button & input events
 htmlId('btnSubmitRecord').addEventListener('click', () => { Store.editAddRecord('editSeedPkt') }, false);
@@ -738,7 +718,7 @@ async function loadData(sortOn = 'variety', sortOrder = 'next') {
     const db = new Db();
     await db.open();    
     const records = await db.getAll(sortOn, sortOrder);
-    View.displaySeeds(records);
+    View.displayPackets(records);
 };
 
 // Event get pktId from table
