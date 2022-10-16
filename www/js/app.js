@@ -14,6 +14,84 @@ class Seed { //=> Creates an instance of a seed packet for data upload
     this.seedNotes = seedNotes;
     this.timeStamp = timeStamp;
   }
+};
+
+class Db {
+    // responsible for Db access
+    static openDbPromise(version) {
+	      return new Promise((resolve, reject) => {
+	          const request = window.indexedDB.open('seedB', version);    
+            request.onupgradeneeded = function (event) {
+                const db = event.target.result;
+                const store = db.createObjectStore('collection', { keyPath: 'pktId' });
+                store.createIndex('variety', 'variety', { unique: false });
+                store.createIndex('seedGroup', 'seedGroup', { unique: false });
+                store.createIndex('seedDatePacked', 'seedDatePacked', { unique: false });
+                store.createIndex('timeStamp', 'timeStamp', { unique: false });
+            }
+
+	          request.onsuccess = (event) => {
+		            resolve(event.target.result);
+	          }
+
+            request.onerror = (event) => {
+		            reject(event.target.errorCode);
+	          }
+	      });
+    }
+
+    initialize() {
+        const store = this.db.createObjectStore('collection', { keyPath: 'pktId' }); // -> with object store ->
+        store.createIndex('variety', 'variety', { unique: false });             // -> and keys 
+        store.createIndex('seedGroup', 'seedGroup', { unique: false });
+        store.createIndex('seedDatePacked', 'seedDatePacked', { unique: false });
+        store.createIndex('timeStamp', 'timeStamp', { unique: false });
+    }
+
+    getRecordPromise(id) {        
+        return new Promise((resolve, reject) => {
+            const request = this.store.get(id);
+            request.onsuccess = event => {
+                let record = event.target.result;
+                resolve(record)
+            };
+            request.onerror = (event) => {
+                reject(event.target.errorCode);
+            };
+        });
+    };
+
+    async open() {
+        this.db = await Db.openDbPromise();
+        if (this.db.objectStoreNames.contains('collection')==false) {
+            this.initialize();
+        }
+        this.transaction = this.db.transaction(['collection'], "readwrite");
+        this.store = this.transaction.objectStore('collection');
+        console.log('DB Opened');
+    };
+
+    async getRecord(id) {
+        return await this.getRecordPromise(id);
+    };
+};
+
+class View {
+    // Responsible for presenting the model to the user
+    constructor() {
+    }
+};
+
+class Control {
+    // Responsible for handling user input
+}
+
+class Model {
+    // manages the data model
+    constructor(controller, view) {
+        this.controller = controller;
+        this.view = view;
+    }
 }
 
 class UI { // Handles UI Tasks
@@ -210,23 +288,23 @@ class UI { // Handles UI Tasks
   } //=> Should be in Store Class?
 }
 
-class Store {//=> Handles all DB operations
-  static dbExist() {                                     //=> Opens DB when opening the app ->
-    const request = window.indexedDB.open('seedB');
-    request.onsuccess = function(e) {
-      const db = e.target.result;
-      //console.log('db is open');
-      if (!db.objectStoreNames.contains('collection')) { // -> verifies that Store exists ->
-        //console.log('no object store');
-        //db.close();
-        UI.selectPages("dbError");                       // -> if not opens error page ->
+class Store {
+  //=> Handles all DB operations
+  static async dbExist() {                                    
+      const database = new Db();
+      await database.open();
+      console.log(database);
+      // check if DB exists and open home page, if not display error
+      if (database.db.objectStoreNames.contains('collection')) {       
+        UI.selectPages('homePage');
       }
-      else if (db.objectStoreNames.contains('collection')) { // -> opens app
-        //console.log('Object store is named collection');
-        UI.selectPages('homePage');    //=> will sort on global oldSortOn and oldSortOrder values                  
-      }  // TO DO: need final comment screen must not have captured some other error!
-    }
-  } // TO DO: both dbExist and openDB might be merged. Issue to resolve on upgrade needed. never got it to work.
+      else {
+        UI.selectPages("dbError");                       
+      }
+      // TO DO: need final comment screen must not have captured some other error!
+  }
+
+    // TO DO: both dbExist and openDB might be merged. Issue to resolve on upgrade needed. never got it to work.
   
   static openDB() {  //=> opens SeedB, if not exist will create SeedB ->
     const request = window.indexedDB.open('seedB', 1);
@@ -353,15 +431,15 @@ class Store {//=> Handles all DB operations
   }
   
     static openDbPromise() {
-	return new Promise((resolve, reject) => {
-	    const request = window.indexedDB.open('seedB', 1);
-	    request.onsuccess = (event) => {
-		resolve(event.target.result);
-	    }
-	    request.onerror = (event) => {
-		reject(event.target.errorCode);
-	    }
-	});
+	      return new Promise((resolve, reject) => {
+	          const request = window.indexedDB.open('seedB', 1);
+	          request.onsuccess = (event) => {
+		            resolve(event.target.result);
+	          }
+	          request.onerror = (event) => {
+		            reject(event.target.errorCode);
+	          }
+	      });
     }
 }
 
@@ -699,4 +777,4 @@ async function printMe() {
   console.log('hello"');
 }
 
-printMe();
+// printMe();
