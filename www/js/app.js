@@ -123,20 +123,27 @@ class Model {
 }
 
 class View {
-    // View is reponsible for updating the dom
-  static displaySeeds(seedTable) { //=> Delete table rows first before entering updated data on home page
-    const table = document.querySelector('#seed-list');
-    while (table.rows.length > 0) {
-      table.deleteRow(0);
-    };
-    seedTable.forEach((row) => View.addSeedToTable(row));
-  }
+    // View is reponsible for presenting the model to the user
+    // that is, updating the DOM.
+    // It is not responsible for:
+    //  - handling user input
+    //  - updating the database
+    static displaySeeds(seedTable) {
+        // Delete table rows first before entering updated data on home page
+        const table = document.querySelector('#seed-list');
+        while (table.rows.length > 0) {
+            table.deleteRow(0);
+        };
+        seedTable.forEach((row) => View.addSeedToTable(row));
+    }
 
-  static addSeedToTable(seedPkt) { //=> Add row to seeds list table with seed packet
-    const list = document.querySelector('#seed-list');
-    const row = document.createElement('tr');
-    
-    row.innerHTML = `
+    static addSeedToTable(seedPkt) {
+        //=> Add row to seeds list table with seed packet
+        const list = document.querySelector('#seed-list');
+        const row = document.createElement('tr');
+
+        //  This is a template for each row
+        row.innerHTML = `
       <td>${seedPkt.seedGroup}</td>
       <td>${seedPkt.variety}</td>
       <td>${seedPkt.pktId}</td>
@@ -144,66 +151,70 @@ class View {
       <td class="table-seeds__col--center">${seedPkt.seedNumbers}</td>
       <td class="table-seeds__col--center">${seedPkt.seedWeight}</td>
       <td class="edit" onclick="editSeedPkt('${seedPkt.pktId}')"></td>
-    `; //=> Created template literal with $ being a string interpolation
-    list.appendChild(row);
-  }
-
-  static showAlert(message, className, idMessage, idLocation) { //=> Creating warning msg when entering data
-    const div = document.createElement('div');
-    div.className = `alert ${className}`;
-    div.appendChild(document.createTextNode(message));
-    const messages = document.querySelector(`${idMessage}`); //=> message content created Store.editSddRecord()
-    const section = document.querySelector(`${idLocation}`); //=> where in the html page the msg is located
-    section.insertBefore(div, messages);
-    setTimeout(() => document.querySelector('.alert').remove(), 3000); //=> Vanish in 3 seconds
-  }
-
-  static clearFields() { //=> Clears all the entry fields on the edit/add page
-    document.querySelector('#seedGroup').value = '';
-    document.querySelector('#variety').value = '';
-    document.querySelector('#pktId').value = '';
-    document.querySelector('#seedNumbers').value = '';
-    document.querySelector('#seedWeight').value = '';
-    document.querySelector('#seedDatePacked').value = '';
-    document.querySelector('#timeStamp').value = '';
-    document.querySelector('#seedNotes').value = '';
-  }
-
-  static selectPages(pageSelected, initialSortOn, initialOrder) {  //=> Selects the pages from menu and other buttons
-    if (pageSelected === "homePage") { //=> Checks if all the pages are hidden on startup and remove hidden to show
-      if (document.getElementById("showHide").classList.contains("js-all-pages--none")) {
-        document.getElementById("showHide").classList.add("js-all-pages--opened");
-        document.getElementById("showHide").classList.remove("js-all-pages--none");
-      }
-      document.title = "SeedB Blue Wren"; //=> Page at startup being the seed list
-      document.querySelector("#home-page").style.display = "";
-      document.querySelector("#edit-page").style.display = "none";
-      document.querySelector("#read-write-page").style.display = "none";
-      document.querySelector("#instructions-page").style.display = "none";
-      loadData(initialSortOn, initialOrder);
+    `;
+        
+        list.appendChild(row);
     }
-    else if (pageSelected === "editSeedPkt") { //=> edit/add page seed packet selected from the seed list
-      View.clearFields();
-      document.title = "Edit Seed Pkt";
-      document.querySelector("#edit-pkt-buttons").style.display = "";
-      document.querySelector("#new-pkt-buttons").style.display = "none";
-      document.querySelector("#scrollRecordsButtons").style.display = "none";
-      document.querySelector("#home-page").style.display = "none";
-      document.querySelector("#edit-page").style.display = "";
-      document.querySelector("#read-write-page").style.display = "none";
-      document.querySelector("#instructions-page").style.display = "none";
+
+    static showAlert(message, className, idMessage, idLocation) {
+        //=> Creating warning msg when entering data
+        const div = document.createElement('div');
+        div.className = `alert ${className}`;
+        div.appendChild(document.createTextNode(message));
+        const messages = document.querySelector(`${idMessage}`);
+        //=> where in the html page the msg is located
+        const section = document.querySelector(`${idLocation}`); 
+        section.insertBefore(div, messages);
+        //=> Vanish in 3 seconds
+        setTimeout(() => document.querySelector('.alert').remove(), 3000); 
     }
-    else if (pageSelected === "newPktPage") { //=> edit/add page for new seed packet entry
-      View.clearFields();
-      document.title = "New Seed Pkt";
-      document.querySelector("#new-pkt-buttons").style.display = "";
-      document.querySelector("#edit-pkt-buttons").style.display = "none";
-      document.querySelector("#scrollRecordsButtons").style.display = "none";
-      document.querySelector("#home-page").style.display = "none";
-      document.querySelector("#edit-page").style.display = "";
-      document.querySelector("#read-write-page").style.display = "none";
-      document.querySelector("#instructions-page").style.display = "none";
+
+    static clearFields() { //=> Clears all the entry fields on the edit/add page
+        document.querySelector('#seedGroup').value = '';
+        document.querySelector('#variety').value = '';
+        document.querySelector('#pktId').value = '';
+        document.querySelector('#seedNumbers').value = '';
+        document.querySelector('#seedWeight').value = '';
+        document.querySelector('#seedDatePacked').value = '';
+        document.querySelector('#timeStamp').value = '';
+        document.querySelector('#seedNotes').value = '';
     }
+
+    static selectPages(pageSelected, initialSortOn, initialOrder) {  //=> Selects the pages from menu and other buttons
+        if (pageSelected === "homePage") { //=> Checks if all the pages are hidden on startup and remove hidden to show
+            if (document.getElementById("showHide").classList.contains("js-all-pages--none")) {
+                document.getElementById("showHide").classList.add("js-all-pages--opened");
+                document.getElementById("showHide").classList.remove("js-all-pages--none");
+            }
+            document.title = "SeedB Blue Wren"; //=> Page at startup being the seed list
+            document.querySelector("#home-page").style.display = "";
+            document.querySelector("#edit-page").style.display = "none";
+            document.querySelector("#read-write-page").style.display = "none";
+            document.querySelector("#instructions-page").style.display = "none";
+            loadData(initialSortOn, initialOrder);
+        }
+        else if (pageSelected === "editSeedPkt") { //=> edit/add page seed packet selected from the seed list
+            View.clearFields();
+            document.title = "Edit Seed Pkt";
+            document.querySelector("#edit-pkt-buttons").style.display = "";
+            document.querySelector("#new-pkt-buttons").style.display = "none";
+            document.querySelector("#scrollRecordsButtons").style.display = "none";
+            document.querySelector("#home-page").style.display = "none";
+            document.querySelector("#edit-page").style.display = "";
+            document.querySelector("#read-write-page").style.display = "none";
+            document.querySelector("#instructions-page").style.display = "none";
+        }
+        else if (pageSelected === "newPktPage") { //=> edit/add page for new seed packet entry
+            View.clearFields();
+            document.title = "New Seed Pkt";
+            document.querySelector("#new-pkt-buttons").style.display = "";
+            document.querySelector("#edit-pkt-buttons").style.display = "none";
+            document.querySelector("#scrollRecordsButtons").style.display = "none";
+            document.querySelector("#home-page").style.display = "none";
+            document.querySelector("#edit-page").style.display = "";
+            document.querySelector("#read-write-page").style.display = "none";
+            document.querySelector("#instructions-page").style.display = "none";
+        }
     else if (pageSelected === "scrollRecords") { //=> edit/add page for new seed packet entry
       View.clearFields();
       document.title = "Scroll Pkt Records";
