@@ -16,9 +16,15 @@ class Seed { //=> Creates an instance of a seed packet for data upload
   }
 };
 
-class Db {
+class Db {    
     // responsible for Db access
-    static openDbPromise(version) {
+    constructor() {
+        this.newlyCreated = false;
+        this.db = null;
+        this.version = null;
+    }
+    
+    openDbPromise(version) {
 	      return new Promise((resolve, reject) => {
 	          const request = window.indexedDB.open('seedB', version);    
             request.onupgradeneeded = function (event) {
@@ -40,12 +46,22 @@ class Db {
 	      });
     }
 
-    initialize() {
-        const store = this.db.createObjectStore('collection', { keyPath: 'pktId' }); // -> with object store ->
-        store.createIndex('variety', 'variety', { unique: false });             // -> and keys 
-        store.createIndex('seedGroup', 'seedGroup', { unique: false });
-        store.createIndex('seedDatePacked', 'seedDatePacked', { unique: false });
-        store.createIndex('timeStamp', 'timeStamp', { unique: false });
+    deletePromise() {        
+        return new Promise((resolve, reject) => {
+            const req = window.indexedDB.deleteDatabase('seedB')
+            req.onsuccess = function () {
+                //console.log("Deleted database successfully");
+                resolve('success');
+            };
+            req.onerror = function () {
+                //console.log("Couldn't delete database");
+                reject('error');
+            };
+            req.onblocked = function () {
+                //console.log("Couldn't delete database due to the operation being blocked");
+                reject('blocked')
+            };
+        });
     }
 
     getRecordPromise(id) {        
@@ -62,18 +78,20 @@ class Db {
     };
 
     async open() {
-        this.db = await Db.openDbPromise();
-        if (this.db.objectStoreNames.contains('collection')==false) {
-            this.initialize();
-        }
+        this.db = await this.openDbPromise();
         this.transaction = this.db.transaction(['collection'], "readwrite");
         this.store = this.transaction.objectStore('collection');
+        this.version = this.db.version;
         console.log('DB Opened');
     };
 
     async getRecord(id) {
         return await this.getRecordPromise(id);
     };
+
+    async delete() {
+        return await this.deletePromise();
+    }
 };
 
 class View {
@@ -306,39 +324,31 @@ class Store {
 
     // TO DO: both dbExist and openDB might be merged. Issue to resolve on upgrade needed. never got it to work.
   
-  static openDB() {  //=> opens SeedB, if not exist will create SeedB ->
-    const request = window.indexedDB.open('seedB', 1);
-    request.onupgradeneeded = function (event) {
-      const db = event.target.result;
-      const store = db.createObjectStore('collection', { keyPath: 'pktId' }); // -> with object store ->
-      store.createIndex('variety', 'variety', { unique: false });             // -> and keys 
-      store.createIndex('seedGroup', 'seedGroup', { unique: false });
-      store.createIndex('seedDatePacked', 'seedDatePacked', { unique: false });
-      store.createIndex('timeStamp', 'timeStamp', { unique: false });
-      //console.log('Index Creation Successful');
-      //console.log('The new database version number is = ' + event.newVersion);
-      const version = 'The new database version number is = ' + event.newVersion;
-      msgInstallBb.innerHTML += ('<li>=> New SeedB created.</li>');
-      msgInstallBb.innerHTML += ('<li>=> ' + version + '</li>');
+    static async openDB() {  //=> opens SeedB, if not exist will create SeedB ->
+        const database = new Db();
+        await database.open();
+        if (database.newlyCreated) {
+            const version = 'The new database version number is = ' + database.version;
+            msgInstallBb.innerHTML += ('<li>=> New SeedB created.</li>');
+            msgInstallBb.innerHTML += ('<li>=> ' + version + '</li>');
+        }
     }
-  }
 
-  static corruptDB() {  //=> Deletes corrupted database directed from dbError page
-    const req = indexedDB.deleteDatabase('seedB');
-    req.onsuccess = function () {
-      //console.log("Deleted database successfully");
-      msgInstallBb.innerHTML += ('<li>=> Deleted corrupted database.</li>');
-      Store.openDB();
-    };
-    req.onerror = function () {
-      //console.log("Couldn't delete database");
-      msgInstallBb.innerHTML += ('<li>=> Could not delete database</li>');
-    };
-    req.onblocked = function () {
-      //console.log("Couldn't delete database due to the operation being blocked");
-      msgInstallBb.innerHTML += ('<li>=> Could not delete database due to the operation being blocked</li>');
-    };
-  }
+    static async corruptDB() {  //=> Deletes corrupted database directed from dbError page
+        const db = new Db();
+        const ret = await db.delete();
+        if (ret === 'success') {
+            //console.log("Deleted database successfully");
+            msgInstallBb.innerHTML += ('<li>=> Deleted corrupted database.</li>');
+            db.open();
+        } else if (ret === 'error') {
+            //console.log("Couldn't delete database");
+            msgInstallBb.innerHTML += ('<li>=> Could not delete database</li>');
+        } else if (ret === 'blocked') {
+            //console.log("Couldn't delete database due to the operation being blocked");
+            msgInstallBb.innerHTML += ('<li>=> Could not delete database due to the operation being blocked</li>');
+        };
+    }
 
   static editAddRecord(mode) { //=> Adds or edits one seed pkt record ->
     //console.log(mode);
