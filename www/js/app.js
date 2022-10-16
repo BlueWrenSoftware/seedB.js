@@ -72,16 +72,7 @@ class View {
 
     static selectPages(pageSelected, initialSortOn, initialOrder) {  //=> Selects the pages from menu and other buttons
         if (pageSelected === "homePage") { //=> Checks if all the pages are hidden on startup and remove hidden to show
-            if (document.getElementById("showHide").classList.contains("js-all-pages--none")) {
-                document.getElementById("showHide").classList.add("js-all-pages--opened");
-                document.getElementById("showHide").classList.remove("js-all-pages--none");
-            }
-            document.title = "SeedB Blue Wren"; //=> Page at startup being the seed list
-            document.querySelector("#home-page").style.display = "";
-            document.querySelector("#edit-page").style.display = "none";
-            document.querySelector("#read-write-page").style.display = "none";
-            document.querySelector("#instructions-page").style.display = "none";
-            loadData(initialSortOn, initialOrder);
+            View.showHomePage();
         }
         else if (pageSelected === "editSeedPkt") { //=> edit/add page seed packet selected from the seed list
             View.clearFields();
@@ -173,28 +164,6 @@ class View {
     } else {
       toTop.style.display = "none";
     }
-  }
-
-    static refreshTable(sortOn) {
-        //=> refresh table on selected column for sort
-    //console.log('1 ' + oldSortOn);
-    //console.log('2 ' + sortOn);
-    let invertSort = sortOn === oldSortOn; //=> false if not the same
-    //console.log('3 ' + invertSort);
-    let sortOrder = 'next';
-    let invertOrder = sortOrder === oldSortOrder; //=> false if not the same
-    //console.log('4 ' + invertOrder);
-    if (invertOrder && invertSort) { //=> true - change sort order
-      sortOrder = 'prev';
-      //console.log('5 if was selected');
-    }
-    oldSortOn = sortOn;         //=> assign present sort column to variable ->
-    oldSortOrder = sortOrder;  //-> and assign present sort order to variable
-    const table = document.getElementById('seed-list');
-    loadData(sortOn, sortOrder); //=> pass on the sort instruction to this function
-    //sortState[0] = sortOn; 
-    //sortState[1] = sortOrder;
-    //console.log(sortState);
   }
 
   static locateBtnHomePage(e) { //=> select from classList the right return to Home page button
