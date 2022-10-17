@@ -186,6 +186,10 @@ class View {
       document.querySelector('#' + field).value = record[field];
     });
   } //=> Should be in Store Class?
+
+    static showMessage(message) {
+        msgInstallBb.innerHTML += (`<li>=> ${message}</li>`);
+    }
 }
 
 class Seed { //=> Creates an instance of a seed packet for data upload
@@ -209,13 +213,17 @@ class Db {
         this.version = null;
         this.view = view;
     }
+
+    close() {
+        this.db.close();
+    }
     
     open(version) {
 	      return new Promise((resolve, reject) => {
 	          const request = window.indexedDB.open('seedB', version);    
             request.onupgradeneeded = function (event) {
                 this.db = event.target.result;
-                const store = db.createObjectStore('collection', { keyPath: 'pktId' });
+                const store = this.db.createObjectStore('collection', { keyPath: 'pktId' });
                 store.createIndex('variety', 'variety', { unique: false });
                 store.createIndex('seedGroup', 'seedGroup', { unique: false });
                 store.createIndex('seedDatePacked', 'seedDatePacked', { unique: false });
@@ -335,26 +343,31 @@ class Controller {
         // request the new data from the model
         const records = await this.model.getAll(sortOn, sortOrder);
         View.displayPackets(records);
-  }
+    }
+
+    async fixCorruptDB() {
+        try {
+            this.model.close();
+            const ret = await this.model.delete();
+            this.model.open();
+            View.showMessage('Deleted corrupted database');
+        } catch (error) {
+            switch (error) {
+            case 'error':
+                View.showMessage('Could not delete database');
+                break;
+            case 'blocked':
+                View.showMessage('Could not delete database; operation blocked');
+                break;
+            default:
+                View.showMessage('Unknown error');
+            }
+        }
+    }
 }
 
 
 class Store {  
-    static async corruptDB() {  //=> Deletes corrupted database directed from dbError page
-        const db = new Db();
-        const ret = await db.delete();
-        if (ret === 'success') {
-            //console.log("Deleted database successfully");
-            msgInstallBb.innerHTML += ('<li>=> Deleted corrupted database.</li>');
-            db.open();
-        } else if (ret === 'error') {
-            //console.log("Couldn't delete database");
-            msgInstallBb.innerHTML += ('<li>=> Could not delete database</li>');
-        } else if (ret === 'blocked') {
-            //console.log("Couldn't delete database due to the operation being blocked");
-            msgInstallBb.innerHTML += ('<li>=> Could not delete database due to the operation being blocked</li>');
-        };
-    }
 
   static editAddRecord(mode) { //=> Adds or edits one seed pkt record ->
     //console.log(mode);
@@ -584,12 +597,12 @@ Data.backup(); // TO DO: have to sort the events in that function
  
 //=> Events 
 window.onscroll = () => { View.scrollEvent() }; //=> scrolls down 20px, show the up button
+const model = new Db();
+const controller = new Controller(model);
 
 window.onload = async () => {
-    const model = new Db();
     await model.open();
     const controller = new Controller(model);
-    controller.getSortedPacketList();
 }
 
 //=> Menu events
@@ -613,7 +626,7 @@ htmlId('btnSubmitRecord').addEventListener('click', () => { Store.editAddRecord(
 htmlId('btnDeleteRecord').addEventListener('click', () => { Store.deleteRecord() }, false);
 htmlId('btnNewRecord').addEventListener('click', () => { Store.editAddRecord('newPktPage') }, false);
 htmlId('btnRetrieveData').addEventListener('click', () => { Data.retrieveAll() }, false);
-htmlId('btnReinstall').addEventListener('click', () => { Store.corruptDB() }, false);
+htmlId('btnReinstall').addEventListener('click', () => { controller.fixCorruptDB() }, false);
 htmlId('js-page--to-bottom').addEventListener('click', () => { View.scrollToBottom() }, false);
 htmlId('js-page--to-top').addEventListener('click', () => { View.scrollToTop() }, false);
 
