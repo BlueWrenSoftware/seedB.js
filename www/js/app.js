@@ -339,24 +339,7 @@ class Controller {
 }
 
 
-class Store {
-  //=> Handles all DB operations
-  static async dbExist() {                                    
-      const database = new Db();
-      await database.open();
-      console.log(database);
-      // check if DB exists and open home page, if not display error
-      if (database.db.objectStoreNames.contains('collection')) {       
-        View.showHomePage();
-      }
-      else {
-        View.selectPages("dbError");                       
-      }
-      // TO DO: need final comment screen must not have captured some other error!
-  }
-
-    // TO DO: both dbExist and openDB might be merged. Issue to resolve on upgrade needed. never got it to work.
-  
+class Store {  
     static async openDB() {  //=> opens SeedB, if not exist will create SeedB ->
         const database = new Db();
         await database.open();
