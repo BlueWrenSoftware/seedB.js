@@ -340,16 +340,6 @@ class Controller {
 
 
 class Store {  
-    static async openDB() {  //=> opens SeedB, if not exist will create SeedB ->
-        const database = new Db();
-        await database.open();
-        if (database.newlyCreated) {
-            const version = 'The new database version number is = ' + database.version;
-            msgInstallBb.innerHTML += ('<li>=> New SeedB created.</li>');
-            msgInstallBb.innerHTML += ('<li>=> ' + version + '</li>');
-        }
-    }
-
     static async corruptDB() {  //=> Deletes corrupted database directed from dbError page
         const db = new Db();
         const ret = await db.delete();
