@@ -70,6 +70,18 @@ class View {
         document.querySelector("#instructions-page").style.display = "none";
     }
 
+    static showAddPacket() {        
+        View.clearFields();
+        document.title = "New Seed Pkt";
+        document.querySelector("#new-pkt-buttons").style.display = "";
+        document.querySelector("#edit-pkt-buttons").style.display = "none";
+        document.querySelector("#scrollRecordsButtons").style.display = "none";
+        document.querySelector("#home-page").style.display = "none";
+        document.querySelector("#edit-page").style.display = "";
+        document.querySelector("#read-write-page").style.display = "none";
+        document.querySelector("#instructions-page").style.display = "none";
+    }
+
     static selectPages(pageSelected, initialSortOn, initialOrder) {  //=> Selects the pages from menu and other buttons
         if (pageSelected === "homePage") { //=> Checks if all the pages are hidden on startup and remove hidden to show
             View.showHomePage();
@@ -86,15 +98,7 @@ class View {
             document.querySelector("#instructions-page").style.display = "none";
         }
         else if (pageSelected === "newPktPage") { //=> edit/add page for new seed packet entry
-            View.clearFields();
-            document.title = "New Seed Pkt";
-            document.querySelector("#new-pkt-buttons").style.display = "";
-            document.querySelector("#edit-pkt-buttons").style.display = "none";
-            document.querySelector("#scrollRecordsButtons").style.display = "none";
-            document.querySelector("#home-page").style.display = "none";
-            document.querySelector("#edit-page").style.display = "";
-            document.querySelector("#read-write-page").style.display = "none";
-            document.querySelector("#instructions-page").style.display = "none";
+            View.showAddPacket();
         }
     else if (pageSelected === "scrollRecords") { //=> edit/add page for new seed packet entry
       View.clearFields();
@@ -216,6 +220,7 @@ class Db {
 
     close() {
         this.db.close();
+        this.db = null;
     }
     
     open(version) {
@@ -232,8 +237,6 @@ class Db {
 
 	          request.onsuccess = (event) => {
                 this.db = event.target.result;
-                this.transaction = this.db.transaction(['collection'], "readwrite");
-                this.store = this.transaction.objectStore('collection');
                 this.version = this.db.version;
 		            resolve(event.target.result);
 	          }
@@ -242,10 +245,19 @@ class Db {
 		            reject(event.target.errorCode);
 	          }
 	      });
+    };
+
+    async tryOpen(version) {
+        if (this.db===null) {
+            await this.open(version);
+        };
     }
 
-    delete() {        
+    delete() {
         return new Promise((resolve, reject) => {
+            if (this.db) {
+                this.close();
+            };
             const req = window.indexedDB.deleteDatabase('seedB')
             req.onsuccess = function () {
                 //console.log("Deleted database successfully");
@@ -263,7 +275,8 @@ class Db {
     }
 
     getRecord(id) {        
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
+            await this.tryOpen();
             const transaction = this.db.transaction('collection', "readonly");
             const objectStore = transaction.objectStore('collection');
             const request = objectStore.get(id);
@@ -278,8 +291,9 @@ class Db {
     };
     
     getAll(sortOn = 'variety', sortOrder = 'next') {
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             let cursorRequest;
+            await this.tryOpen();
             const transaction = this.db.transaction('collection', "readonly");
             const objectStore = transaction.objectStore('collection');
             if (sortOn === 'pktId') {
@@ -303,7 +317,17 @@ class Db {
                 reject(event.target.errorCode);
             };
         })
-    };    
+    };
+
+    
+    async loadRecords(records) {
+        await this.tryOpen();
+        const transaction = this.db.transaction('collection', 'readwrite');
+        const store = transaction.objectStore('collection');
+        records.forEach(record => { 
+            store.put(record);
+        });
+    }
 };
 
 class Controller {
@@ -315,6 +339,11 @@ class Controller {
         this.sortOn = 'variety';
         // Sort 'next' or 'prev'
         this.sortOrder = 'next';
+    }
+
+    async showPacketList() {
+        View.showHomePage();
+        this.getSortedPacketList();        
     }
     
     async getSortedPacketList(sortOn) {
@@ -347,9 +376,7 @@ class Controller {
 
     async fixCorruptDB() {
         try {
-            this.model.close();
             const ret = await this.model.delete();
-            this.model.open();
             View.showMessage('Deleted corrupted database');
         } catch (error) {
             switch (error) {
@@ -363,6 +390,10 @@ class Controller {
                 View.showMessage('Unknown error');
             }
         }
+    }
+
+    async addPacket(form) {
+        console.log(form);
     }
 }
 
@@ -404,7 +435,7 @@ class Store {
       if (mode === 'editSeedPkt') { //=> return to seed list
         View.selectPages('homePage', oldSortOn, oldSortOrder);
       } else if (mode === 'newPktPage') { //=> Create new empty seed packet entry
-        View.selectPages('newPktPage');
+          View.showAddPacket();
       };
     };
   }
@@ -434,29 +465,6 @@ class Store {
     View.showAlert('Seed Packet Deleted', 'warning', '#pkt-message', '#insert-form-alerts'); //=> Show success message
       View.clearFields(); //=> Clear form fields
       model.getAll();
-  }
-
-    
-  static addRecords(file) { //=> add te records extracted from the backup file.
-    const request = window.indexedDB.open('seedB', 1);
-    request.onsuccess = (event) => {
-      //console.log('request success');
-      const db = event.target.result;
-      db.onerror = function (event) {
-        // Generic error handler for all errors targeted at this database's requests!
-        //console.log("Database error: " + event.target.errorCode);
-        event.target.errorCode
-      };
-      const transaction = db.transaction('collection', 'readwrite');
-      const store = transaction.objectStore('collection');
-      file.forEach(record => { //=> cycle through each record oject and merge in the object store
-        store.put(record);
-      });
-      transaction.oncomplete = () => {
-        //console.log('finished transaction');
-        db.close();
-      }
-    }
   }
   
     static openDbPromise() {
@@ -556,11 +564,11 @@ class Data { //=> Handles data files for backup and restore
       backupNotes.innerHTML += '<li>=> Backup file was created on:  '+ file.lastModifiedDate.toString().slice(0, 24) + '</li>';
       backupNotes.innerHTML += '<li>=> Backup file now merged with seed list already in db</li>';
       const reader = new FileReader();
-      reader.onload = function (progressEvent) {
+      reader.onload = async function (progressEvent) {
         //console.log(this.result);
         dataFile = JSON.parse(this.result);
-        //console.log(dataFile);
-        Store.addRecords(dataFile);
+          //console.log(dataFile);
+          await model.loadRecords(dataFile);
         //console.log(dataFile[4]);
       };
       reader.readAsText(file);
@@ -600,16 +608,11 @@ window.onscroll = () => { View.scrollEvent() }; //=> scrolls down 20px, show the
 const model = new Db();
 const controller = new Controller(model);
 
-window.onload = async () => {
-    await model.open();
-    const controller = new Controller(model);
-}
-
 //=> Menu events
 document.querySelector(".js-menu-hamburger").addEventListener("click", View.menu);
 // Menu selection events
-htmlId('eventHomePage').addEventListener('click', () => { View.showHomePage() }, false);
-htmlId('eventPktPage').addEventListener('click', () => { View.selectPages('newPktPage') }, false);
+htmlId('eventHomePage').addEventListener('click', controller.showPacketList, false);
+htmlId('eventPktPage').addEventListener('click', View.showAddPacket, false);
 htmlId('eventScrollPage').addEventListener('click', () => { View.selectPages('scrollRecords') }, false)
 htmlId('eventReadWritePage').addEventListener('click', () => { View.selectPages('readWritePage') }, false);
 htmlId('eventErrorPage').addEventListener('click', () => { View.selectPages('dbError') }, false);
