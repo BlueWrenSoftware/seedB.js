@@ -126,7 +126,6 @@ class Model {
             };
         })
     };
-
     
     async loadRecords(records) {
         await this.tryOpen();
@@ -420,51 +419,44 @@ class Controller {
     async addPacket(form) {
         console.log(form);
     }
+
+    async loadRecord() {
+        const seedGroup = document.querySelector('#seedGroup').value; // -> collects the ->
+        const variety = document.querySelector('#variety').value;     // -> content from ->
+        const pktId = document.querySelector('#pktId').value;         // -> each form field
+        const seedNumbers = document.querySelector('#seedNumbers').value;
+        const seedWeight = document.querySelector('#seedWeight').value;
+        const seedDatePacked = document.querySelector('#seedDatePacked').value;
+        const seedNotes = document.querySelector('#seedNotes').value;
+        if (seedGroup === '' || variety === '' || pktId === '' || seedNumbers === ''
+            || seedWeight === '' || seedDatePacked === '') {
+            View.showAlert('Please fill in all fields', 'warning', '#pkt-message', '#insert-form-alerts');
+        } //=> checks if all the fields are filled out, if not an error message sent.
+        else { //=> instantiates new seed object from Seed Class
+            const timeStamp = Date.now();
+            const seed = new Seed(seedGroup, variety, pktId, seedNumbers, seedWeight, seedDatePacked, seedNotes, timeStamp);
+            //console.log(seed);
+            //console.log(seed['pktId']);
+            await this.model.loadRecords([seed]);
+        };
+        View.showAlert('Seed Packet Added', 'success', '#pkt-message', '#insert-form-alerts'); //=> Show success message
+        View.clearFields();  //=> Clear form fields
+    };
+
+    async editRecord() {
+        await this.loadRecord();
+        View.selectPages('homePage', oldSortOn, oldSortOrder);
+    }
+
+    async addRecord() {
+        await this.loadRecord();
+        View.showAddPacket();
+    };
 }
 
 
-class Store {  
 
-  static editAddRecord(mode) { //=> Adds or edits one seed pkt record ->
-    //console.log(mode);
-    const seedGroup = document.querySelector('#seedGroup').value; // -> collects the ->
-    const variety = document.querySelector('#variety').value;     // -> content from ->
-    const pktId = document.querySelector('#pktId').value;         // -> each form field
-    const seedNumbers = document.querySelector('#seedNumbers').value;
-    const seedWeight = document.querySelector('#seedWeight').value;
-    const seedDatePacked = document.querySelector('#seedDatePacked').value;
-    const seedNotes = document.querySelector('#seedNotes').value;
-    if (seedGroup === '' || variety === '' || pktId === '' || seedNumbers === ''
-     || seedWeight === '' || seedDatePacked === '') {
-      View.showAlert('Please fill in all fields', 'warning', '#pkt-message', '#insert-form-alerts');
-    } //=> checks if all the fields are filled out, if not an error message sent.
-    else { //=> instantiates new seed object from Seed Class
-      const timeStamp = Date.now();
-      const seed = new Seed(seedGroup, variety, pktId, seedNumbers, seedWeight, seedDatePacked, seedNotes, timeStamp);
-      //console.log(seed);
-      //console.log(seed['pktId']);
-      const request = window.indexedDB.open('seedB', 1); //=> Add SeedPkt to IndexedDB
-      request.onsuccess = (event) => {
-        //console.log('request success');
-        const db = event.target.result;
-        db.onerror = function (event) { //=> Generic error handler for all errors targeted at this database's requests!
-          //console.log("Database error: " + event.target.errorCode);
-          event.target.errorCode
-        };
-        const transaction = db.transaction('collection', 'readwrite');
-        const store = transaction.objectStore('collection');
-        store.put(seed); //=> adds record to collection. If pktID already exists, will update edited record.
-      };
-      View.showAlert('Seed Packet Added', 'success', '#pkt-message', '#insert-form-alerts'); //=> Show success message
-      View.clearFields();  //=> Clear form fields 
-      if (mode === 'editSeedPkt') { //=> return to seed list
-        View.selectPages('homePage', oldSortOn, oldSortOrder);
-      } else if (mode === 'newPktPage') { //=> Create new empty seed packet entry
-          View.showAddPacket();
-      };
-    };
-  }
-
+class Store {
   static deleteRecord() { //=> Delete record requested from delete button on edit page
     const pktId = document.querySelector('#pktId').value; //=> pktId obtained from edit button on seed list
     const request = window.indexedDB.open('seedB', 1);
@@ -652,9 +644,9 @@ htmlId('sortPktId').addEventListener('click', () => { controller.getSortedPacket
 htmlId('sortDatePacked').addEventListener('click', () => { controller.getSortedPacketList('seedDatePacked') }, false);
 
 //=> Button & input events
-htmlId('btnSubmitRecord').addEventListener('click', () => { Store.editAddRecord('editSeedPkt') }, false);
+htmlId('btnSubmitRecord').addEventListener('click', () => { controller.editRecord() }, false);
 htmlId('btnDeleteRecord').addEventListener('click', () => { Store.deleteRecord() }, false);
-htmlId('btnNewRecord').addEventListener('click', () => { Store.editAddRecord('newPktPage') }, false);
+htmlId('btnNewRecord').addEventListener('click', () => { controller.addRecord() }, false);
 htmlId('btnRetrieveData').addEventListener('click', () => { Data.retrieveAll() }, false);
 htmlId('btnReinstall').addEventListener('click', () => { controller.fixCorruptDB() }, false);
 htmlId('js-page--to-bottom').addEventListener('click', () => { View.scrollToBottom() }, false);
