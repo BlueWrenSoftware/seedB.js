@@ -421,26 +421,27 @@ class Controller {
     }
 
     async loadRecord() {
-        const seedGroup = document.querySelector('#seedGroup').value; // -> collects the ->
-        const variety = document.querySelector('#variety').value;     // -> content from ->
-        const pktId = document.querySelector('#pktId').value;         // -> each form field
-        const seedNumbers = document.querySelector('#seedNumbers').value;
-        const seedWeight = document.querySelector('#seedWeight').value;
-        const seedDatePacked = document.querySelector('#seedDatePacked').value;
-        const seedNotes = document.querySelector('#seedNotes').value;
-        if (seedGroup === '' || variety === '' || pktId === '' || seedNumbers === ''
-            || seedWeight === '' || seedDatePacked === '') {
-            View.showAlert('Please fill in all fields', 'warning', '#pkt-message', '#insert-form-alerts');
-        } //=> checks if all the fields are filled out, if not an error message sent.
-        else { //=> instantiates new seed object from Seed Class
-            const timeStamp = Date.now();
-            const seed = new Seed(seedGroup, variety, pktId, seedNumbers, seedWeight, seedDatePacked, seedNotes, timeStamp);
-            //console.log(seed);
-            //console.log(seed['pktId']);
+        // Get the content from the form fields
+        const formData = new FormData(document.getElementById("seed-entry"));
+        const seed = Object.fromEntries(formData);
+        seed['timeStamp'] = Date.now();
+        var missingRequiredField;
+        for (const pair of formData.entries()) {
+            const key = pair[0];
+            const value = pair[1];
+            const missingField = value==='';
+            const isRequired = document.getElementById(key).hasAttribute('required');
+            missingRequiredField = missingField && isRequired;
+            if (missingRequiredField) {
+                View.showAlert('Please fill in all fields', 'warning', '#pkt-message', '#insert-form-alerts');
+                break;
+            }
+        }
+        if (!missingRequiredField) {
             await this.model.loadRecords([seed]);
+            View.showAlert('Seed Packet Added', 'success', '#pkt-message', '#insert-form-alerts'); //=> Show success message
+            View.clearFields();  //=> Clear form fields
         };
-        View.showAlert('Seed Packet Added', 'success', '#pkt-message', '#insert-form-alerts'); //=> Show success message
-        View.clearFields();  //=> Clear form fields
     };
 
     async editRecord() {

@@ -74,20 +74,20 @@
           <p>**&ensp;Seed Packet Id must be unique!</p>
           <br>
           <label for="seedGroup">*&nbsp;Seed&nbsp;Group: </label>
-          <input type="text" id="seedGroup"><br>
+          <input type="text" id="seedGroup" name="seedGroup" required><br>
           <label for="variety">*&nbsp;Variety: </label>
-          <input type="text" id="variety"><br>
+          <input type="text" id="variety" name="variety" required><br>
           <label for="pktId">**&nbsp;Seed&nbsp;Packet:</label>
-          <input type="text" id="pktId"><br>
+          <input type="text" id="pktId" name="pktId" required><br>
           <label for="seedNumbers">*&nbsp;Seed&nbsp;Count:</label>
-          <input type="number" id="seedNumbers"><br>
+          <input type="number" id="seedNumbers" name="seedNumbers" required><br>
           <label for="seedWeight">*&nbsp;Seed &nbsp;Grams:</label>
-          <input type="number" id="seedWeight"><br>
+          <input type="number" id="seedWeight" name="seedWeight" required><br>
           <label for="seedDatePacked">*&nbsp;Date&nbsp;Packaged:</label>
-          <input type="date" id="seedDatePacked"><br>
+          <input type="date" id="seedDatePacked" name="seedDatePacked" required><br>
           <label for="timeStamp">Timestamp:</label>
-          <input type="number" readonly="readonly" class="timestamp" id="timeStamp"><br>
-          <label class="notes" for="seedNotes">Notes:</label>
+          <input type="number" readonly="readonly" class="timestamp" id="timeStamp" name="timeStamp"><br>
+          <label class="notes" for="seedNotes" name="seedNotes">Notes:</label>
           <textarea rows="2" id="seedNotes"></textarea>
           <br>
           <div id="edit-pkt-buttons" class="wrapper">
