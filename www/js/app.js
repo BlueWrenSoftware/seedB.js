@@ -135,6 +135,13 @@ class Model {
             store.put(record);
         });
     }
+    
+    async deleteRecord(pktId) {        
+        await this.tryOpen();
+        const transaction = this.db.transaction('collection', 'readwrite');
+        const store = transaction.objectStore('collection');
+        store.delete(pktId);
+    }
 };
 
 
@@ -453,38 +460,20 @@ class Controller {
         await this.loadRecord();
         View.showAddPacket();
     };
+
+    async deleteRecord() {
+        //=> Delete record requested from delete button on edit page
+        const pktId = document.querySelector('#pktId').value; //=> pktId obtained from edit button on seed list
+        await this.model.deleteRecord(pktId);
+        View.showAlert('Seed Packet Deleted', 'warning', '#pkt-message', '#insert-form-alerts'); //=> Show success message
+        View.clearFields(); //=> Clear form fields
+        this.model.getAll();
+    }
 }
 
 
 
 class Store {
-  static deleteRecord() { //=> Delete record requested from delete button on edit page
-    const pktId = document.querySelector('#pktId').value; //=> pktId obtained from edit button on seed list
-    const request = window.indexedDB.open('seedB', 1);
-    request.onsuccess = (event) => {
-      //console.log('request success');
-      const db = event.target.result;
-      const transaction = db.transaction('collection', 'readwrite');
-      const store = transaction.objectStore('collection');
-      let deleted = store.get(pktId);
-      //console.log(pktId);
-      //console.log("After push: " + deleted);      //TO DO: Create this as a user message
-      store.delete(pktId);
-      transaction.oncomplete = () => {
-        //console.log('finished transaction');
-        db.close();
-      }
-      db.onerror = function (event) {
-        // Generic error handler for all errors targeted at this database's requests!
-        //console.log("Database error: " + event.target.errorCode);
-        event.target.errorCode
-      };
-    };
-    View.showAlert('Seed Packet Deleted', 'warning', '#pkt-message', '#insert-form-alerts'); //=> Show success message
-      View.clearFields(); //=> Clear form fields
-      model.getAll();
-  }
-  
     static openDbPromise() {
 	      return new Promise((resolve, reject) => {
 	          const request = window.indexedDB.open('seedB', 1);
@@ -646,7 +635,7 @@ htmlId('sortDatePacked').addEventListener('click', () => { controller.getSortedP
 
 //=> Button & input events
 htmlId('btnSubmitRecord').addEventListener('click', () => { controller.editRecord() }, false);
-htmlId('btnDeleteRecord').addEventListener('click', () => { Store.deleteRecord() }, false);
+htmlId('btnDeleteRecord').addEventListener('click', () => { controller.deleteRecord() }, false);
 htmlId('btnNewRecord').addEventListener('click', () => { controller.addRecord() }, false);
 htmlId('btnRetrieveData').addEventListener('click', () => { Data.retrieveAll() }, false);
 htmlId('btnReinstall').addEventListener('click', () => { controller.fixCorruptDB() }, false);
