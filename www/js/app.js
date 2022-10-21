@@ -165,7 +165,7 @@ class View {
                           <td class="table-seeds__col--center">${(seedPkt.seedDatePacked).substring(2)}</td>
                           <td class="table-seeds__col--center">${seedPkt.seedNumbers}</td>
                           <td class="table-seeds__col--center">${seedPkt.seedWeight}</td>
-                          <td class="edit" onclick="editSeedPkt('${seedPkt.pktId}')"></td>`;
+                          <td class="edit" onclick="controller.editSeedPkt('${seedPkt.pktId}')"></td>`;
         list.appendChild(row);
     }
     
@@ -437,6 +437,12 @@ class Controller {
         };
     };
 
+    
+    async editSeedPkt(pktId) {
+        const record = await this.model.getRecord(pktId);
+        View.editSeed(record, 'editSeedPkt');
+    };
+
     async editRecord() {
         await this.loadRecord();
         View.selectPages('homePage', oldSortOn, oldSortOrder);
@@ -489,37 +495,33 @@ class Controller {
         fileNotes.innerHTML += '<li>=> Backup file name is: ' + filename + '</li>';
         this.download(filename, text); //=> Save backup file.
     }
-} 
 
-
-class Data { //=> Handles data files for backup and restore 
-  static backup() { //=> Upload backup file and merge with data in object store
-    const fileSelect = document.getElementById("js-file-select");
-    const extractFileData = document.getElementById("js-input-file-data");
-    fileSelect.addEventListener("click", function () { //=> Upload Text File button clicked readWritePage
-      if (extractFileData) { extractFileData.click(); } }, false);
-    extractFileData.onchange = function () { //=> Parse data to JSON objects in an array
-      let dataFile = [];
-      const file = this.files[0];
-      //console.log(file);
-      //console.log(file.name);
-      //console.log(file.lastModifiedDate.toString().slice(0,24));
-      backupNotes.innerHTML += '<li>=> Backup file used:  '+file.name+'</li>';
-      backupNotes.innerHTML += '<li>=> Backup file was created on:  '+ file.lastModifiedDate.toString().slice(0, 24) + '</li>';
-      backupNotes.innerHTML += '<li>=> Backup file now merged with seed list already in db</li>';
-      const reader = new FileReader();
-      reader.onload = async function (progressEvent) {
-        //console.log(this.result);
-        dataFile = JSON.parse(this.result);
-          //console.log(dataFile);
-          await model.loadRecords(dataFile);
-        //console.log(dataFile[4]);
-      };
-      reader.readAsText(file);
-    };
-  } /* TO DO: all the events have to be taken out!
+    backup() { //=> Upload backup file and merge with data in object store
+        const fileSelect = document.getElementById("js-file-select");
+        const extractFileData = document.getElementById("js-input-file-data");
+        fileSelect.addEventListener("click", function () { //=> Upload Text File button clicked readWritePage
+            if (extractFileData) { extractFileData.click(); } }, false);
+        extractFileData.onchange = function () { //=> Parse data to JSON objects in an array
+            let dataFile = [];
+            const file = this.files[0];
+            //console.log(file);
+            //console.log(file.name);
+            //console.log(file.lastModifiedDate.toString().slice(0,24));
+            backupNotes.innerHTML += '<li>=> Backup file used:  '+file.name+'</li>';
+            backupNotes.innerHTML += '<li>=> Backup file was created on:  '+ file.lastModifiedDate.toString().slice(0, 24) + '</li>';
+            backupNotes.innerHTML += '<li>=> Backup file now merged with seed list already in db</li>';
+            const reader = new FileReader();
+            reader.onload = async function (progressEvent) {
+                //console.log(this.result);
+                dataFile = JSON.parse(this.result);
+                //console.log(dataFile);
+                await model.loadRecords(dataFile);
+                //console.log(dataFile[4]);
+            };
+            reader.readAsText(file);
+        };
+    } /* TO DO: all the events have to be taken out!
               better documentation need for this function */
-
 }
 
 const model = new Model();
@@ -550,7 +552,7 @@ const errorMsg = document.getElementById("dbError");  //=> alias forDB error msg
 const msgInstallBb = document.getElementById('installDbMsg'); //=> alias for UI installation msgs
 
 //=> Restore data from backup file
-Data.backup(); // TO DO: have to sort the events in that function
+controller.backup(); // TO DO: have to sort the events in that function
  
 //=> Events 
 window.onscroll = () => { View.scrollEvent() }; //=> scrolls down 20px, show the up button
@@ -589,49 +591,7 @@ document.querySelectorAll('.btnHomePage')
          create universal open db promise 
 */
 
-function fetchSortDataPromise(db, sortOn = 'variety', sortOrder = 'next') {
-  return new Promise((resolve, reject) => {
-    //request = db.transaction('collection').objectStore('collection').openCursor();
-    const transaction = db.transaction(['collection'], "readonly");
-    const store = transaction.objectStore('collection');
-    let cursorRequest;
-    if (sortOn === 'pktId') {
-      cursorRequest = store.openCursor(null, sortOrder);
-    } else {
-      const index = store.index(sortOn);
-      cursorRequest = index.openCursor(null, sortOrder); //sort by variety name
-    }
-    const records = [];
-    cursorRequest.onsuccess = event => {
-      let cursor = event.target.result;
-      if (cursor) {
-        records.push(cursor.value);
-        cursor.continue();
-      }
-      else {
-        resolve(records);
-      }
-    }
-    cursorRequest.onerror = (event) => {
-      reject(event.target.errorCode);
-    }
-  })
-};
-
-async function loadData(sortOn = 'variety', sortOrder = 'next') {
-    const db = new Model();
-    await db.open();    
-    const records = await db.getAll(sortOn, sortOrder);
-    View.displayPackets(records);
-};
-
 // Event get pktId from table
-async function editSeedPkt(pktId) {
-    const db = new Model();
-    await db.open();
-    const record = await db.getRecord(pktId);
-    View.editSeed(record, 'editSeedPkt');
-};
 
 //=> Design Scroll pages
 
