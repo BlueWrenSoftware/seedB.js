@@ -3,20 +3,6 @@
   -> Continuation of initial comment*/
 'use strict';
 
-
-class Seed { //=> Creates an instance of a seed packet for data upload
-  constructor(seedGroup, variety, pktId, seedNumbers, seedWeight, seedDatePacked, seedNotes, timeStamp) {
-    this.seedGroup = seedGroup;
-    this.variety = variety;
-    this.pktId = pktId;
-    this.seedNumbers = seedNumbers;
-    this.seedWeight = seedWeight;
-    this.seedDatePacked = seedDatePacked;
-    this.seedNotes = seedNotes;
-    this.timeStamp = timeStamp;
-  }
-};
-
 class Model {    
     // responsible for Db access
     constructor(view = null) {
@@ -468,94 +454,45 @@ class Controller {
         View.showAlert('Seed Packet Deleted', 'warning', '#pkt-message', '#insert-form-alerts'); //=> Show success message
         View.clearFields(); //=> Clear form fields
         this.model.getAll();
+    };
+
+    fileTime() {  //=> Timestamp for file names
+        const date = new Date();
+        const year = date.getFullYear().toString();
+        const month = "0" + (date.getMonth() + 1)
+        const day = "0" + date.getDate();
+        const hours = "0" + date.getHours();
+        const minutes = "0" + date.getMinutes();
+        const formattedTime = `${year.slice(-2)}-${month.slice(-2)}-${day.slice(-2)}T${hours.slice(-2)}∶${minutes.slice(-2)}`;
+        return formattedTime;
     }
-}
 
-
-
-class Store {
-    static openDbPromise() {
-	      return new Promise((resolve, reject) => {
-	          const request = window.indexedDB.open('seedB', 1);
-	          request.onsuccess = (event) => {
-		            resolve(event.target.result);
-	          }
-	          request.onerror = (event) => {
-		            reject(event.target.errorCode);
-	          }
-	      });
-    }
-}
-
-
-class Data { //=> Handles data files for backup and restore
-  static fileTime() {  //=> Timestamp for file names
-    const date = new Date();
-    const year = date.getFullYear().toString();
-    const month = "0" + (date.getMonth() + 1)
-    const day = "0" + date.getDate();
-    const hours = "0" + date.getHours();
-    const minutes = "0" + date.getMinutes();
-    //const seconds = "0" + date.getSeconds();
-    const formattedTime = `${year.slice(-2)}-${month.slice(-2)}-${day.slice(-2)}T${hours.slice(-2)}∶${minutes.slice(-2)}`;
-    //console.log(date, day, month, year); //=> Time format to UTC standard. Colons not accepted in filenames. ->
-    //console.log(formattedTime); //-> used math ratio symbol U2236 instead and truncated year to 2 digits
-    return formattedTime;
+    
+    download(filename, textInput) {
+        //=> Download filename using browser file download
+        const element = document.createElement('a'); //=> Create anchor tag
+        element.setAttribute('href', 'data:text/plain;charset=utf-8, ' + encodeURIComponent(textInput));
+        element.setAttribute('download', filename); //=> create and download the stringified record
+        document.body.appendChild(element);
+        element.click();                            //=> Click the href anchor
+        document.body.removeChild(element);         //=> Remove anchor element
+        //console.log('Download complete');
+        fileNotes.innerHTML += '<li>=> Download is completed.</li>';
   }
-  
-  static retrieveAll() { //=> Collects all data records from DB
-    Store.openDbPromise().then( //=> open DB
-      db => {
-        return new Promise((resolve, reject) => {
-          const transaction = db.transaction(['collection'], "readonly");
-          const store = transaction.objectStore('collection');
-          let cursorRequest;
-          let records = []; //=> array objects
-          cursorRequest = store.openCursor();
-
-          cursorRequest.onsuccess = event => {
-            let cursor = event.target.result;
-            if (cursor) { 
-              //let key = cursor.key; //=> Next key for console output
-              let value = cursor.value; //=> Next record
-              //console.log(key, value);
-              records.push(value);
-              cursor.continue();
-            }
-            else {
-              resolve(records); //=> All records collected
-              //console.log('All SeedB data retrieved');
-              fileNotes.innerHTML += '<li>=> All SeedB data retrieved</li>';
-            }
-          }
-          cursorRequest.onerror = (event) => {
-            reject(event.target.errorCode);
-          }
-        })
-      })
-      .then(records => {  //=> return records;
-        //console.log(records)
+    
+    async retrieveAll() {
+        //=> Collects all data records from DB
+        const records = await this.model.getAll();
         const text = JSON.stringify(records, null, 2); //=> array of records objects converted to string
-        //console.log(text);
-        let time = Data.fileTime() + ".txt"; //=> Created file name with timestamp
+        let time = this.fileTime() + ".txt"; //=> Created file name with timestamp
         const filename = "seedB∶" + time;
-        //console.log(filename);
         fileNotes.innerHTML += '<li>=> Backup file name is: ' + filename + '</li>';
-        Data.download(filename, text); //=> Save backup file.
-      });
-  } // TO DO: Change to async await structure.
+        this.download(filename, text); //=> Save backup file.
+    }
+} 
 
-  static download(filename, textInput) { //=> Download filename using browser file download
-    const element = document.createElement('a'); //=> Create anchor tag
-    element.setAttribute('href', 'data:text/plain;charset=utf-8, ' + encodeURIComponent(textInput));
-    element.setAttribute('download', filename); //=> create and download the stringified record
-    document.body.appendChild(element);
-    element.click();                            //=> Click the href anchor
-    document.body.removeChild(element);         //=> Remove anchor element
-    //console.log('Download complete');
-    fileNotes.innerHTML += '<li>=> Download is completed.</li>';
-  }
- 
+
+class Data { //=> Handles data files for backup and restore 
   static backup() { //=> Upload backup file and merge with data in object store
     const fileSelect = document.getElementById("js-file-select");
     const extractFileData = document.getElementById("js-input-file-data");
@@ -637,7 +574,7 @@ htmlId('sortDatePacked').addEventListener('click', () => { controller.getSortedP
 htmlId('btnSubmitRecord').addEventListener('click', () => { controller.editRecord() }, false);
 htmlId('btnDeleteRecord').addEventListener('click', () => { controller.deleteRecord() }, false);
 htmlId('btnNewRecord').addEventListener('click', () => { controller.addRecord() }, false);
-htmlId('btnRetrieveData').addEventListener('click', () => { Data.retrieveAll() }, false);
+htmlId('btnRetrieveData').addEventListener('click', () => { controller.retrieveAll() }, false);
 htmlId('btnReinstall').addEventListener('click', () => { controller.fixCorruptDB() }, false);
 htmlId('js-page--to-bottom').addEventListener('click', () => { View.scrollToBottom() }, false);
 htmlId('js-page--to-top').addEventListener('click', () => { View.scrollToTop() }, false);
