@@ -3,7 +3,7 @@
   -> Continuation of initial comment*/
 'use strict';
 
-class Model {    
+class Model {
     // responsible for Db access
     constructor(view = null) {
         this.newlyCreated = false;
@@ -16,10 +16,10 @@ class Model {
         this.db.close();
         this.db = null;
     }
-    
+
     open(version) {
-	      return new Promise((resolve, reject) => {
-	          const request = window.indexedDB.open('seedB', version);    
+        return new Promise((resolve, reject) => {
+            const request = window.indexedDB.open('seedB', version);
             request.onupgradeneeded = function (event) {
                 this.db = event.target.result;
                 const store = this.db.createObjectStore('collection', { keyPath: 'pktId' });
@@ -29,20 +29,20 @@ class Model {
                 store.createIndex('timeStamp', 'timeStamp', { unique: false });
             }
 
-	          request.onsuccess = (event) => {
+            request.onsuccess = (event) => {
                 this.db = event.target.result;
                 this.version = this.db.version;
-		            resolve(event.target.result);
-	          }
+                resolve(event.target.result);
+            }
 
             request.onerror = (event) => {
-		            reject(event.target.errorCode);
-	          }
-	      });
+                reject(event.target.errorCode);
+            }
+        });
     };
 
     async tryOpen(version) {
-        if (this.db===null) {
+        if (this.db === null) {
             await this.open(version);
         };
     }
@@ -68,7 +68,7 @@ class Model {
         });
     }
 
-    getRecord(id) {        
+    getRecord(id) {
         return new Promise(async (resolve, reject) => {
             await this.tryOpen();
             const transaction = this.db.transaction('collection', "readonly");
@@ -83,7 +83,7 @@ class Model {
             };
         });
     };
-    
+
     getAll(sortOn = 'variety', sortOrder = 'next') {
         return new Promise(async (resolve, reject) => {
             let cursorRequest;
@@ -112,17 +112,17 @@ class Model {
             };
         })
     };
-    
+
     async loadRecords(records) {
         await this.tryOpen();
         const transaction = this.db.transaction('collection', 'readwrite');
         const store = transaction.objectStore('collection');
-        records.forEach(record => { 
+        records.forEach(record => {
             store.put(record);
         });
     }
-    
-    async deleteRecord(pktId) {        
+
+    async deleteRecord(pktId) {
         await this.tryOpen();
         const transaction = this.db.transaction('collection', 'readwrite');
         const store = transaction.objectStore('collection');
@@ -132,7 +132,7 @@ class Model {
 
 
 class View {
-    // View is reponsible for presenting the model to the user
+    // View is responsible for presenting the model to the user
     // that is, updating the DOM.
     // It is not responsible for:
     //  - handling user input
@@ -143,23 +143,23 @@ class View {
         this.app = this.getElement('#root');
         this.homePageLink = this.getElement('#eventHomePage');
     }
-    
+
     createElement(tag, className) {
         const element = document.createElement(tag);
         if (className) element.classList.add(className);
         return element;
     }
-    
+
     getElement(selector) {
         const element = document.querySelector(selector);
         return element;
     }
-    
+
     static addPacketToTable(seedPkt) {
         // Adds a packet as a row to packet list
         const list = document.querySelector('#seed-list');
         const row = document.createElement('tr');
-        row.innerHTML =  `<td>${seedPkt.seedGroup}</td>
+        row.innerHTML = `<td>${seedPkt.seedGroup}</td>
                           <td>${seedPkt.variety}</td>
                           <td>${seedPkt.pktId}</td>
                           <td class="table-seeds__col--center">${(seedPkt.seedDatePacked).substring(2)}</td>
@@ -168,7 +168,7 @@ class View {
                           <td class="edit" onclick="controller.editSeedPkt('${seedPkt.pktId}')"></td>`;
         list.appendChild(row);
     }
-    
+
     static displayPackets(packets) {
         // Delete table rows first before entering updated data on home page
         const table = document.querySelector('#seed-list');
@@ -177,7 +177,7 @@ class View {
         };
         packets.forEach((packet) => View.addPacketToTable(packet));
     }
-    
+
     static showAlert(message, className, idMessage, idLocation) {
         //=> Creating warning msg when entering data
         const div = document.createElement('div');
@@ -185,10 +185,10 @@ class View {
         div.appendChild(document.createTextNode(message));
         const messages = document.querySelector(`${idMessage}`);
         //=> where in the html page the msg is located
-        const section = document.querySelector(`${idLocation}`); 
+        const section = document.querySelector(`${idLocation}`);
         section.insertBefore(div, messages);
         //=> Vanish in 3 seconds
-        setTimeout(() => document.querySelector('.alert').remove(), 3000); 
+        setTimeout(() => document.querySelector('.alert').remove(), 3000);
     }
 
     static clearFields() { //=> Clears all the entry fields on the edit/add page
@@ -204,9 +204,9 @@ class View {
 
     static showHomePage() {
         if (document.getElementById("showHide").classList.contains("js-all-pages--none")) {
-                document.getElementById("showHide").classList.add("js-all-pages--opened");
-                document.getElementById("showHide").classList.remove("js-all-pages--none");
-            }
+            document.getElementById("showHide").classList.add("js-all-pages--opened");
+            document.getElementById("showHide").classList.remove("js-all-pages--none");
+        }
         document.title = "SeedB Blue Wren"; //=> Page at startup being the seed list
         document.querySelector("#home-page").style.display = "";
         document.querySelector("#edit-page").style.display = "none";
@@ -214,7 +214,7 @@ class View {
         document.querySelector("#instructions-page").style.display = "none";
     }
 
-    static showAddPacket() {        
+    static showAddPacket() {
         View.clearFields();
         document.title = "New Seed Pkt";
         document.querySelector("#new-pkt-buttons").style.display = "";
@@ -244,102 +244,101 @@ class View {
         else if (pageSelected === "newPktPage") { //=> edit/add page for new seed packet entry
             View.showAddPacket();
         }
-    else if (pageSelected === "scrollRecords") { //=> edit/add page for new seed packet entry
-      View.clearFields();
-      document.title = "Scroll Pkt Records";
-      document.querySelector("#new-pkt-buttons").style.display = "none";
-      document.querySelector("#edit-pkt-buttons").style.display = "none";
-      document.querySelector("#scrollRecordsButtons").style.display = "";
-      document.querySelector("#home-page").style.display = "none";
-      document.querySelector("#edit-page").style.display = "";
-      document.querySelector("#read-write-page").style.display = "none";
-      document.querySelector("#instructions-page").style.display = "none";
+        else if (pageSelected === "scrollRecords") { //=> edit/add page for new seed packet entry
+            View.clearFields();
+            document.title = "Scroll Pkt Records";
+            document.querySelector("#new-pkt-buttons").style.display = "none";
+            document.querySelector("#edit-pkt-buttons").style.display = "none";
+            document.querySelector("#scrollRecordsButtons").style.display = "";
+            document.querySelector("#home-page").style.display = "none";
+            document.querySelector("#edit-page").style.display = "";
+            document.querySelector("#read-write-page").style.display = "none";
+            document.querySelector("#instructions-page").style.display = "none";
+        }
+        else if (pageSelected === "readWritePage") { //=> backup and restore page
+            document.title = "Backup & Restore";
+            document.querySelector("#retrieve-data-button").style.display = "";
+            document.querySelector("#home-page").style.display = "none";
+            document.querySelector("#edit-page").style.display = "none";
+            document.querySelector("#read-write-page").style.display = "";
+            document.querySelector("#instructions-page").style.display = "none";
+            document.querySelector("#dbError").style.display = "none"
+        }
+        else if (pageSelected === "instructionsPage") { //=> page for instructions
+            document.title = "Instructions";
+            document.querySelector("#home-page").style.display = "none";
+            document.querySelector("#edit-page").style.display = "none";
+            document.querySelector("#read-write-page").style.display = "none";
+            document.querySelector("#instructions-page").style.display = "";
+        }
+        else if (pageSelected === "dbError") { //=> checks if pages are hidden before loading error page on start
+            if (document.getElementById("showHide").classList.contains("js-all-pages--none")) {
+                document.getElementById("showHide").classList.add("js-all-pages--opened");
+                document.getElementById("showHide").classList.remove("js-all-pages--none");
+            }
+            document.title = "DB Error"; //=> on start up if db fails this page will be loaded
+            document.querySelector("#retrieve-data-button").style.display = "none";
+            document.querySelector("#home-page").style.display = "none";
+            document.querySelector("#edit-page").style.display = "none";
+            document.querySelector("#read-write-page").style.display = "none";
+            document.querySelector("#instructions-page").style.display = "none";
+            document.querySelector("#read-write-page").style.display = "";
+            //document.querySelector("#dbError").style.display = ""
+        }
     }
-    else if (pageSelected === "readWritePage") { //=> backup and restore page
-      document.title = "Backup & Restore";
-      document.querySelector("#retrieve-data-button").style.display = "";
-      document.querySelector("#home-page").style.display = "none";
-      document.querySelector("#edit-page").style.display = "none";
-      document.querySelector("#read-write-page").style.display = "";
-      document.querySelector("#instructions-page").style.display = "none";
-      document.querySelector("#dbError").style.display = "none"
+
+    static menu() { //=> toggle function using class lists on click of the hamburger menu
+        let getMenu = document.querySelector(".js-menu-hamburger--closed");
+        getMenu.classList.toggle("js-menu-hamburger--opened");
     }
-    else if (pageSelected === "instructionsPage") { //=> page for instructions
-      document.title = "Instructions";
-      document.querySelector("#home-page").style.display = "none";
-      document.querySelector("#edit-page").style.display = "none";
-      document.querySelector("#read-write-page").style.display = "none";
-      document.querySelector("#instructions-page").style.display = "";
+
+    static scrollToBottom() { //=> function activated on click of down arrow
+        if (document.documentElement.scrollHeight > document.documentElement.clientHeight) {
+            const scrollHeight = document.documentElement.scrollHeight;
+            window.scrollTo(0, scrollHeight);
+        }
     }
-    else if (pageSelected === "dbError") { //=> checks if pages are hidden before loading error page on start
-      if (document.getElementById("showHide").classList.contains("js-all-pages--none")) {
-        document.getElementById("showHide").classList.add("js-all-pages--opened");
-        document.getElementById("showHide").classList.remove("js-all-pages--none");
-      }
-      document.title = "DB Error"; //=> on start up if db fails this page will be loaded
-      document.querySelector("#retrieve-data-button").style.display = "none";
-      document.querySelector("#home-page").style.display = "none";
-      document.querySelector("#edit-page").style.display = "none";
-      document.querySelector("#read-write-page").style.display = "none";
-      document.querySelector("#instructions-page").style.display = "none";
-      document.querySelector("#read-write-page").style.display = "";
-      //document.querySelector("#dbError").style.display = ""
+
+    static scrollToTop() { //=> function activated on click of up arrow
+        toBottom = document.getElementById("js-page--to-bottom");
+        toBottom.style.display = "block"
+        document.body.scrollTop = 0; //=> For Safari
+        document.documentElement.scrollTop = 0; //=> For Chrome, Firefox, IE and Opera
     }
-  }
 
-  static menu() { //=> toggle function using class lists on click of the hamburger menu
-    let getMenu = document.querySelector(".js-menu-hamburger--closed");
-    getMenu.classList.toggle("js-menu-hamburger--opened");
-  }
-
-  static scrollToBottom() { //=> function activated on click of down arrow
-    if (document.documentElement.scrollHeight > document.documentElement.clientHeight) {
-      const scrollHeight = document.documentElement.scrollHeight;
-      window.scrollTo(0, scrollHeight);
+    static scrollEvent() { //=> scroll event to hide or show to top button
+        if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
+            toTop.style.display = "block";
+        } else {
+            toTop.style.display = "none";
+        }
     }
-  }
 
-  static scrollToTop() { //=> function activated on click of up arrow
-    toBottom = document.getElementById("js-page--to-bottom");
-    toBottom.style.display = "block"
-    document.body.scrollTop = 0; //=> For Safari
-    document.documentElement.scrollTop = 0; //=> For Chrome, Firefox, IE and Opera
-  }
-
-  static scrollEvent() { //=> scroll event to hide or show to top button
-    if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
-      toTop.style.display = "block";
-    } else {
-      toTop.style.display = "none";
+    static locateBtnHomePage(e) { //=> select from classList the right return to Home page button
+        if (e.target === foundBtnHomePage) {
+            fileNotes.innerHTML = "";
+            //console.log("file notes deleted");
+            backupNotes.innerHTML = "";
+        };
+        //console.log('Home Page selected');
+        View.showHomePage();
     }
-  }
 
-  static locateBtnHomePage(e) { //=> select from classList the right return to Home page button
-    if (e.target === foundBtnHomePage)
-      {
-        fileNotes.innerHTML = "";
-        //console.log("file notes deleted");
-        backupNotes.innerHTML = "";
-      }; 
-      //console.log('Home Page selected');
-      View.showHomePage();
-  } 
-
-  static editSeed(record, editPage) { //=> opens the edit/add page ->
-    View.clearFields();
-    View.selectPages(editPage);
-    Object.keys(record).forEach(field => { // -> with the requested seed pkt record for editing
-      //console.log(field);
-      //console.log(record[field]);
-      document.querySelector('#' + field).value = record[field];
-    });
-  } //=> Should be in Store Class?
+    static editSeed(record, editPage) { //=> opens the edit/add page ->
+        View.clearFields();
+        View.selectPages(editPage);
+        Object.keys(record).forEach(field => { // -> with the requested seed pkt record for editing
+            //console.log(field);
+            //console.log(record[field]);
+            document.querySelector('#' + field).value = record[field];
+        });
+    } //=> Should be in Store Class?
 
     static showMessage(message) {
         msgInstallBb.innerHTML += (`<li>=> ${message}</li>`);
     }
 
-    bindHomePageLink(handler) {    
+    bindHomePageLink(handler) {
         this.homePageLink.addEventListener('click', handler, false);
     }
 }
@@ -355,10 +354,10 @@ class Controller {
         this.sortOn = 'variety';
         // Sort 'next' or 'prev'
         this.sortOrder = 'next';
-        this.view.bindHomePageLink(() => {this.requestPacketList();});
+        this.view.bindHomePageLink(() => { this.requestPacketList(); });
     }
-    
-    async getSortedPacketList(sortOn='variety') {
+
+    async getSortedPacketList(sortOn = 'variety') {
         // Refresh table on selected column for sort
         // if the new sort column is not the same as the old,
         // then we have changed the sorting
@@ -367,7 +366,7 @@ class Controller {
         // default to sorting forward (next)
         let sortOrder = 'next';
         // if the old sort order is the same as the default
-        let sameSortOrder = sortOrder === this.sortOrder; 
+        let sameSortOrder = sortOrder === this.sortOrder;
 
         // if the same column for sorting was requested
         // and the sorting direction was already 'next'
@@ -397,14 +396,14 @@ class Controller {
             View.showMessage('Deleted corrupted database');
         } catch (error) {
             switch (error) {
-            case 'error':
-                View.showMessage('Could not delete database');
-                break;
-            case 'blocked':
-                View.showMessage('Could not delete database; operation blocked');
-                break;
-            default:
-                View.showMessage('Unknown error');
+                case 'error':
+                    View.showMessage('Could not delete database');
+                    break;
+                case 'blocked':
+                    View.showMessage('Could not delete database; operation blocked');
+                    break;
+                default:
+                    View.showMessage('Unknown error');
             }
         }
     }
@@ -422,7 +421,7 @@ class Controller {
         for (const pair of formData.entries()) {
             const key = pair[0];
             const value = pair[1];
-            const missingField = value==='';
+            const missingField = value === '';
             const isRequired = document.getElementById(key).hasAttribute('required');
             missingRequiredField = missingField && isRequired;
             if (missingRequiredField) {
@@ -437,7 +436,7 @@ class Controller {
         };
     };
 
-    
+
     async editSeedPkt(pktId) {
         const record = await this.model.getRecord(pktId);
         View.editSeed(record, 'editSeedPkt');
@@ -473,7 +472,7 @@ class Controller {
         return formattedTime;
     }
 
-    
+
     download(filename, textInput) {
         //=> Download filename using browser file download
         const element = document.createElement('a'); //=> Create anchor tag
@@ -484,8 +483,8 @@ class Controller {
         document.body.removeChild(element);         //=> Remove anchor element
         //console.log('Download complete');
         fileNotes.innerHTML += '<li>=> Download is completed.</li>';
-  }
-    
+    }
+
     async retrieveAll() {
         //=> Collects all data records from DB
         const records = await this.model.getAll();
@@ -500,15 +499,16 @@ class Controller {
         const fileSelect = document.getElementById("js-file-select");
         const extractFileData = document.getElementById("js-input-file-data");
         fileSelect.addEventListener("click", function () { //=> Upload Text File button clicked readWritePage
-            if (extractFileData) { extractFileData.click(); } }, false);
+            if (extractFileData) { extractFileData.click(); }
+        }, false);
         extractFileData.onchange = function () { //=> Parse data to JSON objects in an array
             let dataFile = [];
             const file = this.files[0];
             //console.log(file);
             //console.log(file.name);
             //console.log(file.lastModifiedDate.toString().slice(0,24));
-            backupNotes.innerHTML += '<li>=> Backup file used:  '+file.name+'</li>';
-            backupNotes.innerHTML += '<li>=> Backup file was created on:  '+ file.lastModifiedDate.toString().slice(0, 24) + '</li>';
+            backupNotes.innerHTML += '<li>=> Backup file used:  ' + file.name + '</li>';
+            backupNotes.innerHTML += '<li>=> Backup file was created on:  ' + file.lastModifiedDate.toString().slice(0, 24) + '</li>';
             backupNotes.innerHTML += '<li>=> Backup file now merged with seed list already in db</li>';
             const reader = new FileReader();
             reader.onload = async function (progressEvent) {
@@ -553,7 +553,7 @@ const msgInstallBb = document.getElementById('installDbMsg'); //=> alias for UI 
 
 //=> Restore data from backup file
 controller.backup(); // TO DO: have to sort the events in that function
- 
+
 //=> Events 
 window.onscroll = () => { View.scrollEvent() }; //=> scrolls down 20px, show the up button
 
@@ -583,7 +583,7 @@ htmlId('js-page--to-top').addEventListener('click', () => { View.scrollToTop() }
 
 // Buttons & inputs all opening Home Page (same class)
 document.querySelectorAll('.btnHomePage')
-  .forEach(btn => btn.addEventListener('click', (e) => { View.locateBtnHomePage(e) }, false));
+    .forEach(btn => btn.addEventListener('click', (e) => { View.locateBtnHomePage(e) }, false));
 
 // Functions
 /*TO DO: make this functions static 
@@ -596,53 +596,53 @@ document.querySelectorAll('.btnHomePage')
 //=> Design Scroll pages
 
 function fetchSelKeyPrimKey(db) {
-  return new Promise((resolve, reject) => {
-    const transaction = db.transaction(['collection'], "readonly");
-    const store = transaction.objectStore('collection');
-    const selIndex = store.index('seedDatePacked')
-    const selKey = [];
-    const pktIds = [];
-    //const data = [];
-    const keysData = {};
-    selIndex.openCursor().onsuccess = (event) => {
-      const cursor = event.target.result;
-      if(cursor) {
-        selKey.push(cursor.key);
-        //pktIds.push(cursor.primaryKey);
-        cursor.continue();
-      }
-      else {
-        /* data = pktIds.map((value, index) => ({[value]: selKey[index]}));
-        resolve(data); */
-        /* pktIds.forEach((pktId, i) => keysData[pktId] = selKey[i]);
-        resolve(keysData); */
-        resolve(selKey);
-        //console.log('finished');
-      }
-    }
-    selIndex.openCursor().onerror = (event) => {
-      reject(event.target.errorCode);
-    }
-  })
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(['collection'], "readonly");
+        const store = transaction.objectStore('collection');
+        const selIndex = store.index('seedDatePacked')
+        const selKey = [];
+        const pktIds = [];
+        //const data = [];
+        const keysData = {};
+        selIndex.openCursor().onsuccess = (event) => {
+            const cursor = event.target.result;
+            if (cursor) {
+                selKey.push(cursor.key);
+                //pktIds.push(cursor.primaryKey);
+                cursor.continue();
+            }
+            else {
+                /* data = pktIds.map((value, index) => ({[value]: selKey[index]}));
+                resolve(data); */
+                /* pktIds.forEach((pktId, i) => keysData[pktId] = selKey[i]);
+                resolve(keysData); */
+                resolve(selKey);
+                //console.log('finished');
+            }
+        }
+        selIndex.openCursor().onerror = (event) => {
+            reject(event.target.errorCode);
+        }
+    })
 };
 
 function fetchOnlyPrimKey(db) {
-  return new Promise((resolve, reject) => {
-    const transaction = db.transaction(['collection'], "readonly");
-    const store = transaction.objectStore('collection');
-    const selIndex = store.index('seedDatePacked');
-    const getAllKeyReq = selIndex.getAllKeys();
-    getAllKeyReq.onsuccess = (event) => {
-      const allKeyData = event.target.result;
-      //console.log(allKeyData);
-      //console.log(getAllKeyReq.result);
-      console.log(allKeyData[34]);
-      resolve(allKeyData);
-    }
-    getAllKeyReq.onerror = (event) => {
-      reject(event.target.errorCode);
-    }
-  })
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(['collection'], "readonly");
+        const store = transaction.objectStore('collection');
+        const selIndex = store.index('seedDatePacked');
+        const getAllKeyReq = selIndex.getAllKeys();
+        getAllKeyReq.onsuccess = (event) => {
+            const allKeyData = event.target.result;
+            //console.log(allKeyData);
+            //console.log(getAllKeyReq.result);
+            console.log(allKeyData[34]);
+            resolve(allKeyData);
+        }
+        getAllKeyReq.onerror = (event) => {
+            reject(event.target.errorCode);
+        }
+    })
 };
 
 async function printMe() {
