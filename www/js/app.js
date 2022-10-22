@@ -5,8 +5,7 @@
 
 class Model {
     // responsible for Db access
-    constructor(view = null) {
-        this.newlyCreated = false;
+    constructor() {
         this.db = null;
         this.version = null;
         this.view = view;
