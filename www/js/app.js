@@ -142,6 +142,9 @@ class View {
     constructor() {
         this.app = this.getElement('#root');
         this.homePageLink = this.getElement('#eventHomePage');
+        this.toTop = document.getElementById("js-page--to-top"); //=> Get the button
+        this.toBottom = document.getElementById("js-page--to-bottom"); //=> Get the button
+
     }
     
     createElement(tag, className) {
@@ -299,18 +302,18 @@ class View {
     }
   }
 
-  static scrollToTop() { //=> function activated on click of up arrow
-    toBottom = document.getElementById("js-page--to-bottom");
-    toBottom.style.display = "block"
+  scrollToTop() { //=> function activated on click of up arrow
+    this.toBottom = document.getElementById("js-page--to-bottom");
+    this.toBottom.style.display = "block"
     document.body.scrollTop = 0; //=> For Safari
     document.documentElement.scrollTop = 0; //=> For Chrome, Firefox, IE and Opera
   }
 
-  static scrollEvent() { //=> scroll event to hide or show to top button
+  scrollEvent() { //=> scroll event to hide or show to top button
     if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
-      toTop.style.display = "block";
+      this.toTop.style.display = "block";
     } else {
-      toTop.style.display = "none";
+      this.toTop.style.display = "none";
     }
   }
 
@@ -445,7 +448,7 @@ class Controller {
 
     async editRecord() {
         await this.loadRecord();
-        View.selectPages('homePage', oldSortOn, oldSortOrder);
+        View.selectPages('homePage', this.sortOn, this.sortOrder);
     }
 
     async addRecord() {
@@ -539,11 +542,6 @@ const controller = new Controller(model, view);
 
 //=> Global variables
 
-let oldSortOn = 'variety'; //=> last sort configuration by user - table column
-let oldSortOrder = 'next'; //=> last sort configuration by user - sort order
-let toTop = document.getElementById("js-page--to-top"); //=> Get the button
-let toBottom = document.getElementById("js-page--to-bottom"); //=> Get the button
-
 const htmlId = id => document.getElementById(id); //=> alias
 const foundBtnHomePage = document.getElementById('findBtnHomePage'); //=> alias
 const fileNotes = document.getElementById('fileNotifications'); //=> alias for user msgs retrieving data & backup
@@ -555,7 +553,7 @@ const msgInstallBb = document.getElementById('installDbMsg'); //=> alias for UI 
 controller.backup(); // TO DO: have to sort the events in that function
  
 //=> Events 
-window.onscroll = () => { View.scrollEvent() }; //=> scrolls down 20px, show the up button
+window.onscroll = () => { view.scrollEvent() }; //=> scrolls down 20px, show the up button
 
 //=> Menu events
 document.querySelector(".js-menu-hamburger").addEventListener("click", View.menu);
@@ -579,85 +577,11 @@ htmlId('btnNewRecord').addEventListener('click', () => { controller.addRecord() 
 htmlId('btnRetrieveData').addEventListener('click', () => { controller.retrieveAll() }, false);
 htmlId('btnReinstall').addEventListener('click', () => { controller.fixCorruptDB() }, false);
 htmlId('js-page--to-bottom').addEventListener('click', () => { View.scrollToBottom() }, false);
-htmlId('js-page--to-top').addEventListener('click', () => { View.scrollToTop() }, false);
+htmlId('js-page--to-top').addEventListener('click', () => { view.scrollToTop() }, false);
 
 // Buttons & inputs all opening Home Page (same class)
 document.querySelectorAll('.btnHomePage')
   .forEach(btn => btn.addEventListener('click', (e) => { View.locateBtnHomePage(e) }, false));
 
-// Functions
-/*TO DO: make this functions static 
-         convert all to sync await protocol
-         create universal open db promise 
-*/
 
-// Event get pktId from table
 
-//=> Design Scroll pages
-
-function fetchSelKeyPrimKey(db) {
-  return new Promise((resolve, reject) => {
-    const transaction = db.transaction(['collection'], "readonly");
-    const store = transaction.objectStore('collection');
-    const selIndex = store.index('seedDatePacked')
-    const selKey = [];
-    const pktIds = [];
-    //const data = [];
-    const keysData = {};
-    selIndex.openCursor().onsuccess = (event) => {
-      const cursor = event.target.result;
-      if(cursor) {
-        selKey.push(cursor.key);
-        //pktIds.push(cursor.primaryKey);
-        cursor.continue();
-      }
-      else {
-        /* data = pktIds.map((value, index) => ({[value]: selKey[index]}));
-        resolve(data); */
-        /* pktIds.forEach((pktId, i) => keysData[pktId] = selKey[i]);
-        resolve(keysData); */
-        resolve(selKey);
-        //console.log('finished');
-      }
-    }
-    selIndex.openCursor().onerror = (event) => {
-      reject(event.target.errorCode);
-    }
-  })
-};
-
-function fetchOnlyPrimKey(db) {
-  return new Promise((resolve, reject) => {
-    const transaction = db.transaction(['collection'], "readonly");
-    const store = transaction.objectStore('collection');
-    const selIndex = store.index('seedDatePacked');
-    const getAllKeyReq = selIndex.getAllKeys();
-    getAllKeyReq.onsuccess = (event) => {
-      const allKeyData = event.target.result;
-      //console.log(allKeyData);
-      //console.log(getAllKeyReq.result);
-      console.log(allKeyData[34]);
-      resolve(allKeyData);
-    }
-    getAllKeyReq.onerror = (event) => {
-      reject(event.target.errorCode);
-    }
-  })
-};
-
-async function printMe() {
-    const db = new Model();
-    db.open();
-    const values = await fetchSelKeyPrimKey(db.db);
-    const keys = await fetchOnlyPrimKey(db.db);
-    console.log(keys);
-    console.log(values);
-    const data = {};
-
-    for (let i = 0; i < keys.length; i++) {
-        data[keys[i]] = values[i];
-    }
-    console.log(data)
-}
-
-// printMe();
