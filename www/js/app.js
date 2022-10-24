@@ -139,6 +139,7 @@ class View {
 
     constructor() {
         this.app = this.getElement('#root');
+        this.seedListLinkElements = document.querySelectorAll('.btnHomePage')
         this.homePageLink = this.getElement('#eventHomePage');
         this.toTop = document.getElementById("js-page--to-top"); //=> Get the button
         this.toBottom = document.getElementById("js-page--to-bottom"); //=> Get the button
@@ -344,7 +345,7 @@ class View {
     }
 
     bindHomePageLink(handler) {
-        this.homePageLink.addEventListener('click', handler, false);
+        this.seedListLinkElements.forEach(btn => btn.addEventListener('click', handler, false));
     }
 }
 
@@ -449,7 +450,7 @@ class Controller {
 
     async editRecord() {
         await this.loadRecord();
-        View.selectPages('homePage', this.sortOn, this.sortOrder);
+        await this.requestPacketList();
     }
 
     async addRecord() {
@@ -582,8 +583,6 @@ htmlId('js-page--to-bottom').addEventListener('click', () => { View.scrollToBott
 htmlId('js-page--to-top').addEventListener('click', () => { view.scrollToTop() }, false);
 
 // Buttons & inputs all opening Home Page (same class)
-document.querySelectorAll('.btnHomePage')
-    .forEach(btn => btn.addEventListener('click', (e) => { View.locateBtnHomePage(e) }, false));
 
 
 
