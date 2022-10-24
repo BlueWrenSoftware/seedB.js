@@ -8,7 +8,6 @@ class Model {
     constructor() {
         this.db = null;
         this.version = null;
-        this.view = view;
     }
 
     close() {
@@ -143,7 +142,9 @@ class View {
         this.homePageLink = this.getElement('#eventHomePage');
         this.toTop = document.getElementById("js-page--to-top"); //=> Get the button
         this.toBottom = document.getElementById("js-page--to-bottom"); //=> Get the button
-
+        this.menuButton = document.querySelector(".js-menu-hamburger");
+        this.menuButton.addEventListener("click", () => {this.toggleMenu()});
+        this.closedMenu = document.querySelector(".js-menu-hamburger--closed");
     }
 
     createElement(tag, className) {
@@ -287,12 +288,13 @@ class View {
       document.querySelector("#read-write-page").style.display = "";
       //document.querySelector("#dbError").style.display = ""
     }
-  }
+    }
 
-  static menu() { //=> toggle function using class lists on click of the hamburger menu
-    let getMenu = document.querySelector(".js-menu-hamburger--closed");
-    getMenu.classList.toggle("js-menu-hamburger--opened");
-  }
+    toggleMenu() {
+        //=> toggle function using class lists on click of the hamburger menu
+        this.closedMenu.classList.toggle("js-menu-hamburger--opened");
+        
+    }
 
   static scrollToBottom() { //=> function activated on click of down arrow
     if (document.documentElement.scrollHeight > document.documentElement.clientHeight) {
@@ -556,7 +558,7 @@ controller.backup(); // TO DO: have to sort the events in that function
 window.onscroll = () => { view.scrollEvent() }; //=> scrolls down 20px, show the up button
 
 //=> Menu events
-document.querySelector(".js-menu-hamburger").addEventListener("click", View.menu);
+
 // Menu selection events
 htmlId('eventPktPage').addEventListener('click', View.showAddPacket, false);
 htmlId('eventScrollPage').addEventListener('click', () => { View.selectPages('scrollRecords') }, false)
