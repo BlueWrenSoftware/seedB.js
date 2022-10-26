@@ -359,37 +359,36 @@ class Controller {
         this.model = model;
         this.view = view;
         // Packet sorting column
-        //this.sortOn = 'variety';
+        this.sortOn = 'variety';
         // Sort 'next' or 'prev'
         this.sortOrder = 'next';
         this.view.bindHomePageLink(() => { this.requestPacketList(); });
     }
 
-    async getSortedPacketList(sortOn = 'variety') {
-        // Refresh table on selected column for sort
-        // if the new sort column is not the same as the old,
-        // then we have changed the sorting
-        let sameSortColumn = sortOn === this.sortOn;
+    async getSortedPacketList(sortOn) {
+        if (sortOn !== undefined) {
+            // if sortOn is supplied, then the user is attempting
+            // to change the sorting
 
-        // default to sorting forward (next)
-        let sortOrder = 'next';
-        // if the old sort order is the same as the default
-        let sameSortOrder = sortOrder === this.sortOrder;
-
-        // if the same column for sorting was requested
-        // and the sorting direction was already 'next'
-        // then we should change the sortOrder to 'prev'
-        // for all other cases, we will go with the default
-        // sort order
-        if (sameSortOrder && sameSortColumn) {
-            sortOrder = 'prev';
+            // sameSortColumn is true if the user has requested the
+            // same sorting column as last time
+            const sameSortColumn = sortOn === this.sortOn;
+                        
+            // if the same column for sorting was requested
+            // and the sorting direction was already 'next'
+            // then we should change the sortOrder to 'prev'
+            let sortOrder;
+            if (sameSortColumn && this.sortOrder==='next') {
+                sortOrder = 'prev';
+            } else {
+                sortOrder = 'next';
+            }
+            // save the new sorting order and column
+            this.sortOrder = sortOrder;
+            this.sortOn = sortOn;
         }
-        // save the new sorting order and column
-        this.sortOrder = sortOrder;
-        this.sortOn = sortOn;
-
         // request the new data from the model
-        const records = await this.model.getAll(sortOn, sortOrder);
+        const records = await this.model.getAll(this.sortOn, this.sortOrder);
         View.displayPackets(records);
     }
 
