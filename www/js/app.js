@@ -437,12 +437,9 @@ class Controller {
             }
         }
         if (!missingRequiredField) {
-            if (typeof seed.seedNumbers === "string") {
-                seed.seedNumbers = parseInt(seed.seedNumbers);
-            }
-            if (typeof seed.seedWeight === "string") {
-                seed.seedWeight = parseFloat(seed.seedWeight);
-            }
+            //convert string from FormData to integer and float
+            seed.seedNumbers = parseInt(seed.seedNumbers);
+            seed.seedWeight = parseFloat(seed.seedWeight);
             await this.model.loadRecords([seed]);
             View.showAlert('Seed Packet Added', 'success', '#pkt-message', '#insert-form-alerts'); //=> Show success message
             View.clearFields();  //=> Clear form fields
