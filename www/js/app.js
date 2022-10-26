@@ -359,7 +359,7 @@ class Controller {
         this.model = model;
         this.view = view;
         // Packet sorting column
-        this.sortOn = 'variety';
+        //this.sortOn = 'variety';
         // Sort 'next' or 'prev'
         this.sortOrder = 'next';
         this.view.bindHomePageLink(() => { this.requestPacketList(); });
