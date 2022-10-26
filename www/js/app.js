@@ -533,22 +533,27 @@ class Controller {
             };
             reader.readAsText(file);
         };
-    } /* TO DO: all the events have to be taken out!
-              better documentation need for this function */
+    }   /* TO DO: all the events have to be taken out of backup()!
+                  better documentation need for this function 
+        */
 }
 
-const model = new Model();
-const view = new View();
-const controller = new Controller(model, view);
-
+//=> End of Classes
 /* TO DO: wherever a the db is opened in a Store or Data static functions 
           should change that to one only function to open a db
           and use that function in any of the other ones requiring an open db request.
           Might also need to be promise-async-await structure
           Also sort out versioning numbering when creating opening request.  
           Make all Alert messages sticky and only disappear when changing pages
-          deletedPkts = []; session storage of deleted seed packets*/
-//=> End of Classes
+          deletedPkts = []; session storage of deleted seed packets
+          Checking for the right store on start
+*/
+
+const model = new Model();
+const view = new View();
+const controller = new Controller(model, view);
+
+window.onload = () => { controller.requestPacketList() }; //=> Load IndexedDB and check for right store is missing!
 
 //=> Global variables
 
