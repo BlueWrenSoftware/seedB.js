@@ -24,6 +24,8 @@ class Model {
                 store.createIndex('variety', 'variety', { unique: false });
                 store.createIndex('seedGroup', 'seedGroup', { unique: false });
                 store.createIndex('seedDatePacked', 'seedDatePacked', { unique: false });
+                store.createIndex('seedNumbers', 'seedNumbers', { unique: false });
+                store.createIndex('seedWeight', 'seedWeight', { unique: false });
                 store.createIndex('timeStamp', 'timeStamp', { unique: false });
             }
 
@@ -423,7 +425,7 @@ class Controller {
         const formData = new FormData(document.getElementById("seed-entry"));
         const seed = Object.fromEntries(formData);
         seed['timeStamp'] = Date.now();
-        var missingRequiredField;
+        let missingRequiredField;
         for (const pair of formData.entries()) {
             const key = pair[0];
             const value = pair[1];
@@ -436,12 +438,17 @@ class Controller {
             }
         }
         if (!missingRequiredField) {
+            if (typeof seed.seedNumbers === "string") {
+                seed.seedNumbers = parseInt(seed.seedNumbers);
+            }
+            if (typeof seed.seedWeight === "string") {
+                seed.seedWeight = parseFloat(seed.seedWeight);
+            }
             await this.model.loadRecords([seed]);
             View.showAlert('Seed Packet Added', 'success', '#pkt-message', '#insert-form-alerts'); //=> Show success message
             View.clearFields();  //=> Clear form fields
         };
     };
-
 
     async editSeedPkt(pktId) {
         const record = await this.model.getRecord(pktId);
@@ -572,6 +579,8 @@ htmlId('sortSeedGroup').addEventListener('click', () => { controller.getSortedPa
 htmlId('sortVariety').addEventListener('click', () => { controller.getSortedPacketList('variety') }, false);
 htmlId('sortPktId').addEventListener('click', () => { controller.getSortedPacketList('pktId') }, false);
 htmlId('sortDatePacked').addEventListener('click', () => { controller.getSortedPacketList('seedDatePacked') }, false);
+htmlId('sortSeedNumbers').addEventListener('click', () => { controller.getSortedPacketList('seedNumbers') }, false);
+htmlId('sortSeedWeight').addEventListener('click', () => { controller.getSortedPacketList('seedWeight') }, false);
 
 //=> Button & input events
 htmlId('btnSubmitRecord').addEventListener('click', () => { controller.editRecord() }, false);
