@@ -220,8 +220,8 @@ class View {
         document.querySelector("#instructions-page").style.display = "none";
     }
 
-    static showAddPacket() {
-        View.clearFields();
+    static showAddNewPacket() {
+        //View.clearFields();
         document.title = "New Seed Pkt";
         document.querySelector("#new-pkt-buttons").style.display = "";
         document.querySelector("#edit-pkt-buttons").style.display = "none";
@@ -233,10 +233,12 @@ class View {
     }
 
     static selectPages(pageSelected, initialSortOn, initialOrder) {  //=> Selects the pages from menu and other buttons
-        if (pageSelected === "homePage") { //=> Checks if all the pages are hidden on startup and remove hidden to show
+        if (pageSelected === "homePage") { 
+            //=> Checks if all the pages are hidden on startup and remove hidden to show
             View.showHomePage();
         }
-        else if (pageSelected === "editSeedPkt") { //=> edit/add page seed packet selected from the seed list
+        else if (pageSelected === "editSeedPkt") { 
+            //=> edit/add page seed packet selected from the seed list
             View.clearFields();
             document.title = "Edit Seed Pkt";
             document.querySelector("#edit-pkt-buttons").style.display = "";
@@ -247,50 +249,56 @@ class View {
             document.querySelector("#read-write-page").style.display = "none";
             document.querySelector("#instructions-page").style.display = "none";
         }
-        else if (pageSelected === "newPktPage") { //=> edit/add page for new seed packet entry
-            View.showAddPacket();
+        else if (pageSelected === "newPktPage") { 
+            //=> edit/add page for new seed packet entry
+            View.showAddNewPacket();
         }
-    else if (pageSelected === "scrollRecords") { //=> edit/add page for new seed packet entry
-      View.clearFields();
-      document.title = "Scroll Pkt Records";
-      document.querySelector("#new-pkt-buttons").style.display = "none";
-      document.querySelector("#edit-pkt-buttons").style.display = "none";
-      document.querySelector("#scrollRecordsButtons").style.display = "";
-      document.querySelector("#home-page").style.display = "none";
-      document.querySelector("#edit-page").style.display = "";
-      document.querySelector("#read-write-page").style.display = "none";
-      document.querySelector("#instructions-page").style.display = "none";
-    }
-    else if (pageSelected === "readWritePage") { //=> backup and restore page
-      document.title = "Backup & Restore";
-      document.querySelector("#retrieve-data-button").style.display = "";
-      document.querySelector("#home-page").style.display = "none";
-      document.querySelector("#edit-page").style.display = "none";
-      document.querySelector("#read-write-page").style.display = "";
-      document.querySelector("#instructions-page").style.display = "none";
-      document.querySelector("#dbError").style.display = "none"
-    }
-    else if (pageSelected === "instructionsPage") { //=> page for instructions
-      document.title = "Instructions";
-      document.querySelector("#home-page").style.display = "none";
-      document.querySelector("#edit-page").style.display = "none";
-      document.querySelector("#read-write-page").style.display = "none";
-      document.querySelector("#instructions-page").style.display = "";
-    }
-    else if (pageSelected === "dbError") { //=> checks if pages are hidden before loading error page on start
-      if (document.getElementById("showHide").classList.contains("js-all-pages--none")) {
-        document.getElementById("showHide").classList.add("js-all-pages--opened");
-        document.getElementById("showHide").classList.remove("js-all-pages--none");
-      }
-      document.title = "DB Error"; //=> on start up if db fails this page will be loaded
-      document.querySelector("#retrieve-data-button").style.display = "none";
-      document.querySelector("#home-page").style.display = "none";
-      document.querySelector("#edit-page").style.display = "none";
-      document.querySelector("#read-write-page").style.display = "none";
-      document.querySelector("#instructions-page").style.display = "none";
-      document.querySelector("#read-write-page").style.display = "";
-      //document.querySelector("#dbError").style.display = ""
-    }
+        else if (pageSelected === "scrollRecords") { 
+            //=> edit/add page for new seed packet entry
+            View.clearFields();
+            document.title = "Scroll Pkt Records";
+            document.querySelector("#new-pkt-buttons").style.display = "none";
+            document.querySelector("#edit-pkt-buttons").style.display = "none";
+            document.querySelector("#scrollRecordsButtons").style.display = "";
+            document.querySelector("#home-page").style.display = "none";
+            document.querySelector("#edit-page").style.display = "";
+            document.querySelector("#read-write-page").style.display = "none";
+            document.querySelector("#instructions-page").style.display = "none";
+        }
+        else if (pageSelected === "readWritePage") { 
+            //=> backup and restore page
+            document.title = "Backup & Restore";
+            document.querySelector("#retrieve-data-button").style.display = "";
+            document.querySelector("#home-page").style.display = "none";
+            document.querySelector("#edit-page").style.display = "none";
+            document.querySelector("#read-write-page").style.display = "";
+            document.querySelector("#instructions-page").style.display = "none";
+            document.querySelector("#dbError").style.display = "none"
+        }
+        else if (pageSelected === "instructionsPage") { 
+            //=> page for instructions
+            document.title = "Instructions";
+            document.querySelector("#home-page").style.display = "none";
+            document.querySelector("#edit-page").style.display = "none";
+            document.querySelector("#read-write-page").style.display = "none";
+            document.querySelector("#instructions-page").style.display = "";
+        }
+        else if (pageSelected === "dbError") { 
+            //=> checks if pages are hidden before loading error page on start
+            if (document.getElementById("showHide").classList.contains("js-all-pages--none")) {
+                document.getElementById("showHide").classList.add("js-all-pages--opened");
+                document.getElementById("showHide").classList.remove("js-all-pages--none");
+            }
+            document.title = "DB Error"; 
+            //=> on start up if db fails this page will be loaded
+            document.querySelector("#retrieve-data-button").style.display = "none";
+            document.querySelector("#home-page").style.display = "none";
+            document.querySelector("#edit-page").style.display = "none";
+            document.querySelector("#read-write-page").style.display = "none";
+            document.querySelector("#instructions-page").style.display = "none";
+            document.querySelector("#read-write-page").style.display = "";
+            //document.querySelector("#dbError").style.display = ""
+        }
     }
 
     toggleMenu() {
@@ -362,6 +370,7 @@ class Controller {
         this.sortOn = 'variety';
         // Sort 'next' or 'prev'
         this.sortOrder = 'next';
+        this.missingRequiredField = true;
         this.view.bindHomePageLink(() => { this.requestPacketList(); });
     }
 
@@ -424,24 +433,25 @@ class Controller {
         const formData = new FormData(document.getElementById("seed-entry"));
         const seed = Object.fromEntries(formData);
         seed['timeStamp'] = Date.now();
-        let missingRequiredField;
+        //let missingRequiredField;
         for (const pair of formData.entries()) {
             const key = pair[0];
             const value = pair[1];
             const missingField = value === '';
             const isRequired = document.getElementById(key).hasAttribute('required');
-            missingRequiredField = missingField && isRequired;
-            if (missingRequiredField) {
+            this.missingRequiredField = missingField && isRequired;
+            if (this.missingRequiredField) {
                 View.showAlert('Please fill in all fields', 'warning', '#pkt-message', '#insert-form-alerts');
                 break;
             }
         }
-        if (!missingRequiredField) {
+        if (!this.missingRequiredField) {
             //convert string from FormData to integer and float
             seed.seedNumbers = parseInt(seed.seedNumbers);
             seed.seedWeight = parseFloat(seed.seedWeight);
             await this.model.loadRecords([seed]);
-            View.showAlert('Seed Packet Added', 'success', '#pkt-message', '#insert-form-alerts'); //=> Show success message
+            View.showAlert('Seed Packet Added', 'success', '#pkt-message', '#insert-form-alerts'); 
+            //=> Show success message
             View.clearFields();  //=> Clear form fields
         };
     };
@@ -453,12 +463,15 @@ class Controller {
 
     async editRecord() {
         await this.loadRecord();
-        await this.requestPacketList();
+        if (!this.missingRequiredField) {
+            await this.requestPacketList();
+        }
+        
     }
 
     async addRecord() {
         await this.loadRecord();
-        View.showAddPacket();
+        View.showAddNewPacket();
     };
 
     async deleteRecord() {
@@ -569,7 +582,7 @@ window.onscroll = () => { view.scrollEvent() }; //=> scrolls down 20px, show the
 //=> Menu events
 
 // Menu selection events
-htmlId('eventPktPage').addEventListener('click', View.showAddPacket, false);
+htmlId('eventPktPage').addEventListener('click', View.showAddNewPacket, false);
 htmlId('eventScrollPage').addEventListener('click', () => { View.selectPages('scrollRecords') }, false)
 htmlId('eventReadWritePage').addEventListener('click', () => { View.selectPages('readWritePage') }, false);
 htmlId('eventErrorPage').addEventListener('click', () => { View.selectPages('dbError') }, false);
