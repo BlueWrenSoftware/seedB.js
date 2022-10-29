@@ -141,7 +141,8 @@ class View {
 
     constructor() {
         this.app = this.getElement('#root');
-        this.seedListLinkElements = document.querySelectorAll('.btnHomePage')
+        this.seedListLinkElements = document.querySelectorAll('.btnHomePage');
+        //this.pagesAddEditLinkElements = document.querySelectorAll()
         this.homePageLink = this.getElement('#eventHomePage');
         this.toTop = document.getElementById("js-page--to-top"); //=> Get the button
         this.toBottom = document.getElementById("js-page--to-bottom"); //=> Get the button
@@ -161,30 +162,31 @@ class View {
         return element;
     }
 
-    static addPacketToTable(seedPkt) {
+    addPacketToTable(seedPkt) {
         // Adds a packet as a row to packet list
         const list = document.querySelector('#seed-list');
         const row = document.createElement('tr');
-        row.innerHTML = `<td>${seedPkt.seedGroup}</td>
-                          <td>${seedPkt.variety}</td>
-                          <td>${seedPkt.pktId}</td>
-                          <td class="table-seeds__col--center">${(seedPkt.seedDatePacked).substring(2)}</td>
-                          <td class="table-seeds__col--center">${seedPkt.seedNumbers}</td>
-                          <td class="table-seeds__col--center">${seedPkt.seedWeight}</td>
-                          <td class="edit" onclick="controller.editSeedPkt('${seedPkt.pktId}')"></td>`;
+        row.innerHTML = 
+            `<td>${seedPkt.seedGroup}</td>
+            <td>${seedPkt.variety}</td>
+            <td>${seedPkt.pktId}</td>
+            <td class="table-seeds__col--center">${(seedPkt.seedDatePacked).substring(2)}</td>
+            <td class="table-seeds__col--center">${seedPkt.seedNumbers}</td>
+            <td class="table-seeds__col--center">${seedPkt.seedWeight}</td>
+            <td class="edit" onclick="controller.editSeedPkt('${seedPkt.pktId}')"></td>`;
         list.appendChild(row);
     }
 
-    static displayPackets(packets) {
+    displayPackets(packets) {
         // Delete table rows first before entering updated data on home page
         const table = document.querySelector('#seed-list');
         while (table.rows.length > 0) {
             table.deleteRow(0);
         };
-        packets.forEach((packet) => View.addPacketToTable(packet));
+        packets.forEach((packet) => this.addPacketToTable(packet));
     }
 
-    static showAlert(message, className, idMessage, idLocation) {
+    showAlert(message, className, idMessage, idLocation) {
         //=> Creating warning msg when entering data
         const div = document.createElement('div');
         div.className = `alert ${className}`;
@@ -225,10 +227,12 @@ class View {
         // View.clearFields();
         // clearFields() only called from menu event, not from buttons
         document.title = "New Seed Pkt";
+        document.querySelector("#headerAddSeedPage").style.display = "";
         document.querySelector("#new-pkt-buttons").style.display = "";
         document.querySelector("#edit-pkt-buttons").style.display = "none";
         document.querySelector("#scrollRecordsButtons").style.display = "none";
         document.querySelector("#home-page").style.display = "none";
+        document.querySelector("#headerEditSeedPage").style.display = "none";
         document.querySelector("#edit-page").style.display = "";
         document.querySelector("#read-write-page").style.display = "none";
         document.querySelector("#instructions-page").style.display = "none";
@@ -237,7 +241,8 @@ class View {
         document.querySelector('#pktId').setAttribute('required', 'required');
     }
 
-    static selectPages(pageSelected, initialSortOn, initialOrder) {  //=> Selects the pages from menu and other buttons
+    static selectPages(pageSelected, initialSortOn, initialOrder) { 
+        //=> Selects the pages from menu and other buttons
         if (pageSelected === "homePage") {
             //=> Checks if all the pages are hidden on startup and remove hidden to show
             View.showHomePage();
@@ -247,9 +252,11 @@ class View {
             View.clearFields();
             document.title = "Edit Seed Pkt";
             document.querySelector("#edit-pkt-buttons").style.display = "";
+            document.querySelector("#headerAddSeedPage").style.display = "none";
             document.querySelector("#new-pkt-buttons").style.display = "none";
             document.querySelector("#scrollRecordsButtons").style.display = "none";
             document.querySelector("#home-page").style.display = "none";
+            document.querySelector("#headerEditSeedPage").style.display = "";
             document.querySelector("#edit-page").style.display = "";
             document.querySelector("#read-write-page").style.display = "none";
             document.querySelector("#instructions-page").style.display = "none";
@@ -364,6 +371,10 @@ class View {
     bindHomePageLink(handler) {
         this.seedListLinkElements.forEach(btn => btn.addEventListener('click', handler, false));
     }
+
+    /* bindEditAddSeedPages(handler) {
+        this.pagesAddEditLinkElements.forEach(btn => btn.addEventListener('click', handler, false));
+    } */
 }
 
 
@@ -405,7 +416,7 @@ class Controller {
         }
         // request the new data from the model
         const records = await this.model.getAll(this.sortOn, this.sortOrder);
-        View.displayPackets(records);
+        this.view.displayPackets(records);
     }
 
     async requestPacketList() {
@@ -449,7 +460,7 @@ class Controller {
                 const isRequired = document.getElementById(key).hasAttribute('required');
                 missingRequiredField = missingRequiredField || (missingField && isRequired);
                 if (missingRequiredField) {
-                    View.showAlert('Please fill in all fields', 'warning', '#pkt-message', '#insert-form-alerts');
+                    this.view.showAlert('Please fill in all fields', 'warning', '#pkt-message', '#insert-form-alerts');
                     break checkEntries;
                 }
             }
@@ -469,7 +480,7 @@ class Controller {
             seed.seedNumbers = parseInt(seed.seedNumbers);
             seed.seedWeight = parseFloat(seed.seedWeight);
             await this.model.loadRecords([seed]);
-            View.showAlert('Seed Packet Added', 'success', '#pkt-message', '#insert-form-alerts');
+            this.view.showAlert('Seed Packet Added', 'success', '#pkt-message', '#insert-form-alerts');
             //=> Show success message
             await this.requestPacketList();
             View.clearFields();  //=> Clear form fields
@@ -496,11 +507,13 @@ class Controller {
 
     async deleteRecord() {
         //=> Delete record requested from delete button on edit page
-        const pktId = document.querySelector('#pktId').value; //=> pktId obtained from edit button on seed list
+        const pktId = document.querySelector('#pktId').value; 
+        //=> pktId obtained from edit button on seed list
         await this.model.deleteRecord(pktId);
-        View.showAlert('Seed Packet Deleted', 'warning', '#pkt-message', '#insert-form-alerts'); //=> Show success message
+        this.view.showAlert('Seed Packet Deleted', 'warning', '#pkt-message', '#insert-form-alerts'); //=> Show success message
         View.clearFields(); //=> Clear form fields
         this.model.getAll();
+        await this.requestPacketList();
     };
 
     fileTime() {  //=> Timestamp for file names
