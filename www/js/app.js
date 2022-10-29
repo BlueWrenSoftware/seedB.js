@@ -230,6 +230,9 @@ class View {
         document.querySelector("#edit-page").style.display = "";
         document.querySelector("#read-write-page").style.display = "none";
         document.querySelector("#instructions-page").style.display = "none";
+        // Key pktId is write and required
+        document.querySelector('#pktId').removeAttribute('readonly');
+        document.querySelector('#pktId').setAttribute('required', 'required');
     }
 
     static selectPages(pageSelected, initialSortOn, initialOrder) {  //=> Selects the pages from menu and other buttons
@@ -248,6 +251,9 @@ class View {
             document.querySelector("#edit-page").style.display = "";
             document.querySelector("#read-write-page").style.display = "none";
             document.querySelector("#instructions-page").style.display = "none";
+            // Key pktId is read only
+            document.querySelector('#pktId').removeAttribute('required');
+            document.querySelector('#pktId').setAttribute('readonly', 'readonly');
         }
         else if (pageSelected === "newPktPage") { 
             //=> edit/add page for new seed packet entry
