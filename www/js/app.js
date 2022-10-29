@@ -146,7 +146,7 @@ class View {
         this.toTop = document.getElementById("js-page--to-top"); //=> Get the button
         this.toBottom = document.getElementById("js-page--to-bottom"); //=> Get the button
         this.menuButton = document.querySelector(".js-menu-hamburger");
-        this.menuButton.addEventListener("click", () => {this.toggleMenu()});
+        this.menuButton.addEventListener("click", () => { this.toggleMenu() });
         this.closedMenu = document.querySelector(".js-menu-hamburger--closed");
     }
 
@@ -197,7 +197,7 @@ class View {
         setTimeout(() => document.querySelector('.alert').remove(), 3000);
     }
 
-    static clearFields() { 
+    static clearFields() {
         //=> Clears all the entry fields on the edit/add page
         document.querySelector('#seedGroup').value = '';
         document.querySelector('#variety').value = '';
@@ -238,11 +238,11 @@ class View {
     }
 
     static selectPages(pageSelected, initialSortOn, initialOrder) {  //=> Selects the pages from menu and other buttons
-        if (pageSelected === "homePage") { 
+        if (pageSelected === "homePage") {
             //=> Checks if all the pages are hidden on startup and remove hidden to show
             View.showHomePage();
         }
-        else if (pageSelected === "editSeedPkt") { 
+        else if (pageSelected === "editSeedPkt") {
             //=> edit/add page seed packet selected from the seed list
             View.clearFields();
             document.title = "Edit Seed Pkt";
@@ -257,11 +257,11 @@ class View {
             document.querySelector('#pktId').removeAttribute('required');
             document.querySelector('#pktId').setAttribute('readonly', 'readonly');
         }
-        else if (pageSelected === "newPktPage") { 
+        else if (pageSelected === "newPktPage") {
             //=> edit/add page for new seed packet entry
             View.showAddNewPacket();
         }
-        else if (pageSelected === "scrollRecords") { 
+        else if (pageSelected === "scrollRecords") {
             //=> edit/add page for new seed packet entry
             View.clearFields();
             document.title = "Scroll Pkt Records";
@@ -273,7 +273,7 @@ class View {
             document.querySelector("#read-write-page").style.display = "none";
             document.querySelector("#instructions-page").style.display = "none";
         }
-        else if (pageSelected === "readWritePage") { 
+        else if (pageSelected === "readWritePage") {
             //=> backup and restore page
             document.title = "Backup & Restore";
             document.querySelector("#retrieve-data-button").style.display = "";
@@ -283,7 +283,7 @@ class View {
             document.querySelector("#instructions-page").style.display = "none";
             document.querySelector("#dbError").style.display = "none"
         }
-        else if (pageSelected === "instructionsPage") { 
+        else if (pageSelected === "instructionsPage") {
             //=> page for instructions
             document.title = "Instructions";
             document.querySelector("#home-page").style.display = "none";
@@ -291,13 +291,13 @@ class View {
             document.querySelector("#read-write-page").style.display = "none";
             document.querySelector("#instructions-page").style.display = "";
         }
-        else if (pageSelected === "dbError") { 
+        else if (pageSelected === "dbError") {
             //=> checks if pages are hidden before loading error page on start
             if (document.getElementById("showHide").classList.contains("js-all-pages--none")) {
                 document.getElementById("showHide").classList.add("js-all-pages--opened");
                 document.getElementById("showHide").classList.remove("js-all-pages--none");
             }
-            document.title = "DB Error"; 
+            document.title = "DB Error";
             //=> on start up if db fails this page will be loaded
             document.querySelector("#retrieve-data-button").style.display = "none";
             document.querySelector("#home-page").style.display = "none";
@@ -312,51 +312,50 @@ class View {
     toggleMenu() {
         //=> toggle function using class lists on click of the hamburger menu
         this.closedMenu.classList.toggle("js-menu-hamburger--opened");
-        
+
     }
 
-  static scrollToBottom() { //=> function activated on click of down arrow
-    if (document.documentElement.scrollHeight > document.documentElement.clientHeight) {
-      const scrollHeight = document.documentElement.scrollHeight;
-      window.scrollTo(0, scrollHeight);
+    scrollToBottom() { //=> function activated on click of down arrow
+        if (document.documentElement.scrollHeight > document.documentElement.clientHeight) {
+            const scrollHeight = document.documentElement.scrollHeight;
+            window.scrollTo(0, scrollHeight);
+        }
     }
-  }
 
-  scrollToTop() { //=> function activated on click of up arrow
-    this.toBottom = document.getElementById("js-page--to-bottom");
-    this.toBottom.style.display = "block"
-    document.body.scrollTop = 0; //=> For Safari
-    document.documentElement.scrollTop = 0; //=> For Chrome, Firefox, IE and Opera
-  }
-
-  scrollEvent() { //=> scroll event to hide or show to top button
-    if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
-      this.toTop.style.display = "block";
-    } else {
-      this.toTop.style.display = "none";
+    scrollToTop() { //=> function activated on click of up arrow
+        this.toBottom = document.getElementById("js-page--to-bottom");
+        this.toBottom.style.display = "block"
+        document.body.scrollTop = 0; //=> For Safari
+        document.documentElement.scrollTop = 0; //=> For Chrome, Firefox, IE and Opera
     }
-  }
 
-  static locateBtnHomePage(e) { //=> select from classList the right return to Home page button
-    if (e.target === foundBtnHomePage)
-      {
-        fileNotes.innerHTML = "";
-        //console.log("file notes deleted");
-        backupNotes.innerHTML = "";
-      }; 
-      //console.log('Home Page selected');
-      View.showHomePage();
-  } 
+    scrollEvent() { //=> scroll event to hide or show to top button
+        if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
+            this.toTop.style.display = "block";
+        } else {
+            this.toTop.style.display = "none";
+        }
+    }
 
-  static editSeed(record, editPage) { //=> opens the edit/add page ->
-    View.clearFields();
-    View.selectPages(editPage);
-    Object.keys(record).forEach(field => { // -> with the requested seed pkt record for editing
-      //console.log(field);
-      //console.log(record[field]);
-      document.querySelector('#' + field).value = record[field];
-    });
-  } //=> Should be in Store Class?
+    static locateBtnHomePage(e) { //=> select from classList the right return to Home page button
+        if (e.target === foundBtnHomePage) {
+            fileNotes.innerHTML = "";
+            //console.log("file notes deleted");
+            backupNotes.innerHTML = "";
+        };
+        //console.log('Home Page selected');
+        View.showHomePage();
+    }
+
+    static editSeed(record, editPage) { //=> opens the edit/add page ->
+        View.clearFields();
+        View.selectPages(editPage);
+        Object.keys(record).forEach(field => { // -> with the requested seed pkt record for editing
+            //console.log(field);
+            //console.log(record[field]);
+            document.querySelector('#' + field).value = record[field];
+        });
+    } //=> Should be in Store Class?
 
     static showMessage(message) {
         msgInstallBb.innerHTML += (`<li>=> ${message}</li>`);
@@ -378,7 +377,7 @@ class Controller {
         this.sortOn = 'variety';
         // Sort 'next' or 'prev'
         this.sortOrder = 'next';
-        this.missingRequiredField = true;
+        //this.missingRequiredField = true;
         this.view.bindHomePageLink(() => { this.requestPacketList(); });
     }
 
@@ -390,12 +389,12 @@ class Controller {
             // sameSortColumn is true if the user has requested the
             // same sorting column as last time
             const sameSortColumn = sortOn === this.sortOn;
-                        
+
             // if the same column for sorting was requested
             // and the sorting direction was already 'next'
             // then we should change the sortOrder to 'prev'
             let sortOrder;
-            if (sameSortColumn && this.sortOrder==='next') {
+            if (sameSortColumn && this.sortOrder === 'next') {
                 sortOrder = 'prev';
             } else {
                 sortOrder = 'next';
@@ -441,25 +440,38 @@ class Controller {
         const formData = new FormData(document.getElementById("seed-entry"));
         const seed = Object.fromEntries(formData);
         seed['timeStamp'] = Date.now();
-        //let missingRequiredField;
-        for (const pair of formData.entries()) {
-            const key = pair[0];
-            const value = pair[1];
-            const missingField = value === '';
-            const isRequired = document.getElementById(key).hasAttribute('required');
-            this.missingRequiredField = missingField && isRequired;
-            if (this.missingRequiredField) {
-                View.showAlert('Please fill in all fields', 'warning', '#pkt-message', '#insert-form-alerts');
-                break;
+        let missingRequiredField;
+        checkEntries: {
+            for (const pair of formData.entries()) {
+                const key = pair[0];
+                const value = pair[1];
+                const missingField = value === '';
+                const isRequired = document.getElementById(key).hasAttribute('required');
+                missingRequiredField = missingRequiredField || (missingField && isRequired);
+                if (missingRequiredField) {
+                    View.showAlert('Please fill in all fields', 'warning', '#pkt-message', '#insert-form-alerts');
+                    break checkEntries;
+                }
             }
+            /* for (const pair of formData.entries()) {
+                const key = pair[0];
+                const value = pair[1];
+                const missingField = value === '';
+                const isRequired = document.getElementById(key).hasAttribute('required');
+                this.missingRequiredField = missingField && isRequired;
+                if (this.missingRequiredField) {
+                    View.showAlert('Please fill in all fields', 'warning', '#pkt-message', '#insert-form-alerts');
+                    break;
+                } */
         }
-        if (!this.missingRequiredField) {
+        if (!missingRequiredField) {
             //convert string from FormData to integer and float
             seed.seedNumbers = parseInt(seed.seedNumbers);
             seed.seedWeight = parseFloat(seed.seedWeight);
             await this.model.loadRecords([seed]);
-            View.showAlert('Seed Packet Added', 'success', '#pkt-message', '#insert-form-alerts'); 
+            View.showAlert('Seed Packet Added', 'success', '#pkt-message', '#insert-form-alerts');
             //=> Show success message
+            await this.requestPacketList();
             View.clearFields();  //=> Clear form fields
         };
     };
@@ -471,10 +483,10 @@ class Controller {
 
     async editRecord() {
         await this.loadRecord();
-        if (!this.missingRequiredField) {
+        /* if (!this.missingRequiredField) {
             await this.requestPacketList();
-        }
-        
+        } */
+        //await this.requestPacketList();
     }
 
     async addRecord() {
@@ -590,7 +602,7 @@ window.onscroll = () => { view.scrollEvent() }; //=> scrolls down 20px, show the
 //=> Menu events
 
 // Menu selection events
-htmlId('eventPktPage').addEventListener('click', () => 
+htmlId('eventPktPage').addEventListener('click', () =>
 // Clear fields when opening from menu
 { View.showAddNewPacket(); View.clearFields() }, false);
 htmlId('eventScrollPage').addEventListener('click', () => { View.selectPages('scrollRecords') }, false)
@@ -612,7 +624,7 @@ htmlId('btnDeleteRecord').addEventListener('click', () => { controller.deleteRec
 htmlId('btnNewRecord').addEventListener('click', () => { controller.addRecord() }, false);
 htmlId('btnRetrieveData').addEventListener('click', () => { controller.retrieveAll() }, false);
 htmlId('btnReinstall').addEventListener('click', () => { controller.fixCorruptDB() }, false);
-htmlId('js-page--to-bottom').addEventListener('click', () => { View.scrollToBottom() }, false);
+htmlId('js-page--to-bottom').addEventListener('click', () => { view.scrollToBottom() }, false);
 htmlId('js-page--to-top').addEventListener('click', () => { view.scrollToTop() }, false);
 
 // Buttons & inputs all opening Home Page (same class)
