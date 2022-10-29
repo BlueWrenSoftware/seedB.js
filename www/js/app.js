@@ -197,7 +197,8 @@ class View {
         setTimeout(() => document.querySelector('.alert').remove(), 3000);
     }
 
-    static clearFields() { //=> Clears all the entry fields on the edit/add page
+    static clearFields() { 
+        //=> Clears all the entry fields on the edit/add page
         document.querySelector('#seedGroup').value = '';
         document.querySelector('#variety').value = '';
         document.querySelector('#pktId').value = '';
@@ -221,7 +222,8 @@ class View {
     }
 
     static showAddNewPacket() {
-        //View.clearFields();
+        // View.clearFields();
+        // clearFields() only called from menu event, not from buttons
         document.title = "New Seed Pkt";
         document.querySelector("#new-pkt-buttons").style.display = "";
         document.querySelector("#edit-pkt-buttons").style.display = "none";
@@ -588,7 +590,9 @@ window.onscroll = () => { view.scrollEvent() }; //=> scrolls down 20px, show the
 //=> Menu events
 
 // Menu selection events
-htmlId('eventPktPage').addEventListener('click', View.showAddNewPacket, false);
+htmlId('eventPktPage').addEventListener('click', () => 
+// Clear fields when opening from menu
+{ View.showAddNewPacket(); View.clearFields() }, false);
 htmlId('eventScrollPage').addEventListener('click', () => { View.selectPages('scrollRecords') }, false)
 htmlId('eventReadWritePage').addEventListener('click', () => { View.selectPages('readWritePage') }, false);
 htmlId('eventErrorPage').addEventListener('click', () => { View.selectPages('dbError') }, false);
