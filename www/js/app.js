@@ -130,7 +130,6 @@ class Model {
     }
 };
 
-
 class View {
     // View is responsible for presenting the model to the user
     // that is, updating the DOM.
@@ -141,16 +140,37 @@ class View {
 
     constructor() {
         this.app = this.getElement('#root');
-        this.seedListLinkElements = document.querySelectorAll('.btnHomePage');
-        //this.pagesAddEditLinkElements = document.querySelectorAll()
-        this.homePageLink = this.getElement('#eventHomePage');
+        this.seedListLinkElements = document.querySelectorAll(".openHomePage");
+        //this.newSeedPktLinkElements = document.querySelectorAll(".openNewSeedPage");
+        this.pageEvent("#openNewSeedPage", "pageAddNewPacket");
+        this.pageEvent("#openScrollRecordsPage", "pageScrollRecords");
+        this.pageEvent("#openBackupRestorePage", "pageBackupRestore");
+        this.pageEvent("#openDbErrorPage", "pageDbError");
+        this.pageEvent("#openInstructionsPage", "pageInstructions");
         this.toTop = document.getElementById("js-page--to-top"); //=> Get the button
         this.toBottom = document.getElementById("js-page--to-bottom"); //=> Get the button
         this.menuButton = document.querySelector(".js-menu-hamburger");
         this.menuButton.addEventListener("click", () => { this.toggleMenu() });
         this.closedMenu = document.querySelector(".js-menu-hamburger--closed");
+        //this.bindNewSeedLink();
+        //this.htmlId("eventBackupRestorePage").addEventListener("click", () => { this.selectPages('pageBackupRestore') });
     }
 
+    bindHomePageLink(handler) {
+      // pass on to Controller
+      this.seedListLinkElements.forEach(btn => btn.addEventListener('click', handler, false));
+    }
+
+    bindNewSeedLink() {
+      this.newSeedPktLinkElements.forEach(request => request.addEventListener('click', () => {View.showAddNewPacket()}), false);
+    }
+
+    pageEvent(selector, trigger) {
+      document.querySelector(selector).addEventListener('click', () => {
+        this.selectPages(trigger)}, false);
+    }
+
+  
     createElement(tag, className) {
         const element = document.createElement(tag);
         if (className) element.classList.add(className);
@@ -199,7 +219,7 @@ class View {
         setTimeout(() => document.querySelector('.alert').remove(), 3000);
     }
 
-    static clearFields() {
+    clearFields() {
         //=> Clears all the entry fields on the edit/add page
         document.querySelector('#seedGroup').value = '';
         document.querySelector('#variety').value = '';
@@ -209,6 +229,13 @@ class View {
         document.querySelector('#seedDatePacked').value = '';
         document.querySelector('#timeStamp').value = '';
         document.querySelector('#seedNotes').value = '';
+    }
+
+    clearCopiedField() {
+      document.querySelector('#pktId').value = '';
+      document.querySelector('#seedDatePacked').value = '';
+      document.querySelector('#timeStamp').value = '';
+      document.querySelector('#seedNotes').value = ''
     }
 
     static showHomePage() {
@@ -223,8 +250,8 @@ class View {
         document.querySelector("#instructions-page").style.display = "none";
     }
 
-    static showAddNewPacket() {
-        // View.clearFields();
+    showAddNewPacket() {
+        // this.clearFields();
         // clearFields() only called from menu event, not from buttons
         document.title = "New Seed Pkt";
         document.querySelector("#headerAddSeedPage").style.display = "";
@@ -236,12 +263,12 @@ class View {
         document.querySelector("#edit-page").style.display = "";
         document.querySelector("#read-write-page").style.display = "none";
         document.querySelector("#instructions-page").style.display = "none";
-        // Key pktId is write and required
+        // Key pktId readonly removed and is required
         document.querySelector('#pktId').removeAttribute('readonly');
         document.querySelector('#pktId').setAttribute('required', 'required');
     }
 
-    static selectPages(pageSelected, initialSortOn, initialOrder) { 
+    selectPages(pageSelected) { 
         //=> Selects the pages from menu and other buttons
         if (pageSelected === "homePage") {
             //=> Checks if all the pages are hidden on startup and remove hidden to show
@@ -249,7 +276,7 @@ class View {
         }
         else if (pageSelected === "editSeedPkt") {
             //=> edit/add page seed packet selected from the seed list
-            View.clearFields();
+            this.clearFields();
             document.title = "Edit Seed Pkt";
             document.querySelector("#edit-pkt-buttons").style.display = "";
             document.querySelector("#headerAddSeedPage").style.display = "none";
@@ -264,13 +291,14 @@ class View {
             document.querySelector('#pktId').removeAttribute('required');
             document.querySelector('#pktId').setAttribute('readonly', 'readonly');
         }
-        else if (pageSelected === "newPktPage") {
+        else if (pageSelected === "pageAddNewPacket") {
             //=> edit/add page for new seed packet entry
-            View.showAddNewPacket();
+            this.clearFields();
+            this.showAddNewPacket();
         }
-        else if (pageSelected === "scrollRecords") {
+        else if (pageSelected === "pageScrollRecords") {
             //=> edit/add page for new seed packet entry
-            View.clearFields();
+            this.clearFields();
             document.title = "Scroll Pkt Records";
             document.querySelector("#new-pkt-buttons").style.display = "none";
             document.querySelector("#edit-pkt-buttons").style.display = "none";
@@ -280,7 +308,7 @@ class View {
             document.querySelector("#read-write-page").style.display = "none";
             document.querySelector("#instructions-page").style.display = "none";
         }
-        else if (pageSelected === "readWritePage") {
+        else if (pageSelected === "pageBackupRestore") {
             //=> backup and restore page
             document.title = "Backup & Restore";
             document.querySelector("#retrieve-data-button").style.display = "";
@@ -290,15 +318,7 @@ class View {
             document.querySelector("#instructions-page").style.display = "none";
             document.querySelector("#dbError").style.display = "none"
         }
-        else if (pageSelected === "instructionsPage") {
-            //=> page for instructions
-            document.title = "Instructions";
-            document.querySelector("#home-page").style.display = "none";
-            document.querySelector("#edit-page").style.display = "none";
-            document.querySelector("#read-write-page").style.display = "none";
-            document.querySelector("#instructions-page").style.display = "";
-        }
-        else if (pageSelected === "dbError") {
+        else if (pageSelected === "pageDbError") {
             //=> checks if pages are hidden before loading error page on start
             if (document.getElementById("showHide").classList.contains("js-all-pages--none")) {
                 document.getElementById("showHide").classList.add("js-all-pages--opened");
@@ -313,6 +333,14 @@ class View {
             document.querySelector("#instructions-page").style.display = "none";
             document.querySelector("#read-write-page").style.display = "";
             //document.querySelector("#dbError").style.display = ""
+        }
+        else if (pageSelected === "pageInstructions") {
+            //=> page for instructions
+            document.title = "Instructions";
+            document.querySelector("#home-page").style.display = "none";
+            document.querySelector("#edit-page").style.display = "none";
+            document.querySelector("#read-write-page").style.display = "none";
+            document.querySelector("#instructions-page").style.display = "";
         }
     }
 
@@ -344,7 +372,7 @@ class View {
         }
     }
 
-    static locateBtnHomePage(e) { //=> select from classList the right return to Home page button
+    /* static locateBtnHomePage(e) { //=> select from classList the right return to Home page button
         if (e.target === foundBtnHomePage) {
             fileNotes.innerHTML = "";
             //console.log("file notes deleted");
@@ -352,11 +380,11 @@ class View {
         };
         //console.log('Home Page selected');
         View.showHomePage();
-    }
+    } */
 
-    static editSeed(record, editPage) { //=> opens the edit/add page ->
-        View.clearFields();
-        View.selectPages(editPage);
+    editSeed(record, editPage) { //=> opens the edit/add page ->
+        this.clearFields();
+        this.selectPages("editSeedPkt");
         Object.keys(record).forEach(field => { // -> with the requested seed pkt record for editing
             //console.log(field);
             //console.log(record[field]);
@@ -368,9 +396,7 @@ class View {
         msgInstallBb.innerHTML += (`<li>=> ${message}</li>`);
     }
 
-    bindHomePageLink(handler) {
-        this.seedListLinkElements.forEach(btn => btn.addEventListener('click', handler, false));
-    }
+    
 
     /* bindEditAddSeedPages(handler) {
         this.pagesAddEditLinkElements.forEach(btn => btn.addEventListener('click', handler, false));
@@ -483,13 +509,13 @@ class Controller {
             this.view.showAlert('Seed Packet Added', 'success', '#pkt-message', '#insert-form-alerts');
             //=> Show success message
             await this.requestPacketList();
-            View.clearFields();  //=> Clear form fields
+            this.view.clearFields();  //=> Clear form fields
         };
     };
 
     async editSeedPkt(pktId) {
         const record = await this.model.getRecord(pktId);
-        View.editSeed(record, 'editSeedPkt');
+        this.view.editSeed(record, 'editSeedPkt');
     };
 
     async editRecord() {
@@ -511,7 +537,7 @@ class Controller {
         //=> pktId obtained from edit button on seed list
         await this.model.deleteRecord(pktId);
         this.view.showAlert('Seed Packet Deleted', 'warning', '#pkt-message', '#insert-form-alerts'); //=> Show success message
-        View.clearFields(); //=> Clear form fields
+        this.view.clearFields(); //=> Clear form fields
         this.model.getAll();
         await this.requestPacketList();
     };
@@ -553,7 +579,7 @@ class Controller {
     backup() { //=> Upload backup file and merge with data in object store
         const fileSelect = document.getElementById("js-file-select");
         const extractFileData = document.getElementById("js-input-file-data");
-        fileSelect.addEventListener("click", function () { //=> Upload Text File button clicked readWritePage
+        fileSelect.addEventListener("click", function () { //=> Upload Text File button clicked pageBackupRestore
             if (extractFileData) { extractFileData.click(); }
         }, false);
         extractFileData.onchange = function () { //=> Parse data to JSON objects in an array
@@ -615,13 +641,6 @@ window.onscroll = () => { view.scrollEvent() }; //=> scrolls down 20px, show the
 //=> Menu events
 
 // Menu selection events
-htmlId('eventPktPage').addEventListener('click', () =>
-// Clear fields when opening from menu
-{ View.showAddNewPacket(); View.clearFields() }, false);
-htmlId('eventScrollPage').addEventListener('click', () => { View.selectPages('scrollRecords') }, false)
-htmlId('eventReadWritePage').addEventListener('click', () => { View.selectPages('readWritePage') }, false);
-htmlId('eventErrorPage').addEventListener('click', () => { View.selectPages('dbError') }, false);
-htmlId('eventInstrPage').addEventListener('click', () => { View.selectPages('instructionsPage') }, false);
 
 //=> Sort table columns events
 htmlId('sortSeedGroup').addEventListener('click', () => { controller.getSortedPacketList('seedGroup') }, false);
@@ -639,6 +658,9 @@ htmlId('btnRetrieveData').addEventListener('click', () => { controller.retrieveA
 htmlId('btnReinstall').addEventListener('click', () => { controller.fixCorruptDB() }, false);
 htmlId('js-page--to-bottom').addEventListener('click', () => { view.scrollToBottom() }, false);
 htmlId('js-page--to-top').addEventListener('click', () => { view.scrollToTop() }, false);
+
+htmlId("btnCopyRecord").addEventListener('click', () => {view.clearCopiedField(); 
+view.showAddNewPacket();})
 
 // Buttons & inputs all opening Home Page (same class)
 
