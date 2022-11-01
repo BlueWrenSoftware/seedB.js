@@ -18,12 +18,12 @@
         <img class="menu-hamburger" src="./images/hamburger_active.svg">
         <nav class="menu-hamburger--show">
           <ul class="menu-hamburger__list">
-            <li><a id="eventHomePage" class="btnHomePage">Home Page - Seed List</a></li>
-            <li><a id="eventPktPage">Enter New Seed Packet</a></li>
-            <li><a id="eventScrollPage">Scroll Seed Packets</a></li>
-            <li><a id="eventReadWritePage">Backup and Restore</a></li>
-            <li><a id="eventErrorPage">Reinstall Corrupted DB</a></li>
-            <li><a id="eventInstrPage">Instructions</a></li>
+            <li><a class="openHomePage">Home Page - Seed List</a></li>
+            <li><a id="openNewSeedPage">Enter New Seed Packet</a></li>
+            <li><a id="openScrollRecordsPage">Scroll Seed Packets</a></li>
+            <li><a id="openBackupRestorePage">Backup and Restore</a></li>
+            <li><a id="openDbErrorPage">Reinstall Corrupted DB</a></li>
+            <li><a id="openInstructionsPage">Instructions</a></li>
         </nav>
       </div>
     </section>
@@ -99,7 +99,7 @@
             <div id="edit-pkt-buttons">
               <div class="wrapper">
                 <button class="selected flex-item" type="button" id="btnSubmitRecord">Submit Current Record</button>
-                <input class="selected flex-item btnHomePage " type="reset" value="Cancel: Back to Seed List">
+                <input class="selected flex-item openHomePage " type="reset" value="Cancel: Back to Seed List">
                 <button class="select-delete flex-item" type="button" id="btnDeleteRecord">Delete Current
                   Record</button>
               </div>
@@ -112,13 +112,13 @@
             <div id="new-pkt-buttons" class="wrapper">
               <button class="selected flex-item" type="button" id="btnNewRecord">Submit New Record</button>
               <input class="selected flex-item" type="reset" value="Clear Form (Data Not Saved)">
-              <button class="selected flex-item btnHomePage" type="button">Return to Seed List</button>
+              <button class="selected flex-item openHomePage" type="button">Return to Seed List</button>
             </div>
             <div id="scrollRecordsButtons">
               <div style="clear: both;">
                 <button class="selected flex-item" type="button" id="">Submit Current Record</button>
                 <!-- change id to class -->
-                <button class="selected flex-item btnHomePage" type="button">Return to Seed List </button>
+                <button class="selected flex-item openHomePage" type="button">Return to Seed List </button>
                 <button class="select-delete flex-item" type="button" id="">Delete Current Record</button>
               </div>
             </div>
@@ -166,7 +166,7 @@
         <input type="file" name="file" id="js-input-file-data" style="display:none">
         <button id="js-file-select" class="select-delete">Upload Backup Text File Restoring All Data</button>
         <ul id="backupNotifications"></ul><br>
-        <button id="findBtnHomePage" class="selected btnHomePage" type="button">Return to Seed List</button>
+        <button id="findBtnHomePage" class="selected openHomePage" type="button">Return to Seed List</button>
       </section>
 
       <!-- Instructions Page -->
