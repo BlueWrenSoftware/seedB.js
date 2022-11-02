@@ -128,7 +128,7 @@ class Model {
         const store = transaction.objectStore('collection');
         store.delete(pktId);
     }
-};
+}
 
 class View {
     // View is responsible for presenting the model to the user
@@ -140,29 +140,49 @@ class View {
 
     constructor() {
         this.app = this.getElement('#root');
+
+        // Pages
         this.seedListLinkElements = document.querySelectorAll(".openHomePage");
-        //this.newSeedPktLinkElements = document.querySelectorAll(".openNewSeedPage");
+        this.instructionsLinkElements = document.querySelectorAll(".openInstructionsPage");
+        this.bindInstructionsPageLink(() => { this.showInstructions(); });
+        //this.bindInstructionsPageLink(() => { this.showInstructions(); });
+        //this.bindInstructionsPageLink(() => { this.requestSpecificHelp(); });
+        //this.helpPage = document.querySelector("#openInstructionsPage");
+        //this.helpPage.addEventListener('click', () => this.showInstructions(), false) ;
+
         this.pageEvent("#openNewSeedPage", "pageAddNewPacket");
         this.pageEvent("#openScrollRecordsPage", "pageScrollRecords");
         this.pageEvent("#openBackupRestorePage", "pageBackupRestore");
         this.pageEvent("#openDbErrorPage", "pageDbError");
-        this.pageEvent("#openInstructionsPage", "pageInstructions");
+        //this.pageEvent("#openInstructionsPage", "pageInstructions");
+        
+        // Menu
         this.toTop = document.getElementById("js-page--to-top"); //=> Get the button
         this.toBottom = document.getElementById("js-page--to-bottom"); //=> Get the button
+        this.pageTopButton = window.onscroll = () => { this.scrollEvent() };
         this.menuButton = document.querySelector(".js-menu-hamburger");
         this.menuButton.addEventListener("click", () => { this.toggleMenu() });
         this.closedMenu = document.querySelector(".js-menu-hamburger--closed");
-        //this.bindNewSeedLink();
-        //this.htmlId("eventBackupRestorePage").addEventListener("click", () => { this.selectPages('pageBackupRestore') });
     }
 
     bindHomePageLink(handler) {
       // pass on to Controller
       this.seedListLinkElements.forEach(btn => btn.addEventListener('click', handler, false));
+      //console.log(handler);
     }
 
-    bindNewSeedLink() {
-      this.newSeedPktLinkElements.forEach(request => request.addEventListener('click', () => {View.showAddNewPacket()}), false);
+    bindInstructionsPageLink(handler) {
+       this.instructionsLinkElements.forEach(request => request.addEventListener('click', handler, false));
+    }
+
+    /* async findHelpTopic(topic=all) {
+        this.displayHelpTopic()
+    } */
+
+    requestSpecificHelp() {
+        // designed to show specific instructions when clicked on ? anywhere
+        this.showInstructions();
+        //await this.findHelpTopic();
     }
 
     pageEvent(selector, trigger) {
@@ -238,7 +258,8 @@ class View {
       document.querySelector('#seedNotes').value = ''
     }
 
-    static showHomePage() {
+    // Open Pages
+    showHomePage() {
         if (document.getElementById("showHide").classList.contains("js-all-pages--none")) {
             document.getElementById("showHide").classList.add("js-all-pages--opened");
             document.getElementById("showHide").classList.remove("js-all-pages--none");
@@ -268,15 +289,26 @@ class View {
         document.querySelector('#pktId').setAttribute('required', 'required');
     }
 
+    showInstructions() {
+        //=> page for instructions
+        //this.clearFields();
+        document.title = "Instructions";
+        //document.querySelector("#seed-entry").style.display = "none";
+        document.querySelector("#home-page").style.display = "none";
+        document.querySelector("#edit-page").style.display = "none";
+        document.querySelector("#read-write-page").style.display = "none";
+        document.querySelector("#instructions-page").style.display = "";
+    }
+
     selectPages(pageSelected) { 
         //=> Selects the pages from menu and other buttons
-        if (pageSelected === "homePage") {
+        /* if (pageSelected === "homePage") {
             //=> Checks if all the pages are hidden on startup and remove hidden to show
-            View.showHomePage();
-        }
-        else if (pageSelected === "editSeedPkt") {
+            this.showHomePage();
+        } */
+        if (pageSelected === "editSeedPkt") {
             //=> edit/add page seed packet selected from the seed list
-            this.clearFields();
+            //this.clearFields();
             document.title = "Edit Seed Pkt";
             document.querySelector("#edit-pkt-buttons").style.display = "";
             document.querySelector("#headerAddSeedPage").style.display = "none";
@@ -334,14 +366,6 @@ class View {
             document.querySelector("#read-write-page").style.display = "";
             //document.querySelector("#dbError").style.display = ""
         }
-        else if (pageSelected === "pageInstructions") {
-            //=> page for instructions
-            document.title = "Instructions";
-            document.querySelector("#home-page").style.display = "none";
-            document.querySelector("#edit-page").style.display = "none";
-            document.querySelector("#read-write-page").style.display = "none";
-            document.querySelector("#instructions-page").style.display = "";
-        }
     }
 
     toggleMenu() {
@@ -364,7 +388,9 @@ class View {
         document.documentElement.scrollTop = 0; //=> For Chrome, Firefox, IE and Opera
     }
 
-    scrollEvent() { //=> scroll event to hide or show to top button
+    scrollEvent() { 
+        //=> scroll event to hide or show to top button
+        //=> scrolls down 20px, show the up button
         if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
             this.toTop.style.display = "block";
         } else {
@@ -410,12 +436,10 @@ class Controller {
     constructor(model, view) {
         this.model = model;
         this.view = view;
-        // Packet sorting column
         this.sortOn = 'variety';
-        // Sort 'next' or 'prev'
         this.sortOrder = 'next';
-        //this.missingRequiredField = true;
         this.view.bindHomePageLink(() => { this.requestPacketList(); });
+        //this.view.bindInstructionsPageLink(() => { this.requestSpecificHelp(); });
     }
 
     async getSortedPacketList(sortOn) {
@@ -446,8 +470,18 @@ class Controller {
     }
 
     async requestPacketList() {
-        View.showHomePage();
+        this.view.showHomePage();
         await this.getSortedPacketList();
+    }
+
+    /* async findHelpTopic(topic=all) {
+        this.view.DisplayHelpTopic()
+    } */
+
+    async requestSpecificHelp() {
+        // designed to show specific instructions when clicked on ? anywhere
+        this.view.showInstructions();
+        //await this.findHelpTopic();
     }
 
     async fixCorruptDB() {
@@ -520,10 +554,6 @@ class Controller {
 
     async editRecord() {
         await this.loadRecord();
-        /* if (!this.missingRequiredField) {
-            await this.requestPacketList();
-        } */
-        //await this.requestPacketList();
     }
 
     async addRecord() {
@@ -636,7 +666,7 @@ const msgInstallBb = document.getElementById('installDbMsg'); //=> alias for UI 
 controller.backup(); // TO DO: have to sort the events in that function
 
 //=> Events 
-window.onscroll = () => { view.scrollEvent() }; //=> scrolls down 20px, show the up button
+//window.onscroll = () => { view.scrollEvent() }; 
 
 //=> Menu events
 
