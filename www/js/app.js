@@ -149,6 +149,9 @@ class View {
     this.scrollPacketsLinkElement = document.querySelector(".openScrollPacketsPage");
     this.bindScrollPacketsLink(() => { this.showScrollPackets(); });
 
+    this.backupRestoreLinkElement = document.querySelector(".openBackupRestorePage");
+    this.bindBackupRestoreLink(() => { this.showBackupRestore(); });
+
     this.instructionsLinkElements = document.querySelectorAll(".openInstructionsPage");
     this.bindInstructionsPageLink(() => { this.showInstructions(); });
 
@@ -159,7 +162,7 @@ class View {
 
     //this.pageEvent("#openNewSeedPage", "pageAddNewPacket");
     //this.pageEvent("#openScrollRecordsPage", "pageScrollRecords");
-    this.pageEvent("#openBackupRestorePage", "pageBackupRestore");
+    //this.pageEvent("#openBackupRestorePage", "pageBackupRestore");
     this.pageEvent("#openDbErrorPage", "pageDbError");
     //this.pageEvent("#openInstructionsPage", "pageInstructions");
 
@@ -186,6 +189,10 @@ class View {
 
   bindScrollPacketsLink(handler) { // Scroll Packets Page
     this.scrollPacketsLinkElement.addEventListener("click", handler, false);
+  }
+
+  bindBackupRestoreLink(handler) { // Backup & Restore Page
+    this.backupRestoreLinkElement.addEventListener("click", handler, false);
   }
 
   bindInstructionsPageLink(handler) {
@@ -319,6 +326,16 @@ class View {
     document.querySelector("#instructions-page").style.display = "none";
   }
 
+  showBackupRestore() {
+    document.title = "Backup & Restore";
+    document.querySelector("#retrieve-data-button").style.display = "";
+    document.querySelector("#home-page").style.display = "none";
+    document.querySelector("#edit-page").style.display = "none";
+    document.querySelector("#read-write-page").style.display = "";
+    document.querySelector("#instructions-page").style.display = "none";
+    document.querySelector("#dbError").style.display = "none"
+  }
+
   showInstructions() {
     //=> page for instructions
     //this.clearFields();
@@ -370,7 +387,7 @@ class View {
       document.querySelector("#read-write-page").style.display = "none";
       document.querySelector("#instructions-page").style.display = "none";
     } */
-    else if (pageSelected === "pageBackupRestore") {
+    /* else if (pageSelected === "pageBackupRestore") {
       //=> backup and restore page
       document.title = "Backup & Restore";
       document.querySelector("#retrieve-data-button").style.display = "";
@@ -379,7 +396,7 @@ class View {
       document.querySelector("#read-write-page").style.display = "";
       document.querySelector("#instructions-page").style.display = "none";
       document.querySelector("#dbError").style.display = "none"
-    }
+    } */
     else if (pageSelected === "pageDbError") {
       //=> checks if pages are hidden before loading error page on start
       if (document.getElementById("showHide").classList.contains("js-all-pages--none")) {
