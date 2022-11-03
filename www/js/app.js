@@ -140,14 +140,14 @@ class View {
 
   constructor() {
     this.app = this.getElement('#root');
-
     // Pages
     this.seedListLinkElements = document.querySelectorAll(".openHomePage");
 
     this.addNewPacketLinkElement = document.querySelector(".openNewPacketPage");
     this.bindAddNewPacketLink(() => { this.showAddNewPacket(); });
 
-
+    this.scrollPacketsLinkElement = document.querySelector(".openScrollPacketsPage");
+    this.bindScrollPacketsLink(() => { this.showScrollPackets(); });
 
     this.instructionsLinkElements = document.querySelectorAll(".openInstructionsPage");
     this.bindInstructionsPageLink(() => { this.showInstructions(); });
@@ -158,7 +158,7 @@ class View {
     //this.helpPage.addEventListener('click', () => this.showInstructions(), false) ;
 
     //this.pageEvent("#openNewSeedPage", "pageAddNewPacket");
-    this.pageEvent("#openScrollRecordsPage", "pageScrollRecords");
+    //this.pageEvent("#openScrollRecordsPage", "pageScrollRecords");
     this.pageEvent("#openBackupRestorePage", "pageBackupRestore");
     this.pageEvent("#openDbErrorPage", "pageDbError");
     //this.pageEvent("#openInstructionsPage", "pageInstructions");
@@ -185,7 +185,7 @@ class View {
   }
 
   bindScrollPacketsLink(handler) { // Scroll Packets Page
-    this.addNewPacketLinkElement.addEventListener("click", handler, false);
+    this.scrollPacketsLinkElement.addEventListener("click", handler, false);
   }
 
   bindInstructionsPageLink(handler) {
@@ -307,6 +307,18 @@ class View {
     document.querySelector('#pktId').setAttribute('required', 'required');
   }
 
+  showScrollPackets() {
+    this.clearFields();
+    document.title = "Scroll Pkt Records";
+    document.querySelector("#new-pkt-buttons").style.display = "none";
+    document.querySelector("#edit-pkt-buttons").style.display = "none";
+    document.querySelector("#scrollRecordsButtons").style.display = "";
+    document.querySelector("#home-page").style.display = "none";
+    document.querySelector("#edit-page").style.display = "";
+    document.querySelector("#read-write-page").style.display = "none";
+    document.querySelector("#instructions-page").style.display = "none";
+  }
+
   showInstructions() {
     //=> page for instructions
     //this.clearFields();
@@ -346,7 +358,7 @@ class View {
       this.clearFields();
       this.showAddNewPacket();
     } */
-    else if (pageSelected === "pageScrollRecords") {
+    /* else if (pageSelected === "pageScrollRecords") {
       //=> edit/add page for new seed packet entry
       this.clearFields();
       document.title = "Scroll Pkt Records";
@@ -357,7 +369,7 @@ class View {
       document.querySelector("#edit-page").style.display = "";
       document.querySelector("#read-write-page").style.display = "none";
       document.querySelector("#instructions-page").style.display = "none";
-    }
+    } */
     else if (pageSelected === "pageBackupRestore") {
       //=> backup and restore page
       document.title = "Backup & Restore";
