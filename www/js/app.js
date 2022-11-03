@@ -152,20 +152,11 @@ class View {
     this.backupRestoreLinkElement = document.querySelector(".openBackupRestorePage");
     this.bindBackupRestoreLink(() => { this.showBackupRestore(); });
 
+    this.dbErrorLinkElement = document.querySelector(".openDbErrorPage");
+    this.bindDbErrorLink(() => { this.showDbError(); });
+
     this.instructionsLinkElements = document.querySelectorAll(".openInstructionsPage");
     this.bindInstructionsPageLink(() => { this.showInstructions(); });
-
-    //this.bindInstructionsPageLink(() => { this.showInstructions(); });
-    //this.bindInstructionsPageLink(() => { this.requestSpecificHelp(); });
-    //this.helpPage = document.querySelector("#openInstructionsPage");
-    //this.helpPage.addEventListener('click', () => this.showInstructions(), false) ;
-
-    //this.pageEvent("#openNewSeedPage", "pageAddNewPacket");
-    //this.pageEvent("#openScrollRecordsPage", "pageScrollRecords");
-    //this.pageEvent("#openBackupRestorePage", "pageBackupRestore");
-    this.pageEvent("#openDbErrorPage", "pageDbError");
-    //this.pageEvent("#openInstructionsPage", "pageInstructions");
-
     // Menu
     this.toTop = document.getElementById("js-page--to-top"); //=> Get the button
     this.toBottom = document.getElementById("js-page--to-bottom"); //=> Get the button
@@ -193,6 +184,10 @@ class View {
 
   bindBackupRestoreLink(handler) { // Backup & Restore Page
     this.backupRestoreLinkElement.addEventListener("click", handler, false);
+  }
+
+  bindDbErrorLink(handler) { // Reinstall corrupted DB 
+    this.dbErrorLinkElement.addEventListener("click", handler, false);
   }
 
   bindInstructionsPageLink(handler) {
@@ -336,6 +331,22 @@ class View {
     document.querySelector("#dbError").style.display = "none"
   }
 
+  showDbError() {
+    //=> checks if pages are hidden before loading error page on start
+    if (document.getElementById("showHide").classList.contains("js-all-pages--none")) {
+      document.getElementById("showHide").classList.add("js-all-pages--opened");
+      document.getElementById("showHide").classList.remove("js-all-pages--none");
+    }
+    document.title = "DB Error";
+    //=> on start up if db fails this page will be loaded
+    document.querySelector("#retrieve-data-button").style.display = "none";
+    document.querySelector("#home-page").style.display = "none";
+    document.querySelector("#edit-page").style.display = "none";
+    document.querySelector("#read-write-page").style.display = "none";
+    document.querySelector("#instructions-page").style.display = "none";
+    document.querySelector("#read-write-page").style.display = "";
+    //document.querySelector("#dbError").style.display = ""
+  }
   showInstructions() {
     //=> page for instructions
     //this.clearFields();
@@ -348,6 +359,7 @@ class View {
   }
 
   selectPages(pageSelected) {
+    ``
     //=> Selects the pages from menu and other buttons
     /* if (pageSelected === "homePage") {
         //=> Checks if all the pages are hidden on startup and remove hidden to show
@@ -370,49 +382,7 @@ class View {
       document.querySelector('#pktId').removeAttribute('required');
       document.querySelector('#pktId').setAttribute('readonly', 'readonly');
     }
-    /* else if (pageSelected === "pageAddNewPacket") {
-      //=> edit/add page for new seed packet entry
-      this.clearFields();
-      this.showAddNewPacket();
-    } */
-    /* else if (pageSelected === "pageScrollRecords") {
-      //=> edit/add page for new seed packet entry
-      this.clearFields();
-      document.title = "Scroll Pkt Records";
-      document.querySelector("#new-pkt-buttons").style.display = "none";
-      document.querySelector("#edit-pkt-buttons").style.display = "none";
-      document.querySelector("#scrollRecordsButtons").style.display = "";
-      document.querySelector("#home-page").style.display = "none";
-      document.querySelector("#edit-page").style.display = "";
-      document.querySelector("#read-write-page").style.display = "none";
-      document.querySelector("#instructions-page").style.display = "none";
-    } */
-    /* else if (pageSelected === "pageBackupRestore") {
-      //=> backup and restore page
-      document.title = "Backup & Restore";
-      document.querySelector("#retrieve-data-button").style.display = "";
-      document.querySelector("#home-page").style.display = "none";
-      document.querySelector("#edit-page").style.display = "none";
-      document.querySelector("#read-write-page").style.display = "";
-      document.querySelector("#instructions-page").style.display = "none";
-      document.querySelector("#dbError").style.display = "none"
-    } */
-    else if (pageSelected === "pageDbError") {
-      //=> checks if pages are hidden before loading error page on start
-      if (document.getElementById("showHide").classList.contains("js-all-pages--none")) {
-        document.getElementById("showHide").classList.add("js-all-pages--opened");
-        document.getElementById("showHide").classList.remove("js-all-pages--none");
-      }
-      document.title = "DB Error";
-      //=> on start up if db fails this page will be loaded
-      document.querySelector("#retrieve-data-button").style.display = "none";
-      document.querySelector("#home-page").style.display = "none";
-      document.querySelector("#edit-page").style.display = "none";
-      document.querySelector("#read-write-page").style.display = "none";
-      document.querySelector("#instructions-page").style.display = "none";
-      document.querySelector("#read-write-page").style.display = "";
-      //document.querySelector("#dbError").style.display = ""
-    }
+
   }
 
   toggleMenu() {
