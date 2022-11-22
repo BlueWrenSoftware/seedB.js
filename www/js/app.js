@@ -142,21 +142,16 @@ class View {
     this.app = this.getElement('#root');
     // Pages
     this.seedListLinkElements = document.querySelectorAll(".openHomePage");
-
     this.addNewPacketLinkElement = document.querySelector(".openNewPacketPage");
-    this.bindAddNewPacketLink(() => { this.showAddNewPacket(); });
-
+    //this.bindAddNewPacketLink(() => { this.showAddNewPacket(); });
     this.scrollPacketsLinkElement = document.querySelector(".openScrollPacketsPage");
-    this.bindScrollPacketsLink(() => { this.showScrollPackets(); });
-
+    //this.bindScrollPacketsLink(() => { this.showScrollPackets(); });
     this.backupRestoreLinkElement = document.querySelector(".openBackupRestorePage");
-    this.bindBackupRestoreLink(() => { this.showBackupRestore(); });
-
+    //this.bindBackupRestoreLink(() => { this.showBackupRestore(); });
     this.dbErrorLinkElement = document.querySelector(".openDbErrorPage");
-    this.bindDbErrorLink(() => { this.showDbError(); });
-
+    //this.bindDbErrorLink(() => { this.showDbError(); });
     this.instructionsLinkElements = document.querySelectorAll(".openInstructionsPage");
-    this.bindInstructionsPageLink(() => { this.showInstructions(); });
+    //this.bindInstructionsPageLink(() => { this.showInstructions(); });
     // Menu
     this.toTop = document.getElementById("js-page--to-top"); //=> Get the button
     this.toBottom = document.getElementById("js-page--to-bottom"); //=> Get the button
@@ -186,7 +181,7 @@ class View {
     this.backupRestoreLinkElement.addEventListener("click", handler, false);
   }
 
-  bindDbErrorLink(handler) { // Reinstall corrupted DB 
+  bindDbErrorLink(handler) { // Reinstall corrupted DB
     this.dbErrorLinkElement.addEventListener("click", handler, false);
   }
 
@@ -198,6 +193,7 @@ class View {
       this.displayHelpTopic()
   } */
 
+  // transfer this to Controller
   requestSpecificHelp() {
     // designed to show specific instructions when clicked on ? anywhere
     this.showInstructions();
@@ -233,7 +229,7 @@ class View {
             <td class="table-seeds__col--center">${(seedPkt.seedDatePacked).substring(2)}</td>
             <td class="table-seeds__col--center">${seedPkt.seedNumbers}</td>
             <td class="table-seeds__col--center">${seedPkt.seedWeight}</td>
-            <td class="edit" onclick="controller.editSeedPkt('${seedPkt.pktId}')"></td>`;
+            <td class="edit" onclick=controller.editSeedPkt("${seedPkt.pktId}")></td>`;
     list.appendChild(row);
   }
 
@@ -284,7 +280,7 @@ class View {
       document.getElementById("showHide").classList.add("js-all-pages--opened");
       document.getElementById("showHide").classList.remove("js-all-pages--none");
     }
-    document.title = "SeedB Blue Wren"; //=> Page at startup being the seed list
+    document.title = "SeedB List"; //=> Page at startup being the seed list
     document.querySelector("#home-page").style.display = "";
     document.querySelector("#edit-page").style.display = "none";
     document.querySelector("#read-write-page").style.display = "none";
@@ -307,6 +303,22 @@ class View {
     // Key pktId readonly removed and is required
     document.querySelector('#pktId').removeAttribute('readonly');
     document.querySelector('#pktId').setAttribute('required', 'required');
+  }
+
+  showEditPacket() {
+    document.title = "Edit Seed Pkt";
+    document.querySelector("#edit-pkt-buttons").style.display = "";
+    document.querySelector("#headerAddSeedPage").style.display = "none";
+    document.querySelector("#new-pkt-buttons").style.display = "none";
+    document.querySelector("#scrollRecordsButtons").style.display = "none";
+    document.querySelector("#home-page").style.display = "none";
+    document.querySelector("#headerEditSeedPage").style.display = "";
+    document.querySelector("#edit-page").style.display = "";
+    document.querySelector("#read-write-page").style.display = "none";
+    document.querySelector("#instructions-page").style.display = "none";
+    // Key pktId is read only
+    document.querySelector('#pktId').removeAttribute('required');
+    document.querySelector('#pktId').setAttribute('readonly', 'readonly');   
   }
 
   showScrollPackets() {
@@ -333,20 +345,20 @@ class View {
 
   showDbError() {
     //=> checks if pages are hidden before loading error page on start
-    if (document.getElementById("showHide").classList.contains("js-all-pages--none")) {
+    /* if (document.getElementById("showHide").classList.contains("js-all-pages--none")) {
       document.getElementById("showHide").classList.add("js-all-pages--opened");
       document.getElementById("showHide").classList.remove("js-all-pages--none");
-    }
+    } */
     document.title = "DB Error";
     //=> on start up if db fails this page will be loaded
     document.querySelector("#retrieve-data-button").style.display = "none";
     document.querySelector("#home-page").style.display = "none";
     document.querySelector("#edit-page").style.display = "none";
-    document.querySelector("#read-write-page").style.display = "none";
-    document.querySelector("#instructions-page").style.display = "none";
     document.querySelector("#read-write-page").style.display = "";
-    //document.querySelector("#dbError").style.display = ""
+    document.querySelector("#instructions-page").style.display = "none";
+    document.querySelector("#dbError").style.display = ""
   }
+
   showInstructions() {
     //=> page for instructions
     //this.clearFields();
@@ -356,33 +368,6 @@ class View {
     document.querySelector("#edit-page").style.display = "none";
     document.querySelector("#read-write-page").style.display = "none";
     document.querySelector("#instructions-page").style.display = "";
-  }
-
-  selectPages(pageSelected) {
-    ``
-    //=> Selects the pages from menu and other buttons
-    /* if (pageSelected === "homePage") {
-        //=> Checks if all the pages are hidden on startup and remove hidden to show
-        this.showHomePage();
-    } */
-    if (pageSelected === "editSeedPkt") {
-      //=> edit/add page seed packet selected from the seed list
-      //this.clearFields();
-      document.title = "Edit Seed Pkt";
-      document.querySelector("#edit-pkt-buttons").style.display = "";
-      document.querySelector("#headerAddSeedPage").style.display = "none";
-      document.querySelector("#new-pkt-buttons").style.display = "none";
-      document.querySelector("#scrollRecordsButtons").style.display = "none";
-      document.querySelector("#home-page").style.display = "none";
-      document.querySelector("#headerEditSeedPage").style.display = "";
-      document.querySelector("#edit-page").style.display = "";
-      document.querySelector("#read-write-page").style.display = "none";
-      document.querySelector("#instructions-page").style.display = "none";
-      // Key pktId is read only
-      document.querySelector('#pktId').removeAttribute('required');
-      document.querySelector('#pktId').setAttribute('readonly', 'readonly');
-    }
-
   }
 
   toggleMenu() {
@@ -427,25 +412,22 @@ class View {
 
   editSeed(record, editPage) { //=> opens the edit/add page ->
     this.clearFields();
-    this.selectPages("editSeedPkt");
+    this.showEditPacket();
     Object.keys(record).forEach(field => { // -> with the requested seed pkt record for editing
       //console.log(field);
       //console.log(record[field]);
       document.querySelector('#' + field).value = record[field];
     });
-  } //=> Should be in Store Class?
+  } //=> Should be in Controller!!!
 
   static showMessage(message) {
     msgInstallBb.innerHTML += (`<li>=> ${message}</li>`);
   }
 
-
-
   /* bindEditAddSeedPages(handler) {
       this.pagesAddEditLinkElements.forEach(btn => btn.addEventListener('click', handler, false));
   } */
 }
-
 
 class Controller {
   // Responsible for handling user input
@@ -455,8 +437,13 @@ class Controller {
     this.view = view;
     this.sortOn = 'variety';
     this.sortOrder = 'next';
+    // bindings
     this.view.bindHomePageLink(() => { this.requestPacketList(); });
-    //this.view.bindInstructionsPageLink(() => { this.requestSpecificHelp(); });
+    this.view.bindAddNewPacketLink(() => { this.requestAddNewPacket(); });
+    this.view.bindScrollPacketsLink(() => { this.requestScrollPackets(); });
+    this.view.bindBackupRestoreLink(() => { this.requestBackupRestore(); });
+    this.view.bindDbErrorLink(() => { this.requestDbError(); });
+    this.view.bindInstructionsPageLink(() => { this.requestHelpPage(); });
   }
 
   async getSortedPacketList(sortOn) {
@@ -495,7 +482,23 @@ class Controller {
       this.view.DisplayHelpTopic()
   } */
 
-  async requestSpecificHelp() {
+  requestAddNewPacket() {
+    this.view.showAddNewPacket();
+  }
+
+  requestScrollPackets() {
+    this.view.showScrollPackets();
+  }
+
+  requestBackupRestore() {
+    this.view.showBackupRestore();
+  }
+
+  requestDbError() {
+    this.view.showDbError();
+  }
+
+  requestHelpPage() {
     // designed to show specific instructions when clicked on ? anywhere
     this.view.showInstructions();
     //await this.findHelpTopic();
@@ -600,7 +603,6 @@ class Controller {
     return formattedTime;
   }
 
-
   download(filename, textInput) {
     //=> Download filename using browser file download
     const element = document.createElement('a'); //=> Create anchor tag
@@ -649,16 +651,16 @@ class Controller {
       reader.readAsText(file);
     };
   }   /* TO DO: all the events have to be taken out of backup()!
-                  better documentation need for this function 
+                  better documentation need for this function
         */
 }
 
 //=> End of Classes
-/* TO DO: wherever a the db is opened in a Store or Data static functions 
+/* TO DO: wherever a the db is opened in a Store or Data static functions
           should change that to one only function to open a db
           and use that function in any of the other ones requiring an open db request.
           Might also need to be promise-async-await structure
-          Also sort out versioning numbering when creating opening request.  
+          Also sort out versioning numbering when creating opening request.
           Make all Alert messages sticky and only disappear when changing pages
           deletedPkts = []; session storage of deleted seed packets
           Checking for the right store on start
@@ -682,8 +684,8 @@ const msgInstallBb = document.getElementById('installDbMsg'); //=> alias for UI 
 //=> Restore data from backup file
 controller.backup(); // TO DO: have to sort the events in that function
 
-//=> Events 
-//window.onscroll = () => { view.scrollEvent() }; 
+//=> Events
+//window.onscroll = () => { view.scrollEvent() };
 
 //=> Menu events
 

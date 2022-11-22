@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Copy SeedB</title>
+  <title>SeedB</title>
   <link rel="stylesheet" href="./styles/styles.css">
 </head>
 
@@ -33,8 +33,7 @@
       <header>
         <img class="page-header__h1--logo" src="./images/bettong-june.svg" height="42">
         <h1 class="page-header__h1">
-          SeedB - Seed Data Base
-        </h1>
+          SeedB - Seed Data Base </h1>
       </header>
     </section>
 
@@ -93,45 +92,45 @@
           <input type="date" id="seedDatePacked" name="seedDatePacked" required="required"><br>
           <label for="timeStamp">Timestamp:</label>
           <input type="number" readonly="readonly" class="timestamp" id="timeStamp" name="timeStamp"><br>
-          <label class="notes" for="seedNotes"">Notes:</label>
-          <textarea rows=" 2" name="seedNotes" id="seedNotes"></textarea>
-            <br>
-            <!-- Buttons -->
-            <div id="edit-pkt-buttons">
-              <input class="openInstructionsPage selected" type="reset" value="?">
-              <div class="wrapper">
-                <button class="selected " type="button" id="btnSubmitRecord">Submit Current Record</button>
-                <input class="selected  openHomePage " type="reset" value="Cancel: Back to Seed List">
-                <button class="select-delete " type="button" id="btnDeleteRecord">Delete Current Record</button>
-              </div>
-              <div>
-                <button class="selected " type="button" id="btnCopyRecord">Copy Current
-                  Record&emsp;-&emsp;Opens in 'Add New Seed Packet'</button>
-              </div>
+          <label class="notes" for="seedNotes">Notes:</label>
+          <textarea rows="2" name="seedNotes" id="seedNotes"></textarea>
+          <br>
+          <!-- Buttons -->
+          <div id="edit-pkt-buttons">
+            <input class="openInstructionsPage selected" type="reset" value="?">
+            <div class="wrapper">
+              <button class="selected " type="button" id="btnSubmitRecord">Submit Current Record</button>
+              <input class="selected  openHomePage " type="reset" value="Cancel: Back to Seed List">
+              <button class="select-delete " type="button" id="btnDeleteRecord">Delete Current Record</button>
             </div>
-            <div id="new-pkt-buttons">
-              <input id="newSeedHelp" class="openInstructionsPage selected" type="reset" value="?">
-              <div class="wrapper">
-                <button class="selected " type="button" id="btnNewRecord">Submit New Record</button>
-                <input class="selected " type="reset" value="Clear Form (Data Not Saved)">
-                <button class="selected  openHomePage" type="button">Return to Seed List</button>
-              </div>
+            <div>
+              <button class="selected " type="button" id="btnCopyRecord">Copy Current
+                Record&emsp;-&emsp;Opens in 'Add New Seed Packet'</button>
             </div>
-            <div id="scrollRecordsButtons">
-              <div style="clear: both;">
-                <button class="selected " type="button" id="">Submit Current Record</button>
-                <!-- change id to class -->
-                <button class="selected  openHomePage" type="button">Return to Seed List </button>
-                <button class="select-delete " type="button" id="">Delete Current Record</button>
-              </div>
+          </div>
+          <div id="new-pkt-buttons">
+            <input id="newSeedHelp" class="openInstructionsPage selected" type="reset" value="?">
+            <div class="wrapper">
+              <button class="selected " type="button" id="btnNewRecord">Submit New Record</button>
+              <input class="selected " type="reset" value="Clear Form (Data Not Saved)">
+              <button class="selected  openHomePage" type="button">Return to Seed List</button>
             </div>
+          </div>
+          <div id="scrollRecordsButtons">
+            <div style="clear: both;">
+              <button class="selected " type="button" id="">Submit Current Record</button>
+              <!-- change id to class -->
+              <button class="selected  openHomePage" type="button">Return to Seed List </button>
+              <button class="select-delete " type="button" id="">Delete Current Record</button>
+            </div>
+          </div>
         </form>
         <div id="insert-form-alerts">
           <p id="pkt-message"></p>
         </div>
       </section>
 
-      <!-- Read Write Files Page-->
+      <!-- Read Write Files Page -->
       <section id="read-write-page">
         <header>
           <h2 class="chapter--h2">
@@ -172,6 +171,12 @@
         <button id="findBtnHomePage" class="selected openHomePage" type="button">Return to Seed List</button>
       </section>
 
+      <!-- DB Error Page -->
+      <section>
+        
+      </section>
+
+
       <!-- Instructions Page -->
       <section id="instructions-page" class="section--paragraph">
         <br>
@@ -179,131 +184,13 @@
         <p>The instruction below is a hack for the moment when the SeedB is not installed or the browser's cache was
           reset - deleting the SeedB.</p>
         <p>
-          IndexedDB is not working properly after a reset of the browser?<br>Amet nulla facilisi morbi tempus. Senectus
-          et netus et malesuada. Tellus in metus vulputate eu scelerisque felis
-          imperdiet. Tortor posuere ac ut consequat semper viverra nam. Suscipit tellus mauris a diam maecenas sed.
-          Pulvinar
-          mattis nunc sed blandit libero volutpat sed. Netus et malesuada fames ac turpis. Auctor augue mauris augue
-          neque
-          gravida in fermentum et. Malesuada proin libero nunc consequat interdum varius sit. Dignissim diam quis enim
-          lobortis.
-          Odio tempor orci dapibus ultrices in iaculis. Bibendum arcu vitae elementum curabitur vitae nunc. Scelerisque
-          varius
-          morbi enim nunc. Dictum sit amet justo donec enim diam vulputate. Suspendisse in est ante in nibh mauris
-          cursus
-          mattis. Viverra maecenas accumsan lacus vel. Sit amet nisl purus in mollis. Vel pretium lectus quam id leo.
         </p>
         <h3 class="chapter--h3" id="general">General</h3>
-        <p>
-          Dolor purus non enim praesent elementum facilisis leo vel. Augue neque gravida in fermentum. Netus et
-          malesuada
-          fames
-          ac turpis egestas sed tempus. Amet mauris commodo quis imperdiet massa tincidunt nunc pulvinar. Cras tincidunt
-          lobortis feugiat vivamus. Vel risus commodo viverra maecenas accumsan lacus vel facilisis. Posuere ac ut
-          consequat
-          semper viverra nam libero. Elit eget gravida cum sociis natoque penatibus. In dictum non consectetur a.
-          Ullamcorper
-          malesuada proin libero nunc consequat interdum varius sit. Sodales ut etiam sit amet nisl purus in mollis. Sit
-          amet
-          nisl purus in mollis nunc. Enim diam vulputate ut pharetra sit amet. Lobortis mattis aliquam faucibus purus in
-          massa.
-          Sed risus pretium quam vulputate dignissim suspendisse in est ante. Faucibus interdum posuere lorem ipsum
-          dolor sit
-          amet consectetur adipiscing.
-        </p>
-
-        <p>
-          Velit laoreet id donec ultrices tincidunt arcu non sodales neque. Ultricies leo integer malesuada nunc vel
-          risus
-          commodo viverra. Scelerisque felis imperdiet proin fermentum leo vel. Eleifend donec pretium vulputate sapien
-          nec
-          sagittis. At volutpat diam ut venenatis. Malesuada nunc vel risus commodo viverra maecenas accumsan. Sit amet
-          facilisis magna etiam tempor orci. Consequat nisl vel pretium lectus quam id. Pellentesque eu tincidunt tortor
-          aliquam nulla facilisi cras. Vulputate mi sit amet mauris commodo quis imperdiet. Volutpat commodo sed egestas
-          egestas fringilla. Sit amet commodo nulla facilisi nullam. At urna condimentum mattis pellentesque id.
-          Malesuada
-          bibendum arcu vitae elementum curabitur vitae nunc sed velit. Aliquam ultrices sagittis orci a scelerisque
-          purus
-          semper. Cras pulvinar mattis nunc sed. Vitae congue mauris rhoncus aenean vel.
-        </p>
-
-        <p>
-          Vitae congue eu consequat ac. Nibh sit amet commodo nulla facilisi nullam vehicula ipsum. Eleifend donec
-          pretium
-          vulputate sapien nec sagittis aliquam. Odio facilisis mauris sit amet massa vitae tortor condimentum. Molestie
-          ac
-          feugiat sed lectus vestibulum mattis ullamcorper velit sed. Eget nullam non nisi est sit. Viverra nam libero
-          justo
-          laoreet sit. Malesuada pellentesque elit eget gravida cum sociis natoque. Vitae et leo duis ut diam. Massa
-          placerat
-          duis ultricies lacus sed turpis.
-        </p>
+        <p></p>
         <h3 id="newSeedHelp" class="chapter--h3" id="helpNewSeed">Enter New Seed Packet</h3>
-        <p>
-          Sem viverra aliquet eget sit amet tellus cras adipiscing. Arcu dui vivamus arcu felis bibendum ut tristique.
-          Fringilla ut morbi tincidunt augue interdum velit euismod. Dictumst quisque sagittis purus sit amet volutpat
-          consequat mauris nunc. Malesuada nunc vel risus commodo viverra maecenas accumsan. Magna sit amet purus
-          gravida quis
-          blandit turpis. In est ante in nibh mauris. Aliquam malesuada bibendum arcu vitae elementum. Amet mattis
-          vulputate
-          enim nulla aliquet porttitor lacus luctus accumsan. Nibh tortor id aliquet lectus. Pellentesque nec nam
-          aliquam sem
-          et. Rhoncus mattis rhoncus urna neque viverra.
-        </p>
-
-        <p>
-          Nibh tellus molestie nunc non. Varius vel pharetra vel turpis nunc. Netus et malesuada fames ac turpis egestas
-          sed.
-          Tortor consequat id porta nibh venenatis cras. Pellentesque adipiscing commodo elit at imperdiet. Ultrices
-          gravida
-          dictum fusce ut placerat orci. Sagittis nisl rhoncus mattis rhoncus urna neque. Nulla porttitor massa id neque
-          aliquam vestibulum morbi blandit. Tempor commodo ullamcorper a lacus vestibulum sed arcu non. Morbi blandit
-          cursus
-          risus at ultrices mi. In hendrerit gravida rutrum quisque non. Fermentum dui faucibus in ornare quam viverra
-          orci
-          sagittis eu. Blandit libero volutpat sed cras ornare arcu dui. Odio morbi quis commodo odio aenean sed
-          adipiscing
-          diam donec. Turpis egestas maecenas pharetra convallis posuere morbi leo. Vitae congue mauris rhoncus aenean
-          vel
-          elit scelerisque mauris. Habitant morbi tristique senectus et netus et malesuada. Duis at consectetur lorem
-          donec
-          massa sapien faucibus.
-        </p>
-
-        <p>
-          Nibh cras pulvinar mattis nunc sed blandit libero. Purus in mollis nunc sed id semper. Ut aliquam purus sit
-          amet.
-          Molestie a iaculis at erat pellentesque adipiscing commodo. Vitae elementum curabitur vitae nunc sed velit.
-          Senectus
-          et netus et malesuada fames ac. Id velit ut tortor pretium viverra suspendisse potenti nullam ac. In vitae
-          turpis
-          massa sed elementum tempus egestas. Lacus sed turpis tincidunt id. Rutrum tellus pellentesque eu tincidunt
-          tortor
-          aliquam nulla facilisi cras. Rhoncus aenean vel elit scelerisque mauris pellentesque pulvinar. Cursus metus
-          aliquam
-          eleifend mi. Iaculis nunc sed augue lacus viverra. Ac tortor vitae purus faucibus. Non diam phasellus
-          vestibulum
-          lorem sed risus ultricies. Velit ut tortor pretium viverra. Sit amet risus nullam eget felis eget nunc. Orci
-          ac
-          auctor augue mauris. Ornare arcu odio ut sem nulla.
-        </p>
+        <p></p>
         <h3 class="chapter--h3" id="helpEditSeed">Edit Existing Seed Packet</h3>
-        <p>
-          Urna cursus eget nunc scelerisque viverra mauris in. Mauris augue neque gravida in fermentum et sollicitudin
-          ac
-          orci. Malesuada bibendum arcu vitae elementum. Sed blandit libero volutpat sed cras ornare arcu dui. Et
-          sollicitudin
-          ac orci phasellus. Facilisi nullam vehicula ipsum a arcu cursus. Augue neque gravida in fermentum et. Mollis
-          aliquam
-          ut porttitor leo a diam sollicitudin tempor id. Diam phasellus vestibulum lorem sed risus ultricies. Non
-          blandit
-          massa enim nec. Aliquam nulla facilisi cras fermentum odio eu. Gravida rutrum quisque non tellus. Mauris
-          pharetra et
-          ultrices neque. Imperdiet dui accumsan sit amet nulla facilisi morbi. Eu volutpat odio facilisis mauris sit
-          amet
-          massa. Purus ut faucibus pulvinar elementum integer enim neque. Nullam non nisi est sit amet. Velit euismod in
-          pellentesque massa placerat. Id cursus metus aliquam eleifend mi in nulla posuere.
-        </p>
+        <p></p>
         <br>
       </section>
     </div>
