@@ -46,12 +46,12 @@
         <table class="table-seeds table-seeds__row-color" id="mytable">
           <thead>
             <tr>
-              <th class="sort" id="sortSeedGroup">Group</th>
+              <th class="sort" id="sortGroup">Group</th>
               <th class="sort" id="sortVariety">Variety</th>
               <th class="sort" id="sortPacketId">Packet Id</th>
-              <th class="sort" id="sortDatePacked">Date</th>
-              <th class="sort" id="sortSeedNumbers">Number</th>
-              <th class="sort" id="sortSeedWeight">Gram</th>
+              <th class="sort" id="sortDate">Date</th>
+              <th class="sort" id="sortNumber">Number</th>
+              <th class="sort" id="sortWeight">Gram</th>
               <th>Edit</th>
             </tr>
           </thead>
@@ -78,18 +78,18 @@
           <p>*&emsp;Input required.</p>
           <p>**&ensp;Seed Packet Id must be unique!</p>
           <br>
-          <label for="seedGroup">*&nbsp;Seed&nbsp;Group: </label>
-          <input type="text" id="seedGroup" name="seedGroup" required="required"><br>
+          <label for="group">*&nbsp;Seed&nbsp;Group: </label>
+          <input type="text" id="group" name="group" required="required"><br>
           <label for="variety">*&nbsp;Variety: </label>
           <input type="text" id="variety" name="variety" required="required"><br>
-          <label for="pktId">**&nbsp;Seed&nbsp;Packet:</label>
-          <input type="text" id="pktId" name="pktId"><br>
-          <label for="seedNumbers">*&nbsp;Seed&nbsp;Count:</label>
-          <input type="number" id="seedNumbers" name="seedNumbers" required="required"><br>
-          <label for="seedWeight">*&nbsp;Seed &nbsp;Grams:</label>
-          <input type="number" id="seedWeight" name="seedWeight" required="required"><br>
-          <label for="seedDatePacked">*&nbsp;Date&nbsp;Packaged:</label>
-          <input type="date" id="seedDatePacked" name="seedDatePacked" required="required"><br>
+          <label for="packetId">**&nbsp;Seed&nbsp;Packet:</label>
+          <input type="text" id="packetId" name="packetId"><br>
+          <label for="number">*&nbsp;Seed&nbsp;Count:</label>
+          <input type="number" id="number" name="number" required="required"><br>
+          <label for="weight">*&nbsp;Seed &nbsp;Grams:</label>
+          <input type="number" id="weight" name="weight" required="required"><br>
+          <label for="date">*&nbsp;Date&nbsp;Packaged:</label>
+          <input type="date" id="date" name="date" required="required"><br>
           <label for="timeStamp">Timestamp:</label>
           <input type="number" readonly="readonly" class="timestamp" id="timeStamp" name="timeStamp"><br>
           <label class="notes" for="seedNotes">Notes:</label>

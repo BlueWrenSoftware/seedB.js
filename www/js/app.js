@@ -20,12 +20,12 @@ class Model {
       const request = window.indexedDB.open('seedB', version);
       request.onupgradeneeded = function (event) {
         this.db = event.target.result;
-        const store = this.db.createObjectStore('collection', { keyPath: 'pktId' });
+        const store = this.db.createObjectStore('collection', { keyPath: 'packetId' });
         store.createIndex('variety', 'variety', { unique: false });
-        store.createIndex('seedGroup', 'seedGroup', { unique: false });
-        store.createIndex('seedDatePacked', 'seedDatePacked', { unique: false });
-        store.createIndex('seedNumbers', 'seedNumbers', { unique: false });
-        store.createIndex('seedWeight', 'seedWeight', { unique: false });
+        store.createIndex('group', 'group', { unique: false });
+        store.createIndex('date', 'date', { unique: false });
+        store.createIndex('number', 'number', { unique: false });
+        store.createIndex('weight', 'weight', { unique: false });
         store.createIndex('timeStamp', 'timeStamp', { unique: false });
       }
 
@@ -90,7 +90,7 @@ class Model {
       await this.tryOpen();
       const transaction = this.db.transaction('collection', "readonly");
       const objectStore = transaction.objectStore('collection');
-      if (sortOn === 'pktId') {
+      if (sortOn === 'packetId') {
         cursorRequest = objectStore.openCursor(null, sortOrder);
       } else {
         const index = objectStore.index(sortOn);
@@ -122,11 +122,11 @@ class Model {
     });
   }
 
-  async deleteRecord(pktId) {
+  async deleteRecord(packetId) {
     await this.tryOpen();
     const transaction = this.db.transaction('collection', 'readwrite');
     const store = transaction.objectStore('collection');
-    store.delete(pktId);
+    store.delete(packetId);
   }
 }
 
@@ -149,12 +149,12 @@ class View {
     this.dbErrorLinkElement = document.querySelector(".openDbErrorPage");
     this.instructionsLinkElements = document.querySelectorAll(".openInstructionsPage");
     //Sort table columns
-    this.sortSeedGroupLinkElement = document.getElementById("sortSeedGroup");
+    this.sortGroupLinkElement = document.getElementById("sortGroup");
     this.sortVarietyLinkElement = document.getElementById("sortVariety");
     this.sortPacketIdLinkElement = document.getElementById("sortPacketId");
-    this.sortDatePackedLinkElement = document.getElementById("sortDatePacked");
-    this.sortSeedNumbersLinkElement = document.getElementById("sortSeedNumbers");
-    this.sortSeedWeightLinkElement = document.getElementById("sortSeedWeight");
+    this.sortDateLinkElement = document.getElementById("sortDate");
+    this.sortNumberLinkElement = document.getElementById("sortNumber");
+    this.sortWeightLinkElement = document.getElementById("sortWeight");
     // Menu
     this.toTop = document.getElementById("js-page--to-top"); //=> Get the button
     this.toBottom = document.getElementById("js-page--to-bottom"); //=> Get the button
@@ -187,8 +187,8 @@ class View {
     this.instructionsLinkElements.forEach(request => request.addEventListener('click', handler, false));
   }
 
-  bindSortSeedGroup(handler) {
-    this.sortSeedGroupLinkElement.addEventListener('click', handler, false);
+  bindSortGroup(handler) {
+    this.sortGroupLinkElement.addEventListener('click', handler, false);
   }
   bindSortVariety(handler) {
     this.sortVarietyLinkElement.addEventListener('click', handler, false);
@@ -196,14 +196,14 @@ class View {
   bindSortPacketId(handler) {
     this.sortPacketIdLinkElement.addEventListener('click', handler, false);
   }
-  bindSortDatePacked(handler) {
-    this.sortDatePackedLinkElement.addEventListener('click', handler, false);
+  bindSortDate(handler) {
+    this.sortDateLinkElement.addEventListener('click', handler, false);
   }
-  bindSortSeedNumbers(handler) {
-    this.sortSeedNumbersLinkElement.addEventListener('click', handler, false);
+  bindSortNumber(handler) {
+    this.sortNumberLinkElement.addEventListener('click', handler, false);
   }
-  bindSortSeedWeight(handler) {
-    this.sortSeedWeightLinkElement.addEventListener('click', handler, false);
+  bindSortWeight(handler) {
+    this.sortWeightLinkElement.addEventListener('click', handler, false);
   }
 
   /* async findHelpTopic(topic=all) {
@@ -240,13 +240,13 @@ class View {
     const list = document.querySelector('#seed-list');
     const row = document.createElement('tr');
     row.innerHTML =
-      `<td>${seedPkt.seedGroup}</td>
+      `<td>${seedPkt.group}</td>
             <td>${seedPkt.variety}</td>
-            <td>${seedPkt.pktId}</td>
-            <td class="table-seeds__col--center">${(seedPkt.seedDatePacked).substring(2)}</td>
-            <td class="table-seeds__col--center">${seedPkt.seedNumbers}</td>
-            <td class="table-seeds__col--center">${seedPkt.seedWeight}</td>
-            <td class="edit" onclick=controller.editSeedPkt("${seedPkt.pktId}")></td>`;
+            <td>${seedPkt.packetId}</td>
+            <td class="table-seeds__col--center">${(seedPkt.date).substring(2)}</td>
+            <td class="table-seeds__col--center">${seedPkt.number}</td>
+            <td class="table-seeds__col--center">${seedPkt.weight}</td>
+            <td class="edit" onclick=controller.editSeedPkt("${seedPkt.packetId}")></td>`;
     list.appendChild(row);
   }
 
@@ -274,19 +274,19 @@ class View {
 
   clearFields() {
     //=> Clears all the entry fields on the edit/add page
-    document.querySelector('#seedGroup').value = '';
+    document.querySelector('#group').value = '';
     document.querySelector('#variety').value = '';
-    document.querySelector('#pktId').value = '';
-    document.querySelector('#seedNumbers').value = '';
-    document.querySelector('#seedWeight').value = '';
-    document.querySelector('#seedDatePacked').value = '';
+    document.querySelector('#packetId').value = '';
+    document.querySelector('#number').value = '';
+    document.querySelector('#weight').value = '';
+    document.querySelector('#date').value = '';
     document.querySelector('#timeStamp').value = '';
     document.querySelector('#seedNotes').value = '';
   }
 
   clearCopiedField() {
-    document.querySelector('#pktId').value = '';
-    document.querySelector('#seedDatePacked').value = '';
+    document.querySelector('#packetId').value = '';
+    document.querySelector('#date').value = '';
     document.querySelector('#timeStamp').value = '';
     document.querySelector('#seedNotes').value = ''
   }
@@ -317,9 +317,9 @@ class View {
     document.querySelector("#edit-page").style.display = "";
     document.querySelector("#read-write-page").style.display = "none";
     document.querySelector("#instructions-page").style.display = "none";
-    // Key pktId readonly removed and is required
-    document.querySelector('#pktId').removeAttribute('readonly');
-    document.querySelector('#pktId').setAttribute('required', 'required');
+    // Key packetId readonly removed and is required
+    document.querySelector('#packetId').removeAttribute('readonly');
+    document.querySelector('#packetId').setAttribute('required', 'required');
   }
 
   showEditPacket() {
@@ -333,9 +333,9 @@ class View {
     document.querySelector("#edit-page").style.display = "";
     document.querySelector("#read-write-page").style.display = "none";
     document.querySelector("#instructions-page").style.display = "none";
-    // Key pktId is read only
-    document.querySelector('#pktId').removeAttribute('required');
-    document.querySelector('#pktId').setAttribute('readonly', 'readonly');   
+    // Key packetId is read only
+    document.querySelector('#packetId').removeAttribute('required');
+    document.querySelector('#packetId').setAttribute('readonly', 'readonly');   
   }
 
   showScrollPackets() {
@@ -462,12 +462,12 @@ class Controller {
     this.view.bindDbErrorLink(() => { this.requestDbError(); });
     this.view.bindInstructionsPageLink( () => { this.requestHelpPage(); });
     // bindings table sort
-    this.view.bindSortSeedGroup( () => { this.getSortedPacketList('seedGroup'); });
+    this.view.bindSortGroup( () => { this.getSortedPacketList('group'); });
     this.view.bindSortVariety( () => { this.getSortedPacketList('variety'); });
-    this.view.bindSortPacketId( () => { this.getSortedPacketList('pktId'); });
-    this.view.bindSortDatePacked( () => { this.getSortedPacketList('seedDatePacked'); });
-    this.view.bindSortSeedNumbers( () => { this.getSortedPacketList('seedNumbers'); });
-    this.view.bindSortSeedWeight (() => { this.getSortedPacketList('seedWeight'); });
+    this.view.bindSortPacketId( () => { this.getSortedPacketList('packetId'); });
+    this.view.bindSortDate( () => { this.getSortedPacketList('date'); });
+    this.view.bindSortNumber( () => { this.getSortedPacketList('number'); });
+    this.view.bindSortWeight (() => { this.getSortedPacketList('weight'); });
   }
 
   async getSortedPacketList(sortOn) {
@@ -578,8 +578,8 @@ class Controller {
     }
     if (!missingRequiredField) {
       //convert string from FormData to integer and float
-      seed.seedNumbers = parseInt(seed.seedNumbers);
-      seed.seedWeight = parseFloat(seed.seedWeight);
+      seed.number = parseInt(seed.number);
+      seed.weight = parseFloat(seed.weight);
       await this.model.loadRecords([seed]);
       this.view.showAlert('Seed Packet Added', 'success', '#pkt-message', '#insert-form-alerts');
       //=> Show success message
@@ -588,8 +588,8 @@ class Controller {
     };
   };
 
-  async editSeedPkt(pktId) {
-    const record = await this.model.getRecord(pktId);
+  async editSeedPkt(packetId) {
+    const record = await this.model.getRecord(packetId);
     this.view.clearFields();
     this.view.showEditPacket();
     Object.keys(record).forEach(field => { // -> with the requested seed pkt record for editing
@@ -611,9 +611,9 @@ class Controller {
 
   async deleteRecord() {
     //=> Delete record requested from delete button on edit page
-    const pktId = document.querySelector('#pktId').value;
-    //=> pktId obtained from edit button on seed list
-    await this.model.deleteRecord(pktId);
+    const packetId = document.querySelector('#packetId').value;
+    //=> packetId obtained from edit button on seed list
+    await this.model.deleteRecord(packetId);
     this.view.showAlert('Seed Packet Deleted', 'warning', '#pkt-message', '#insert-form-alerts'); //=> Show success message
     this.view.clearFields(); //=> Clear form fields
     this.model.getAll();
