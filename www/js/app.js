@@ -140,18 +140,21 @@ class View {
 
   constructor() {
     this.app = this.getElement('#root');
+
     // Pages
     this.seedListLinkElements = document.querySelectorAll(".openHomePage");
     this.addNewPacketLinkElement = document.querySelector(".openNewPacketPage");
-    //this.bindAddNewPacketLink(() => { this.showAddNewPacket(); });
     this.scrollPacketsLinkElement = document.querySelector(".openScrollPacketsPage");
-    //this.bindScrollPacketsLink(() => { this.showScrollPackets(); });
     this.backupRestoreLinkElement = document.querySelector(".openBackupRestorePage");
-    //this.bindBackupRestoreLink(() => { this.showBackupRestore(); });
     this.dbErrorLinkElement = document.querySelector(".openDbErrorPage");
-    //this.bindDbErrorLink(() => { this.showDbError(); });
     this.instructionsLinkElements = document.querySelectorAll(".openInstructionsPage");
-    //this.bindInstructionsPageLink(() => { this.showInstructions(); });
+    //Sort table columns
+    this.sortSeedGroupLinkElement = document.getElementById("sortSeedGroup");
+    this.sortVarietyLinkElement = document.getElementById("sortVariety");
+    this.sortPacketIdLinkElement = document.getElementById("sortPacketId");
+    this.sortDatePackedLinkElement = document.getElementById("sortDatePacked");
+    this.sortSeedNumbersLinkElement = document.getElementById("sortSeedNumbers");
+    this.sortSeedWeightLinkElement = document.getElementById("sortSeedWeight");
     // Menu
     this.toTop = document.getElementById("js-page--to-top"); //=> Get the button
     this.toBottom = document.getElementById("js-page--to-bottom"); //=> Get the button
@@ -166,27 +169,41 @@ class View {
     this.seedListLinkElements.forEach(btn => btn.addEventListener('click', handler, false));
     //console.log(handler);
   }
-
   bindAddNewPacketLink(handler) { // Add New Packet Page
     //can be converted to multiple classes to trigger this event
     //variable addNewLinkElement is singular as only one class at the moment
     this.addNewPacketLinkElement.addEventListener("click", handler, false);
   }
-
   bindScrollPacketsLink(handler) { // Scroll Packets Page
     this.scrollPacketsLinkElement.addEventListener("click", handler, false);
   }
-
   bindBackupRestoreLink(handler) { // Backup & Restore Page
     this.backupRestoreLinkElement.addEventListener("click", handler, false);
   }
-
   bindDbErrorLink(handler) { // Reinstall corrupted DB
     this.dbErrorLinkElement.addEventListener("click", handler, false);
   }
-
   bindInstructionsPageLink(handler) {
     this.instructionsLinkElements.forEach(request => request.addEventListener('click', handler, false));
+  }
+
+  bindSortSeedGroup(handler) {
+    this.sortSeedGroupLinkElement.addEventListener('click', handler, false);
+  }
+  bindSortVariety(handler) {
+    this.sortVarietyLinkElement.addEventListener('click', handler, false);
+  }
+  bindSortPacketId(handler) {
+    this.sortPacketIdLinkElement.addEventListener('click', handler, false);
+  }
+  bindSortDatePacked(handler) {
+    this.sortDatePackedLinkElement.addEventListener('click', handler, false);
+  }
+  bindSortSeedNumbers(handler) {
+    this.sortSeedNumbersLinkElement.addEventListener('click', handler, false);
+  }
+  bindSortSeedWeight(handler) {
+    this.sortSeedWeightLinkElement.addEventListener('click', handler, false);
   }
 
   /* async findHelpTopic(topic=all) {
@@ -410,7 +427,7 @@ class View {
       View.showHomePage();
   } */
 
-  editSeed(record, editPage) { //=> opens the edit/add page ->
+/*   editSeed(record) { //=> opens the edit/add page ->
     this.clearFields();
     this.showEditPacket();
     Object.keys(record).forEach(field => { // -> with the requested seed pkt record for editing
@@ -418,7 +435,7 @@ class View {
       //console.log(record[field]);
       document.querySelector('#' + field).value = record[field];
     });
-  } //=> Should be in Controller!!!
+  } */ //=> Should be in Controller!!!
 
   static showMessage(message) {
     msgInstallBb.innerHTML += (`<li>=> ${message}</li>`);
@@ -437,13 +454,20 @@ class Controller {
     this.view = view;
     this.sortOn = 'variety';
     this.sortOrder = 'next';
-    // bindings
+    // bindings pages
     this.view.bindHomePageLink(() => { this.requestPacketList(); });
-    this.view.bindAddNewPacketLink(() => { this.requestAddNewPacket(); });
-    this.view.bindScrollPacketsLink(() => { this.requestScrollPackets(); });
-    this.view.bindBackupRestoreLink(() => { this.requestBackupRestore(); });
+    this.view.bindAddNewPacketLink( () => { this.requestAddNewPacket(); });
+    this.view.bindScrollPacketsLink( () => { this.requestScrollPackets(); });
+    this.view.bindBackupRestoreLink( () => { this.requestBackupRestore(); });
     this.view.bindDbErrorLink(() => { this.requestDbError(); });
-    this.view.bindInstructionsPageLink(() => { this.requestHelpPage(); });
+    this.view.bindInstructionsPageLink( () => { this.requestHelpPage(); });
+    // bindings table sort
+    this.view.bindSortSeedGroup( () => { this.getSortedPacketList('seedGroup'); });
+    this.view.bindSortVariety( () => { this.getSortedPacketList('variety'); });
+    this.view.bindSortPacketId( () => { this.getSortedPacketList('pktId'); });
+    this.view.bindSortDatePacked( () => { this.getSortedPacketList('seedDatePacked'); });
+    this.view.bindSortSeedNumbers( () => { this.getSortedPacketList('seedNumbers'); });
+    this.view.bindSortSeedWeight (() => { this.getSortedPacketList('seedWeight'); });
   }
 
   async getSortedPacketList(sortOn) {
@@ -473,6 +497,7 @@ class Controller {
     this.view.displayPackets(records);
   }
 
+  // Pages requested
   async requestPacketList() {
     this.view.showHomePage();
     await this.getSortedPacketList();
@@ -485,19 +510,15 @@ class Controller {
   requestAddNewPacket() {
     this.view.showAddNewPacket();
   }
-
   requestScrollPackets() {
     this.view.showScrollPackets();
   }
-
   requestBackupRestore() {
     this.view.showBackupRestore();
   }
-
   requestDbError() {
     this.view.showDbError();
   }
-
   requestHelpPage() {
     // designed to show specific instructions when clicked on ? anywhere
     this.view.showInstructions();
@@ -569,7 +590,14 @@ class Controller {
 
   async editSeedPkt(pktId) {
     const record = await this.model.getRecord(pktId);
-    this.view.editSeed(record, 'editSeedPkt');
+    this.view.clearFields();
+    this.view.showEditPacket();
+    Object.keys(record).forEach(field => { // -> with the requested seed pkt record for editing
+      //console.log(field);
+      //console.log(record[field]);
+      document.querySelector('#' + field).value = record[field];
+    });
+    //this.view.editSeed(record, 'editSeedPkt');
   };
 
   async editRecord() {
@@ -673,7 +701,6 @@ const controller = new Controller(model, view);
 window.onload = () => { controller.requestPacketList() }; //=> Load IndexedDB and check for right store is missing!
 
 //=> Global variables
-
 const htmlId = id => document.getElementById(id); //=> alias
 const foundBtnHomePage = document.getElementById('findBtnHomePage'); //=> alias
 const fileNotes = document.getElementById('fileNotifications'); //=> alias for user msgs retrieving data & backup
@@ -683,21 +710,6 @@ const msgInstallBb = document.getElementById('installDbMsg'); //=> alias for UI 
 
 //=> Restore data from backup file
 controller.backup(); // TO DO: have to sort the events in that function
-
-//=> Events
-//window.onscroll = () => { view.scrollEvent() };
-
-//=> Menu events
-
-// Menu selection events
-
-//=> Sort table columns events
-htmlId('sortSeedGroup').addEventListener('click', () => { controller.getSortedPacketList('seedGroup') }, false);
-htmlId('sortVariety').addEventListener('click', () => { controller.getSortedPacketList('variety') }, false);
-htmlId('sortPktId').addEventListener('click', () => { controller.getSortedPacketList('pktId') }, false);
-htmlId('sortDatePacked').addEventListener('click', () => { controller.getSortedPacketList('seedDatePacked') }, false);
-htmlId('sortSeedNumbers').addEventListener('click', () => { controller.getSortedPacketList('seedNumbers') }, false);
-htmlId('sortSeedWeight').addEventListener('click', () => { controller.getSortedPacketList('seedWeight') }, false);
 
 //=> Button & input events
 htmlId('btnSubmitRecord').addEventListener('click', () => { controller.editRecord() }, false);
