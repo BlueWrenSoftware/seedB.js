@@ -724,8 +724,3 @@ htmlId("btnCopyRecord").addEventListener('click', () => {
   view.clearCopiedField();
   view.showAddNewPacket();
 })
-
-// Buttons & inputs all opening Home Page (same class)
-
-
-
