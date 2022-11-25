@@ -54,15 +54,15 @@ class Model {
       };
       const req = window.indexedDB.deleteDatabase('seedB')
       req.onsuccess = function () {
-        //console.log("Deleted database successfully");
+        //console.log('Deleted database successfully');
         resolve('success');
       };
       req.onerror = function () {
-        //console.log("Couldn't delete database");
+        //console.log('Couldn't delete database');
         reject('error');
       };
       req.onblocked = function () {
-        //console.log("Couldn't delete database due to the operation being blocked");
+        //console.log('Couldn't delete database due to the operation being blocked');
         reject('blocked')
       };
     });
@@ -71,7 +71,7 @@ class Model {
   getRecord(id) {
     return new Promise(async (resolve, reject) => {
       await this.tryOpen();
-      const transaction = this.db.transaction('collection', "readonly");
+      const transaction = this.db.transaction('collection', 'readonly');
       const objectStore = transaction.objectStore('collection');
       const request = objectStore.get(id);
       request.onsuccess = event => {
@@ -88,7 +88,7 @@ class Model {
     return new Promise(async (resolve, reject) => {
       let cursorRequest;
       await this.tryOpen();
-      const transaction = this.db.transaction('collection', "readonly");
+      const transaction = this.db.transaction('collection', 'readonly');
       const objectStore = transaction.objectStore('collection');
       if (sortOn === 'packetId') {
         cursorRequest = objectStore.openCursor(null, sortOrder);
@@ -141,27 +141,30 @@ class View {
   constructor() {
     this.app = this.getElement('#root');
 
-    // Pages
-    this.seedListLinkElements = document.querySelectorAll(".openHomePage");
-    this.addNewPacketLinkElement = document.querySelector(".openNewPacketPage");
-    this.scrollPacketsLinkElement = document.querySelector(".openScrollPacketsPage");
-    this.backupRestoreLinkElement = document.querySelector(".openBackupRestorePage");
-    this.dbErrorLinkElement = document.querySelector(".openDbErrorPage");
-    this.instructionsLinkElements = document.querySelectorAll(".openInstructionsPage");
-    //Sort table columns
-    this.sortGroupLinkElement = document.getElementById("sortGroup");
-    this.sortVarietyLinkElement = document.getElementById("sortVariety");
-    this.sortPacketIdLinkElement = document.getElementById("sortPacketId");
-    this.sortDateLinkElement = document.getElementById("sortDate");
-    this.sortNumberLinkElement = document.getElementById("sortNumber");
-    this.sortWeightLinkElement = document.getElementById("sortWeight");
-    // Menu
-    this.toTop = document.getElementById("js-page--to-top"); //=> Get the button
-    this.toBottom = document.getElementById("js-page--to-bottom"); //=> Get the button
+    // Pages events
+    this.seedListLinkElements = document.querySelectorAll('.openHomePage');
+    this.addNewPacketLinkElement = document.querySelector('.openNewPacketPage');
+    this.scrollPacketsLinkElement = document.querySelector('.openScrollPacketsPage');
+    this.backupRestoreLinkElement = document.querySelector('.openBackupRestorePage');
+    this.dbErrorLinkElement = document.querySelector('.openDbErrorPage');
+    this.instructionsLinkElements = document.querySelectorAll('.openInstructionsPage');
+    //Sort table columns events
+    this.sortGroupLinkElement = document.getElementById('sortGroup');
+    this.sortVarietyLinkElement = document.getElementById('sortVariety');
+    this.sortPacketIdLinkElement = document.getElementById('sortPacketId');
+    this.sortDateLinkElement = document.getElementById('sortDate');
+    this.sortNumberLinkElement = document.getElementById('sortNumber');
+    this.sortWeightLinkElement = document.getElementById('sortWeight');
+    // Button events
+    this.btnSubmitEditRecordLinkElement = document.querySelector('#btnSubmitEditRecord');
+    this.btnSubmitNewRecordLinkElement = document.querySelector('#btnSubmitNewRecord');
+    // Menu events
+    this.toTop = document.getElementById('js-page--to-top'); //=> Get the button
+    this.toBottom = document.getElementById('js-page--to-bottom'); //=> Get the button
     this.pageTopButton = window.onscroll = () => { this.scrollEvent() };
-    this.menuButton = document.querySelector(".js-menu-hamburger");
-    this.menuButton.addEventListener("click", () => { this.toggleMenu() });
-    this.closedMenu = document.querySelector(".js-menu-hamburger--closed");
+    this.menuButton = document.querySelector('.js-menu-hamburger');
+    this.menuButton.addEventListener('click', () => { this.toggleMenu() });
+    this.closedMenu = document.querySelector('.js-menu-hamburger--closed');
   }
 
   bindHomePageLink(handler) {
@@ -172,16 +175,16 @@ class View {
   bindAddNewPacketLink(handler) { // Add New Packet Page
     //can be converted to multiple classes to trigger this event
     //variable addNewLinkElement is singular as only one class at the moment
-    this.addNewPacketLinkElement.addEventListener("click", handler, false);
+    this.addNewPacketLinkElement.addEventListener('click', handler, false);
   }
   bindScrollPacketsLink(handler) { // Scroll Packets Page
-    this.scrollPacketsLinkElement.addEventListener("click", handler, false);
+    this.scrollPacketsLinkElement.addEventListener('click', handler, false);
   }
   bindBackupRestoreLink(handler) { // Backup & Restore Page
-    this.backupRestoreLinkElement.addEventListener("click", handler, false);
+    this.backupRestoreLinkElement.addEventListener('click', handler, false);
   }
   bindDbErrorLink(handler) { // Reinstall corrupted DB
-    this.dbErrorLinkElement.addEventListener("click", handler, false);
+    this.dbErrorLinkElement.addEventListener('click', handler, false);
   }
   bindInstructionsPageLink(handler) {
     this.instructionsLinkElements.forEach(request => request.addEventListener('click', handler, false));
@@ -206,9 +209,16 @@ class View {
     this.sortWeightLinkElement.addEventListener('click', handler, false);
   }
 
-  /* async findHelpTopic(topic=all) {
-      this.displayHelpTopic()
-  } */
+  bindBtnSubmitEditRecord(handler) {
+    this.btnSubmitEditRecordLinkElement.addEventListener('click', handler, false);
+  }
+  bindBtnSubmitNewRecord(handler) {
+    this.btnSubmitNewRecordLinkElement.addEventListener('click', handler, false);
+  }
+
+  // async findHelpTopic(topic=all) {
+  //     this.displayHelpTopic()
+  // }
 
   // transfer this to Controller
   requestSpecificHelp() {
@@ -243,10 +253,10 @@ class View {
       `<td>${seedPkt.group}</td>
             <td>${seedPkt.variety}</td>
             <td>${seedPkt.packetId}</td>
-            <td class="table-seeds__col--center">${(seedPkt.date).substring(2)}</td>
-            <td class="table-seeds__col--center">${seedPkt.number}</td>
-            <td class="table-seeds__col--center">${seedPkt.weight}</td>
-            <td class="edit" onclick=controller.editSeedPkt("${seedPkt.packetId}")></td>`;
+            <td class='table-seeds__col--center'>${(seedPkt.date).substring(2)}</td>
+            <td class='table-seeds__col--center'>${seedPkt.number}</td>
+            <td class='table-seeds__col--center'>${seedPkt.weight}</td>
+            <td class='edit' onclick=controller.editSeedPkt('${seedPkt.packetId}')></td>`;
     list.appendChild(row);
   }
 
@@ -260,6 +270,7 @@ class View {
   }
 
   showAlert(message, className, idMessage, idLocation) {
+    //alert('Record submitted');
     //=> Creating warning msg when entering data
     const div = document.createElement('div');
     div.className = `alert ${className}`;
@@ -293,46 +304,46 @@ class View {
 
   // Open Pages
   showHomePage() {
-    if (document.getElementById("showHide").classList.contains("js-all-pages--none")) {
-      document.getElementById("showHide").classList.add("js-all-pages--opened");
-      document.getElementById("showHide").classList.remove("js-all-pages--none");
+    if (document.getElementById('showHide').classList.contains('js-all-pages--none')) {
+      document.getElementById('showHide').classList.add('js-all-pages--opened');
+      document.getElementById('showHide').classList.remove('js-all-pages--none');
     }
-    document.title = "SeedB List"; //=> Page at startup being the seed list
-    document.querySelector("#home-page").style.display = "";
-    document.querySelector("#edit-page").style.display = "none";
-    document.querySelector("#read-write-page").style.display = "none";
-    document.querySelector("#instructions-page").style.display = "none";
+    document.title = 'SeedB List'; //=> Page at startup being the seed list
+    document.querySelector('#home-page').style.display = '';
+    document.querySelector('#edit-page').style.display = 'none';
+    document.querySelector('#read-write-page').style.display = 'none';
+    document.querySelector('#instructions-page').style.display = 'none';
   }
 
   showAddNewPacket() {
     // this.clearFields();
     // clearFields() only called from menu event, not from buttons
-    document.title = "New Seed Pkt";
-    document.querySelector("#headerAddSeedPage").style.display = "";
-    document.querySelector("#new-pkt-buttons").style.display = "";
-    document.querySelector("#edit-pkt-buttons").style.display = "none";
-    document.querySelector("#scrollRecordsButtons").style.display = "none";
-    document.querySelector("#home-page").style.display = "none";
-    document.querySelector("#headerEditSeedPage").style.display = "none";
-    document.querySelector("#edit-page").style.display = "";
-    document.querySelector("#read-write-page").style.display = "none";
-    document.querySelector("#instructions-page").style.display = "none";
+    document.title = 'New Seed Pkt';
+    document.querySelector('#headerAddSeedPage').style.display = '';
+    document.querySelector('#new-pkt-buttons').style.display = '';
+    document.querySelector('#edit-pkt-buttons').style.display = 'none';
+    document.querySelector('#scrollRecordsButtons').style.display = 'none';
+    document.querySelector('#home-page').style.display = 'none';
+    document.querySelector('#headerEditSeedPage').style.display = 'none';
+    document.querySelector('#edit-page').style.display = '';
+    document.querySelector('#read-write-page').style.display = 'none';
+    document.querySelector('#instructions-page').style.display = 'none';
     // Key packetId readonly removed and is required
     document.querySelector('#packetId').removeAttribute('readonly');
     document.querySelector('#packetId').setAttribute('required', 'required');
   }
 
   showEditPacket() {
-    document.title = "Edit Seed Pkt";
-    document.querySelector("#edit-pkt-buttons").style.display = "";
-    document.querySelector("#headerAddSeedPage").style.display = "none";
-    document.querySelector("#new-pkt-buttons").style.display = "none";
-    document.querySelector("#scrollRecordsButtons").style.display = "none";
-    document.querySelector("#home-page").style.display = "none";
-    document.querySelector("#headerEditSeedPage").style.display = "";
-    document.querySelector("#edit-page").style.display = "";
-    document.querySelector("#read-write-page").style.display = "none";
-    document.querySelector("#instructions-page").style.display = "none";
+    document.title = 'Edit Seed Pkt';
+    document.querySelector('#edit-pkt-buttons').style.display = '';
+    document.querySelector('#headerAddSeedPage').style.display = 'none';
+    document.querySelector('#new-pkt-buttons').style.display = 'none';
+    document.querySelector('#scrollRecordsButtons').style.display = 'none';
+    document.querySelector('#home-page').style.display = 'none';
+    document.querySelector('#headerEditSeedPage').style.display = '';
+    document.querySelector('#edit-page').style.display = '';
+    document.querySelector('#read-write-page').style.display = 'none';
+    document.querySelector('#instructions-page').style.display = 'none';
     // Key packetId is read only
     document.querySelector('#packetId').removeAttribute('required');
     document.querySelector('#packetId').setAttribute('readonly', 'readonly');   
@@ -340,56 +351,56 @@ class View {
 
   showScrollPackets() {
     this.clearFields();
-    document.title = "Scroll Pkt Records";
-    document.querySelector("#new-pkt-buttons").style.display = "none";
-    document.querySelector("#edit-pkt-buttons").style.display = "none";
-    document.querySelector("#scrollRecordsButtons").style.display = "";
-    document.querySelector("#home-page").style.display = "none";
-    document.querySelector("#edit-page").style.display = "";
-    document.querySelector("#read-write-page").style.display = "none";
-    document.querySelector("#instructions-page").style.display = "none";
+    document.title = 'Scroll Pkt Records';
+    document.querySelector('#new-pkt-buttons').style.display = 'none';
+    document.querySelector('#edit-pkt-buttons').style.display = 'none';
+    document.querySelector('#scrollRecordsButtons').style.display = '';
+    document.querySelector('#home-page').style.display = 'none';
+    document.querySelector('#edit-page').style.display = '';
+    document.querySelector('#read-write-page').style.display = 'none';
+    document.querySelector('#instructions-page').style.display = 'none';
   }
 
   showBackupRestore() {
-    document.title = "Backup & Restore";
-    document.querySelector("#retrieve-data-button").style.display = "";
-    document.querySelector("#home-page").style.display = "none";
-    document.querySelector("#edit-page").style.display = "none";
-    document.querySelector("#read-write-page").style.display = "";
-    document.querySelector("#instructions-page").style.display = "none";
-    document.querySelector("#dbError").style.display = "none"
+    document.title = 'Backup & Restore';
+    document.querySelector('#retrieve-data-button').style.display = '';
+    document.querySelector('#home-page').style.display = 'none';
+    document.querySelector('#edit-page').style.display = 'none';
+    document.querySelector('#read-write-page').style.display = '';
+    document.querySelector('#instructions-page').style.display = 'none';
+    document.querySelector('#dbError').style.display = 'none'
   }
 
   showDbError() {
     //=> checks if pages are hidden before loading error page on start
-    /* if (document.getElementById("showHide").classList.contains("js-all-pages--none")) {
-      document.getElementById("showHide").classList.add("js-all-pages--opened");
-      document.getElementById("showHide").classList.remove("js-all-pages--none");
+    /* if (document.getElementById('showHide').classList.contains('js-all-pages--none')) {
+      document.getElementById('showHide').classList.add('js-all-pages--opened');
+      document.getElementById('showHide').classList.remove('js-all-pages--none');
     } */
-    document.title = "DB Error";
+    document.title = 'DB Error';
     //=> on start up if db fails this page will be loaded
-    document.querySelector("#retrieve-data-button").style.display = "none";
-    document.querySelector("#home-page").style.display = "none";
-    document.querySelector("#edit-page").style.display = "none";
-    document.querySelector("#read-write-page").style.display = "";
-    document.querySelector("#instructions-page").style.display = "none";
-    document.querySelector("#dbError").style.display = ""
+    document.querySelector('#retrieve-data-button').style.display = 'none';
+    document.querySelector('#home-page').style.display = 'none';
+    document.querySelector('#edit-page').style.display = 'none';
+    document.querySelector('#read-write-page').style.display = '';
+    document.querySelector('#instructions-page').style.display = 'none';
+    document.querySelector('#dbError').style.display = ''
   }
 
   showInstructions() {
     //=> page for instructions
     //this.clearFields();
-    document.title = "Instructions";
-    //document.querySelector("#seed-entry").style.display = "none";
-    document.querySelector("#home-page").style.display = "none";
-    document.querySelector("#edit-page").style.display = "none";
-    document.querySelector("#read-write-page").style.display = "none";
-    document.querySelector("#instructions-page").style.display = "";
+    document.title = 'Instructions';
+    //document.querySelector('#seed-entry').style.display = 'none';
+    document.querySelector('#home-page').style.display = 'none';
+    document.querySelector('#edit-page').style.display = 'none';
+    document.querySelector('#read-write-page').style.display = 'none';
+    document.querySelector('#instructions-page').style.display = '';
   }
 
   toggleMenu() {
     //=> toggle function using class lists on click of the hamburger menu
-    this.closedMenu.classList.toggle("js-menu-hamburger--opened");
+    this.closedMenu.classList.toggle('js-menu-hamburger--opened');
 
   }
 
@@ -401,8 +412,8 @@ class View {
   }
 
   scrollToTop() { //=> function activated on click of up arrow
-    this.toBottom = document.getElementById("js-page--to-bottom");
-    this.toBottom.style.display = "block"
+    this.toBottom = document.getElementById('js-page--to-bottom');
+    this.toBottom.style.display = 'block'
     document.body.scrollTop = 0; //=> For Safari
     document.documentElement.scrollTop = 0; //=> For Chrome, Firefox, IE and Opera
   }
@@ -411,17 +422,17 @@ class View {
     //=> scroll event to hide or show to top button
     //=> scrolls down 20px, show the up button
     if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
-      this.toTop.style.display = "block";
+      this.toTop.style.display = 'block';
     } else {
-      this.toTop.style.display = "none";
+      this.toTop.style.display = 'none';
     }
   }
 
   /* static locateBtnHomePage(e) { //=> select from classList the right return to Home page button
       if (e.target === foundBtnHomePage) {
-          fileNotes.innerHTML = "";
-          //console.log("file notes deleted");
-          backupNotes.innerHTML = "";
+          fileNotes.innerHTML = '';
+          //console.log('file notes deleted');
+          backupNotes.innerHTML = '';
       };
       //console.log('Home Page selected');
       View.showHomePage();
@@ -455,30 +466,31 @@ class Controller {
     this.sortOn = 'variety';
     this.sortOrder = 'next';
     // bindings pages
-    this.view.bindHomePageLink(() => { this.requestPacketList(); });
-    this.view.bindAddNewPacketLink( () => { this.requestAddNewPacket(); });
-    this.view.bindScrollPacketsLink( () => { this.requestScrollPackets(); });
-    this.view.bindBackupRestoreLink( () => { this.requestBackupRestore(); });
-    this.view.bindDbErrorLink(() => { this.requestDbError(); });
+    this.view.bindHomePageLink(() => { this.requestPacketListPage(); });
+    this.view.bindAddNewPacketLink( () => { this.requestAddNewPacketPage(); });
+    this.view.bindScrollPacketsLink( () => { this.requestScrollPacketsPage(); });
+    this.view.bindBackupRestoreLink( () => { this.requestBackupRestorePage(); });
+    this.view.bindDbErrorLink(() => { this.requestDbErrorPage(); });
     this.view.bindInstructionsPageLink( () => { this.requestHelpPage(); });
     // bindings table sort
-    this.view.bindSortGroup( () => { this.getSortedPacketList('group'); });
-    this.view.bindSortVariety( () => { this.getSortedPacketList('variety'); });
-    this.view.bindSortPacketId( () => { this.getSortedPacketList('packetId'); });
-    this.view.bindSortDate( () => { this.getSortedPacketList('date'); });
-    this.view.bindSortNumber( () => { this.getSortedPacketList('number'); });
-    this.view.bindSortWeight (() => { this.getSortedPacketList('weight'); });
+    this.view.bindSortGroup( () => { this.requestSortedPacketList('group'); });
+    this.view.bindSortVariety( () => { this.requestSortedPacketList('variety'); });
+    this.view.bindSortPacketId( () => { this.requestSortedPacketList('packetId'); });
+    this.view.bindSortDate( () => { this.requestSortedPacketList('date'); });
+    this.view.bindSortNumber( () => { this.requestSortedPacketList('number'); });
+    this.view.bindSortWeight( () => { this.requestSortedPacketList('weight'); });
+    // bindings button events
+    this.view.bindBtnSubmitEditRecord( () => { this.requestAddRecord('editRecord'); });
+    this.view.bindBtnSubmitNewRecord( () => { this.requestAddRecord('newRecord'); });
   }
 
-  async getSortedPacketList(sortOn) {
+  async requestSortedPacketList(sortOn) {
     if (sortOn !== undefined) {
       // if sortOn is supplied, then the user is attempting
       // to change the sorting
-
       // sameSortColumn is true if the user has requested the
       // same sorting column as last time
       const sameSortColumn = sortOn === this.sortOn;
-
       // if the same column for sorting was requested
       // and the sorting direction was already 'next'
       // then we should change the sortOrder to 'prev'
@@ -498,25 +510,20 @@ class Controller {
   }
 
   // Pages requested
-  async requestPacketList() {
+  async requestPacketListPage() {
     this.view.showHomePage();
-    await this.getSortedPacketList();
+    await this.requestSortedPacketList();
   }
-
-  /* async findHelpTopic(topic=all) {
-      this.view.DisplayHelpTopic()
-  } */
-
-  requestAddNewPacket() {
+  requestAddNewPacketPage() {
     this.view.showAddNewPacket();
   }
-  requestScrollPackets() {
+  requestScrollPacketsPage() {
     this.view.showScrollPackets();
   }
-  requestBackupRestore() {
+  requestBackupRestorePage() {
     this.view.showBackupRestore();
   }
-  requestDbError() {
+  requestDbErrorPage() {
     this.view.showDbError();
   }
   requestHelpPage() {
@@ -549,7 +556,7 @@ class Controller {
 
   async loadRecord() {
     // Get the content from the form fields
-    const formData = new FormData(document.getElementById("seed-entry"));
+    const formData = new FormData(document.getElementById('seed-entry'));
     const seed = Object.fromEntries(formData);
     seed['timeStamp'] = Date.now();
     let missingRequiredField;
@@ -563,28 +570,18 @@ class Controller {
         if (missingRequiredField) {
           this.view.showAlert('Please fill in all fields', 'warning', '#pkt-message', '#insert-form-alerts');
           break checkEntries;
-        }
-      }
-      /* for (const pair of formData.entries()) {
-          const key = pair[0];
-          const value = pair[1];
-          const missingField = value === '';
-          const isRequired = document.getElementById(key).hasAttribute('required');
-          this.missingRequiredField = missingField && isRequired;
-          if (this.missingRequiredField) {
-              View.showAlert('Please fill in all fields', 'warning', '#pkt-message', '#insert-form-alerts');
-              break;
-          } */
-    }
+        };
+      };
+    };
     if (!missingRequiredField) {
       //convert string from FormData to integer and float
       seed.number = parseInt(seed.number);
       seed.weight = parseFloat(seed.weight);
       await this.model.loadRecords([seed]);
-      this.view.showAlert('Seed Packet Added', 'success', '#pkt-message', '#insert-form-alerts');
+      await this.view.showAlert('Seed Packet Added', 'success', '#pkt-message', '#insert-form-alerts');
       //=> Show success message
-      await this.requestPacketList();
-      this.view.clearFields();  //=> Clear form fields
+      //await this.requestPacketListPage();
+      //this.view.clearFields();  //=> Clear form fields
     };
   };
 
@@ -600,13 +597,22 @@ class Controller {
     //this.view.editSeed(record, 'editSeedPkt');
   };
 
-  async editRecord() {
+  async requestAddRecord(submit) {
     await this.loadRecord();
-  }
-
-  async addRecord() {
-    await this.loadRecord();
-    View.showAddNewPacket();
+    switch (submit) {
+      case 'editRecord':
+        console.log('edit record');
+        this.view.clearFields();
+        this.requestPacketListPage();
+        break;
+      case 'newRecord':
+        console.log('new record');
+        this.view.clearFields();  //=> Clear form fields
+        this.view.showAddNewPacket();
+        break;
+      default:
+        break;
+    };
   };
 
   async deleteRecord() {
@@ -617,16 +623,16 @@ class Controller {
     this.view.showAlert('Seed Packet Deleted', 'warning', '#pkt-message', '#insert-form-alerts'); //=> Show success message
     this.view.clearFields(); //=> Clear form fields
     this.model.getAll();
-    await this.requestPacketList();
+    await this.requestPacketListPage();
   };
 
   fileTime() {  //=> Timestamp for file names
     const date = new Date();
     const year = date.getFullYear().toString();
-    const month = "0" + (date.getMonth() + 1)
-    const day = "0" + date.getDate();
-    const hours = "0" + date.getHours();
-    const minutes = "0" + date.getMinutes();
+    const month = '0' + (date.getMonth() + 1)
+    const day = '0' + date.getDate();
+    const hours = '0' + date.getHours();
+    const minutes = '0' + date.getMinutes();
     const formattedTime = `${year.slice(-2)}-${month.slice(-2)}-${day.slice(-2)}T${hours.slice(-2)}∶${minutes.slice(-2)}`;
     return formattedTime;
   }
@@ -647,16 +653,16 @@ class Controller {
     //=> Collects all data records from DB
     const records = await this.model.getAll();
     const text = JSON.stringify(records, null, 2); //=> array of records objects converted to string
-    let time = this.fileTime() + ".txt"; //=> Created file name with timestamp
-    const filename = "seedB∶" + time;
+    let time = this.fileTime() + '.txt'; //=> Created file name with timestamp
+    const filename = 'seedB∶' + time;
     fileNotes.innerHTML += '<li>=> Backup file name is: ' + filename + '</li>';
     this.download(filename, text); //=> Save backup file.
   }
 
   backup() { //=> Upload backup file and merge with data in object store
-    const fileSelect = document.getElementById("js-file-select");
-    const extractFileData = document.getElementById("js-input-file-data");
-    fileSelect.addEventListener("click", function () { //=> Upload Text File button clicked pageBackupRestore
+    const fileSelect = document.getElementById('js-file-select');
+    const extractFileData = document.getElementById('js-input-file-data');
+    fileSelect.addEventListener('click', function () { //=> Upload Text File button clicked pageBackupRestore
       if (extractFileData) { extractFileData.click(); }
     }, false);
     extractFileData.onchange = function () { //=> Parse data to JSON objects in an array
@@ -698,29 +704,29 @@ const model = new Model();
 const view = new View();
 const controller = new Controller(model, view);
 
-window.onload = () => { controller.requestPacketList() }; //=> Load IndexedDB and check for right store is missing!
+window.onload = () => { controller.requestPacketListPage() }; //=> Load IndexedDB and check for right store is missing!
 
 //=> Global variables
 const htmlId = id => document.getElementById(id); //=> alias
 const foundBtnHomePage = document.getElementById('findBtnHomePage'); //=> alias
 const fileNotes = document.getElementById('fileNotifications'); //=> alias for user msgs retrieving data & backup
 const backupNotes = document.getElementById('backupNotifications');  //=> alias for user msgs backup installation
-const errorMsg = document.getElementById("dbError");  //=> alias forDB error msgs for the UI
+const errorMsg = document.getElementById('dbError');  //=> alias forDB error msgs for the UI
 const msgInstallBb = document.getElementById('installDbMsg'); //=> alias for UI installation msgs
 
 //=> Restore data from backup file
 controller.backup(); // TO DO: have to sort the events in that function
 
 //=> Button & input events
-htmlId('btnSubmitRecord').addEventListener('click', () => { controller.editRecord() }, false);
+//htmlId('btnSubmitRecord').addEventListener('click', () => { controller.editRecord() }, false);
 htmlId('btnDeleteRecord').addEventListener('click', () => { controller.deleteRecord() }, false);
-htmlId('btnNewRecord').addEventListener('click', () => { controller.addRecord() }, false);
+//htmlId('btnNewRecord').addEventListener('click', () => { controller.requestAddRecord('newRecord') }, false);
 htmlId('btnRetrieveData').addEventListener('click', () => { controller.retrieveAll() }, false);
 htmlId('btnReinstall').addEventListener('click', () => { controller.fixCorruptDB() }, false);
 htmlId('js-page--to-bottom').addEventListener('click', () => { view.scrollToBottom() }, false);
 htmlId('js-page--to-top').addEventListener('click', () => { view.scrollToTop() }, false);
 
-htmlId("btnCopyRecord").addEventListener('click', () => {
+htmlId('btnCopyRecord').addEventListener('click', () => {
   view.clearCopiedField();
   view.showAddNewPacket();
 })
