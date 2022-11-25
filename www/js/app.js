@@ -158,6 +158,8 @@ class View {
     // Button events
     this.btnSubmitEditRecordLinkElement = document.querySelector('#btnSubmitEditRecord');
     this.btnSubmitNewRecordLinkElement = document.querySelector('#btnSubmitNewRecord');
+    this.btnDeleteRecordLinkElement = document.querySelector('#btnDeleteRecord');
+    this.btnRetrieveDataLinkElement = document.querySelector('#btnRetrieveData');
     // Menu events
     this.toTop = document.getElementById('js-page--to-top'); //=> Get the button
     this.toBottom = document.getElementById('js-page--to-bottom'); //=> Get the button
@@ -215,7 +217,12 @@ class View {
   bindBtnSubmitNewRecord(handler) {
     this.btnSubmitNewRecordLinkElement.addEventListener('click', handler, false);
   }
-
+  bindBtnDeleteRecord(handler) {
+    this.btnDeleteRecordLinkElement.addEventListener('click', handler, false);
+  }
+  bindBtnRetrieveData(handler) {
+    this.btnRetrieveDataLinkElement.addEventListener('click', handler, false);
+  }
   // async findHelpTopic(topic=all) {
   //     this.displayHelpTopic()
   // }
@@ -482,6 +489,8 @@ class Controller {
     // bindings button events
     this.view.bindBtnSubmitEditRecord( () => { this.requestAddRecord('editRecord'); });
     this.view.bindBtnSubmitNewRecord( () => { this.requestAddRecord('newRecord'); });
+    this.view.bindBtnDeleteRecord( () => { this.requestDeleteRecord(); });
+    this.view.bindBtnRetrieveData( () => { this.requestRetrieveAllData(); });
   }
 
   async requestSortedPacketList(sortOn) {
@@ -615,7 +624,7 @@ class Controller {
     };
   };
 
-  async deleteRecord() {
+  async requestDeleteRecord() {
     //=> Delete record requested from delete button on edit page
     const packetId = document.querySelector('#packetId').value;
     //=> packetId obtained from edit button on seed list
@@ -649,7 +658,7 @@ class Controller {
     fileNotes.innerHTML += '<li>=> Download is completed.</li>';
   }
 
-  async retrieveAll() {
+  async requestRetrieveAllData() {
     //=> Collects all data records from DB
     const records = await this.model.getAll();
     const text = JSON.stringify(records, null, 2); //=> array of records objects converted to string
@@ -718,10 +727,6 @@ const msgInstallBb = document.getElementById('installDbMsg'); //=> alias for UI 
 controller.backup(); // TO DO: have to sort the events in that function
 
 //=> Button & input events
-//htmlId('btnSubmitRecord').addEventListener('click', () => { controller.editRecord() }, false);
-htmlId('btnDeleteRecord').addEventListener('click', () => { controller.deleteRecord() }, false);
-//htmlId('btnNewRecord').addEventListener('click', () => { controller.requestAddRecord('newRecord') }, false);
-htmlId('btnRetrieveData').addEventListener('click', () => { controller.retrieveAll() }, false);
 htmlId('btnReinstall').addEventListener('click', () => { controller.fixCorruptDB() }, false);
 htmlId('js-page--to-bottom').addEventListener('click', () => { view.scrollToBottom() }, false);
 htmlId('js-page--to-top').addEventListener('click', () => { view.scrollToTop() }, false);
