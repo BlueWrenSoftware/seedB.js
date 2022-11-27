@@ -1,7 +1,7 @@
 /*All console.log are disable, were there for debugging
   => New Comment
   -> Continuation of initial comment*/
-'use strict';
+"use strict";
 
 class Model {
   // responsible for Db access
@@ -139,10 +139,10 @@ class View {
   // It does not make requests of the Model
 
   constructor() {
-    this.app = this.getElement('#root');
+    this.app = document.getElementById('#root');
 
     // Pages events
-    this.seedListLinkElements = document.querySelectorAll('.openHomePage');
+    this.packetListLinkElements = document.querySelectorAll('.openHomePage');
     this.addNewPacketLinkElement = document.querySelector('.openNewPacketPage');
     this.scrollPacketsLinkElement = document.querySelector('.openScrollPacketsPage');
     this.backupRestoreLinkElement = document.querySelector('.openBackupRestorePage');
@@ -160,35 +160,36 @@ class View {
     this.btnSubmitNewRecordLinkElement = document.querySelector('#btnSubmitNewRecord');
     this.btnDeleteRecordLinkElement = document.querySelector('#btnDeleteRecord');
     this.btnRetrieveDataLinkElement = document.querySelector('#btnRetrieveData');
+    this.btnReinstallLinkElement = document.querySelector('#btnReinstall');
     // Menu events
-    this.toTop = document.getElementById('js-page--to-top'); //=> Get the button
-    this.toBottom = document.getElementById('js-page--to-bottom'); //=> Get the button
-    this.pageTopButton = window.onscroll = () => { this.scrollEvent() };
     this.menuButton = document.querySelector('.js-menu-hamburger');
     this.menuButton.addEventListener('click', () => { this.toggleMenu() });
     this.closedMenu = document.querySelector('.js-menu-hamburger--closed');
+    // Up-Down events
+    this.toTop = document.getElementById('js-page--to-top'); //=> Get the button
+    this.toBottom = document.getElementById('js-page--to-bottom'); //=> Get the button
+    this.pageTopButton = window.onscroll = () => { this.scrollEvent() };
   }
 
-  bindHomePageLink(handler) {
+  bindPacketListPage(packetListRequestHandler) {
     // pass on to Controller
-    this.seedListLinkElements.forEach(btn => btn.addEventListener('click', handler, false));
-    //console.log(handler);
+    this.packetListLinkElements.forEach(btn => btn.addEventListener('click', packetListRequestHandler, false));
   }
-  bindAddNewPacketLink(handler) { // Add New Packet Page
+  bindAddNewPacketPage(handler) { // Add New Packet Page
     //can be converted to multiple classes to trigger this event
     //variable addNewLinkElement is singular as only one class at the moment
     this.addNewPacketLinkElement.addEventListener('click', handler, false);
   }
-  bindScrollPacketsLink(handler) { // Scroll Packets Page
+  bindScrollPacketsPage(handler) { // Scroll Packets Page
     this.scrollPacketsLinkElement.addEventListener('click', handler, false);
   }
-  bindBackupRestoreLink(handler) { // Backup & Restore Page
+  bindBackupRestorePage(handler) { // Backup & Restore Page
     this.backupRestoreLinkElement.addEventListener('click', handler, false);
   }
-  bindDbErrorLink(handler) { // Reinstall corrupted DB
+  bindDbErrorPage(handler) { // Reinstall corrupted DB
     this.dbErrorLinkElement.addEventListener('click', handler, false);
   }
-  bindInstructionsPageLink(handler) {
+  bindInstructionsPage(handler) {
     this.instructionsLinkElements.forEach(request => request.addEventListener('click', handler, false));
   }
 
@@ -213,15 +214,25 @@ class View {
 
   bindBtnSubmitEditRecord(handler) {
     this.btnSubmitEditRecordLinkElement.addEventListener('click', handler, false);
-  }
+  };
   bindBtnSubmitNewRecord(handler) {
     this.btnSubmitNewRecordLinkElement.addEventListener('click', handler, false);
   }
   bindBtnDeleteRecord(handler) {
     this.btnDeleteRecordLinkElement.addEventListener('click', handler, false);
-  }
+  };
   bindBtnRetrieveData(handler) {
     this.btnRetrieveDataLinkElement.addEventListener('click', handler, false);
+  };
+  bindBtnReinstall(handler) {
+    this.btnReinstallLinkElement.addEventListener('click', handler, false);
+  };
+  bindBtnReinstall(handler) {
+    this.btnReinstallLinkElement.addEventListener('click', handler, false);
+  };
+
+  bindEditPacket(editPacketRequestHandler) {
+    this.editPacketRequestHandler = editPacketRequestHandler;
   }
   // async findHelpTopic(topic=all) {
   //     this.displayHelpTopic()
@@ -234,46 +245,41 @@ class View {
     //await this.findHelpTopic();
   }
 
-  pageEvent(selector, trigger) {
-    document.querySelector(selector).addEventListener('click', () => {
-      this.selectPages(trigger)
-    }, false);
-  }
+  // createElement(tag, className) {
+  //   const element = document.createElement(tag);
+  //   if (className) element.classList.add(className);
+  //   return element; 
+  // }
+  // getElement(selector) {
+  //   const element = document.querySelector(selector);
+  //   return element;
+  // }
 
-
-  createElement(tag, className) {
-    const element = document.createElement(tag);
-    if (className) element.classList.add(className);
-    return element;
-  }
-
-  getElement(selector) {
-    const element = document.querySelector(selector);
-    return element;
-  }
-
-  addPacketToTable(seedPkt) {
+  createTableTemplate(packet) {
     // Adds a packet as a row to packet list
     const list = document.querySelector('#seed-list');
     const row = document.createElement('tr');
+    const edit = document.createElement('td');
+    edit.className = 'edit-record';
+    edit.addEventListener('click', () => {this.editPacketRequestHandler(packet.packetId)}, false);
     row.innerHTML =
-      `<td>${seedPkt.group}</td>
-            <td>${seedPkt.variety}</td>
-            <td>${seedPkt.packetId}</td>
-            <td class='table-seeds__col--center'>${(seedPkt.date).substring(2)}</td>
-            <td class='table-seeds__col--center'>${seedPkt.number}</td>
-            <td class='table-seeds__col--center'>${seedPkt.weight}</td>
-            <td class='edit' onclick=controller.editSeedPkt('${seedPkt.packetId}')></td>`;
+      `<td>${packet.group}</td>
+            <td>${packet.variety}</td>
+            <td>${packet.packetId}</td>
+            <td class='table-seeds__col--center'>${(packet.date).substring(2)}</td>
+            <td class='table-seeds__col--center'>${packet.number}</td>
+            <td class='table-seeds__col--center'>${packet.weight}</td>`;
+    row.appendChild(edit);      
     list.appendChild(row);
   }
 
-  displayPackets(packets) {
+  displayPacketsList(packets) {
     // Delete table rows first before entering updated data on home page
     const table = document.querySelector('#seed-list');
     while (table.rows.length > 0) {
       table.deleteRow(0);
     };
-    packets.forEach((packet) => this.addPacketToTable(packet));
+    packets.forEach((packet) => this.createTableTemplate(packet));
   }
 
   showAlert(message, className, idMessage, idLocation) {
@@ -473,12 +479,12 @@ class Controller {
     this.sortOn = 'variety';
     this.sortOrder = 'next';
     // bindings pages
-    this.view.bindHomePageLink(() => { this.requestPacketListPage(); });
-    this.view.bindAddNewPacketLink( () => { this.requestAddNewPacketPage(); });
-    this.view.bindScrollPacketsLink( () => { this.requestScrollPacketsPage(); });
-    this.view.bindBackupRestoreLink( () => { this.requestBackupRestorePage(); });
-    this.view.bindDbErrorLink(() => { this.requestDbErrorPage(); });
-    this.view.bindInstructionsPageLink( () => { this.requestHelpPage(); });
+    this.view.bindPacketListPage( () => { this.requestPacketListPage(); });
+    this.view.bindAddNewPacketPage( () => { this.requestAddNewPacketPage(); });
+    this.view.bindScrollPacketsPage( () => { this.requestScrollPacketsPage(); });
+    this.view.bindBackupRestorePage( () => { this.requestBackupRestorePage(); });
+    this.view.bindDbErrorPage(() => { this.requestDbErrorPage(); });
+    this.view.bindInstructionsPage( () => { this.requestHelpPage(); });
     // bindings table sort
     this.view.bindSortGroup( () => { this.requestSortedPacketList('group'); });
     this.view.bindSortVariety( () => { this.requestSortedPacketList('variety'); });
@@ -491,6 +497,9 @@ class Controller {
     this.view.bindBtnSubmitNewRecord( () => { this.requestAddRecord('newRecord'); });
     this.view.bindBtnDeleteRecord( () => { this.requestDeleteRecord(); });
     this.view.bindBtnRetrieveData( () => { this.requestRetrieveAllData(); });
+    this.view.bindBtnReinstall( () => { this.fixCorruptDB(); });
+    
+    this.view.bindEditPacket( (packetId) => { this.editPacketRequestHandler(packetId); });
   }
 
   async requestSortedPacketList(sortOn) {
@@ -515,8 +524,20 @@ class Controller {
     }
     // request the new data from the model
     const records = await this.model.getAll(this.sortOn, this.sortOrder);
-    this.view.displayPackets(records);
+    this.view.displayPacketsList(records);
   }
+
+  async editPacketRequestHandler(packetId) {
+    const record = await this.model.getRecord(packetId);
+    this.view.clearFields();
+    this.view.showEditPacket();
+    Object.keys(record).forEach(field => { 
+      // -> with the requested seed pkt record for editing
+      //console.log(field);
+      //console.log(record[field]);
+      document.querySelector('#' + field).value = record[field];
+    });
+  };
 
   // Pages requested
   async requestPacketListPage() {
@@ -557,11 +578,11 @@ class Controller {
           View.showMessage('Unknown error');
       }
     }
-  }
+  };
 
-  async addPacket(form) {
-    console.log(form);
-  }
+  // async addPacket(form) {
+  //   console.log(form);
+  // };
 
   async loadRecord() {
     // Get the content from the form fields
@@ -592,18 +613,6 @@ class Controller {
       //await this.requestPacketListPage();
       //this.view.clearFields();  //=> Clear form fields
     };
-  };
-
-  async editSeedPkt(packetId) {
-    const record = await this.model.getRecord(packetId);
-    this.view.clearFields();
-    this.view.showEditPacket();
-    Object.keys(record).forEach(field => { // -> with the requested seed pkt record for editing
-      //console.log(field);
-      //console.log(record[field]);
-      document.querySelector('#' + field).value = record[field];
-    });
-    //this.view.editSeed(record, 'editSeedPkt');
   };
 
   async requestAddRecord(submit) {
@@ -727,7 +736,7 @@ const msgInstallBb = document.getElementById('installDbMsg'); //=> alias for UI 
 controller.backup(); // TO DO: have to sort the events in that function
 
 //=> Button & input events
-htmlId('btnReinstall').addEventListener('click', () => { controller.fixCorruptDB() }, false);
+//htmlId('btnReinstall').addEventListener('click', () => { controller.fixCorruptDB() }, false);
 htmlId('js-page--to-bottom').addEventListener('click', () => { view.scrollToBottom() }, false);
 htmlId('js-page--to-top').addEventListener('click', () => { view.scrollToTop() }, false);
 
