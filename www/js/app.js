@@ -162,9 +162,8 @@ class View {
     this.btnRetrieveDataLinkElement = document.querySelector('#btnRetrieveData');
     this.btnReinstallLinkElement = document.querySelector('#btnReinstall');
     // Menu events
-    this.menuButton = document.querySelector('.js-menu-hamburger');
-    this.menuButton.addEventListener('click', () => { this.toggleMenu() });
-    this.closedMenu = document.querySelector('.js-menu-hamburger--closed');
+    this.menuButtonLinkElement = document.querySelector('.js-menu-hamburger');
+    //this.closedMenu = document.querySelector('.js-menu-hamburger--closed');
     // Up-Down events
     this.toTop = document.getElementById('js-page--to-top'); //=> Get the button
     this.toBottom = document.getElementById('js-page--to-bottom'); //=> Get the button
@@ -234,6 +233,11 @@ class View {
   bindEditPacket(editPacketRequestHandler) {
     this.editPacketRequestHandler = editPacketRequestHandler;
   }
+
+  bindMenuButton(menuButtonRequestHandler) {
+    this.menuButtonLinkElement.addEventListener('click', menuButtonRequestHandler, false);
+  };
+
   // async findHelpTopic(topic=all) {
   //     this.displayHelpTopic()
   // }
@@ -413,7 +417,8 @@ class View {
 
   toggleMenu() {
     //=> toggle function using class lists on click of the hamburger menu
-    this.closedMenu.classList.toggle('js-menu-hamburger--opened');
+    const closedMenu = document.querySelector('.js-menu-hamburger--closed');
+    closedMenu.classList.toggle('js-menu-hamburger--opened');
 
   }
 
@@ -500,6 +505,8 @@ class Controller {
     this.view.bindBtnReinstall( () => { this.fixCorruptDB(); });
     
     this.view.bindEditPacket( (packetId) => { this.editPacketRequestHandler(packetId); });
+
+    this.view.bindMenuButton( () => {this.view.toggleMenu();} );
   }
 
   async requestSortedPacketList(sortOn) {
