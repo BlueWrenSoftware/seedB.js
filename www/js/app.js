@@ -165,10 +165,22 @@ class View {
     this.menuButtonLinkElement = document.querySelector('.js-menu-hamburger');
     //this.closedMenu = document.querySelector('.js-menu-hamburger--closed');
     // Up-Down events
-    this.toTop = document.getElementById('js-page--to-top'); //=> Get the button
-    this.toBottom = document.getElementById('js-page--to-bottom'); //=> Get the button
-    this.pageTopButton = window.onscroll = () => { this.scrollEvent() };
+    //this.toTop = document.getElementById('js-page--to-top'); 
+    //this.toBottom = document.getElementById('js-page--to-bottom');
+    //this.pageTopButton = window.onscroll = () => { this.scrollEvent() };
+    this.scrollToBottomPageLinkElement = document.getElementById('js-page--to-bottom');
+    this.scrollToTopPageLinkElement = document.getElementById('js-page--to-top');
   }
+
+  bindScrollTopBottomEvent(scrollTopBottomRequestHandler) {
+    window.onscroll = scrollTopBottomRequestHandler;
+  };
+  bindScrollToBottomPage(scrollToBottomRequestHandler) {
+    this.scrollToBottomPageLinkElement.addEventListener('click', scrollToBottomRequestHandler, false);
+  };
+  bindScrollToTopPage(scrollToTopPageRequestHandler) {
+    this.scrollToTopPageLinkElement.addEventListener('click', scrollToTopPageRequestHandler, false);
+  };
 
   bindPacketListPage(packetListRequestHandler) {
     // pass on to Controller
@@ -430,8 +442,8 @@ class View {
   }
 
   scrollToTop() { //=> function activated on click of up arrow
-    this.toBottom = document.getElementById('js-page--to-bottom');
-    this.toBottom.style.display = 'block'
+    //this.toBottom = document.getElementById('js-page--to-bottom');
+    //this.toBottom.style.display = 'block'
     document.body.scrollTop = 0; //=> For Safari
     document.documentElement.scrollTop = 0; //=> For Chrome, Firefox, IE and Opera
   }
@@ -440,9 +452,9 @@ class View {
     //=> scroll event to hide or show to top button
     //=> scrolls down 20px, show the up button
     if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
-      this.toTop.style.display = 'block';
+      this.scrollToTopPageLinkElement.style.display = 'block';
     } else {
-      this.toTop.style.display = 'none';
+      this.scrollToTopPageLinkElement.style.display = 'none';
     }
   }
 
@@ -506,7 +518,10 @@ class Controller {
     
     this.view.bindEditPacket( (packetId) => { this.editPacketRequestHandler(packetId); });
 
-    this.view.bindMenuButton( () => {this.view.toggleMenu();} );
+    this.view.bindMenuButton( () => { this.view.toggleMenu(); });
+    this.view.bindScrollTopBottomEvent( () => { this.view.scrollEvent(); });
+    this.view.bindScrollToBottomPage( () => { this.view.scrollToBottom(); });
+    this.view.bindScrollToTopPage( () => { this.view.scrollToTop(); });
   }
 
   async requestSortedPacketList(sortOn) {
@@ -743,9 +758,9 @@ const msgInstallBb = document.getElementById('installDbMsg'); //=> alias for UI 
 controller.backup(); // TO DO: have to sort the events in that function
 
 //=> Button & input events
-//htmlId('btnReinstall').addEventListener('click', () => { controller.fixCorruptDB() }, false);
-htmlId('js-page--to-bottom').addEventListener('click', () => { view.scrollToBottom() }, false);
-htmlId('js-page--to-top').addEventListener('click', () => { view.scrollToTop() }, false);
+//htmlId('btnReinstall').addEventListener('click', () => { controller.fix CorruptDB() }, false);
+//htmlId('js-page--to-bottom').addEventListener('click', () => { view.scrollToBottom() }, false);
+//htmlId('js-page--to-top').addEventListener('click', () => { view.scrollToTop() }, false);
 
 htmlId('btnCopyRecord').addEventListener('click', () => {
   view.clearCopiedField();
