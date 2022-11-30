@@ -1,6 +1,3 @@
-/*All console.log are disable, were there for debugging
-  => New Comment
-  -> Continuation of initial comment*/
 "use strict";
 
 class Model {
@@ -9,12 +6,10 @@ class Model {
     this.db = null;
     this.version = null;
   }
-
   close() {
     this.db.close();
     this.db = null;
   }
-
   open(version) {
     return new Promise((resolve, reject) => {
       const request = window.indexedDB.open('seedB', version);
@@ -28,25 +23,21 @@ class Model {
         store.createIndex('weight', 'weight', { unique: false });
         store.createIndex('timeStamp', 'timeStamp', { unique: false });
       }
-
       request.onsuccess = (event) => {
         this.db = event.target.result;
         this.version = this.db.version;
         resolve(event.target.result);
       }
-
       request.onerror = (event) => {
         reject(event.target.errorCode);
       }
     });
   };
-
   async tryOpen(version) {
     if (this.db === null) {
       await this.open(version);
     };
   }
-
   delete() {
     return new Promise((resolve, reject) => {
       if (this.db) {
@@ -67,7 +58,6 @@ class Model {
       };
     });
   }
-
   getRecord(id) {
     return new Promise(async (resolve, reject) => {
       await this.tryOpen();
@@ -83,7 +73,6 @@ class Model {
       };
     });
   };
-
   getAll(sortOn = 'variety', sortOrder = 'next') {
     return new Promise(async (resolve, reject) => {
       let cursorRequest;
@@ -112,7 +101,6 @@ class Model {
       };
     })
   };
-
   async loadRecords(records) {
     await this.tryOpen();
     const transaction = this.db.transaction('collection', 'readwrite');
@@ -121,7 +109,6 @@ class Model {
       store.put(record);
     });
   }
-
   async deleteRecord(packetId) {
     await this.tryOpen();
     const transaction = this.db.transaction('collection', 'readwrite');
@@ -137,10 +124,8 @@ class View {
   //  - handling user input
   //  - updating the database
   // It does not make requests of the Model
-
   constructor() {
     this.app = document.getElementById('#root');
-
     // Pages events
     this.packetListLinkElements = document.querySelectorAll('.openHomePage');
     this.addNewPacketLinkElement = document.querySelector('.openNewPacketPage');
@@ -163,15 +148,11 @@ class View {
     this.btnReinstallLinkElement = document.querySelector('#btnReinstall');
     // Menu events
     this.menuButtonLinkElement = document.querySelector('.js-menu-hamburger');
-    //this.closedMenu = document.querySelector('.js-menu-hamburger--closed');
-    // Up-Down events
-    //this.toTop = document.getElementById('js-page--to-top'); 
-    //this.toBottom = document.getElementById('js-page--to-bottom');
-    //this.pageTopButton = window.onscroll = () => { this.scrollEvent() };
+    //scroll events
     this.scrollToBottomPageLinkElement = document.getElementById('js-page--to-bottom');
     this.scrollToTopPageLinkElement = document.getElementById('js-page--to-top');
   }
-
+  //scroll events
   bindScrollTopBottomEvent(scrollTopBottomRequestHandler) {
     window.onscroll = scrollTopBottomRequestHandler;
   };
@@ -181,7 +162,7 @@ class View {
   bindScrollToTopPage(scrollToTopPageRequestHandler) {
     this.scrollToTopPageLinkElement.addEventListener('click', scrollToTopPageRequestHandler, false);
   };
-
+  //page events
   bindPacketListPage(packetListRequestHandler) {
     // pass on to Controller
     this.packetListLinkElements.forEach(btn => btn.addEventListener('click', packetListRequestHandler, false));
@@ -203,7 +184,7 @@ class View {
   bindInstructionsPage(handler) {
     this.instructionsLinkElements.forEach(request => request.addEventListener('click', handler, false));
   }
-
+  //sort list table events
   bindSortGroup(handler) {
     this.sortGroupLinkElement.addEventListener('click', handler, false);
   }
@@ -222,7 +203,7 @@ class View {
   bindSortWeight(handler) {
     this.sortWeightLinkElement.addEventListener('click', handler, false);
   }
-
+  //edit, new packets
   bindBtnSubmitEditRecord(handler) {
     this.btnSubmitEditRecordLinkElement.addEventListener('click', handler, false);
   };
@@ -232,6 +213,10 @@ class View {
   bindBtnDeleteRecord(handler) {
     this.btnDeleteRecordLinkElement.addEventListener('click', handler, false);
   };
+  bindEditPacket(editPacketRequestHandler) {
+    this.editPacketRequestHandler = editPacketRequestHandler;
+  }
+  //retrieve data, reinstall db
   bindBtnRetrieveData(handler) {
     this.btnRetrieveDataLinkElement.addEventListener('click', handler, false);
   };
@@ -241,11 +226,7 @@ class View {
   bindBtnReinstall(handler) {
     this.btnReinstallLinkElement.addEventListener('click', handler, false);
   };
-
-  bindEditPacket(editPacketRequestHandler) {
-    this.editPacketRequestHandler = editPacketRequestHandler;
-  }
-
+  //menu hamburger event
   bindMenuButton(menuButtonRequestHandler) {
     this.menuButtonLinkElement.addEventListener('click', menuButtonRequestHandler, false);
   };
@@ -260,16 +241,6 @@ class View {
     this.showInstructions();
     //await this.findHelpTopic();
   }
-
-  // createElement(tag, className) {
-  //   const element = document.createElement(tag);
-  //   if (className) element.classList.add(className);
-  //   return element; 
-  // }
-  // getElement(selector) {
-  //   const element = document.querySelector(selector);
-  //   return element;
-  // }
 
   createTableTemplate(packet) {
     // Adds a packet as a row to packet list
@@ -330,7 +301,6 @@ class View {
     document.querySelector('#timeStamp').value = '';
     document.querySelector('#seedNotes').value = ''
   }
-
   // Open Pages
   showHomePage() {
     if (document.getElementById('showHide').classList.contains('js-all-pages--none')) {
@@ -343,7 +313,6 @@ class View {
     document.querySelector('#read-write-page').style.display = 'none';
     document.querySelector('#instructions-page').style.display = 'none';
   }
-
   showAddNewPacket() {
     // this.clearFields();
     // clearFields() only called from menu event, not from buttons
@@ -361,7 +330,6 @@ class View {
     document.querySelector('#packetId').removeAttribute('readonly');
     document.querySelector('#packetId').setAttribute('required', 'required');
   }
-
   showEditPacket() {
     document.title = 'Edit Seed Pkt';
     document.querySelector('#edit-pkt-buttons').style.display = '';
@@ -377,7 +345,6 @@ class View {
     document.querySelector('#packetId').removeAttribute('required');
     document.querySelector('#packetId').setAttribute('readonly', 'readonly');   
   }
-
   showScrollPackets() {
     this.clearFields();
     document.title = 'Scroll Pkt Records';
@@ -389,7 +356,6 @@ class View {
     document.querySelector('#read-write-page').style.display = 'none';
     document.querySelector('#instructions-page').style.display = 'none';
   }
-
   showBackupRestore() {
     document.title = 'Backup & Restore';
     document.querySelector('#retrieve-data-button').style.display = '';
@@ -399,13 +365,8 @@ class View {
     document.querySelector('#instructions-page').style.display = 'none';
     document.querySelector('#dbError').style.display = 'none'
   }
-
   showDbError() {
     //=> checks if pages are hidden before loading error page on start
-    /* if (document.getElementById('showHide').classList.contains('js-all-pages--none')) {
-      document.getElementById('showHide').classList.add('js-all-pages--opened');
-      document.getElementById('showHide').classList.remove('js-all-pages--none');
-    } */
     document.title = 'DB Error';
     //=> on start up if db fails this page will be loaded
     document.querySelector('#retrieve-data-button').style.display = 'none';
@@ -415,7 +376,6 @@ class View {
     document.querySelector('#instructions-page').style.display = 'none';
     document.querySelector('#dbError').style.display = ''
   }
-
   showInstructions() {
     //=> page for instructions
     //this.clearFields();
@@ -426,24 +386,20 @@ class View {
     document.querySelector('#read-write-page').style.display = 'none';
     document.querySelector('#instructions-page').style.display = '';
   }
-
+  //menu and scroll
   toggleMenu() {
     //=> toggle function using class lists on click of the hamburger menu
     const closedMenu = document.querySelector('.js-menu-hamburger--closed');
     closedMenu.classList.toggle('js-menu-hamburger--opened');
 
   }
-
   scrollToBottom() { //=> function activated on click of down arrow
     if (document.documentElement.scrollHeight > document.documentElement.clientHeight) {
       const scrollHeight = document.documentElement.scrollHeight;
       window.scrollTo(0, scrollHeight);
     }
   }
-
   scrollToTop() { //=> function activated on click of up arrow
-    //this.toBottom = document.getElementById('js-page--to-bottom');
-    //this.toBottom.style.display = 'block'
     document.body.scrollTop = 0; //=> For Safari
     document.documentElement.scrollTop = 0; //=> For Chrome, Firefox, IE and Opera
   }
@@ -457,39 +413,13 @@ class View {
       this.scrollToTopPageLinkElement.style.display = 'none';
     }
   }
-
-  /* static locateBtnHomePage(e) { //=> select from classList the right return to Home page button
-      if (e.target === foundBtnHomePage) {
-          fileNotes.innerHTML = '';
-          //console.log('file notes deleted');
-          backupNotes.innerHTML = '';
-      };
-      //console.log('Home Page selected');
-      View.showHomePage();
-  } */
-
-/*   editSeed(record) { //=> opens the edit/add page ->
-    this.clearFields();
-    this.showEditPacket();
-    Object.keys(record).forEach(field => { // -> with the requested seed pkt record for editing
-      //console.log(field);
-      //console.log(record[field]);
-      document.querySelector('#' + field).value = record[field];
-    });
-  } */ //=> Should be in Controller!!!
-
-  static showMessage(message) {
-    msgInstallBb.innerHTML += (`<li>=> ${message}</li>`);
+  showMessage(message) {
+    msgInstallDb.innerHTML += (`<li>=> ${message}</li>`);
   }
-
-  /* bindEditAddSeedPages(handler) {
-      this.pagesAddEditLinkElements.forEach(btn => btn.addEventListener('click', handler, false));
-  } */
 }
 
 class Controller {
   // Responsible for handling user input
-
   constructor(model, view) {
     this.model = model;
     this.view = view;
@@ -502,6 +432,7 @@ class Controller {
     this.view.bindBackupRestorePage( () => { this.requestBackupRestorePage(); });
     this.view.bindDbErrorPage(() => { this.requestDbErrorPage(); });
     this.view.bindInstructionsPage( () => { this.requestHelpPage(); });
+    this.view.bindEditPacket( (packetId) => { this.editPacketRequestHandler(packetId); });
     // bindings table sort
     this.view.bindSortGroup( () => { this.requestSortedPacketList('group'); });
     this.view.bindSortVariety( () => { this.requestSortedPacketList('variety'); });
@@ -515,15 +446,12 @@ class Controller {
     this.view.bindBtnDeleteRecord( () => { this.requestDeleteRecord(); });
     this.view.bindBtnRetrieveData( () => { this.requestRetrieveAllData(); });
     this.view.bindBtnReinstall( () => { this.fixCorruptDB(); });
-    
-    this.view.bindEditPacket( (packetId) => { this.editPacketRequestHandler(packetId); });
-
+    //bindings menu ans scroll
     this.view.bindMenuButton( () => { this.view.toggleMenu(); });
     this.view.bindScrollTopBottomEvent( () => { this.view.scrollEvent(); });
     this.view.bindScrollToBottomPage( () => { this.view.scrollToBottom(); });
     this.view.bindScrollToTopPage( () => { this.view.scrollToTop(); });
   }
-
   async requestSortedPacketList(sortOn) {
     if (sortOn !== undefined) {
       // if sortOn is supplied, then the user is attempting
@@ -548,7 +476,6 @@ class Controller {
     const records = await this.model.getAll(this.sortOn, this.sortOrder);
     this.view.displayPacketsList(records);
   }
-
   async editPacketRequestHandler(packetId) {
     const record = await this.model.getRecord(packetId);
     this.view.clearFields();
@@ -560,7 +487,6 @@ class Controller {
       document.querySelector('#' + field).value = record[field];
     });
   };
-
   // Pages requested
   async requestPacketListPage() {
     this.view.showHomePage();
@@ -583,29 +509,23 @@ class Controller {
     this.view.showInstructions();
     //await this.findHelpTopic();
   }
-
   async fixCorruptDB() {
     try {
       const ret = await this.model.delete();
-      View.showMessage('Deleted corrupted database');
+      this.view.showMessage('Deleted corrupted database');
     } catch (error) {
       switch (error) {
         case 'error':
-          View.showMessage('Could not delete database');
+          this.view.showMessage('Could not delete database');
           break;
         case 'blocked':
-          View.showMessage('Could not delete database; operation blocked');
+          this.view.showMessage('Could not delete database; operation blocked');
           break;
         default:
-          View.showMessage('Unknown error');
+          this.view.showMessage('Unknown error');
       }
     }
   };
-
-  // async addPacket(form) {
-  //   console.log(form);
-  // };
-
   async loadRecord() {
     // Get the content from the form fields
     const formData = new FormData(document.getElementById('seed-entry'));
@@ -636,7 +556,6 @@ class Controller {
       //this.view.clearFields();  //=> Clear form fields
     };
   };
-
   async requestAddRecord(submit) {
     await this.loadRecord();
     switch (submit) {
@@ -654,7 +573,6 @@ class Controller {
         break;
     };
   };
-
   async requestDeleteRecord() {
     //=> Delete record requested from delete button on edit page
     const packetId = document.querySelector('#packetId').value;
@@ -665,7 +583,6 @@ class Controller {
     this.model.getAll();
     await this.requestPacketListPage();
   };
-
   fileTime() {  //=> Timestamp for file names
     const date = new Date();
     const year = date.getFullYear().toString();
@@ -676,7 +593,6 @@ class Controller {
     const formattedTime = `${year.slice(-2)}-${month.slice(-2)}-${day.slice(-2)}T${hours.slice(-2)}∶${minutes.slice(-2)}`;
     return formattedTime;
   }
-
   download(filename, textInput) {
     //=> Download filename using browser file download
     const element = document.createElement('a'); //=> Create anchor tag
@@ -688,7 +604,6 @@ class Controller {
     //console.log('Download complete');
     fileNotes.innerHTML += '<li>=> Download is completed.</li>';
   }
-
   async requestRetrieveAllData() {
     //=> Collects all data records from DB
     const records = await this.model.getAll();
@@ -698,8 +613,8 @@ class Controller {
     fileNotes.innerHTML += '<li>=> Backup file name is: ' + filename + '</li>';
     this.download(filename, text); //=> Save backup file.
   }
-
-  backup() { //=> Upload backup file and merge with data in object store
+  backup() { 
+    //=> Upload backup file and merge with data in object store
     const fileSelect = document.getElementById('js-file-select');
     const extractFileData = document.getElementById('js-input-file-data');
     fileSelect.addEventListener('click', function () { //=> Upload Text File button clicked pageBackupRestore
@@ -724,45 +639,19 @@ class Controller {
       };
       reader.readAsText(file);
     };
-  }   /* TO DO: all the events have to be taken out of backup()!
-                  better documentation need for this function
-        */
+  }
 }
-
 //=> End of Classes
-/* TO DO: wherever a the db is opened in a Store or Data static functions
-          should change that to one only function to open a db
-          and use that function in any of the other ones requiring an open db request.
-          Might also need to be promise-async-await structure
-          Also sort out versioning numbering when creating opening request.
-          Make all Alert messages sticky and only disappear when changing pages
-          deletedPkts = []; session storage of deleted seed packets
-          Checking for the right store on start
-*/
-
 const model = new Model();
 const view = new View();
 const controller = new Controller(model, view);
-
-window.onload = () => { controller.requestPacketListPage() }; //=> Load IndexedDB and check for right store is missing!
-
+//=> Load IndexedDB and check for right store is missing!
+window.onload = () => { controller.requestPacketListPage() }; 
 //=> Global variables
-const htmlId = id => document.getElementById(id); //=> alias
-const foundBtnHomePage = document.getElementById('findBtnHomePage'); //=> alias
+//const foundBtnHomePage = document.getElementById('findBtnHomePage'); //=> alias
 const fileNotes = document.getElementById('fileNotifications'); //=> alias for user msgs retrieving data & backup
 const backupNotes = document.getElementById('backupNotifications');  //=> alias for user msgs backup installation
 const errorMsg = document.getElementById('dbError');  //=> alias forDB error msgs for the UI
-const msgInstallBb = document.getElementById('installDbMsg'); //=> alias for UI installation msgs
-
+const msgInstallDb = document.getElementById('installDbMsg'); //=> alias for UI installation msgs
 //=> Restore data from backup file
 controller.backup(); // TO DO: have to sort the events in that function
-
-//=> Button & input events
-//htmlId('btnReinstall').addEventListener('click', () => { controller.fix CorruptDB() }, false);
-//htmlId('js-page--to-bottom').addEventListener('click', () => { view.scrollToBottom() }, false);
-//htmlId('js-page--to-top').addEventListener('click', () => { view.scrollToTop() }, false);
-
-htmlId('btnCopyRecord').addEventListener('click', () => {
-  view.clearCopiedField();
-  view.showAddNewPacket();
-})
