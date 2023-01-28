@@ -22,6 +22,7 @@ class Model {
         store.createIndex('number', 'number', { unique: false });
         store.createIndex('weight', 'weight', { unique: false });
         store.createIndex('timeStamp', 'timeStamp', { unique: false });
+        store.createIndex('cost', 'cost', { unique: false });
       }
       request.onsuccess = (event) => {
         this.db = event.target.result;
