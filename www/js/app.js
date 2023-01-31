@@ -22,7 +22,7 @@ class Model {
         store.createIndex('number', 'number', { unique: false });
         store.createIndex('weight', 'weight', { unique: false });
         store.createIndex('timeStamp', 'timeStamp', { unique: false });
-        store.createIndex('cost', 'cost', { unique: false });
+        //store.createIndex('cost', 'cost', { unique: false });
       }
       request.onsuccess = (event) => {
         this.db = event.target.result;
@@ -139,8 +139,8 @@ class View {
     this.sortVarietyLinkElement = document.getElementById('sortVariety');
     this.sortPacketIdLinkElement = document.getElementById('sortPacketId');
     this.sortDateLinkElement = document.getElementById('sortDate');
-    this.sortNumberLinkElement = document.getElementById('sortNumber');
-    this.sortWeightLinkElement = document.getElementById('sortWeight');
+    //this.sortNumberLinkElement = document.getElementById('sortNumber');
+    //this.sortWeightLinkElement = document.getElementById('sortWeight');
     // Button events
     this.btnSubmitEditRecordLinkElement = document.querySelector('#btnSubmitEditRecord');
     this.btnSubmitNewRecordLinkElement = document.querySelector('#btnSubmitNewRecord');
@@ -198,12 +198,12 @@ class View {
   bindSortDate(handler) {
     this.sortDateLinkElement.addEventListener('click', handler, false);
   }
-  bindSortNumber(handler) {
-    this.sortNumberLinkElement.addEventListener('click', handler, false);
-  }
-  bindSortWeight(handler) {
-    this.sortWeightLinkElement.addEventListener('click', handler, false);
-  }
+//  bindSortNumber(handler) {
+//    this.sortNumberLinkElement.addEventListener('click', handler, false);
+//  }
+//  bindSortWeight(handler) {
+//    this.sortWeightLinkElement.addEventListener('click', handler, false);
+//  }
   //edit, new packets
   bindBtnSubmitEditRecord(handler) {
     this.btnSubmitEditRecordLinkElement.addEventListener('click', handler, false);
@@ -256,7 +256,9 @@ class View {
             <td>${packet.packetId}</td>
             <td class='table-seeds__col--center'>${(packet.date).substring(2)}</td>
             <td class='table-seeds__col--center'>${packet.number}</td>
-            <td class='table-seeds__col--center'>${packet.weight}</td>`;
+            <td class='table-seeds__col--center'>${packet.weight}</td>
+            <td class='table-seeds__col--center'>${packet.cost}</td>
+            `;
     row.appendChild(edit);      
     list.appendChild(row);
   }
@@ -292,6 +294,7 @@ class View {
     document.querySelector('#number').value = '';
     document.querySelector('#weight').value = '';
     document.querySelector('#date').value = '';
+    document.querySelector('#cost').value = '';
     document.querySelector('#timeStamp').value = '';
     document.querySelector('#seedNotes').value = '';
   }
@@ -300,7 +303,7 @@ class View {
     document.querySelector('#packetId').value = '';
     document.querySelector('#date').value = '';
     document.querySelector('#timeStamp').value = '';
-    document.querySelector('#seedNotes').value = ''
+    document.querySelector('#seedNotes').value = '';
   }
   // Open Pages
   showHomePage() {
@@ -439,8 +442,8 @@ class Controller {
     this.view.bindSortVariety( () => { this.requestSortedPacketList('variety'); });
     this.view.bindSortPacketId( () => { this.requestSortedPacketList('packetId'); });
     this.view.bindSortDate( () => { this.requestSortedPacketList('date'); });
-    this.view.bindSortNumber( () => { this.requestSortedPacketList('number'); });
-    this.view.bindSortWeight( () => { this.requestSortedPacketList('weight'); });
+//    this.view.bindSortNumber( () => { this.requestSortedPacketList('number'); });
+//    this.view.bindSortWeight( () => { this.requestSortedPacketList('weight'); });
     // bindings button events
     this.view.bindBtnSubmitEditRecord( () => { this.requestAddRecord('editRecord'); });
     this.view.bindBtnSubmitNewRecord( () => { this.requestAddRecord('newRecord'); });
