@@ -249,6 +249,7 @@ class View {
     const row = document.createElement('tr');
     const edit = document.createElement('td');
     edit.className = 'edit-record';
+    edit.setAttribute("title", "Edit Record");
     edit.addEventListener('click', () => {this.editPacketRequestHandler(packet.packetId)}, false);
     row.innerHTML =
       `<td>${packet.group}</td>
@@ -259,7 +260,7 @@ class View {
             <td class='table-seeds__col--center'>${packet.weight}</td>
             <td class='table-seeds__col--center'>${packet.cost}</td>
             `;
-    row.appendChild(edit);      
+    row.appendChild(edit);
     list.appendChild(row);
   }
 
@@ -347,7 +348,7 @@ class View {
     document.querySelector('#instructions-page').style.display = 'none';
     // Key packetId is read only
     document.querySelector('#packetId').removeAttribute('required');
-    document.querySelector('#packetId').setAttribute('readonly', 'readonly');   
+    document.querySelector('#packetId').setAttribute('readonly', 'readonly');
   }
   showScrollPackets() {
     this.clearFields();
@@ -484,7 +485,7 @@ class Controller {
     const record = await this.model.getRecord(packetId);
     this.view.clearFields();
     this.view.showEditPacket();
-    Object.keys(record).forEach(field => { 
+    Object.keys(record).forEach(field => {
       // -> with the requested seed pkt record for editing
       //console.log(field);
       //console.log(record[field]);
@@ -617,7 +618,7 @@ class Controller {
     fileNotes.innerHTML += '<li>=> Backup file name is: ' + filename + '</li>';
     this.download(filename, text); //=> Save backup file.
   }
-  backup() { 
+  backup() {
     //=> Upload backup file and merge with data in object store
     const fileSelect = document.getElementById('js-file-select');
     const extractFileData = document.getElementById('js-input-file-data');
@@ -650,7 +651,7 @@ const model = new Model();
 const view = new View();
 const controller = new Controller(model, view);
 //=> Load IndexedDB and check for right store is missing!
-window.onload = () => { controller.requestPacketListPage() }; 
+window.onload = () => { controller.requestPacketListPage() };
 //=> Global variables
 //const foundBtnHomePage = document.getElementById('findBtnHomePage'); //=> alias
 const fileNotes = document.getElementById('fileNotifications'); //=> alias for user msgs retrieving data & backup
