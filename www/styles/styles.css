@@ -266,9 +266,14 @@ table.table-seeds {
   font-family: VuSans, sans-serif;
   font-size: 100%;
   font-weight: normal;
-  border: 1px solid #000000;
+  border: 2px solid #ccc;
   margin-bottom: 20px;
   table-layout: auto;
+  width: 100%;
+  /*resizable columns
+  table-layout: fixed;
+  white-space: wrap;
+  word-wrap: break-word;*/
 }
 
 table td.table-seeds__col--center {
@@ -286,13 +291,24 @@ table caption {
 }
 
 th {
-  padding: 2px 5px 2px 10px;
-  border: 1px solid #000000;
+  padding: 2px;
+  border: 2px solid #ccc;
   background-color: #F6DA74;
   text-align: center;
   font-size: 80%;
+  /*resizable columns
+  overflow: hidden;*/
 }
 
+td {
+  padding:0.2em;
+  border: 2px solid #ccc;
+  line-height: normal;
+  font-size: 80%;
+  /*resizable columns
+  height: 10px;
+  overflow: hidden;*/
+}
 tr.row__bottom-line {
   border-bottom: 1px solid #000000;
 }
@@ -301,12 +317,7 @@ tr.row__bottom-line {
   background: #E8E8E8;
 } */
 
-td {
-  padding:0.2em;
-  border-left: 1px solid #000000;
-  line-height: normal;
-  font-size: 80%;
-}
+
 
 #page-footer {
   clear: both;
@@ -397,6 +408,7 @@ input[type=date] {
   background-color: #E8E8E8;
   color:black;
   font-weight: bold;
+  height: 24px;
   padding: 2px;
   margin: 5px;
   border: none;
@@ -541,7 +553,7 @@ textarea {
 .buttons-container {
   display: flex;
   flex-grow: wrap;
-  justify-content: left;
+  justify-content: center;
   /* justify-content: center; */
   text-align: center;
   width: 100%;
@@ -552,18 +564,7 @@ textarea {
 div.center {
   text-align: center;
 }
-button.right {
-  float: right;
-  padding: unset;
-  margin: unset;
-  padding-top: 3px;
-}
-button.left {
-  float: left;
-  padding: unset;
-  margin: unset;
-  padding-top: 3px;
-}
+
 form {
   clear:both;
   font-size: 80%;
@@ -594,6 +595,9 @@ ul {
 form#seed-entry > p {
   font-size: unset;
   padding-left: 50px;
+  padding-top: unset;
+  padding-bottom: unset;
+  padding-right: unset;
 }
 
 input[type=text].input-searchicon {
