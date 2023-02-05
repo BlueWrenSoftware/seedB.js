@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   width="14.999999"
-   height="14.999999"
+   width="34px"
+   height="34px"
    stroke-width="1.5"
-   viewBox="0 0 10.588235 10.588235"
+   viewBox="0 0 24 24"
    fill="none"
    color="#000000"
    version="1.1"
-   id="svg4"
-   sodipodi:docname="edit-pencil.svg"
+   id="svg627"
+   sodipodi:docname="nav-arrow-left.svg"
    inkscape:version="1.2.2 (1:1.2.2+202212051550+b0a8486541)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
   <defs
-     id="defs8" />
+     id="defs631" />
   <sodipodi:namedview
-     id="namedview6"
+     id="namedview629"
      pagecolor="#ffffff"
      bordercolor="#000000"
      borderopacity="0.25"
@@ -27,19 +27,19 @@
      inkscape:deskcolor="#d1d1d1"
      showgrid="false"
      inkscape:zoom="22.294118"
-     inkscape:cx="12.895778"
-     inkscape:cy="13.837731"
-     inkscape:window-width="1876"
-     inkscape:window-height="1016"
-     inkscape:window-x="44"
-     inkscape:window-y="27"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg4" />
+     inkscape:cx="15.430079"
+     inkscape:cy="17.044855"
+     inkscape:window-width="1429"
+     inkscape:window-height="939"
+     inkscape:window-x="325"
+     inkscape:window-y="57"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg627" />
   <path
-     d="M 5.8793566,1.9754116 7.441811,0.41406136 10.174174,3.1469765 8.6122715,4.7083268 M 5.8793566,1.9754116 0.57584498,7.2794753 A 0.55210405,0.55210405 0 0 0 0.4140785,7.6698133 v 2.5043437 h 2.504344 A 0.55210405,0.55210405 0 0 0 3.3087601,10.012391 L 8.6122715,4.7083268 M 5.8793566,1.9754116 8.6122715,4.7083268"
+     d="M 16.333311,3.3333332 7.6666443,12 16.333311,20.666667"
      stroke="#000000"
-     stroke-width="0.828157"
+     stroke-width="2.16667"
      stroke-linecap="round"
      stroke-linejoin="round"
-     id="path2" />
+     id="path625" />
 </svg>

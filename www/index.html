@@ -33,7 +33,7 @@
       <header>
         <img class="page-header__h1--logo" src="./images/bettong-june.svg" height="42">
         <h1 class="page-header__h1">
-          SeedB - Seed Data Base </h1>
+          SeedB - Grower's Data Base </h1>
       </header>
     </section>
 
@@ -41,19 +41,18 @@
 
       <!-- Home Page -->
       <section id="home-page">
-        <br><button type="button" onclick="">Cycle through records. <br>Not working yet.</button>
-        <button class="openInstructionsPage selected" type="button">?</button><br><br>
-        <input class="input-searchicon" placeholder="Search in Group" type="text" title="Search List"></input>
-        <input class="input-searchicon" placeholder="for Variety" type="text" title="Search List"></input><br><br>
+        <br>
+        <input class="input-searchicon" placeholder="Find" type="text" title="Search List"></input>
+        <br><br>
         <!-- Table of Records -->
         <table class="table-seeds table-seeds__row-color" id="mytable">
           <thead>
             <tr>
               <th class="sort" id="sortGroup">Group</th>
               <th class="sort" id="sortVariety">Variety</th>
-              <th class="sort" id="sortPacketId">Packet Id</th>
+              <th class="sort" id="sortPacketId">Package Id</th>
               <th class="sort" id="sortDate">Date</th>
-              <th class="" id="">Number</th>
+              <th class="" id="">Num</th>
               <th class="" id="">Gram</th>
               <th class="" id="">Cost</th>
               <th>Edit</th>
@@ -67,17 +66,21 @@
       <section id="edit-page">
         <header>
           <h2 class="chapter--h2">
-            Seed Collection
           </h2>
-          <h3 class="chapter--h3" id="headerEditSeedPage">
-            Edit Seed Packet
-          </h3>
+          <h3 class="chapter--h3" id="headerEditSeedPage"></h3>
           <h3 class="chapter--h3" id="headerAddSeedPage">
             Add New Seed Packet
           </h3>
         </header>
-        <button class="selected left" type="button">&ensp;⮜&ensp;</button>
-        <button class="selected right" type="button">&ensp;⮞&ensp;</button>
+        <nav id="edit-pkt-buttons"  class="buttons-container">
+          <button class="selected" type="button"><img src="./images/nav-arrow-left.svg" height="20"></button>
+          <input id="" class="selected openInstructionsPage" type="reset" value="?">
+          <button class="selected " type="button" id="btnSubmitEditRecord" title="Save Current Record"><img src="./images/save-floppy-disk.svg" height="20"></button>
+          <button class="selected  openHomePage input-homeicon" type="reset" title="Cancel: Back to List"><img src="./images/home.svg" height="20"></button>
+          <button class="selected " type="button" id="btnCopyRecord" title="Copy Record - Opens in 'Add New Seed Packet'"><img src="./images/copy.svg"></button>
+          <button class="selected" type="button" id="btnDeleteRecord" title="Delete Current Record"><img src="./images/delete-circle.svg" height="20"></button>
+          <button class="selected" type="button"><img src="./images/nav-arrow-right.svg" height="20"></button>
+        </nav>
         <form id="seed-entry">
           <p>*&emsp;Input required.</p>
           <p>**&ensp;Seed Packet Id must be unique!</p>
@@ -101,16 +104,6 @@
           <label class="notes" for="seedNotes">Notes:</label>
           <textarea rows="2" name="seedNotes" id="seedNotes"></textarea><br>
           <!-- Buttons -->
-          <div id="edit-pkt-buttons">
-
-            <div class="buttons-container">
-              <input id="" class="selected openInstructionsPage" type="reset" value="?">
-              <button class="selected " type="button" id="btnSubmitEditRecord" title="Submit Current Record"><img src="./images/upload-data-window.svg"></button>
-              <input class="selected  openHomePage input-homeicon" type="reset" title="Cancel: Back to List" value="">
-              <button class="selected " type="button" id="btnCopyRecord" title="Copy Record - Opens in 'Add New Seed Packet'"><img src="./images/copy.svg"></button>
-              <button class="select-delete " type="button" id="btnDeleteRecord" title="Delete Current Record"><img src="./images/delete-circle.svg"></button>
-            </div>
-          </div>
           <div id="new-pkt-buttons">
             <div class="buttons-container">
               <input id="newSeedHelp" class="openInstructionsPage selected" type="reset" value="?">
@@ -207,6 +200,9 @@
     <div id="js-page--to-top" title="Go to Top"></div>
   </div>
   <script src="./js/app.js"></script>
+  <script src="./js/column.js"></script>
+
+
 </body>
 
 </html>
