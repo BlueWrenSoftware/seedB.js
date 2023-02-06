@@ -2,13 +2,13 @@
 <svg
    width="34"
    height="34"
-   stroke-width="1.5"
    viewBox="0 0 34 34"
+   stroke-width="1.5"
    fill="none"
    color="#000000"
    version="1.1"
    id="svg6"
-   sodipodi:docname="copy.svg"
+   sodipodi:docname="add-page.svg"
    inkscape:version="1.2.2 (1:1.2.2+202212051550+b0a8486541)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -26,9 +26,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      showgrid="false"
-     inkscape:zoom="31.583333"
-     inkscape:cx="12.221636"
-     inkscape:cy="12.015831"
+     inkscape:zoom="22.327479"
+     inkscape:cx="16.146023"
+     inkscape:cy="16.325175"
      inkscape:window-width="1876"
      inkscape:window-height="1016"
      inkscape:window-x="44"
@@ -36,19 +36,19 @@
      inkscape:window-maximized="1"
      inkscape:current-layer="svg6" />
   <g
-     id="g241"
-     transform="translate(-0.0624998,-0.0624998)">
+     id="g299"
+     transform="translate(2.5072664,1.9375001)">
     <path
-       d="m 28.743929,29.691071 h -15.47 a 0.94714286,0.94714286 0 0 1 -0.947143,-0.947142 v -15.47 a 0.94714286,0.94714286 0 0 1 0.947143,-0.947143 h 15.47 a 0.94714286,0.94714286 0 0 1 0.947142,0.947143 v 15.47 a 0.94714286,0.94714286 0 0 1 -0.947142,0.947142 z"
+       d="m 10.638081,15.0625 h 3.854652 m 3.854651,0 h -3.854651 m 0,0 v -3.854651 m 0,3.854651 v 3.854651 M 4.2136628,27.140407 V 2.984593 A 0.77093023,0.77093023 0 0 1 4.984593,2.2136628 h 14.971465 a 0.77093023,0.77093023 0 0 1 0.544791,0.2261395 l 4.044814,4.044814 a 0.77093023,0.77093023 0 0 1 0.226139,0.5473604 V 27.140407 a 0.77093023,0.77093023 0 0 1 -0.77093,0.77093 H 4.984593 a 0.77093023,0.77093023 0 0 1 -0.7709302,-0.77093 z"
        stroke="#000000"
-       stroke-width="2.36786"
+       stroke-width="1.92733"
        stroke-linecap="round"
        stroke-linejoin="round"
        id="path2" />
     <path
-       d="M 21.798214,12.326786 V 5.3810714 A 0.94714286,0.94714286 0 0 0 20.851071,4.4339286 H 5.3810714 A 0.94714286,0.94714286 0 0 0 4.4339286,5.3810714 V 20.851071 a 0.94714286,0.94714286 0 0 0 0.9471428,0.947143 h 6.9457146"
+       d="m 19.632267,2.2136628 v 4.3686046 a 0.77093023,0.77093023 0 0 0 0.770931,0.7709303 h 4.368604"
        stroke="#000000"
-       stroke-width="2.36786"
+       stroke-width="1.92733"
        stroke-linecap="round"
        stroke-linejoin="round"
        id="path4" />

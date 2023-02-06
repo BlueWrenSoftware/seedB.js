@@ -72,35 +72,52 @@
             Add New Seed Packet
           </h3>
         </header>
+<!-- Button Tool Bar       -->
         <nav id="edit-pkt-buttons"  class="buttons-container">
-          <button class="selected" type="button"><img src="./images/nav-arrow-left.svg" height="20"></button>
-          <input id="" class="selected openInstructionsPage" type="reset" value="?">
-          <button class="selected " type="button" id="btnSubmitEditRecord" title="Save Current Record"><img src="./images/save-floppy-disk.svg" height="20"></button>
-          <button class="selected  openHomePage input-homeicon" type="reset" title="Cancel: Back to List"><img src="./images/home.svg" height="20"></button>
-          <button class="selected " type="button" id="btnCopyRecord" title="Copy Record - Opens in 'Add New Seed Packet'"><img src="./images/copy.svg"></button>
-          <button class="selected" type="button" id="btnDeleteRecord" title="Delete Current Record"><img src="./images/delete-circle.svg" height="20"></button>
-          <button class="selected" type="button"><img src="./images/nav-arrow-right.svg" height="20"></button>
+          <button class="selected" type="button" title="Previous record." > 
+          <img src="./images/nav-arrow-left.svg" height="20"></button>
+          <button class="selected" type="button" title="Help on buttons."><img 
+            src="./images/help-no-circle.svg" height="20"></button>
+          <button class="selected  openHomePage" type="button" 
+            title="Back to List."><img src="./images/home.svg" height="20"></button>
+          <button class="selected" type="button" title="Edit scrolled record.">
+            <img src="./images/edit.svg" height="20"></button>
+          <button class="selected" type="button" title="Create new record.">
+            <img src="./images/add-page.svg" height="20"></button>
+          <button class="selected " type="button" id="btnCopyRecord" 
+            title="Copy record, unlock ID. &#010;Create new ID and record."><img 
+            src="./images/copy.svg" height="20"></button>
+          <button class="selected " type="button" id="" 
+            title="Reload."><img src="./images/reset-form.svg" height="20"></button>
+          <button class="selected " type="button" id="btnSubmitEditRecord" 
+            title="Save current record."><img src="./images/save-floppy-disk.svg" 
+            height="20"></button>
+          <button class="selected" type="button" id="btnDeleteRecord" 
+            title="Delete current record."><img src="./images/delete-no-circle.svg" 
+            height="20"></button>
+          <button class="selected" type="button"><img title="Next record."
+            src="./images/nav-arrow-right.svg" height="20"></button>
         </nav>
+  <!-- Data Entry Edit Form -->      
         <form id="seed-entry">
           <p>*&emsp;Input required.</p>
           <p>**&ensp;Seed Packet Id must be unique!</p>
-          <br>
-          <label for="group">*&nbsp;Seed&nbsp;Group: </label>
+          <label for="group">*&nbsp;Group: </label>
           <input type="text" id="group" name="group" required="required"><br>
           <label for="variety">*&nbsp;Variety: </label>
           <input type="text" id="variety" name="variety" required="required"><br>
-          <label for="packetId">**&nbsp;Seed&nbsp;Packet:</label>
-          <input type="text" id="packetId" name="packetId"><br>
-          <label for="number">&nbsp;Seed&nbsp;Count:</label>
+          <label for="packetId">**&nbsp;Packet ID:</label>
+          <input type="text" id="packetId" class="no-edit" name="packetId"><br>
+          <label for="number">&nbsp;Count:</label>
           <input type="number" id="number" name="number" value=0><br>
-          <label for="weight">&nbsp;Seed &nbsp;Grams:</label>
+          <label for="weight">&nbsp;Grams:</label>
           <input type="number" id="weight" name="weight" value=0><br>
-          <label for="number">&nbsp;Seed &nbsp;Cost:</label>
+          <label for="number">&nbsp;Cost:</label>
           <input type="number" id="cost" name="cost" value=0><br>
-          <label for="date">*&nbsp;Date&nbsp;Packaged:</label>
+          <label for="date">*&nbsp;Packaged:</label>
           <input type="date" id="date" name="date" required="required"><br>
           <label for="timeStamp">Timestamp:</label>
-          <input type="number" readonly="readonly" class="timestamp" id="timeStamp" name="timeStamp"><br>
+          <input type="number" readonly="readonly" class="no-edit" id="timeStamp" name="timeStamp"><br>
           <label class="notes" for="seedNotes">Notes:</label>
           <textarea rows="2" name="seedNotes" id="seedNotes"></textarea><br>
           <!-- Buttons -->

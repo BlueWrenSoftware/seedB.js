@@ -2,20 +2,20 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="3.7041667mm"
    height="5.0270796mm"
    viewBox="0 0 3.7041667 5.0270795"
    version="1.1"
    id="svg8"
-   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
-   sodipodi:docname="to_bottom_red_icon.svg">
+   inkscape:version="1.2.2 (1:1.2.2+202212051550+b0a8486541)"
+   sodipodi:docname="to_bottom_red_icon.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -26,8 +26,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="15.36"
-     inkscape:cx="4.7745535"
-     inkscape:cy="8.8723803"
+     inkscape:cx="1.3997396"
+     inkscape:cy="8.8867187"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -42,7 +42,10 @@
      fit-margin-bottom="0"
      inkscape:snap-grids="false"
      showguides="true"
-     inkscape:guide-bbox="true" />
+     inkscape:guide-bbox="true"
+     inkscape:showpageshadow="2"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -51,7 +54,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -60,49 +63,42 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(59.289361,-150.63988)">
-    <rect
-       style="opacity:0.97000002;fill:#ee0000;fill-opacity:1;stroke:#f50000;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
-       id="rect985"
-       width="3.7041657"
-       height="0.4490203"
-       x="55.585194"
-       y="-155.66696"
-       ry="0.22451015"
-       inkscape:export-xdpi="96"
-       inkscape:export-ydpi="96"
-       transform="scale(-1)" />
-    <rect
-       style="opacity:0.97000002;fill:#ee0000;fill-opacity:1;stroke:#f50000;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
-       id="rect985-6"
-       width="2.9226551"
-       height="0.42136884"
-       x="143.28922"
-       y="-58.863956"
-       ry="0.21068442"
-       transform="matrix(-0.65743733,0.75350923,-0.65743733,-0.75350923,0,0)"
-       inkscape:export-xdpi="96"
-       inkscape:export-ydpi="96" />
-    <rect
-       style="opacity:0.97000002;fill:#ee0000;fill-opacity:1;stroke:#f50000;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
-       id="rect985-5"
-       width="2.9226551"
-       height="0.42136884"
-       x="-58.846485"
-       y="-146.22935"
-       ry="0.21068442"
-       transform="matrix(-0.65743733,-0.75350923,0.65743733,-0.75350923,0,0)"
-       inkscape:export-xdpi="96"
-       inkscape:export-ydpi="96" />
-    <rect
-       style="opacity:0.97000002;fill:#ee0000;fill-opacity:1;stroke:#f50000;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
-       id="rect985-5-2"
-       width="3.7938631"
-       height="0.39177057"
-       x="-154.43375"
-       y="-57.633148"
-       ry="0.19588529"
-       transform="rotate(-90)"
-       inkscape:export-xdpi="96"
-       inkscape:export-ydpi="96" />
+    <g
+       id="g295"
+       transform="translate(0,0.61660449)">
+      <rect
+         style="opacity:0.97;fill:#ee0000;fill-opacity:1;stroke:#f50000;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+         id="rect985-6"
+         width="2.9226551"
+         height="0.42136884"
+         x="143.28922"
+         y="-58.863956"
+         ry="0.21068442"
+         transform="matrix(-0.65743733,0.75350923,-0.65743733,-0.75350923,0,0)"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96" />
+      <rect
+         style="opacity:0.97;fill:#ee0000;fill-opacity:1;stroke:#f50000;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+         id="rect985-5"
+         width="2.9226551"
+         height="0.42136884"
+         x="-58.846485"
+         y="-146.22935"
+         ry="0.21068442"
+         transform="matrix(-0.65743733,-0.75350923,0.65743733,-0.75350923,0,0)"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96" />
+      <rect
+         style="opacity:0.97;fill:#ee0000;fill-opacity:1;stroke:#f50000;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+         id="rect985-5-2"
+         width="3.7938631"
+         height="0.39177057"
+         x="-154.43375"
+         y="-57.633148"
+         ry="0.19588529"
+         transform="rotate(-90)"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96" />
+    </g>
   </g>
 </svg>

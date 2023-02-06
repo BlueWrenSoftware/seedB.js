@@ -388,10 +388,6 @@ input[type=number] {
   border-radius: 4px;
   box-sizing: border-box;
 }
-input[type=number].timestamp {
-  background-color: #E8E8E8;
-  font-size: 65%;
-}
 input[type=date] {
   font-family: VuSans, sans-serif;
   font-size: 90%;
@@ -402,6 +398,9 @@ input[type=date] {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+}
+input.no-edit {
+  background-color: #E8E8E8;
 }
 .selected {
   display: inline-block;
@@ -606,11 +605,11 @@ input[type=text].input-searchicon {
   padding-left: 20px;
 }
 
-input[type=reset].input-homeicon {
+/*input[type=reset].input-homeicon {
   background: url(../images/home.svg) no-repeat left;
   padding-left: 23px;
   background-color: #E8E8E8;
-}
+}*/
 
 input[type=reset]:hover {
   background-color:#CFCFCF;
