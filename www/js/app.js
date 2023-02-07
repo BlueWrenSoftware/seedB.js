@@ -22,7 +22,7 @@ class Model {
 				store.createIndex('number', 'number', { unique: false });
 				store.createIndex('weight', 'weight', { unique: false });
 				store.createIndex('timeStamp', 'timeStamp', { unique: false });
-				//store.createIndex('cost', 'cost', { unique: false });
+				store.createIndex('cost', 'cost', { unique: false });
 			}
 			request.onsuccess = (event) => {
 				this.db = event.target.result;
@@ -129,7 +129,7 @@ class View {
 		this.app = document.getElementById('#root');
 		// Pages events
 		this.packetListLinkElements = document.querySelectorAll('.openHomePage');
-		this.addNewPacketLinkElement = document.querySelector('.openNewPacketPage');
+		this.addNewPacketLinkElement = document.querySelectorAll('.openNewPacketPage');
 		this.scrollPacketsLinkElement = document.querySelector('.openScrollPacketsPage');
 		this.backupRestoreLinkElement = document.querySelector('.openBackupRestorePage');
 		this.dbErrorLinkElement = document.querySelector('.openDbErrorPage');
@@ -166,7 +166,7 @@ class View {
 		'click', scrollToTopPageRequestHandler, false);
 	};
 	//page events
-	bindPacketListPage(packetListRequestHandler) {
+	bindPacketListPage(packetListRequestHandler) { // Open Home Page
 		// pass on to Controller
 		this.packetListLinkElements.forEach(btn => btn.addEventListener(
 		'click', packetListRequestHandler, false));
@@ -174,7 +174,10 @@ class View {
 	bindAddNewPacketPage(handler) { // Add New Packet Page
 		//can be converted to multiple classes to trigger this event
 		//variable addNewLinkElement is singular as only one class at the moment
-		this.addNewPacketLinkElement.addEventListener('click', handler, false);
+		this.addNewPacketLinkElement.forEach(btn => btn.addEventListener(
+		'click', handler, false));
+		
+		//this.addNewPacketLinkElement.addEventListener('click', handler, false);
 	}
 	bindScrollPacketsPage(handler) { // Scroll Packets Page
 		this.scrollPacketsLinkElement.addEventListener('click', handler, false);
@@ -327,12 +330,12 @@ class View {
 		// this.clearFields();
 		// clearFields() only called from menu event, not from buttons
 		document.title = 'New Seed Pkt';
-		document.querySelector('#headerAddSeedPage').style.display = '';
-		document.querySelector('#new-pkt-buttons').style.display = '';
-		document.querySelector('#edit-pkt-buttons').style.display = 'none';
+		//document.querySelector('#headerAddSeedPage').style.display = 'none';
+		document.querySelector('#new-pkt-buttons').style.display = 'none';
+		document.querySelector('#edit-pkt-buttons').style.display = '';
 		document.querySelector('#scrollRecordsButtons').style.display = 'none';
 		document.querySelector('#home-page').style.display = 'none';
-		document.querySelector('#headerEditSeedPage').style.display = 'none';
+		//document.querySelector('#headerEditSeedPage').style.display = 'none';
 		document.querySelector('#edit-page').style.display = '';
 		document.querySelector('#read-write-page').style.display = 'none';
 		document.querySelector('#instructions-page').style.display = 'none';
@@ -343,11 +346,11 @@ class View {
 	showEditPacket() {
 		document.title = 'Edit Seed Pkt';
 		document.querySelector('#edit-pkt-buttons').style.display = '';
-		document.querySelector('#headerAddSeedPage').style.display = 'none';
+		//document.querySelector('#headerAddSeedPage').style.display = 'none';
 		document.querySelector('#new-pkt-buttons').style.display = 'none';
 		document.querySelector('#scrollRecordsButtons').style.display = 'none';
 		document.querySelector('#home-page').style.display = 'none';
-		document.querySelector('#headerEditSeedPage').style.display = '';
+		//document.querySelector('#headerEditSeedPage').style.display = 'none';
 		document.querySelector('#edit-page').style.display = '';
 		document.querySelector('#read-write-page').style.display = 'none';
 		document.querySelector('#instructions-page').style.display = 'none';
@@ -359,12 +362,14 @@ class View {
 		this.clearFields();
 		document.title = 'Scroll Pkt Records';
 		document.querySelector('#new-pkt-buttons').style.display = 'none';
-		document.querySelector('#edit-pkt-buttons').style.display = 'none';
-		document.querySelector('#scrollRecordsButtons').style.display = '';
+		document.querySelector('#edit-pkt-buttons').style.display = '';
+		document.querySelector('#scrollRecordsButtons').style.display = 'none';
 		document.querySelector('#home-page').style.display = 'none';
 		document.querySelector('#edit-page').style.display = '';
 		document.querySelector('#read-write-page').style.display = 'none';
 		document.querySelector('#instructions-page').style.display = 'none';
+		document.querySelector('#packetId').removeAttribute('required');
+		document.querySelector('#packetId').setAttribute('readonly', 'readonly');
 	}
 	showBackupRestore() {
 		document.title = 'Backup & Restore';
@@ -490,6 +495,7 @@ class Controller {
 		const record = await this.model.getRecord(packetId);
 		this.view.clearFields();
 		this.view.showEditPacket();
+		document.getElementById("packetId").classList.add("no-edit");
 		Object.keys(record).forEach(field => {
 			// -> with the requested seed pkt record for editing
 			//console.log(field);
@@ -504,6 +510,8 @@ class Controller {
 	}
 	requestAddNewPacketPage() {
 		this.view.showAddNewPacket();
+		this.view.clearFields();
+		document.getElementById("packetId").classList.remove("no-edit");
 	}
 	requestScrollPacketsPage() {
 		this.view.showScrollPackets();

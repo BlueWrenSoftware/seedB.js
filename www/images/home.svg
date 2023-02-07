@@ -27,19 +27,23 @@
      inkscape:deskcolor="#d1d1d1"
      showgrid="false"
      inkscape:zoom="22.294118"
-     inkscape:cx="14.667546"
+     inkscape:cx="12.335092"
      inkscape:cy="17.044855"
      inkscape:window-width="1429"
      inkscape:window-height="939"
      inkscape:window-x="197"
-     inkscape:window-y="165"
+     inkscape:window-y="104"
      inkscape:window-maximized="0"
      inkscape:current-layer="svg459" />
-  <path
-     d="M 1.9714224,9.2142777 12.000001,3.085702 22.028578,9.2142777 m -2.228573,3.9000013 v 7.131433 a 0.66857183,0.66857183 0 0 1 -0.668572,0.668572 H 4.868567 A 0.66857183,0.66857183 0 0 1 4.1999952,20.245712 v -7.131433"
-     stroke="#000000"
-     stroke-width="1.67143"
-     stroke-linecap="round"
-     stroke-linejoin="round"
-     id="path457" />
+  <g
+     id="g234"
+     transform="matrix(1.0940165,0,0,1.2307694,-1.1281982,-2.769233)">
+    <path
+       d="M 1.9714224,9.2142777 12.000001,3.085702 22.028578,9.2142777 m -2.228573,3.9000013 v 7.131433 a 0.66857183,0.66857183 0 0 1 -0.668572,0.668572 H 4.868567 A 0.66857183,0.66857183 0 0 1 4.1999952,20.245712 v -7.131433"
+       stroke="#000000"
+       stroke-width="1.67143"
+       stroke-linecap="round"
+       stroke-linejoin="round"
+       id="path457" />
+  </g>
 </svg>

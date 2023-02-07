@@ -27,17 +27,17 @@
      inkscape:deskcolor="#d1d1d1"
      showgrid="false"
      inkscape:zoom="22.332789"
-     inkscape:cx="5.9329804"
-     inkscape:cy="17.798941"
-     inkscape:window-width="1876"
-     inkscape:window-height="1016"
+     inkscape:cx="13.298832"
+     inkscape:cy="17.82133"
+     inkscape:window-width="1429"
+     inkscape:window-height="939"
      inkscape:window-x="44"
      inkscape:window-y="27"
-     inkscape:window-maximized="1"
+     inkscape:window-maximized="0"
      inkscape:current-layer="svg6" />
   <g
      id="g241"
-     transform="matrix(1.284857,0,0,1.284857,1.5817148,1.581716)">
+     transform="matrix(1.5813953,0,0,1.5813953,-1.976745,-1.9767436)">
     <path
        d="M 4,21.4 V 2.6 A 0.6,0.6 0 0 1 4.6,2 h 11.652 a 0.6,0.6 0 0 1 0.424,0.176 l 3.148,3.148 A 0.6,0.6 0 0 1 20,5.75 V 21.4 A 0.6,0.6 0 0 1 19.4,22 H 4.6 A 0.6,0.6 0 0 1 4,21.4 Z"
        stroke="#000000"
@@ -55,21 +55,21 @@
   </g>
   <g
      id="g670"
-     transform="matrix(0.7474081,0,0,0.81373147,4.2940621,-0.70050971)"
-     style="stroke-width:2.47094033;stroke-dasharray:none">
+     transform="matrix(0.91990602,0,0,1.0015365,1.3615976,-7.2472857)"
+     style="stroke-width:2.47094;stroke-dasharray:none">
     <g
        id="g599"
        transform="rotate(180,3.3046821,19.935909)"
-       style="stroke-width:2.47094033;stroke-dasharray:none">
+       style="stroke-width:2.47094;stroke-dasharray:none">
       <g
          id="g592"
-         style="stroke-width:2.47094033;stroke-dasharray:none">
+         style="stroke-width:2.47094;stroke-dasharray:none">
         <g
            id="g586"
-           style="stroke-width:2.47094033;stroke-dasharray:none">
+           style="stroke-width:2.47094;stroke-dasharray:none">
           <g
              id="g581"
-             style="stroke-width:2.47094033;stroke-dasharray:none">
+             style="stroke-width:2.47094;stroke-dasharray:none">
             <path
                d="m -17.228344,18.059222 c 1.1845,3.009167 3.894666,5.11175 7.045666,5.11175 3.3695004,0 6.2330004,-2.405417 7.2699174,-5.75"
                stroke="#000000"
@@ -78,7 +78,7 @@
                stroke-linejoin="round"
                id="path269"
                sodipodi:nodetypes="csc"
-               style="stroke-width:2.47094033;stroke-dasharray:none" />
+               style="stroke-width:2.47094;stroke-dasharray:none" />
             <path
                d="m -14.025595,18.059222 h -3.202749 v 0 a 0.64016668,0.64016668 0 0 0 -0.640167,0.640167 v 3.618666"
                stroke="#000000"
@@ -86,7 +86,7 @@
                stroke-linecap="round"
                stroke-linejoin="round"
                id="path271"
-               style="stroke-width:2.47094033;stroke-dasharray:none" />
+               style="stroke-width:2.47094;stroke-dasharray:none" />
           </g>
         </g>
       </g>
@@ -94,16 +94,16 @@
     <g
        id="g599-3"
        transform="translate(27.390636,8.5483559)"
-       style="stroke-width:2.47094033;stroke-dasharray:none">
+       style="stroke-width:2.47094;stroke-dasharray:none">
       <g
          id="g592-6"
-         style="stroke-width:2.47094033;stroke-dasharray:none">
+         style="stroke-width:2.47094;stroke-dasharray:none">
         <g
            id="g586-7"
-           style="stroke-width:2.47094033;stroke-dasharray:none">
+           style="stroke-width:2.47094;stroke-dasharray:none">
           <g
              id="g581-5"
-             style="stroke-width:2.47094033;stroke-dasharray:none">
+             style="stroke-width:2.47094;stroke-dasharray:none">
             <path
                d="m -17.228344,18.059222 c 1.1845,3.009167 3.894666,5.11175 7.045666,5.11175 3.3695004,0 6.2330004,-2.405417 7.2699174,-5.75"
                stroke="#000000"
@@ -112,7 +112,7 @@
                stroke-linejoin="round"
                id="path269-3"
                sodipodi:nodetypes="csc"
-               style="stroke-width:2.47094033;stroke-dasharray:none" />
+               style="stroke-width:2.47094;stroke-dasharray:none" />
             <path
                d="m -14.025595,18.059222 h -3.202749 v 0 a 0.64016668,0.64016668 0 0 0 -0.640167,0.640167 v 3.618666"
                stroke="#000000"
@@ -120,7 +120,7 @@
                stroke-linecap="round"
                stroke-linejoin="round"
                id="path271-5"
-               style="stroke-width:2.47094033;stroke-dasharray:none" />
+               style="stroke-width:2.47094;stroke-dasharray:none" />
           </g>
         </g>
       </g>
