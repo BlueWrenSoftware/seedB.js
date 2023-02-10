@@ -146,9 +146,9 @@ class View {
 		this.btnSubmitNewRecordLinkElement = document.querySelector('#btnSubmitNewRecord');
 		this.btnDeleteRecordLinkElement = document.querySelector('#btnDeleteRecord');
 		this.btnRetrieveDataLinkElement = document.querySelector('#btnRetrieveData');
-		this.btnReinstallLinkElement = document.querySelector('#btnReinstall');
+		this.btnReinstallLinkElements = document.querySelectorAll('.btnReinstall');
 		// Menu events
-		this.menuButtonLinkElement = document.querySelector('.js-menu-hamburger');
+		//this.menuButtonLinkElement = document.querySelector('.js-menu-hamburger');
 		//scroll events
 		this.scrollToBottomPageLinkElement = document.getElementById('js-page--to-bottom');
 		this.scrollToTopPageLinkElement = document.getElementById('js-page--to-top');
@@ -179,15 +179,15 @@ class View {
 		
 		//this.addNewPacketLinkElement.addEventListener('click', handler, false);
 	}
-	bindScrollPacketsPage(handler) { // Scroll Packets Page
+/*	bindScrollPacketsPage(handler) { // Scroll Packets Page
 		this.scrollPacketsLinkElement.addEventListener('click', handler, false);
-	}
-	bindBackupRestorePage(handler) { // Backup & Restore Page
+	}*/
+bindBackupRestorePage(handler) { // Backup & Restore Page
 		this.backupRestoreLinkElement.addEventListener('click', handler, false);
 	}
-	bindDbErrorPage(handler) { // Reinstall corrupted DB
+/*	bindDbErrorPage(handler) { // Reinstall corrupted DB
 		this.dbErrorLinkElement.addEventListener('click', handler, false);
-	}
+	}*/
 	bindInstructionsPage(handler) {
 		this.instructionsLinkElements.forEach(request => request.addEventListener(
 		'click', handler, false));
@@ -215,9 +215,9 @@ class View {
 	bindBtnSubmitEditRecord(handler) {
 		this.btnSubmitEditRecordLinkElement.addEventListener('click', handler, false);
 	};
-	bindBtnSubmitNewRecord(handler) {
+/*	bindBtnSubmitNewRecord(handler) {
 		this.btnSubmitNewRecordLinkElement.addEventListener('click', handler, false);
-	}
+	}*/
 	bindBtnDeleteRecord(handler) {
 		this.btnDeleteRecordLinkElement.addEventListener('click', handler, false);
 	};
@@ -229,15 +229,17 @@ class View {
 		this.btnRetrieveDataLinkElement.addEventListener('click', handler, false);
 	};
 	bindBtnReinstall(handler) {
-		this.btnReinstallLinkElement.addEventListener('click', handler, false);
+		//this.btnReinstallLinkElement.addEventListener('click', handler, false);
+		this.btnReinstallLinkElements.forEach(btn => btn.addEventListener(
+		'click', handler, false));
 	};
-	bindBtnReinstall(handler) {
-		this.btnReinstallLinkElement.addEventListener('click', handler, false);
-	};
+//	bindBtnReinstall(handler) {
+	//	this.btnReinstallLinkElement.addEventListener('click', handler, false);
+	//};
 	//menu hamburger event
-	bindMenuButton(menuButtonRequestHandler) {
+/*	bindMenuButton(menuButtonRequestHandler) {
 		this.menuButtonLinkElement.addEventListener('click', menuButtonRequestHandler, false);
-	};
+	};*/
 
 	// async findHelpTopic(topic=all) {
 	//     this.displayHelpTopic()
@@ -320,39 +322,39 @@ class View {
 			document.getElementById('showHide').classList.add('js-all-pages--opened');
 			document.getElementById('showHide').classList.remove('js-all-pages--none');
 		}
-		document.title = 'SeedB List'; //=> Page at startup being the seed list
+		//document.title = 'SeedB List'; //=> Page at startup being the seed list
 		document.querySelector('#home-page').style.display = '';
 		document.querySelector('#edit-page').style.display = 'none';
-		document.querySelector('#read-write-page').style.display = 'none';
+		document.querySelector('#maintenance').style.display = 'none';
 		document.querySelector('#instructions-page').style.display = 'none';
 	}
 	showAddNewPacket() {
 		// this.clearFields();
 		// clearFields() only called from menu event, not from buttons
-		document.title = 'New Seed Pkt';
+		//document.title = 'New Seed Pkt';
 		//document.querySelector('#headerAddSeedPage').style.display = 'none';
-		document.querySelector('#new-pkt-buttons').style.display = 'none';
-		document.querySelector('#edit-pkt-buttons').style.display = '';
-		document.querySelector('#scrollRecordsButtons').style.display = 'none';
+		//document.querySelector('#new-pkt-buttons').style.display = 'none';
+		document.querySelector('#toolbarButtons').style.display = '';
+		//document.querySelector('#scrollRecordsButtons').style.display = 'none';
 		document.querySelector('#home-page').style.display = 'none';
 		//document.querySelector('#headerEditSeedPage').style.display = 'none';
 		document.querySelector('#edit-page').style.display = '';
-		document.querySelector('#read-write-page').style.display = 'none';
+		document.querySelector('#maintenance').style.display = 'none';
 		document.querySelector('#instructions-page').style.display = 'none';
 		// Key packetId readonly removed and is required
 		document.querySelector('#packetId').removeAttribute('readonly');
 		document.querySelector('#packetId').setAttribute('required', 'required');
 	}
 	showEditPacket() {
-		document.title = 'Edit Seed Pkt';
-		document.querySelector('#edit-pkt-buttons').style.display = '';
+		//document.title = 'Edit Seed Pkt';
+		document.querySelector('#toolbarButtons').style.display = '';
 		//document.querySelector('#headerAddSeedPage').style.display = 'none';
-		document.querySelector('#new-pkt-buttons').style.display = 'none';
-		document.querySelector('#scrollRecordsButtons').style.display = 'none';
+		//document.querySelector('#new-pkt-buttons').style.display = 'none';
+		//document.querySelector('#scrollRecordsButtons').style.display = 'none';
 		document.querySelector('#home-page').style.display = 'none';
 		//document.querySelector('#headerEditSeedPage').style.display = 'none';
 		document.querySelector('#edit-page').style.display = '';
-		document.querySelector('#read-write-page').style.display = 'none';
+		document.querySelector('#maintenance').style.display = 'none';
 		document.querySelector('#instructions-page').style.display = 'none';
 		// Key packetId is read only
 		document.querySelector('#packetId').removeAttribute('required');
@@ -360,54 +362,53 @@ class View {
 	}
 	showScrollPackets() {
 		this.clearFields();
-		document.title = 'Scroll Pkt Records';
+		//document.title = 'Scroll Pkt Records';
 		document.querySelector('#new-pkt-buttons').style.display = 'none';
-		document.querySelector('#edit-pkt-buttons').style.display = '';
+		document.querySelector('#toolbarButtons').style.display = '';
 		document.querySelector('#scrollRecordsButtons').style.display = 'none';
 		document.querySelector('#home-page').style.display = 'none';
 		document.querySelector('#edit-page').style.display = '';
-		document.querySelector('#read-write-page').style.display = 'none';
+		document.querySelector('#maintenance').style.display = 'none';
 		document.querySelector('#instructions-page').style.display = 'none';
 		document.querySelector('#packetId').removeAttribute('required');
 		document.querySelector('#packetId').setAttribute('readonly', 'readonly');
 	}
 	showBackupRestore() {
-		document.title = 'Backup & Restore';
+		//document.title = 'Backup & Restore';
 		document.querySelector('#retrieve-data-button').style.display = '';
 		document.querySelector('#home-page').style.display = 'none';
 		document.querySelector('#edit-page').style.display = 'none';
-		document.querySelector('#read-write-page').style.display = '';
+		document.querySelector('#maintenance').style.display = '';
 		document.querySelector('#instructions-page').style.display = 'none';
-		document.querySelector('#dbError').style.display = 'none'
+		//document.querySelector('#dbError').style.display = ''
 	}
 	showDbError() {
 		//=> checks if pages are hidden before loading error page on start
-		document.title = 'DB Error';
+		//document.title = 'DB Error';
 		//=> on start up if db fails this page will be loaded
 		document.querySelector('#retrieve-data-button').style.display = 'none';
 		document.querySelector('#home-page').style.display = 'none';
 		document.querySelector('#edit-page').style.display = 'none';
-		document.querySelector('#read-write-page').style.display = '';
+		document.querySelector('#maintenance').style.display = '';
 		document.querySelector('#instructions-page').style.display = 'none';
 		document.querySelector('#dbError').style.display = ''
 	}
 	showInstructions() {
 		//=> page for instructions
 		//this.clearFields();
-		document.title = 'Instructions';
+		//document.title = 'Instructions';
 		//document.querySelector('#seed-entry').style.display = 'none';
 		document.querySelector('#home-page').style.display = 'none';
 		document.querySelector('#edit-page').style.display = 'none';
-		document.querySelector('#read-write-page').style.display = 'none';
+		document.querySelector('#maintenance').style.display = 'none';
 		document.querySelector('#instructions-page').style.display = '';
 	}
 	//menu and scroll
-	toggleMenu() {
+/*	toggleMenu() {
 		//=> toggle function using class lists on click of the hamburger menu
 		const closedMenu = document.querySelector('.js-menu-hamburger--closed');
 		closedMenu.classList.toggle('js-menu-hamburger--opened');
-
-	}
+	}*/
 	scrollToBottom() { //=> function activated on click of down arrow
 		if (document.documentElement.scrollHeight > document.documentElement.clientHeight) {
 			const scrollHeight = document.documentElement.scrollHeight;
@@ -429,7 +430,8 @@ class View {
 		}
 	}
 	showMessage(message) {
-		msgInstallDb.innerHTML += (`<li>=> ${message}</li>`);
+		msgInstallDb.innerHTML = (`<li>${message}.</li>
+		                           <li>Manually restore data from backup file.</li>`);
 	}
 }
 
@@ -443,9 +445,9 @@ class Controller {
 		// bindings pages
 		this.view.bindPacketListPage( () => { this.requestPacketListPage(); });
 		this.view.bindAddNewPacketPage( () => { this.requestAddNewPacketPage(); });
-		this.view.bindScrollPacketsPage( () => { this.requestScrollPacketsPage(); });
+		//this.view.bindScrollPacketsPage( () => { this.requestScrollPacketsPage(); });
 		this.view.bindBackupRestorePage( () => { this.requestBackupRestorePage(); });
-		this.view.bindDbErrorPage(() => { this.requestDbErrorPage(); });
+		//this.view.bindDbErrorPage(() => { this.requestDbErrorPage(); });
 		this.view.bindInstructionsPage( () => { this.requestHelpPage(); });
 		this.view.bindEditPacket( (packetId) => { this.editPacketRequestHandler(packetId); });
 		// bindings table sort
@@ -457,12 +459,12 @@ class Controller {
 //    this.view.bindSortWeight( () => { this.requestSortedPacketList('weight'); });
 		// bindings button events
 		this.view.bindBtnSubmitEditRecord( () => { this.requestAddRecord('editRecord'); });
-		this.view.bindBtnSubmitNewRecord( () => { this.requestAddRecord('newRecord'); });
+		//this.view.bindBtnSubmitNewRecord( () => { this.requestAddRecord('newRecord'); });
 		this.view.bindBtnDeleteRecord( () => { this.requestDeleteRecord(); });
 		this.view.bindBtnRetrieveData( () => { this.requestRetrieveAllData(); });
 		this.view.bindBtnReinstall( () => { this.fixCorruptDB(); });
 		//bindings menu ans scroll
-		this.view.bindMenuButton( () => { this.view.toggleMenu(); });
+		//this.view.bindMenuButton( () => { this.view.toggleMenu(); });
 		this.view.bindScrollTopBottomEvent( () => { this.view.scrollEvent(); });
 		this.view.bindScrollToBottomPage( () => { this.view.scrollToBottom(); });
 		this.view.bindScrollToTopPage( () => { this.view.scrollToTop(); });
@@ -576,9 +578,9 @@ class Controller {
 			//this.view.clearFields();  //=> Clear form fields
 		};
 	};
-	async requestAddRecord(submit) {
+	async requestAddRecord() {
 		await this.loadRecord();
-		switch (submit) {
+/*		switch (submit) {
 			case 'editRecord':
 				console.log('edit record');
 				this.view.clearFields();
@@ -591,7 +593,7 @@ class Controller {
 				break;
 			default:
 				break;
-		};
+		};*/
 	};
 	async requestDeleteRecord() {
 		//=> Delete record requested from delete button on edit page
@@ -603,7 +605,7 @@ class Controller {
 		//=> Show success message
 		this.view.clearFields(); //=> Clear form fields
 		this.model.getAll();
-		await this.requestPacketListPage();
+		//await this.requestPacketListPage();
 	};
 	fileTime() {  //=> Timestamp for file names
 		const date = new Date();
@@ -625,7 +627,7 @@ class Controller {
 		element.click();                            //=> Click the href anchor
 		document.body.removeChild(element);         //=> Remove anchor element
 		//console.log('Download complete');
-		fileNotes.innerHTML += '<li>=> Download is completed.</li>';
+		fileNotes.innerHTML += '<li>Download is completed.</li>';
 	}
 	async requestRetrieveAllData() {
 		//=> Collects all data records from DB
@@ -633,9 +635,10 @@ class Controller {
 		const text = JSON.stringify(records, null, 2); //=> array of records objects converted to string
 		let time = this.fileTime() + '.txt'; //=> Created file name with timestamp
 		const filename = 'seedB∶' + time;
-		fileNotes.innerHTML += '<li>=> Backup file name is: ' + filename + '</li>';
+		fileNotes.innerHTML += '<li>Backup file name is: ' + filename + '</li>';
 		this.download(filename, text); //=> Save backup file.
 	}
+	
 	backup() {
 		//=> Upload backup file and merge with data in object store
 		const fileSelect = document.getElementById('js-file-select');
@@ -646,19 +649,13 @@ class Controller {
 		extractFileData.onchange = function () { //=> Parse data to JSON objects in an array
 			let dataFile = [];
 			const file = this.files[0];
-			//console.log(file);
-			//console.log(file.name);
-			//console.log(file.lastModifiedDate.toString().slice(0,24));
-			backupNotes.innerHTML += '<li>=> Backup file used:  ' + file.name + '</li>';
-			backupNotes.innerHTML += '<li>=> Backup file was created on:  ' + file.lastModifiedDate.toString().slice(0, 24) + '</li>';
-			backupNotes.innerHTML += '<li>=> Backup file now merged with seed list already in db</li>';
+			backupNotes.innerHTML += '<li>Backup file used:  ' + file.name + '</li>';
+			backupNotes.innerHTML += '<li>Backup file was created on:  ' + file.lastModifiedDate.toString().slice(0, 24) + '</li>';
+			backupNotes.innerHTML += '<li>Backup file now merged with seed list already in db</li>';
 			const reader = new FileReader();
 			reader.onload = async function (progressEvent) {
-				//console.log(this.result);
 				dataFile = JSON.parse(this.result);
-				//console.log(dataFile);
 				await model.loadRecords(dataFile);
-				//console.log(dataFile[4]);
 			};
 			reader.readAsText(file);
 		};

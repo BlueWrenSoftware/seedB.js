@@ -45,14 +45,12 @@ html:focus {
 
 body {
   font-family: VuSans, sans-serif;
-  font-size: 100%;
-  font-weight: normal;
   background-color: #fdfdf0;
 }
 
 p {
-  font-family: VuSans, sans-serif;
-  font-size: 80%;
+  font-size: 0.9rem;
+  padding-bottom: 0.3rem;
 }
 
 a {
@@ -98,13 +96,13 @@ a:active {
   font-style: normal;
 }
 
-/* @font-face {
+  @font-face {
   font-family: VuMono;
   src: url("../fonts/DejaVuSansMono.ttf") format("truetype");
   font-style: normal;
 }
 
-@font-face {
+/* @font-face {
   font-family: VuItalic;
   src: url("../fonts/DejaVuSerif-Italic.ttf") format("truetype");
   font-style: normal;
@@ -119,138 +117,57 @@ a:active {
 
 .page-header__h1 {
   display: inline-block;
-  padding-top: 0.6em;
-  padding-bottom: 0.8em;
+  padding-top: 0.6rem;
+  padding-bottom: 0.8rem;
   font-family: VuSans, sans-serif;
-  font-size: 1.1em;
+  font-size: 16px;
   font-weight: normal;
   text-align: left;
-  padding-left: 0.625em;
+  padding-left: 0.625rem;
 }
 
 .page-header__h1--logo {
   display: inline-block;
-  top: 0.625em;
+  top: 0.625rem;
   vertical-align: middle;
 }
 
 .chapter--h2 {
   font-family: VuSans, sans-serif;
-  font-size: 1em;
+  font-size: 1.1rem;
   font-weight: normal;
-  padding-bottom: 0.4em;
-  /* padding-top: 0.8em;*/
-  /* width: 760px;*/
+  padding-bottom: 0.5rem;
   min-width: 400px;
 }
 
 .chapter--h3 {
   font-family: VuSans, sans-serif;
-  font-size: 0.9em;
+  font-size: 0.935rem;
+  padding-bottom: 0.3rem;
+  padding-top: 0.3rem;
   font-weight: normal;
-   /*padding-top: 0em;
-  padding-bottom: 0.4em;*/
 }
 
 .chapter--h4 {
   font-family: VuSans, sans-serif;
-  font-size: 1.03em;
+  font-size: 0.95rem;
   font-weight: normal;
-  /* padding-top: 0.6em;*/
-  padding-bottom: 0.4em;
+  padding-bottom: 0.3rem;
 }
 
 article.article--paragraph p {
-  padding-bottom: 0.5em;
-  line-height: 1.3em;
+  padding-bottom: 0.3rem;
 }
 
 section.section--paragraph p {
-  padding-bottom: 0.5em;
-  line-height: 1.3em;
+  padding-bottom: 0.3rem;
 }
 
 .page-img--left {
   display: block;
-  margin-left: 1.25em;
-  padding: 0.15em;
-  border: 0.025em solid #CCCCCC;
-}
-
-.menu-hamburger {
-  display: block;
-  position: absolute;
-  cursor: pointer;
-  /*top: 0.625rem;*/
-  margin-top: 7px;
-  right: 40px;
-  height: 20px;
-  width: 20px;
-  z-index: 30; /* was 70 */
-}
-.menu-hamburger:hover {
-  background-color: #E8E8E8;
-  ;
-}
-
-.menu-hamburger--show {
-  display: block;
-  position: absolute;
-  right: 40px;
-  top: calc(1.5em + 0.625em);
-  padding: 0.5em;
-  width: calc(400px * 1 / 2);
-  background-color: #f8f8f8;
-  border: 0.025em solid #CCCCCC;
-  z-index: 40; /* was 90 */
-  font-family: VuSans, sans-serif;
-}
-
-.menu-hamburger__list {
-  list-style-type: none;
-  font-size: 90%;
-  text-align: right;
-}
-
-.js-menu-hamburger--closed { /*closes menu*/
-  display: none;
-}
-
-.js-menu-hamburger--opened { /*opens menu*/
-  display: block;
-  position: absolute;
-  width: 760px;
-  height: 100%;
-  right: 0;
-  z-index: 30; /* was 70 */
-}
-
-.js-display-instructions {
-  padding-top: 0.75em;
-}
-
-.js-display-instructions--closed {
-  display: none;
-}
-
-.js-display-instructions--open {
-  display: block;
-  position: relative;
-  padding: 0.5em 0 0.5em 0;
-
-}
-
-.page-menu {
-  display: block;
-  font-size: 100%;
-  font-family: VuSans, sans-serif;
-  padding-left: 1.5em;
-}
-
-.page-menu__list {
-  list-style-type: none;
-  text-align: right;
-  /*font-size: 100%;*/
+  margin-left: 1.25rem;
+  padding: 0.15rem;
+  border: 0.025rem solid #CCCCCC;
 }
 
 table.table-seeds__row-color tr:nth-child(even) {
@@ -262,19 +179,12 @@ table.table-seeds__row-color tr:nth-child(odd) {
 }
 
 table.table-seeds {
-  caption-side: top;
+  margin-top: 1rem;
   border-collapse: collapse;
   font-family: VuSans, sans-serif;
-  font-size: 100%;
   font-weight: normal;
   border: 2px solid #ccc;
-  margin-bottom: 20px;
   table-layout: auto;
-  width: 100%;
-  /*resizable columns
-  table-layout: fixed;
-  white-space: wrap;
-  word-wrap: break-word;*/
 }
 
 table td.table-seeds__col--center {
@@ -286,63 +196,36 @@ table td.del-row__col--center {
   cursor: pointer;
 }
 
-table caption {
-  font-size: 1.125em;
-  padding-bottom: 10px;
-}
-
 th {
-  padding: 2px;
+  padding: 0.2rem;
   border: 2px solid #ccc;
   background-color: #F6DA74;
   text-align: center;
-  font-size: 80%;
-  /*resizable columns
-  overflow: hidden;*/
+  font-size: 0.8rem;
 }
 
 td {
-  padding:0.2em;
+  padding:0.15rem;
   border: 2px solid #ccc;
   line-height: normal;
-  font-size: 80%;
-  /*resizable columns
-  height: 10px;
-  overflow: hidden;*/
+  font-size: 0.78rem;
 }
 tr.row__bottom-line {
   border-bottom: 1px solid #000000;
 }
 
-/* tr.row__color {
-  background: #E8E8E8;
-} */
-
-
-
 #page-footer {
   clear: both;
-  margin-top: 0.5em;
-  border-top: 0.025em solid #CCCCCC;
-  border-bottom: 0.025em solid;
-  padding-bottom: 0.5em;
+  margin-top: 0.5rem;
+  border-top: 0.025rem solid #CCC;
+  border-bottom: 0.025rem solid #CCC;
+  padding-bottom: 0.5rem;
   text-align: center;
 }
 
 #page-footer p {
-  padding-top: 0.55em;
-  font-size: 0.75em;
-}
-
-#js-search-input-seeds {
-  background-image: url('../images/search_icon.png');
-  background-position: 10px 10px;
-  background-repeat: no-repeat;
-  width: 50%;
-  font-size: 16px;
-  padding: 12px 20px 12px 40px;
-  border: 1px solid #ddd;
-  margin-bottom: 12px;
+  padding-top: 0.55rem;
+  font-size: 0.75rem;
 }
 
 #js-page--to-top {
@@ -371,53 +254,49 @@ tr.row__bottom-line {
 }
 
 /* Latest changes - might have to rename classes according to BEM */
+input {
+  font-size: 0.9rem;
+}
+
 input[type=text] {
   width: 30%;
-  padding: 2px;
-  margin: 2px;
+  padding: 0.1rem;
+  margin: 0.2rem;
   display: inline-block;
   border: 1px solid #ccc;
-  border-radius: 4px;
   box-sizing: border-box;
 }
 input[type=number] {
   width: 20%;
-  padding: 2px;
-  margin: 2px;
+  font-family: VuMono, monospace;
+  padding: 0.1rem;
+  margin: 0.2rem;
   display: inline-block;
   border: 1px solid #ccc;
-  border-radius: 4px;
   box-sizing: border-box;
 }
 input[type=date] {
-  font-family: VuSans, sans-serif;
-  font-size: 90%;
   width: 20%;
-  padding: 2px;
-  margin: 2px;
+  font-family: VuMono, monospace;
+  padding: 0.1rem;
+  margin: 0.2rem;
   display: inline-block;
   border: 1px solid #ccc;
-  border-radius: 4px;
   box-sizing: border-box;
 }
 input.no-edit {
   background-color: #E8E8E8;
 }
 .selected {
-  display: inline-block;
+  display: block;
   background-color: unset;
   color:black;
-  font-weight: bold;
-  height: 24px;
-  padding: 2px;
-  margin: 5px;
+  height: 1.1rem;
   border: none;
-  border-radius: 4px;
   cursor: pointer;
-  /* font-size: 80%; */
 }
 .selected:hover {
-  background-color:#E8E8E8;
+  background-color:#C5C5C5;
 }
 
 .select-delete {
@@ -430,17 +309,16 @@ input.no-edit {
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  /* font-size: 80%; */
 }
 .select-delete:hover {
   background-color: #CFCFCF;
 }
 
-label {
+form label {
   display: inline-block;
   width: 30%;
   text-align: right;
-  /* font-size: 80%; */
+  font-size: .85rem;
 }
 
 label.notes {
@@ -454,50 +332,15 @@ label.notes {
   cursor: pointer;
 }
 
-.delete {
-  font-weight: bolder;
-}
-
-.undelete {
-  font-weight: bolder;
-}
-.strike{
-  text-decoration: line-through;
-}
-
-.warningtext {
-  color: red;
-  font-style: italic;
-}
-
-.change-link a:link {
-  color: orange;
-  text-decoration: none;
-}
-
-.change-link a:visited {
-  color: orange;
-  /*#551A8B; */
-}
-
-.change-link a:hover {
-  color: red;
-}
-
-.change-link a:active {
-  color: red;
-}
-
 div.alert {
   display: block;
   text-align: center;
-  font-size: 90%;
+  font-size: 0.9rem;
   color: white;
   border: none;
-  border-radius: 4px;
   margin-left: auto;
   margin-right: auto;
-  padding: 2px;
+  padding: 0.15rem;
   width: auto;
 }
 
@@ -509,7 +352,7 @@ div.alert {
   background-color: green;
 }
 
-#js-page--to-bottom {
+#js-page--to-bottom { /* fix into rem */
   display: block;
   position: fixed;
   top: -12px;
@@ -538,36 +381,32 @@ th.sort{
 
 textarea {
   font-family: VuSans, sans-serif;
+  font-size: 0.9rem;
   display: inline-block;
-  font-size: 90%;
   width: 30%;
   text-align: left;
-  padding: 2px;
-  margin: 2px;
+  padding: 0.1rem;
+  margin: 0.2rem;
   display: inline-block;
   border: 1px solid #ccc;
-  border-radius: 4px;
   box-sizing: border-box;
 }
 
 .buttons-container {
   display: flex;
   flex-grow: wrap;
-  justify-content: center;
-  /* justify-content: center; */
+  justify-content: left;
+  gap: 0.35rem;
+  box-sizing: content-box; 
+  align-items: center;
   text-align: center;
   width: 100%;
-}
-/* .flex-item {
-  flex: none;
-} */
-div.center {
-  text-align: center;
+  margin-top: 0.5rem;
+  margin-bottom: 0.7rem;
 }
 
-form {
-  clear:both;
-  font-size: 80%;
+div.center {
+  text-align: center;
 }
 
 .js-edit-seed-pkt--closed {
@@ -577,12 +416,9 @@ form {
 .js-edit-seed-pkt--opened {
   display: block;
 }
-.clear {
-  clear: both;
-}
+
 ul {
   list-style-type: none;
-  font-size: 80%;
 }
 
 .js-all-pages--opened {
@@ -592,25 +428,66 @@ ul {
   display: none;
 }
 
-form#seed-entry > p {
-  padding-left: 50px;
-  font-size: unset;
-  padding-bottom: 5px;
-}
-
-input[type=text].input-searchicon {
-  background: url(../images/search.svg) no-repeat left;
+input.input-search-icon {
   text-align: left;
-  padding-left: 20px;
+  margin: unset;
+  padding: 0.15rem;
+  width: 10rem;
+  height: 1.2rem;
 }
 
-/*input[type=reset].input-homeicon {
-  background: url(../images/home.svg) no-repeat left;
-  padding-left: 23px;
-  background-color: #E8E8E8;
-}*/
-
-input[type=reset]:hover {
-  background-color:#CFCFCF;
+img {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
 }
+
+label.db-process {
+  font-size: 0.9rem;
+  display: inline-block;
+}
+
+ul.message {
+  font-size: 0.85rem;
+  margin-bottom: 0.7rem;
+  list-style-type: square;
+  list-style-position: inside;
+}
+ 
+.buttons-db-container {
+  display: flex;
+  flex-grow: wrap;
+  justify-content: left;
+  gap: 0.35rem;
+  box-sizing: content-box; 
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  margin-top: 0.5rem;
+  margin-bottom: 0.7rem;
+}
+
+.selected-db {
+  display: block;
+  background-color: unset;
+  color:black;
+  height: 1.5rem;
+  border: none;
+  cursor: pointer;
+}
+
+.selected-db:hover {
+  background-color:#C5C5C5;
+}
+
+section.borders {
+  /*margin-top: 0.3rem;*/
+  /*border-top: 0.025rem solid #CCCCCC;*/
+  border-bottom: 0.025rem solid #CCCCCC;
+}
+
+section.indent p, nav, ul {
+  margin-left: 1rem;
+}
+
 
