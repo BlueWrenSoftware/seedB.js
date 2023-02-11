@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en-au" dir="ltr">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,62 +8,62 @@
   <link rel="stylesheet" href="./styles/styles.css">
 </head>
 
-<body>
-
-<div id="root" class="screen">
+<body class="app" id="root">
+<div  class="screen app__screen">
   <!--Menu Button Tool Bar-->
-  <nav id="toolbarButtons"  class="buttons-container">
-    <button class="selected" type="button" 
-      title="Previous record." > 
-      <img src="./images/nav-arrow-left.svg"></button>
-    <button class="selected" type="button" 
-      title="Next record.">
-      <img src="./images/nav-arrow-right.svg"></button>
-    <button class="selected" type="button" 
-      title="Help on buttons.">
-      <img src="./images/help-no-circle.svg"></button>
-    <button class="selected  openHomePage" type="button" 
-      title="Back to List. Current &#010;record not saved.">
-      <img src="./images/home.svg"></button>
-    <button class="selected openBackupRestorePage" type="button" 
-      title="Maintenance and backup operations.">
-      <img src="./images/tools.svg"></button>
-    <button class="selected" type="button" 
-      title="Edit scrolled record.">
-      <img src="./images/edit.svg"></button>
-    <button class="selected openNewPacketPage" type="button" 
-      title="Create new record.">
-      <img src="./images/add-page.svg"></button>
-    <button class="selected " type="button" id="btnCopyRecord" 
-      title="Copy record, unlock ID. &#010;Create new ID and record."><img 
-      src="./images/copy.svg"></button>
-    <button class="selected " type="button" id="" 
-      title="Reload."><img src="./images/reset-form.svg" height="17"></button>
-    <button class="selected " type="button" id="btnSubmitEditRecord" 
-      title="Save current record."><img src="./images/save-floppy-disk.svg" ></button>
-    <button class="selected" type="button" id="btnDeleteRecord" 
-      title="Delete current record."><img src="./images/bin-full.svg"></button>
-    <input class="input-search-icon" placeholder="Find" type="text" 
-      title="Find entered text."></input>
-    <button class="selected" type="button" id="" 
-      title="Find entered text."><img src="./images/input-search.svg"></button>
-  </nav>
+    <nav class="btn-menu screen__btn-menu" id="toolbarButtons">    
+      <button class="btn-menu__items" type="button" 
+        title="Previous record." > 
+        <img src="./images/nav-arrow-left.svg"></button>
+      <button class="btn-menu__items" type="button" 
+        title="Next record.">
+        <img src="./images/nav-arrow-right.svg"></button>
+      <button class="openHelpPage btn-menu__items" type="button" 
+        title="Help on buttons.">
+        <img src="./images/help-no-circle.svg"></button>
+      <button class="btn-menu__items  openHomePage" type="button" 
+        title="Back to List. Current &#010;record not saved.">
+        <img src="./images/home.svg"></button>
+      <button class="btn-menu__items openBackupRestorePage" type="button" 
+        title="Backup operations.">
+        <img src="./images/tools.svg"></button>
+      <button class="btn-menu__items" type="button" 
+        title="Edit scrolled record.">
+        <img src="./images/edit.svg"></button>
+      <button class="btn-menu__items openNewPacketPage" type="button" 
+        title="Create new record.">
+        <img src="./images/add-page.svg"></button>
+      <button class="btn-menu__items " type="button" id="btnCopyRecord" 
+        title="Copy record, unlock ID. &#010;Create new ID and record."><img 
+        src="./images/copy.svg"></button>
+      <button class="btn-menu__items " type="button" id="" 
+        title="Reload."><img src="./images/reset-form.svg" height="17"></button>
+      <button class="btn-menu__items " type="button" id="btnSubmitEditRecord" 
+        title="Save current record."><img src="./images/save-floppy-disk.svg" ></button>
+      <button class="btn-menu__items" type="button" id="btnDeleteRecord" 
+        title="Delete current record."><img src="./images/bin-full.svg"></button>
+      <input class="btn-menu__items--search" placeholder="Find" type="text" 
+        title="Find entered text."></input>
+      <button class="btn-menu__items" type="button" id="" 
+        title="Find entered text."><img src="./images/input-search.svg"></button>
+    </nav>
   <!-- Pages -->
   <div id="showHide" class="js-all-pages--none">
     <!-- Home Page -->
-    <section id="home-page">
-      <!-- Table of Records -->
-      <table width="100%" class="table-seeds table-seeds__row-color" id="mytable">
+    <section id="homePage">
+    <!-- Table of Records -->
+      <table  class="home-page__table table
+       table-seeds__row-color" >
         <thead>
           <tr>
-            <th class="sort" id="sortGroup">Group</th>
-            <th class="sort" id="sortVariety">Variety</th>
-            <th class="sort" id="sortPacketId">Package Id</th>
-            <th class="sort" id="sortDate">Date</th>
-            <th class="" id="">Num</th>
-            <th class="" id="">Gram</th>
-            <th class="" id="">Cost</th>
-            <th>Edit</th>
+            <th class="table__header--sort" id="sortGroup">Group</th>
+            <th class="table__header--sort" id="sortVariety">Variety</th>
+            <th class="table__header--sort" id="sortPacketId">Package Id</th>
+            <th class="table__header--sort" id="sortDate">Date</th>
+            <th class="table__header--sort" id="">Num</th>
+            <th class="table__header--sort" id="">Gram</th>
+            <th class="table__header--sort" id="">Cost</th>
+            <th class="table__header">Edit</th>
           </tr>
         </thead>
         <tbody id="seed-list"></tbody>
@@ -101,8 +100,19 @@
         </div>
       </section>
 
-      <!-- Maintenance Page -->
-      <section id="maintenance">
+      <!-- Backup Page -->
+    <section id="openBackupPageId">
+    <nav class="buttons-container">
+    <button class="openHelpPage selected" type="button" 
+      title="Help on buttons.">
+      <img src="./images/help-no-circle.svg"></button>
+    <button class="selected  openHomePage" type="button" 
+      title="Back to List. Current &#010;record not saved.">
+      <img src="./images/home.svg"></button>
+    <button class="selected openBackupRestorePage" type="button" 
+      title="Backup operations.">
+      <img src="./images/tools.svg"></button>
+   </nav>
         <!-- Backup Records     -->
         <section class="borders indent">
           <h3 class="chapter--h3">
@@ -114,7 +124,7 @@
             <button class="selected-db" type="button" id="btnRetrieveData" title="">
             <img src="./images/cloud-upload.svg"></button>
             <label class="db-process">Copy and save all records.</label>
-            <button class="selected" type="button" 
+            <button class="openHelpPage selected" type="button" 
             title="Help on backup.">
             <img src="./images/help-no-circle.svg"></button>
           </nav>
@@ -129,7 +139,7 @@
               <button id="js-file-select" class="selected-db">
               <img src="./images/cloud-download.svg" alt=""></button>
               <label class="db-process">Download backup text file restoring all records.</label>
-            <button class="selected" type="button" 
+            <button class="openHelpPage selected" type="button" 
             title="Help on backup.">
             <img src="./images/help-no-circle.svg"></button>
             </nav>
@@ -145,34 +155,43 @@
               <button class="btnReinstall selected-db" type="button"><img 
               src="./images/database-restore.svg"></button>
               <label class="db-process">Refresh seedB application.</label>
-              <button class="selected" type="button" 
+              <button class="openHelpPage selected" type="button" 
               title="Help on backup.">
               <img src="./images/help-no-circle.svg"></button>
             </nav> 
             <ul id="installDbMsg" class="message"></ul>
-
           </section>
       </section>
 
-      <!-- DB Error Page -->
-<div id="retrieve-data-button"></div>   
+  <!-- Help Page -->
+  <section id="helpPageId"  class="section--paragraph">
+    <h1>Documentation seedB</h1>
+    <p>Lorem ipsum dolor sit amet, consecteteur adipiscing elit taciti. Eros primis commodo hymenaeos auctor felis sodales. Sem magna nec torquent cubilia platea per vestibulum taciti, pharetra amet mauris id pede eu justo.</p>
+    <p>Diam scelerisque lobortis erat tortor euismod mus praesent tortor tempor suspendisse. Quam urna tellus curabitur aliquam purus arcu. Fermentum a magna eu ac nibh eleifend mi fusce.</p>
 
 
-      <!-- Instructions Page -->
-      <section id="instructions-page" class="section--paragraph">
-        <br>
-        <h2 class="chapter--h2">Help is here</h2>
-        <p>The instruction below is a hack for the moment when the SeedB is 
-        not installed or the browser's cache was reset - deleting the SeedB.</p>
-        <h3 class="chapter--h3" id="general">General</h3>
-        <p></p>
-        <h3 id="newSeedHelp" class="chapter--h3" id="helpNewSeed">Enter New Seed Packet</h3>
-        <p></p>
-        <h3 class="chapter--h3" id="helpEditSeed">Edit Existing Seed Packet</h3>
-        <p></p>
-        <br>
-      </section>
-    </div>
+<h2>Heading 2</h2>
+<p>Diam scelerisque lobortis erat tortor euismod mus praesent tortor tempor suspendisse. Quam urna tellus curabitur aliquam purus arcu. Fermentum a magna eu ac nibh eleifend mi fusce.</p>
+<p>Diam scelerisque lobortis erat tortor euismod mus praesent tortor tempor suspendisse. Quam urna tellus curabitur aliquam purus arcu. Fermentum a magna eu ac nibh eleifend mi fusce.</p>
+
+<h3>Heading 3</h3>
+<p>Mi velit ut enim ultricies libero a praesent amet nostra quisque elementum per iaculis. Purus vitae elit congue id sed ipsum, id facilisi platea montes integer hendrerit.</p>
+<p>Diam scelerisque lobortis erat tortor euismod mus praesent tortor tempor suspendisse. Quam urna tellus curabitur aliquam purus arcu. Fermentum a magna eu ac nibh eleifend mi fusce.</p>
+
+<h4>Heading 4</h4>
+<p>Mi velit ut enim ultricies libero a praesent amet nostra quisque elementum per iaculis. Purus vitae elit congue id sed ipsum, id facilisi platea montes integer hendrerit.</p>
+<p>Diam scelerisque lobortis erat tortor euismod mus praesent tortor tempor suspendisse. Quam urna tellus curabitur aliquam purus arcu. Fermentum a magna eu ac nibh eleifend mi fusce.</p>
+    <p>The instruction below is a hack for the moment when the SeedB is 
+    not installed or the browser's cache was reset - deleting the SeedB.</p>
+    <h3 class="chapter--h3" id="general">General</h3>
+    <p></p>
+    <h3 id="newSeedHelp" class="chapter--h3" id="helpNewSeed">Enter New Seed Packet</h3>
+    <p></p>
+    <h3 class="chapter--h3" id="helpEditSeed">Edit Existing Seed Packet</h3>
+    <p></p>
+    <br>
+  </section>
+</div>
 
     <!-- Footer -->
     <section class="bottom-margin">
@@ -186,7 +205,7 @@
 
     <!-- Go to top of page-->
     <div id="js-page--to-top" title="Go to Top"></div>
-  </div>
+</div>
   <script src="./js/app.js"></script>
   <script src="./js/column.js"></script>
 
