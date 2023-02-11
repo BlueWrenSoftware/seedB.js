@@ -665,29 +665,8 @@ class Controller {
 			dataFile = JSON.parse(this.result);
 			await model.loadRecords(dataFile);
 		};
-                reader.readAsText(file);
+                reat der.readAsText(file);
         }
-
-		//=> Upload backup file and merge with data in object store
-		// const fileSelect = document.getElementById('js-file-select');
-		// const extractFileData = document.getElementById('js-input-file-data');
-		// fileSelect.addEventListener('click', function () { //=> Upload Text File button clicked pageBackupRestore
-	// 		if (extractFileData) { extractFileData.click(); }
-	// 	}, false);
-	// 	extractFileData.onchange = function () { //=> Parse data to JSON objects in an array
-	// 		let dataFile = [];
-	// 		const file = this.files[0];
-	// 		backupNotes.innerHTML += '<li>Backup file used:  ' + file.name + '</li>';
-	// 		backupNotes.innerHTML += '<li>Backup file was created on:  ' + file.lastModifiedDate.toString().slice(0, 24) + '</li>';
-	// 		backupNotes.innerHTML += '<li>Backup file now merged with seed list already in db</li>';
-	// 		const reader = new FileReader();
-	// 		reader.onload = async function (progressEvent) {
-	// 			dataFile = JSON.parse(this.result);
-	// 			await model.loadRecords(dataFile);
-	// 		};
-	// 		reader.readAsText(file);
-	// 	};
-	// }
 }
 //=> End of Classes
 const model = new Model();
