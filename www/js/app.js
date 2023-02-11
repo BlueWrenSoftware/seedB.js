@@ -479,7 +479,7 @@ class Controller {
 		this.view.bindScrollTopBottomEvent( () => { this.view.scrollEvent(); });
 		this.view.bindScrollToBottomPage( () => { this.view.scrollToBottom(); });
 		this.view.bindScrollToTopPage( () => { this.view.scrollToTop(); });
-                this.view.bindBtnUploadBackupFile( this.backup );
+                this.view.bindBtnUploadBackupFile( this.restoreBackup );
 	}
 	async requestSortedPacketList(sortOn) {
 		if (sortOn !== undefined) {
@@ -652,20 +652,20 @@ class Controller {
 	}
 
 
-        backup() {
+        restoreBackup() {
 		let dataFile = [];
 		const file = this.files[0];
-                // TODO: move backupNotes to View object
-	     	const backupNotes = document.getElementById('backupNotifications');  //=> alias for user msgs backup installation
-		backupNotes.innerHTML += '<li>Backup file used:  ' + file.name + '</li>';
-		backupNotes.innerHTML += '<li>Backup file was created on:  ' + file.lastModifiedDate.toString().slice(0, 24) + '</li>';
-		backupNotes.innerHTML += '<li>Backup file now merged with seed list already in db</li>';
+                // TODO: move backupRestorationNotifications to View object
+	     	const backupResotrationNotifications = document.getElementById('backupNotifications');  //=> alias for user msgs backup installation
+		backupResotrationNotifications.innerHTML += '<li>Backup file used:  ' + file.name + '</li>';
+		backupResotrationNotifications.innerHTML += '<li>Backup file was created on:  ' + file.lastModifiedDate.toString().slice(0, 24) + '</li>';
+		backupResotrationNotifications.innerHTML += '<li>Backup file now merged with seed list already in db</li>';
 		const reader = new FileReader();
 		reader.onload = async function (progressEvent) {
 			dataFile = JSON.parse(this.result);
 			await model.loadRecords(dataFile);
 		};
-                reat der.readAsText(file);
+                reader.readAsText(file);
         }
 }
 //=> End of Classes

@@ -27,8 +27,8 @@
       title="Back to List. Current &#010;record not saved.">
       <img src="./images/home.svg"></button>
     <button class="selected openBackupRestorePage" type="button" 
-      title="Maintenance and backup operations.">
-      <img src="./images/tools.svg"></button>
+      title="Database Maintenanced">
+      <img src="./images/database-settings-orange.svg"></button>
     <button class="selected" type="button" 
       title="Edit scrolled record.">
       <img src="./images/edit.svg"></button>
@@ -43,7 +43,7 @@
     <button class="selected " type="button" id="btnSubmitEditRecord" 
       title="Save current record."><img src="./images/save-floppy-disk.svg" ></button>
     <button class="selected" type="button" id="btnDeleteRecord" 
-      title="Delete current record."><img src="./images/bin-full.svg"></button>
+      title="Delete current record."><img src="./images/bin-red.svg"></button>
     <input class="input-search-icon" placeholder="Find" type="text" 
       title="Find entered text."></input>
     <button class="selected" type="button" id="" 
@@ -106,14 +106,14 @@
         <!-- Backup Records     -->
         <section class="borders indent">
           <h3 class="chapter--h3">
-            Create Records' Data Backup File
+            Export databse to file
           </h3>
-          <p>All records are written to a text file with various upload options.</p>
-          <p>See Help Page for maore information.</p>
+          <p>All records are written to a text file</p>
+          <p>See Help Page for more information.</p>
           <nav class="buttons-db-container">
             <button class="selected-db" type="button" id="btnRetrieveData" title="">
-            <img src="./images/cloud-upload.svg"></button>
-            <label class="db-process">Copy and save all records.</label>
+            <img src="./images/database-export.svg"></button>
+            <label class="db-process">Export databse to file</label>
             <button class="selected" type="button" 
             title="Help on backup.">
             <img src="./images/help-no-circle.svg"></button>
@@ -122,13 +122,13 @@
         </section>
         <!-- Restore Records -->
         <section class="borders indent">
-            <h3 class="chapter--h3">Restore Data from Backup Text File</h3>
-            <p>Retrieve saved records' data from backup text file.</p>
+            <h3 class="chapter--h3">Import file to database</h3>
+            <p>Update the database with data from backup file</p>
             <nav class="buttons-db-container">
               <input type="file" name="file" id="js-input-file-data" style="display:none">
               <button id="js-file-select" class="selected-db">
-              <img src="./images/cloud-download.svg" alt=""></button>
-              <label class="db-process">Download backup text file restoring all records.</label>
+              <img src="./images/database-restore.svg" alt=""></button>
+              <label class="db-process">Import backup file</label>
             <button class="selected" type="button" 
             title="Help on backup.">
             <img src="./images/help-no-circle.svg"></button>
@@ -137,14 +137,13 @@
           </section>              
           <!-- Reinstall IndedexedDB -->
           <section class="indent">
-            <h3 class='chapter--h3'>Refresh seedB Application</h3>
-            <p>Missing and/or corrupted data might be repaired by refreshing the 
-            seedB app. Data loss will be minimal if regular data backups were made.
+            <h3 class='chapter--h3'>Reset seedB Application</h3>
+            <p> WARNING: Only use if database is corrupted-any existing records will be deleted!
             </p>
             <nav class="buttons-db-container">
               <button class="btnReinstall selected-db" type="button"><img 
-              src="./images/database-restore.svg"></button>
-              <label class="db-process">Refresh seedB application.</label>
+              src="./images/database-error-red.svg"></button>
+              <label class="db-process">Reset database</label>
               <button class="selected" type="button" 
               title="Help on backup.">
               <img src="./images/help-no-circle.svg"></button>
