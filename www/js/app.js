@@ -244,6 +244,17 @@ bindBackupRestorePage(handler) { // Backup & Restore Page
 	// async findHelpTopic(topic=all) {
 	//     this.displayHelpTopic()
 	// }
+	
+	bindBtnUploadBackupFile(handler) {
+                // TODO: move to ctor
+		const btnUploadBackupFile = document.getElementById('js-file-select');
+		const extractFileData = document.getElementById('js-input-file-data');
+		btnUploadBackupFile.addEventListener('click', function () { 
+                	//=> Upload Text File button clicked pageBackupRestore
+			if (extractFileData) { extractFileData.click(); }
+	 	}, false);
+	 	extractFileData.onchange = handler;
+        }
 
 	// transfer this to Controller
 	requestSpecificHelp() {
@@ -468,6 +479,7 @@ class Controller {
 		this.view.bindScrollTopBottomEvent( () => { this.view.scrollEvent(); });
 		this.view.bindScrollToBottomPage( () => { this.view.scrollToBottom(); });
 		this.view.bindScrollToTopPage( () => { this.view.scrollToTop(); });
+                this.view.bindBtnUploadBackupFile( this.restoreBackup );
 	}
 	async requestSortedPacketList(sortOn) {
 		if (sortOn !== undefined) {
@@ -638,28 +650,23 @@ class Controller {
 		fileNotes.innerHTML += '<li>Backup file name is: ' + filename + '</li>';
 		this.download(filename, text); //=> Save backup file.
 	}
-	
-	backup() {
-		//=> Upload backup file and merge with data in object store
-		const fileSelect = document.getElementById('js-file-select');
-		const extractFileData = document.getElementById('js-input-file-data');
-		fileSelect.addEventListener('click', function () { //=> Upload Text File button clicked pageBackupRestore
-			if (extractFileData) { extractFileData.click(); }
-		}, false);
-		extractFileData.onchange = function () { //=> Parse data to JSON objects in an array
-			let dataFile = [];
-			const file = this.files[0];
-			backupNotes.innerHTML += '<li>Backup file used:  ' + file.name + '</li>';
-			backupNotes.innerHTML += '<li>Backup file was created on:  ' + file.lastModifiedDate.toString().slice(0, 24) + '</li>';
-			backupNotes.innerHTML += '<li>Backup file now merged with seed list already in db</li>';
-			const reader = new FileReader();
-			reader.onload = async function (progressEvent) {
-				dataFile = JSON.parse(this.result);
-				await model.loadRecords(dataFile);
-			};
-			reader.readAsText(file);
+
+
+        restoreBackup() {
+		let dataFile = [];
+		const file = this.files[0];
+                // TODO: move backupRestorationNotifications to View object
+	     	const backupResotrationNotifications = document.getElementById('backupNotifications');  //=> alias for user msgs backup installation
+		backupResotrationNotifications.innerHTML += '<li>Backup file used:  ' + file.name + '</li>';
+		backupResotrationNotifications.innerHTML += '<li>Backup file was created on:  ' + file.lastModifiedDate.toString().slice(0, 24) + '</li>';
+		backupResotrationNotifications.innerHTML += '<li>Backup file now merged with seed list already in db</li>';
+		const reader = new FileReader();
+		reader.onload = async function (progressEvent) {
+			dataFile = JSON.parse(this.result);
+			await model.loadRecords(dataFile);
 		};
-	}
+                reader.readAsText(file);
+        }
 }
 //=> End of Classes
 const model = new Model();
@@ -670,8 +677,5 @@ window.onload = () => { controller.requestPacketListPage() };
 //=> Global variables
 //const foundBtnHomePage = document.getElementById('findBtnHomePage'); //=> alias
 const fileNotes = document.getElementById('fileNotifications'); //=> alias for user msgs retrieving data & backup
-const backupNotes = document.getElementById('backupNotifications');  //=> alias for user msgs backup installation
 const errorMsg = document.getElementById('dbError');  //=> alias forDB error msgs for the UI
 const msgInstallDb = document.getElementById('installDbMsg'); //=> alias for UI installation msgs
-//=> Restore data from backup file
-controller.backup(); // TO DO: have to sort the events in that function
