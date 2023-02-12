@@ -1,177 +1,56 @@
-/* http://meyerweb.com/eric/tools/css/reset/ 
-   v2.0 | 20110126
-   License: none (public domain)
-*/
-/*div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,b, u, i, center,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td,article, aside, canvas, details, embed,figure, figcaption, footer, header, hgroup,menu, nav, output, ruby, section, summary,time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font: inherit;
-	vertical-align: baseline;
-}*/
+/* BEM - Block Element Modifier is used in this style sheet.
 
-/* End of default settings */
+   - used in names of blocks, elements and modifiers.
+   __ followed by an element
+   -- followed by a modifier
+
+   Cascading is kept to a minimum and naming of classes are supporting
+   the semantic structure of the HTML5.
+   Names indicating a format are avoided and as not to confuse the semantic
+   HTML5 tags.
+
+/* Start of default settings */
 header, section, article, figure, figcaption, nav, footer, video, address, dialog {
   display: block;
 }
+
+/*@charset "UTF-8";
+@media screen {
+    html {
+    background: #f8f8f8;
+    }
+} */
+
 * {
   margin: 0;
   padding: 0;
-  border: 0;
-  
+  /*border: 0;*/
 }
-/* Default element settings for this document */
-html{
-  /* scroll bar fix */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
   box-sizing: border-box;
   height: 100%;
   margin-left: calc(100vw - 100%);
   margin-right: 0;
   overflow: auto;
-    /* 10px equivalent and this wiil be 1rem. Font root setting*/
-  font-size: 62.5%;
 }
+
 html:focus {
   outline: none;
 }
-/* End of default settings for this document */
-.body {}
-.app {
+
+body {
   font-family: VuSans, sans-serif;
   background-color: #fdfdf0;
 }
-.screen {
-}
-.app__screen {
-  width: 500px;
-  margin: 0 auto;
-  position: relative;
-  border: 0.1rem solid #ccc;
-
-}
-/* Menu */
-.menu {}
-.screen__btn-menu {
-/* Outside block settings for btn__menu */
-  width: 100%;
-  margin-top: 0.7rem;
-  margin-bottom: 1.8rem;
-  margin-left:  0;
-}
-.btn-menu {
-/* Inside generic block settings */
-  display: flex;
-  flex-grow: wrap;
-  justify-content: left;
-  gap: 0.6rem;
-  box-sizing: content-box; 
-  align-items: center;
-  text-align: center;
-}
-.btn-menu__items {
-  display: block;
-  background-color: unset;
-  color:black;
-  height: 1.725rem;
-  border: none;
-  cursor: pointer;
-}
-.btn-menu__items--search {
-  text-align: left;
-  /*margin: unset;*/
-  /*padding: 0.15rem;*/
-  width: 10rem;
-  height: 1.9rem;
-  font-size: 1.4rem;
-}
-.btn-menu__items:hover {
-  background-color:#C5C5C5;
-}
-.home-page__table {
-  margin-top: 1rem;
-  margin-left: auto;
-  margin-right: auto;
-}
-.table {
-  /*width: 100%;*/
-  border-collapse: collapse;
-  border: 2px solid #ccc;
-  table-layout: auto;
-}
-.table__header {
-  padding: 0.2rem;
-  border: 2px solid #ccc;
-  background-color: #F6DA74;
-  text-align: center;
-  font-size: 1.1rem;
-  font-weight: bold;
-}
-.table__header--sort {
-  padding: 0.2rem;
-  border: 2px solid #ccc;
-  background-color: #F6DA74;
-  text-align: center;
-  font-size: 1.1rem;
-  font-weight: bold;
-  cursor: pointer;
-}
-.table__data {
-  padding:0.25rem;
-  border: 2px solid #ccc;
-  line-height: normal;
-  font-size:1.1rem;
-}
-.table__data--center {
-  text-align: center;
-  padding:0.25rem;
-  border: 2px solid #ccc;
-  line-height: normal;
-  font-size:1.1rem;
-}
-.table__data--edit {
-  background-image: url(../images/edit-pencil.svg);
-  background-repeat: no-repeat;
-  background-position: center center;
-  cursor: pointer;
-}
-.table__row--color {
-}
-.table__row--color:nth-child(even) {
-  background-color: #E8E8E8;
-}
-.table__row--color:nth-child(odd) {
-  background: #fdfdf0;
-}
-/* Edit Page */
-
-/*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-h1 {
-  font-size: 1.65rem;
-  margin-top: 2rem;
-  margin-bottom: 0.6rem;
-}
-
-h2 {
-  font-size: 1.5rem;
-  margin-top: 1rem;
-  margin-bottom: 0.6rem;
-}
-
-h3 {
-  font-size: 1.4rem;
-  margin-top: 1rem;
-  margin-bottom: 0.6rem;
-}
-
-h4 {
-  font-size: 1.35rem;
-  margin-top: 0.8rem;
-  margin-bottom: 0.4rem
-}
 
 p {
-  font-size: 1.3rem;
-  margin-bottom: 0.6rem;
+  font-size: 0.9rem;
+  padding-bottom: 0.3rem;
 }
 
 a {
@@ -187,6 +66,7 @@ a:link {
 
 a:visited {
   color: #0000EE;
+  /*#551A8B; */
 }
 
 a:hover {
@@ -198,6 +78,17 @@ a:active {
 }
 
 /* DejaVu font settings */
+/* @font-face {
+  font-family: VuSerif;
+  src: url("../fonts/DejaVuSerif.ttf") format("truetype");
+  font-style: normal;
+}
+
+@font-face {
+  font-family: VuSerif;
+  src: url("../fonts/DejaVuSerif-Italic.ttf") format("truetype");
+  font-style: italic;
+} */
 
 @font-face {
   font-family: VuSans;
@@ -211,7 +102,66 @@ a:active {
   font-style: normal;
 }
 
+/* @font-face {
+  font-family: VuItalic;
+  src: url("../fonts/DejaVuSerif-Italic.ttf") format("truetype");
+  font-style: normal;
+} */
 
+.screen {
+  width: 500px;
+  /*min-width: 400px;*/
+  margin: 0 auto;
+  position: relative;
+}
+
+.page-header__h1 {
+  display: inline-block;
+  padding-top: 0.6rem;
+  padding-bottom: 0.8rem;
+  font-family: VuSans, sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  text-align: left;
+  padding-left: 0.625rem;
+}
+
+.page-header__h1--logo {
+  display: inline-block;
+  top: 0.625rem;
+  vertical-align: middle;
+}
+
+.chapter--h2 {
+  font-family: VuSans, sans-serif;
+  font-size: 1.1rem;
+  font-weight: normal;
+  padding-bottom: 0.5rem;
+  min-width: 400px;
+}
+
+.chapter--h3 {
+  font-family: VuSans, sans-serif;
+  font-size: 0.935rem;
+  padding-bottom: 0.3rem;
+  padding-top: 0.3rem;
+  font-weight: normal;
+}
+
+.chapter--h4 {
+  font-family: VuSans, sans-serif;
+  font-size: 0.95rem;
+  font-weight: normal;
+  padding-bottom: 0.3rem;
+}
+
+article.article--paragraph p {
+  padding-bottom: 0.3rem;
+}
+
+section.section--paragraph p {
+  padding-bottom: 0.3rem;
+}
 
 .page-img--left {
   display: block;
@@ -220,10 +170,49 @@ a:active {
   border: 0.025rem solid #CCCCCC;
 }
 
+table.table-seeds__row-color tr:nth-child(even) {
+  background: #E8E8E8;
+}
 
+table.table-seeds__row-color tr:nth-child(odd) {
+  background: #fdfdf0;
+}
 
+table.table-seeds {
+  margin-top: 1rem;
+  border-collapse: collapse;
+  font-family: VuSans, sans-serif;
+  font-weight: normal;
+  border: 2px solid #ccc;
+  table-layout: auto;
+}
 
+table td.table-seeds__col--center {
+  text-align: center;
+}
 
+table td.del-row__col--center {
+  text-align: center;
+  cursor: pointer;
+}
+
+th {
+  padding: 0.2rem;
+  border: 2px solid #ccc;
+  background-color: #F6DA74;
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+td {
+  padding:0.15rem;
+  border: 2px solid #ccc;
+  line-height: normal;
+  font-size: 0.78rem;
+}
+tr.row__bottom-line {
+  border-bottom: 1px solid #000000;
+}
 
 #page-footer {
   clear: both;
@@ -298,7 +287,17 @@ input[type=date] {
 input.no-edit {
   background-color: #E8E8E8;
 }
-
+.selected {
+  display: block;
+  background-color: unset;
+  color:black;
+  height: 1.1rem;
+  border: none;
+  cursor: pointer;
+}
+.selected:hover {
+  background-color:#C5C5C5;
+}
 
 .select-delete {
   display: inline-block;
@@ -326,7 +325,12 @@ label.notes {
   vertical-align: top;
 }
 
-
+.edit-record {
+  background-image: url(../images/edit-pencil.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  cursor: pointer;
+}
 
 div.alert {
   display: block;
@@ -371,7 +375,9 @@ div.alert {
   background-repeat: no-repeat;
   background-position: center center;
 }
-
+th.sort{
+  cursor: pointer;
+}
 
 textarea {
   font-family: VuSans, sans-serif;
@@ -386,7 +392,18 @@ textarea {
   box-sizing: border-box;
 }
 
-
+.buttons-container {
+  display: flex;
+  flex-grow: wrap;
+  justify-content: left;
+  gap: 0.35rem;
+  box-sizing: content-box; 
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  margin-top: 0.5rem;
+  margin-bottom: 0.7rem;
+}
 
 div.center {
   text-align: center;
@@ -411,7 +428,13 @@ ul {
   display: none;
 }
 
-
+input.input-search-icon {
+  text-align: left;
+  margin: unset;
+  padding: 0.15rem;
+  width: 10rem;
+  height: 1.2rem;
+}
 
 img {
   box-sizing: border-box;

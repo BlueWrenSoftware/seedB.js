@@ -21,8 +21,8 @@ class Model {
 				store.createIndex('date', 'date', { unique: false });
 				store.createIndex('number', 'number', { unique: false });
 				store.createIndex('weight', 'weight', { unique: false });
-				store.createIndex('cost', 'cost', { unique: false });
 				store.createIndex('timeStamp', 'timeStamp', { unique: false });
+				store.createIndex('cost', 'cost', { unique: false });
 			}
 			request.onsuccess = (event) => {
 				this.db = event.target.result;
@@ -133,7 +133,7 @@ class View {
 		this.scrollPacketsLinkElement = document.querySelector('.openScrollPacketsPage');
 		this.backupRestoreLinkElement = document.querySelector('.openBackupRestorePage');
 		this.dbErrorLinkElement = document.querySelector('.openDbErrorPage');
-		this.openHelpPageLinkElements = document.querySelectorAll('.openHelpPage');
+		this.instructionsLinkElements = document.querySelectorAll('.openInstructionsPage');
 		//Sort table columns events
 		this.sortGroupLinkElement = document.getElementById('sortGroup');
 		this.sortVarietyLinkElement = document.getElementById('sortVariety');
@@ -188,8 +188,8 @@ bindBackupRestorePage(handler) { // Backup & Restore Page
 /*	bindDbErrorPage(handler) { // Reinstall corrupted DB
 		this.dbErrorLinkElement.addEventListener('click', handler, false);
 	}*/
-	bindHelpPage(handler) {
-		this.openHelpPageLinkElements.forEach(request => request.addEventListener(
+	bindInstructionsPage(handler) {
+		this.instructionsLinkElements.forEach(request => request.addEventListener(
 		'click', handler, false));
 	}
 	//sort list table events
@@ -247,8 +247,8 @@ bindBackupRestorePage(handler) { // Backup & Restore Page
 
 	// transfer this to Controller
 	requestSpecificHelp() {
-		// designed to show specific s when clicked on ? anywhere
-		this.showHelpPage();
+		// designed to show specific instructions when clicked on ? anywhere
+		this.showInstructions();
 		//await this.findHelpTopic();
 	}
 
@@ -256,21 +256,20 @@ bindBackupRestorePage(handler) { // Backup & Restore Page
 		// Adds a packet as a row to packet list
 		const list = document.querySelector('#seed-list');
 		const row = document.createElement('tr');
-		row.className = `table__row--color`;
 		const edit = document.createElement('td');
-		edit.className = `table__data--edit`;
-		//edit.setAttribute("title", "Edit Record");
+		edit.className = 'edit-record';
+		edit.setAttribute("title", "Edit Record");
 		edit.addEventListener('click', () => {this.editPacketRequestHandler(
 		packet.packetId)}, false);
 		row.innerHTML =
-			`<td class="table__data">${packet.group}</td>
-			 <td class="table__data">${packet.variety}</td>
-			 <td class="table__data">${packet.packetId}</td>
-			 <td class="table__data--center">${(packet.date).substring(2)}</td>
-			 <td class="table__data--center">${packet.number}</td>
-			 <td class="table__data--center">${packet.weight}</td>
-			 <td class="table__data">${packet.cost}</td>
-			 `;
+			`<td>${packet.group}</td>
+						<td>${packet.variety}</td>
+						<td>${packet.packetId}</td>
+						<td class='table-seeds__col--center'>${(packet.date).substring(2)}</td>
+						<td class='table-seeds__col--center'>${packet.number}</td>
+						<td class='table-seeds__col--center'>${packet.weight}</td>
+						<td class='table-seeds__col--center'>${packet.cost}</td>
+						`;
 		row.appendChild(edit);
 		list.appendChild(row);
 	}
@@ -324,48 +323,92 @@ bindBackupRestorePage(handler) { // Backup & Restore Page
 			document.getElementById('showHide').classList.remove('js-all-pages--none');
 		}
 		//document.title = 'SeedB List'; //=> Page at startup being the seed list
-		document.querySelector('#homePage').style.display = '';
-		document.querySelector('#toolbarButtons').style.display = '';
+		document.querySelector('#home-page').style.display = '';
 		document.querySelector('#edit-page').style.display = 'none';
-		document.querySelector('#openBackupPageId').style.display = 'none';
-		document.querySelector('#helpPageId').style.display = 'none';
+		document.querySelector('#maintenance').style.display = 'none';
+		document.querySelector('#instructions-page').style.display = 'none';
 	}
 	showAddNewPacket() {
+		// this.clearFields();
+		// clearFields() only called from menu event, not from buttons
+		//document.title = 'New Seed Pkt';
+		//document.querySelector('#headerAddSeedPage').style.display = 'none';
+		//document.querySelector('#new-pkt-buttons').style.display = 'none';
 		document.querySelector('#toolbarButtons').style.display = '';
+		//document.querySelector('#scrollRecordsButtons').style.display = 'none';
 		document.querySelector('#home-page').style.display = 'none';
+		//document.querySelector('#headerEditSeedPage').style.display = 'none';
 		document.querySelector('#edit-page').style.display = '';
-		document.querySelector('#openBackupPageId').style.display = 'none';
-		document.querySelector('#helpPageId').style.display = 'none';
+		document.querySelector('#maintenance').style.display = 'none';
+		document.querySelector('#instructions-page').style.display = 'none';
 		// Key packetId readonly removed and is required
 		document.querySelector('#packetId').removeAttribute('readonly');
 		document.querySelector('#packetId').setAttribute('required', 'required');
 	}
 	showEditPacket() {
+		//document.title = 'Edit Seed Pkt';
 		document.querySelector('#toolbarButtons').style.display = '';
+		//document.querySelector('#headerAddSeedPage').style.display = 'none';
+		//document.querySelector('#new-pkt-buttons').style.display = 'none';
+		//document.querySelector('#scrollRecordsButtons').style.display = 'none';
+		document.querySelector('#home-page').style.display = 'none';
+		//document.querySelector('#headerEditSeedPage').style.display = 'none';
+		document.querySelector('#edit-page').style.display = '';
+		document.querySelector('#maintenance').style.display = 'none';
+		document.querySelector('#instructions-page').style.display = 'none';
+		// Key packetId is read only
+		document.querySelector('#packetId').removeAttribute('required');
+		document.querySelector('#packetId').setAttribute('readonly', 'readonly');
+	}
+	showScrollPackets() {
+		this.clearFields();
+		//document.title = 'Scroll Pkt Records';
+		document.querySelector('#new-pkt-buttons').style.display = 'none';
+		document.querySelector('#toolbarButtons').style.display = '';
+		document.querySelector('#scrollRecordsButtons').style.display = 'none';
 		document.querySelector('#home-page').style.display = 'none';
 		document.querySelector('#edit-page').style.display = '';
-		document.querySelector('#openBackupPageId').style.display = 'none';
-		document.querySelector('#helpPageId').style.display = 'none';
-		// Key packetId is read only
+		document.querySelector('#maintenance').style.display = 'none';
+		document.querySelector('#instructions-page').style.display = 'none';
 		document.querySelector('#packetId').removeAttribute('required');
 		document.querySelector('#packetId').setAttribute('readonly', 'readonly');
 	}
 	showBackupRestore() {
 		//document.title = 'Backup & Restore';
-		document.querySelector('#home-page').style.display = 'none';
-		document.querySelector('#toolbarButtons').style.display = 'none';
-		document.querySelector('#edit-page').style.display = 'none';
-		document.querySelector('#openBackupPageId').style.display = '';
-		document.querySelector('#helpPageId').style.display = 'none';
-	}
-	showHelpPage() {
-	  document.querySelector('#toolbarButtons').style.display = '';
+		document.querySelector('#retrieve-data-button').style.display = '';
 		document.querySelector('#home-page').style.display = 'none';
 		document.querySelector('#edit-page').style.display = 'none';
-		document.querySelector('#openBackupPageId').style.display = 'none';
-		document.querySelector('#helpPageId').style.display = '';
+		document.querySelector('#maintenance').style.display = '';
+		document.querySelector('#instructions-page').style.display = 'none';
+		//document.querySelector('#dbError').style.display = ''
 	}
-
+	showDbError() {
+		//=> checks if pages are hidden before loading error page on start
+		//document.title = 'DB Error';
+		//=> on start up if db fails this page will be loaded
+		document.querySelector('#retrieve-data-button').style.display = 'none';
+		document.querySelector('#home-page').style.display = 'none';
+		document.querySelector('#edit-page').style.display = 'none';
+		document.querySelector('#maintenance').style.display = '';
+		document.querySelector('#instructions-page').style.display = 'none';
+		document.querySelector('#dbError').style.display = ''
+	}
+	showInstructions() {
+		//=> page for instructions
+		//this.clearFields();
+		//document.title = 'Instructions';
+		//document.querySelector('#seed-entry').style.display = 'none';
+		document.querySelector('#home-page').style.display = 'none';
+		document.querySelector('#edit-page').style.display = 'none';
+		document.querySelector('#maintenance').style.display = 'none';
+		document.querySelector('#instructions-page').style.display = '';
+	}
+	//menu and scroll
+/*	toggleMenu() {
+		//=> toggle function using class lists on click of the hamburger menu
+		const closedMenu = document.querySelector('.js-menu-hamburger--closed');
+		closedMenu.classList.toggle('js-menu-hamburger--opened');
+	}*/
 	scrollToBottom() { //=> function activated on click of down arrow
 		if (document.documentElement.scrollHeight > document.documentElement.clientHeight) {
 			const scrollHeight = document.documentElement.scrollHeight;
@@ -405,7 +448,7 @@ class Controller {
 		//this.view.bindScrollPacketsPage( () => { this.requestScrollPacketsPage(); });
 		this.view.bindBackupRestorePage( () => { this.requestBackupRestorePage(); });
 		//this.view.bindDbErrorPage(() => { this.requestDbErrorPage(); });
-		this.view.bindHelpPage( () => { this.requestHelpPage(); });
+		this.view.bindInstructionsPage( () => { this.requestHelpPage(); });
 		this.view.bindEditPacket( (packetId) => { this.editPacketRequestHandler(packetId); });
 		// bindings table sort
 		this.view.bindSortGroup( () => { this.requestSortedPacketList('group'); });
@@ -483,7 +526,7 @@ class Controller {
 	}
 	requestHelpPage() {
 		// designed to show specific instructions when clicked on ? anywhere
-		this.view.showHelpPage();
+		this.view.showInstructions();
 		//await this.findHelpTopic();
 	}
 	async fixCorruptDB() {
