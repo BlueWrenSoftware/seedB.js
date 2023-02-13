@@ -267,20 +267,21 @@ bindBackupRestorePage(handler) { // Backup & Restore Page
 		// Adds a packet as a row to packet list
 		const list = document.querySelector('#seed-list');
 		const row = document.createElement('tr');
+		row.className = `table__row--color`;
 		const edit = document.createElement('td');
-		edit.className = 'edit-record';
-		edit.setAttribute("title", "Edit Record");
+		edit.className = `table__data table__data--edit`;
+		//edit.setAttribute("title", "Edit Record");
 		edit.addEventListener('click', () => {this.editPacketRequestHandler(
 		packet.packetId)}, false);
 		row.innerHTML =
-			`<td>${packet.group}</td>
-						<td>${packet.variety}</td>
-						<td>${packet.packetId}</td>
-						<td class='table-seeds__col--center'>${(packet.date).substring(2)}</td>
-						<td class='table-seeds__col--center'>${packet.number}</td>
-						<td class='table-seeds__col--center'>${packet.weight}</td>
-						<td class='table-seeds__col--center'>${packet.cost}</td>
-						`;
+			`<td class="table__data">${packet.group}</td>
+			 <td class="table__data">${packet.variety}</td>
+			 <td class="table__data">${packet.packetId}</td>
+			 <td class="table__data table__data--center">${(packet.date).substring(2)}</td>
+			 <td class="table__data table__data--center">${packet.number}</td>
+			 <td class="table__data table__data--center">${packet.weight}</td>
+			 <td class="table__data table__data--right">${packet.cost}</td>
+			 `;
 		row.appendChild(edit);
 		list.appendChild(row);
 	}
@@ -334,7 +335,7 @@ bindBackupRestorePage(handler) { // Backup & Restore Page
 			document.getElementById('showHide').classList.remove('js-all-pages--none');
 		}
 		//document.title = 'SeedB List'; //=> Page at startup being the seed list
-		document.querySelector('#home-page').style.display = '';
+		document.querySelector('#homePage').style.display = '';
 		document.querySelector('#edit-page').style.display = 'none';
 		document.querySelector('#maintenance').style.display = 'none';
 		document.querySelector('#instructions-page').style.display = 'none';
@@ -347,7 +348,7 @@ bindBackupRestorePage(handler) { // Backup & Restore Page
 		//document.querySelector('#new-pkt-buttons').style.display = 'none';
 		document.querySelector('#toolbarButtons').style.display = '';
 		//document.querySelector('#scrollRecordsButtons').style.display = 'none';
-		document.querySelector('#home-page').style.display = 'none';
+		document.querySelector('#homePage').style.display = 'none';
 		//document.querySelector('#headerEditSeedPage').style.display = 'none';
 		document.querySelector('#edit-page').style.display = '';
 		document.querySelector('#maintenance').style.display = 'none';
@@ -362,7 +363,7 @@ bindBackupRestorePage(handler) { // Backup & Restore Page
 		//document.querySelector('#headerAddSeedPage').style.display = 'none';
 		//document.querySelector('#new-pkt-buttons').style.display = 'none';
 		//document.querySelector('#scrollRecordsButtons').style.display = 'none';
-		document.querySelector('#home-page').style.display = 'none';
+		document.querySelector('#homePage').style.display = 'none';
 		//document.querySelector('#headerEditSeedPage').style.display = 'none';
 		document.querySelector('#edit-page').style.display = '';
 		document.querySelector('#maintenance').style.display = 'none';
@@ -377,7 +378,7 @@ bindBackupRestorePage(handler) { // Backup & Restore Page
 		document.querySelector('#new-pkt-buttons').style.display = 'none';
 		document.querySelector('#toolbarButtons').style.display = '';
 		document.querySelector('#scrollRecordsButtons').style.display = 'none';
-		document.querySelector('#home-page').style.display = 'none';
+		document.querySelector('#homePage').style.display = 'none';
 		document.querySelector('#edit-page').style.display = '';
 		document.querySelector('#maintenance').style.display = 'none';
 		document.querySelector('#instructions-page').style.display = 'none';
@@ -387,7 +388,7 @@ bindBackupRestorePage(handler) { // Backup & Restore Page
 	showBackupRestore() {
 		//document.title = 'Backup & Restore';
 		document.querySelector('#retrieve-data-button').style.display = '';
-		document.querySelector('#home-page').style.display = 'none';
+		document.querySelector('#homePage').style.display = 'none';
 		document.querySelector('#edit-page').style.display = 'none';
 		document.querySelector('#maintenance').style.display = '';
 		document.querySelector('#instructions-page').style.display = 'none';
@@ -398,7 +399,7 @@ bindBackupRestorePage(handler) { // Backup & Restore Page
 		//document.title = 'DB Error';
 		//=> on start up if db fails this page will be loaded
 		document.querySelector('#retrieve-data-button').style.display = 'none';
-		document.querySelector('#home-page').style.display = 'none';
+		document.querySelector('#homePage').style.display = 'none';
 		document.querySelector('#edit-page').style.display = 'none';
 		document.querySelector('#maintenance').style.display = '';
 		document.querySelector('#instructions-page').style.display = 'none';
@@ -409,7 +410,7 @@ bindBackupRestorePage(handler) { // Backup & Restore Page
 		//this.clearFields();
 		//document.title = 'Instructions';
 		//document.querySelector('#seed-entry').style.display = 'none';
-		document.querySelector('#home-page').style.display = 'none';
+		document.querySelector('#homePage').style.display = 'none';
 		document.querySelector('#edit-page').style.display = 'none';
 		document.querySelector('#maintenance').style.display = 'none';
 		document.querySelector('#instructions-page').style.display = '';

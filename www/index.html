@@ -11,67 +11,66 @@
 
 <body>
 
-<div id="root" class="screen">
+<body class="app" id="root">
+<div  class="screen app__screen">
   <!--Menu Button Tool Bar-->
-  <nav id="toolbarButtons"  class="buttons-container">
-    <button class="selected" type="button" 
-      title="Previous record." > 
-      <img src="./images/nav-arrow-left.svg"></button>
-    <button class="selected" type="button" 
-      title="Next record.">
-      <img src="./images/nav-arrow-right.svg"></button>
-    <button class="selected" type="button" 
-      title="Help on buttons.">
-      <img src="./images/help-no-circle.svg"></button>
-    <button class="selected  openHomePage" type="button" 
-      title="Back to List. Current &#010;record not saved.">
-      <img src="./images/home.svg"></button>
-    <button class="selected openBackupRestorePage" type="button" 
-      title="Database Maintenanced">
-      <img src="./images/tools.svg"></button>
-    <button class="selected" type="button" 
-      title="Edit scrolled record.">
-      <img src="./images/edit.svg"></button>
-    <button class="selected openNewPacketPage" type="button" 
-      title="Create new record.">
-      <img src="./images/add-page.svg"></button>
-    <button class="selected " type="button" id="btnCopyRecord" 
-      title="Copy record, unlock ID. &#010;Create new ID and record."><img 
-      src="./images/copy.svg"></button>
-    <button class="selected " type="button" id="" 
-      title="Reload."><img src="./images/reset-form.svg" height="17"></button>
-    <button class="selected " type="button" id="btnSubmitEditRecord" 
-      title="Save current record."><img src="./images/save-floppy-disk.svg" ></button>
-    <button class="selected" type="button" id="btnDeleteRecord" 
-      title="Delete current record."><img src="./images/bin-full.svg"></button>
-    <input class="input-search-icon" placeholder="Find" type="text" 
-      title="Find entered text."></input>
-    <button class="selected" type="button" id="" 
-      title="Find entered text."><img src="./images/input-search.svg"></button>
-  </nav>
+    <nav class="btn-menu screen__btn-menu" id="toolbarButtons">    
+      <button class="btn-menu__items" type="button" 
+        title="Previous record." > 
+        <img src="./images/nav-arrow-left.svg"></button>
+      <button class="btn-menu__items" type="button" 
+        title="Next record.">
+        <img src="./images/nav-arrow-right.svg"></button>
+      <button class="openHelpPage btn-menu__items" type="button" 
+        title="Help on buttons.">
+        <img src="./images/help-no-circle.svg"></button>
+      <button class="btn-menu__items  openHomePage" type="button" 
+        title="Back to List. Current &#010;record not saved.">
+        <img src="./images/home.svg"></button>
+      <button class="btn-menu__items openBackupRestorePage" type="button" 
+        title="Backup operations.">
+        <img src="./images/tools.svg"></button>
+      <button class="btn-menu__items" type="button" 
+        title="Edit scrolled record.">
+        <img src="./images/edit.svg"></button>
+      <button class="btn-menu__items openNewPacketPage" type="button" 
+        title="Create new record.">
+        <img src="./images/add-page.svg"></button>
+      <button class="btn-menu__items " type="button" id="btnCopyRecord" 
+        title="Copy record, unlock ID. &#010;Create new ID and record."><img 
+        src="./images/copy.svg"></button>
+      <button class="btn-menu__items " type="button" id="" 
+        title="Reload."><img src="./images/reset-form.svg" height="17"></button>
+      <button class="btn-menu__items " type="button" id="btnSubmitEditRecord" 
+        title="Save current record."><img src="./images/save-floppy-disk.svg" ></button>
+      <button class="btn-menu__items" type="button" id="btnDeleteRecord" 
+        title="Delete current record."><img src="./images/bin-full.svg"></button>
+      <input class="btn-menu__items--search" placeholder="Find" type="text" 
+        title="Find entered text."></input>
+      <button class="btn-menu__items" type="button" id="" 
+        title="Find entered text."><img src="./images/input-search.svg"></button>
+    </nav>
   <!-- Pages -->
-  <div id="showHide" class="js-all-pages--none">
-    <!-- Home Page -->
-    <section id="home-page">
-      <!-- Table of Records -->
-      <table width="100%" class="table-seeds table-seeds__row-color" id="mytable">
+<div id="showHide" class="js-all-pages--none">
+<section id="homePage">
+    <!-- Table of Records -->
+      <table  class="home-page__table table
+       table-seeds__row-color" >
         <thead>
           <tr>
-            <th class="sort" id="sortGroup">Group</th>
-            <th class="sort" id="sortVariety">Variety</th>
-            <th class="sort" id="sortPacketId">Package Id</th>
-            <th class="sort" id="sortDate">Date</th>
-            <th class="" id="">Num</th>
-            <th class="" id="">Gram</th>
-            <th class="" id="">Cost</th>
-            <th>Edit</th>
+            <th class="table__header table__header--sort" id="sortGroup">Group</th>
+            <th class="table__header table__header--sort" id="sortVariety">Variety</th>
+            <th class="table__header table__header--sort" id="sortPacketId">Package Id</th>
+            <th class="table__header table__header--sort" id="sortDate">Date</th>
+            <th class="table__header table__header--sort" id="">Num</th>
+            <th class="table__header table__header--sort" id="">Gram</th>
+            <th class="table__header table__header--sort" id="">Cost</th>
+            <th class="table__header">Edit</th>
           </tr>
         </thead>
         <tbody id="seed-list"></tbody>
       </table>
     </section>
-
-    <!-- Data Entry Page -->
     <section id="edit-page">
       <!-- Data Entry Edit Form -->      
       <form id="seed-entry">
