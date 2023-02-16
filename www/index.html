@@ -14,91 +14,92 @@
 <body class="app" id="root">
 <div  class="screen app__screen">
   <!--Menu Button Tool Bar-->
-    <nav class="btn-menu screen__btn-menu" id="toolbarButtons">    
-      <button class="btn-menu__items" type="button" 
-        title="Previous record." > 
-        <img src="./images/nav-arrow-left.svg"></button>
-      <button class="btn-menu__items" type="button" 
-        title="Next record.">
-        <img src="./images/nav-arrow-right.svg"></button>
-      <button class="openHelpPage btn-menu__items" type="button" 
-        title="Help on buttons.">
-        <img src="./images/help-no-circle.svg"></button>
-      <button class="btn-menu__items  openHomePage" type="button" 
-        title="Back to List. Current &#010;record not saved.">
-        <img src="./images/home.svg"></button>
-      <button class="btn-menu__items openBackupRestorePage" type="button" 
-        title="Backup operations.">
-        <img src="./images/tools.svg"></button>
-      <button class="btn-menu__items" type="button" 
-        title="Edit scrolled record.">
-        <img src="./images/edit.svg"></button>
-      <button class="btn-menu__items openNewPacketPage" type="button" 
-        title="Create new record.">
-        <img src="./images/add-page.svg"></button>
-      <button class="btn-menu__items " type="button" id="btnCopyRecord" 
-        title="Copy record, unlock ID. &#010;Create new ID and record."><img 
-        src="./images/copy.svg"></button>
-      <button class="btn-menu__items " type="button" id="" 
-        title="Reload."><img src="./images/reset-form.svg" height="17"></button>
-      <button class="btn-menu__items " type="button" id="btnSubmitEditRecord" 
-        title="Save current record."><img src="./images/save-floppy-disk.svg" ></button>
-      <button class="btn-menu__items" type="button" id="btnDeleteRecord" 
-        title="Delete current record."><img src="./images/bin-full.svg"></button>
-      <input class="btn-menu__items--search" placeholder="Find" type="text" 
-        title="Find entered text."></input>
-      <button class="btn-menu__items" type="button" id="" 
-        title="Find entered text."><img src="./images/input-search.svg"></button>
-    </nav>
+  <nav class="btn-menu screen__btn-menu" id="toolbarButtons">    
+    <button class="btn-menu__items" type="button" 
+      title="Previous record." > 
+      <img src="./images/nav-arrow-left.svg"></button>
+    <button class="btn-menu__items" type="button" 
+      title="Next record.">
+      <img src="./images/nav-arrow-right.svg"></button>
+    <button class="openHelpPage btn-menu__items" type="button" 
+      title="Help on buttons.">
+      <img src="./images/help-no-circle.svg"></button>
+    <button class="btn-menu__items  openHomePage" type="button" 
+      title="Back to List. Current &#010;record not saved.">
+      <img src="./images/home.svg"></button>
+    <button class="btn-menu__items openBackupRestorePage" type="button" 
+      title="Backup operations.">
+      <img src="./images/tools.svg"></button>
+    <button class="btn-menu__items" type="button" 
+      title="Edit scrolled record.">
+      <img src="./images/edit.svg"></button>
+    <button class="btn-menu__items openNewPacketPage" type="button" 
+      title="Create new record.">
+      <img src="./images/add-page.svg"></button>
+    <button class="btn-menu__items " type="button" id="btnCopyRecord" 
+      title="Copy record, unlock ID. &#010;Create new ID and record."><img 
+      src="./images/copy.svg"></button>
+    <button class="btn-menu__items " type="button" id="" 
+      title="Reload."><img src="./images/reset-form.svg" height="17"></button>
+    <button class="btn-menu__items " type="button" id="btnSubmitEditRecord" 
+      title="Save current record."><img src="./images/save-floppy-disk.svg" ></button>
+    <button class="btn-menu__items" type="button" id="btnDeleteRecord" 
+      title="Delete current record."><img src="./images/bin-full.svg"></button>
+    <input class="btn-menu__items--search" placeholder="Find" type="text" 
+      title="Find entered text."></input>
+    <button class="btn-menu__items" type="button" id="" 
+      title="Find entered text."><img src="./images/input-search.svg"></button>
+  </nav>
   <!-- Pages -->
 <div id="showHide" class="js-all-pages--none">
-<section id="homePage">
+  <section id="homePage">
     <!-- Table of Records -->
-      <table  class="home-page__table table
-       table-seeds__row-color" >
-        <thead>
-          <tr>
-            <th class="table__header table__header--sort" id="sortGroup">Group</th>
-            <th class="table__header table__header--sort" id="sortVariety">Variety</th>
-            <th class="table__header table__header--sort" id="sortPacketId">Package Id</th>
-            <th class="table__header table__header--sort" id="sortDate">Date</th>
-            <th class="table__header table__header--sort" id="">Num</th>
-            <th class="table__header table__header--sort" id="">Gram</th>
-            <th class="table__header table__header--sort" id="">Cost</th>
-            <th class="table__header">Edit</th>
-          </tr>
-        </thead>
-        <tbody id="seed-list"></tbody>
-      </table>
-    </section>
-    <section id="edit-page">
-      <!-- Data Entry Edit Form -->      
-      <form id="seed-entry">
-        <p>*&emsp;Input required.</p>
-        <p>**&ensp;Seed Packet Id must be unique!</p>
-        <label for="group">*&nbsp;Group: </label>
-        <input type="text" id="group" name="group" required="required"><br>
-        <label for="variety">*&nbsp;Variety: </label>
-        <input type="text" id="variety" name="variety" required="required"><br>
-        <label for="packetId">**&nbsp;Packet ID:</label>
-        <input type="text" id="packetId" class="no-edit" name="packetId"><br>
-        <label for="number">&nbsp;Count:</label>
-        <input type="number" id="number" name="number" value=0><br>
-        <label for="weight">&nbsp;Grams:</label>
-        <input type="number" id="weight" name="weight" value=0><br>
-        <label for="number">&nbsp;Cost:</label>
-        <input type="number" id="cost" name="cost" value=0><br>
-        <label for="date">*&nbsp;Packaged:</label>
-        <input type="date" id="date" name="date" required="required"><br>
-        <label for="timeStamp">Timestamp:</label>
-        <input type="number" readonly="readonly" class="no-edit" id="timeStamp" name="timeStamp"><br>
-        <label class="notes" for="seedNotes">Notes:</label>
-        <textarea rows="2" name="seedNotes" id="seedNotes"></textarea><br>
-       </form>
-        <div id="insert-form-alerts">
-          <p id="pkt-message"></p>
-        </div>
-      </section>
+    <table  class="home-page__table table
+     table-seeds__row-color" >
+      <thead>
+        <tr class="table__header">
+          <th class="table__header--sort" id="sortPacketId">Package Id</th>
+          <th class="table__header--sort" id="sortVariety">Variety</th>          
+          <th class="table__header--sort" id="sortGroup">Group</th>
+          <th class="table__header--sort" id="">Num</th>
+          <th class="table__header--sort" id="">Gram</th>
+          <th class="table__header--sort" id="">Cost</th>
+          <th class="table__header--sort" id="sortDate">Date</th>
+          <th class="table__header--no-sort">Edit</th>
+        </tr>
+      </thead>
+      <tbody id="seed-list"></tbody>
+    </table>
+  </section>
+  <section class="edit-page" id="edit-page">
+    <!-- Data Entry Edit Form -->      
+    <form class=".form"id="seed-entry">
+      <p>*&emsp;Input required.</p>
+      <p>**&ensp;Seed Packet Id must be unique!</p>
+      <label class="form form__label" for="packetId">**&nbsp;Packet ID:</label>
+      <input type="text" class="form form__input form__input--gray" id="packetId" name="packetId"><br>
+      <label class="form form__label" for="variety">*&nbsp;Variety: </label>
+      <input type="text" class="form form__input" id="variety" name="variety" required="required"><br>
+      <label class="form form__label" for="group">*&nbsp;Group: </label>
+      <input type="text" class="form form__input" id="group" name="group" required="required"><br>          
+      <label class="form form__label" for="number">&nbsp;Count:</label>
+      <input type="number" class="form form__input" id="number" name="number" value=0><br>     
+      <label class="form form__label" for="weight">&nbsp;Grams:</label>
+      <input type="number" class="form form__input" id="weight" name="weight" value=0><br>     
+      <label class="form form__label" for="number">&nbsp;Cost:</label>
+      <input type="number" class="form form__input" id="cost" name="cost" value=0><br>   
+      <label class="form form__label" for="date">*&nbsp;Packaged:</label>
+      <input type="date" class="form form__input" id="date" name="date" required="required"><br>    
+      <label class="form form__label" for="timeStamp">Timestamp:</label>
+      <input type="text" class="form form__input form__input--gray" readonly="readonly" id="timeStamp" 
+      name="timeStamp"><br>     
+      <label class="form form__label" for="seedNotes">Notes:</label>
+      <textarea class="form form__textarea" rows="4" name="seedNotes" id="seedNotes"></textarea><br>
+    </form>
+    <aside id="insert-form-alerts">
+    <p id="pkt-message"></p>
+    </aside>  
+  </section>
 
       <!-- Maintenance Page -->
       <section id="maintenance">

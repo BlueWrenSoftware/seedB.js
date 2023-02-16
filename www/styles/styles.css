@@ -28,7 +28,7 @@ header, section, article, figure, figcaption, nav, footer, video, address, dialo
   margin: 0;
   padding: 0;
   border: 0;
-  font: inherit;
+  font:inherit;
 	vertical-align: baseline;
 }
 /* Default element settings for this document */
@@ -47,12 +47,21 @@ html:focus {
 }
 /* End of default settings for this document */
 .body {}
+@font-face {
+  font-family: vusanswoff;
+  src: url("../fonts/dejavu.woff2") format("woff2");
+  font-style: normal;
+}
+@font-face {
+  font-family: vumonowoff;
+  src: url("../fonts/dejavumono.woff2") format("truetype");
+  font-style: normal;
+}
 .app {
-  font-family: VuSans, sans-serif;
+  font-family: vusanswoff, sans-serif;
   background-color: #fdfdf0;
 }
-.screen {
-}
+.screen {}
 .app__screen {
   width: 500px;
   margin: 0 auto;
@@ -98,6 +107,8 @@ html:focus {
 .btn-menu__items:hover {
   background-color:#C5C5C5;
 }
+/* Home Page */
+.home-page {}
 .home-page__table {
   margin-top: 1rem;
   margin-left: auto;
@@ -109,22 +120,27 @@ html:focus {
   border: 2px solid #ccc;
   table-layout: auto;
 }
-.table__header {
-  padding: 0.2rem;
-  border: 2px solid #ccc;
+.table__header {  
   background-color: #F6DA74;
   text-align: center;
-  font-size: 1.1rem;
-  /*font-weight: bold;*/
+  font-size: 1.15rem;
+/*  font-weight: bold;*/
 }
 .table__header--sort {
+  padding: 0.2rem;
+  border: 2px solid #ccc;
+  cursor: pointer;
+}
+.table__header--no-sort {
+  padding: 0.2rem;
+  border: 2px solid #ccc;
   cursor: pointer;
 }
 .table__data {
   padding:0.2rem;
   border: 2px solid #ccc;
   line-height: normal;
-  font-size:1.1rem;
+  font-size:1.15rem;
 }
 .table__data--center {
   text-align: center;
@@ -148,7 +164,112 @@ html:focus {
   background: #fdfdf0;
 }
 /* Edit Page */
+.edit-page{
+  /*font-size: 1.2rem;*/
+}
+.form {
+  font-size: 1.2rem;
+}
+.form__input {
+  padding: 0.1rem;
+  margin: 0.2rem;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+.form__input[type=text] {
+  width: 25%; 
+}
+.form__input[type=number] {
+  width: 15%;
+  font-family: vumonowoff, monospace;
+}
+.form__input[type=date] {
+  width: 20%;
+  font-family: vumonowoff, monospace;
+}
+.form__input--gray {
+  background-color: #E8E8E8;
+  font-family: vumonowoff, monospace;
+}
+.form__textarea {
+  display: inline-block;
+  padding: 0.1rem;
+  margin: 0.2rem;
+  width: 30%;
+  text-align: left;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+.form__label {
+  vertical-align: top;
+  display: inline-block;
+  width: 30%;
+  text-align: right;
+}
 
+/*label.notes {
+  vertical-align: top;
+}*/
+/*form label {
+  display: inline-block;
+  width: 30%;
+  text-align: right;
+  font-size: 1.2rem;
+}*/
+
+.
+label.db-process {
+  font-size: 0.9rem;
+  display: inline-block;
+}
+
+
+
+
+
+ul.message {
+  font-size: 0.85rem;
+  margin-bottom: 0.7rem;
+  list-style-type: square;
+  list-style-position: inside;
+}
+ 
+.buttons-db-container {
+  display: flex;
+  flex-grow: wrap;
+  justify-content: left;
+  gap: 0.35rem;
+  box-sizing: content-box; 
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  margin-top: 0.5rem;
+  margin-bottom: 0.7rem;
+}
+
+.selected-db {
+  display: block;
+  background-color: unset;
+  color:black;
+  height: 1.5rem;
+  border: none;
+  cursor: pointer;
+}
+
+.selected-db:hover {
+  background-color:#C5C5C5;
+}
+
+section.borders {
+  /*margin-top: 0.3rem;*/
+  /*border-top: 0.025rem solid #CCCCCC;*/
+  border-bottom: 0.025rem solid #CCCCCC;
+}
+
+section.indent p, nav, ul {
+  margin-left: 1rem;
+}
 /*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 h1 {
   font-size: 1.65rem;
@@ -204,17 +325,7 @@ a:active {
 
 /* DejaVu font settings */
 
-@font-face {
-  font-family: VuSans;
-  src: url("../fonts/DejaVuSans.ttf") format("truetype");
-  font-style: normal;
-}
 
-  @font-face {
-  font-family: VuMono;
-  src: url("../fonts/DejaVuSansMono.ttf") format("truetype");
-  font-style: normal;
-}
 
 
 
@@ -270,42 +381,10 @@ a:active {
 }
 
 /* Latest changes - might have to rename classes according to BEM */
-input {
-  font-size: 0.9rem;
-}
-
-input[type=text] {
-  width: 30%;
-  padding: 0.1rem;
-  margin: 0.2rem;
-  display: inline-block;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-}
-input[type=number] {
-  width: 20%;
-  font-family: VuMono, monospace;
-  padding: 0.1rem;
-  margin: 0.2rem;
-  display: inline-block;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-}
-input[type=date] {
-  width: 20%;
-  font-family: VuMono, monospace;
-  padding: 0.1rem;
-  margin: 0.2rem;
-  display: inline-block;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-}
-input.no-edit {
-  background-color: #E8E8E8;
-}
 
 
-.select-delete {
+
+/*.select-delete {
   display: inline-block;
   background-color: #E8E8E8;
   color: black;
@@ -315,21 +394,13 @@ input.no-edit {
   border: none;
   border-radius: 4px;
   cursor: pointer;
-}
-.select-delete:hover {
+}*/
+/*.select-delete:hover {
   background-color: #CFCFCF;
-}
+}*/
 
-form label {
-  display: inline-block;
-  width: 30%;
-  text-align: right;
-  font-size: .85rem;
-}
 
-label.notes {
-  vertical-align: top;
-}
+
 
 
 
@@ -378,18 +449,6 @@ div.alert {
 }
 
 
-textarea {
-  font-family: VuSans, sans-serif;
-  font-size: 0.9rem;
-  display: inline-block;
-  width: 30%;
-  text-align: left;
-  padding: 0.1rem;
-  margin: 0.2rem;
-  display: inline-block;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-}
 
 
 
@@ -424,51 +483,5 @@ img {
   height: 100%;
 }
 
-label.db-process {
-  font-size: 0.9rem;
-  display: inline-block;
-}
 
-ul.message {
-  font-size: 0.85rem;
-  margin-bottom: 0.7rem;
-  list-style-type: square;
-  list-style-position: inside;
-}
- 
-.buttons-db-container {
-  display: flex;
-  flex-grow: wrap;
-  justify-content: left;
-  gap: 0.35rem;
-  box-sizing: content-box; 
-  align-items: center;
-  text-align: center;
-  width: 100%;
-  margin-top: 0.5rem;
-  margin-bottom: 0.7rem;
-}
-
-.selected-db {
-  display: block;
-  background-color: unset;
-  color:black;
-  height: 1.5rem;
-  border: none;
-  cursor: pointer;
-}
-
-.selected-db:hover {
-  background-color:#C5C5C5;
-}
-
-section.borders {
-  /*margin-top: 0.3rem;*/
-  /*border-top: 0.025rem solid #CCCCCC;*/
-  border-bottom: 0.025rem solid #CCCCCC;
-}
-
-section.indent p, nav, ul {
-  margin-left: 1rem;
-}
 

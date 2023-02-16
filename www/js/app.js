@@ -274,13 +274,13 @@ bindBackupRestorePage(handler) { // Backup & Restore Page
 		edit.addEventListener('click', () => {this.editPacketRequestHandler(
 		packet.packetId)}, false);
 		row.innerHTML =
-			`<td class="table__data">${packet.group}</td>
+			`<td class="table__data">${packet.packetId}</td>		
 			 <td class="table__data">${packet.variety}</td>
-			 <td class="table__data">${packet.packetId}</td>
-			 <td class="table__data table__data--center">${(packet.date).substring(2)}</td>
+			 <td class="table__data">${packet.group}</td>
 			 <td class="table__data table__data--center">${packet.number}</td>
 			 <td class="table__data table__data--center">${packet.weight}</td>
 			 <td class="table__data table__data--right">${packet.cost}</td>
+			 <td class="table__data table__data--center">${(packet.date).substring(2)}</td>
 			 `;
 		row.appendChild(edit);
 		list.appendChild(row);
