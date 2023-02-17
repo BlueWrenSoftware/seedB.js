@@ -341,15 +341,9 @@ bindBackupRestorePage(handler) { // Backup & Restore Page
 		document.querySelector('#instructions-page').style.display = 'none';
 	}
 	showAddNewPacket() {
-		// this.clearFields();
-		// clearFields() only called from menu event, not from buttons
-		//document.title = 'New Seed Pkt';
-		//document.querySelector('#headerAddSeedPage').style.display = 'none';
-		//document.querySelector('#new-pkt-buttons').style.display = 'none';
+
 		document.querySelector('#toolbarButtons').style.display = '';
-		//document.querySelector('#scrollRecordsButtons').style.display = 'none';
 		document.querySelector('#homePage').style.display = 'none';
-		//document.querySelector('#headerEditSeedPage').style.display = 'none';
 		document.querySelector('#edit-page').style.display = '';
 		document.querySelector('#maintenance').style.display = 'none';
 		document.querySelector('#instructions-page').style.display = 'none';
@@ -680,3 +674,15 @@ window.onload = () => { controller.requestPacketListPage() };
 const fileNotes = document.getElementById('fileNotifications'); //=> alias for user msgs retrieving data & backup
 const errorMsg = document.getElementById('dbError');  //=> alias forDB error msgs for the UI
 const msgInstallDb = document.getElementById('installDbMsg'); //=> alias for UI installation msgs
+
+function warning() {
+  var userPreference;
+
+			if (confirm("Do you want to save changes?") == true) {
+				userPreference = "Data saved successfully!";
+			} else {
+				userPreference = "Save Canceled!";
+			}
+
+			document.getElementById("msg").innerHTML = userPreference; 
+		}
