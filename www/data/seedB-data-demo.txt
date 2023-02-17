@@ -2,28 +2,6 @@
   {
     "group": "Vegetables",
     "variety": "Artichoke",
-    "packetId": "artichoke-1",
-    "number": 100,
-    "weight": 200,
-    "cost": "10",
-    "date": "2021-11-19",
-    "timeStamp": 1674974294470,
-    "seedNotes": "cropping very well. Planted in the large area of the garden."
-  },
-  {
-    "group": "Vegetables",
-    "variety": "Artichoke",
-    "packetId": "artichoke-2",
-    "number": 11,
-    "weight": 12,
-    "cost": "10",
-    "date": "2022-02-01",
-    "timeStamp": 1674974466185,
-    "seedNotes": ""
-  },
-  {
-    "group": "Vegetables",
-    "variety": "Artichoke",
     "packetId": "artichoke-3",
     "number": 10,
     "weight": 10,
@@ -46,17 +24,6 @@
   {
     "group": "Vegetables",
     "variety": "Artichoke",
-    "packetId": "bartichoke-1",
-    "number": 100,
-    "weight": 200,
-    "cost": "10",
-    "date": "2021-11-19",
-    "timeStamp": 1674974592757,
-    "seedNotes": "cropping very well. Planted in the large area of the garden."
-  },
-  {
-    "group": "Vegetables",
-    "variety": "Artichoke",
     "packetId": "xartichoke-1",
     "number": 100,
     "weight": 200,
@@ -68,23 +35,12 @@
   {
     "group": "Vegetables",
     "variety": "Carrot",
-    "packetId": "Karrot-1",
-    "number": 526,
-    "weight": 12,
-    "cost": "1000",
-    "date": "2020-05-05",
-    "timeStamp": 1674976315213,
-    "seedNotes": "from garden.\nDoing better then commercial seeds"
-  },
-  {
-    "group": "Vegetables",
-    "variety": "Carrot",
     "packetId": "carrot-1",
     "number": 526,
     "weight": 10,
-    "cost": "",
+    "cost": "0",
     "date": "2020-05-05",
-    "timeStamp": 1674976300324,
+    "timeStamp": 1676263858869,
     "seedNotes": "from garden.\nDoing better then commercial seeds"
   },
   {
@@ -165,14 +121,14 @@
     "seedNotes": ""
   },
   {
-    "group": "Trees",
-    "variety": "Crofton",
     "packetId": "crofton-2",
+    "variety": "Crofton",
+    "group": "Trees",
     "number": 5000,
     "weight": 0,
-    "cost": "3.6",
+    "cost": "168.00",
     "date": "2022-07-13",
-    "timeStamp": 1674974699943,
+    "timeStamp": 1676615915433,
     "seedNotes": ""
   },
   {
@@ -286,14 +242,14 @@
     "seedNotes": "from garden"
   },
   {
-    "group": "Vegetables",
-    "variety": "Pumpkin",
     "packetId": "pumpkin-1",
+    "variety": "Pumpkin",
+    "group": "Vegetables",
     "number": 10,
-    "weight": 10,
+    "weight": 168,
     "cost": "5.80",
     "date": "2022-07-05",
-    "timeStamp": 1674974791682,
+    "timeStamp": 1676615814244,
     "seedNotes": ""
   },
   {

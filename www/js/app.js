@@ -139,9 +139,11 @@ class View {
 		this.sortVarietyLinkElement = document.getElementById('sortVariety');
 		this.sortPacketIdLinkElement = document.getElementById('sortPacketId');
 		this.sortDateLinkElement = document.getElementById('sortDate');
-		//this.sortNumberLinkElement = document.getElementById('sortNumber');
-		//this.sortWeightLinkElement = document.getElementById('sortWeight');
+		this.sortNumberLinkElement = document.getElementById('sortNumber');
+		this.sortWeightLinkElement = document.getElementById('sortWeight');
+		this.sortCostLinkElement = document.getElementById('sortCost');
 		// Button events
+		this.btnCopyRecordLinkElement = document.querySelector('#btnCopyRecord');
 		this.btnSubmitEditRecordLinkElement = document.querySelector('#btnSubmitEditRecord');
 		this.btnSubmitNewRecordLinkElement = document.querySelector('#btnSubmitNewRecord');
 		this.btnDeleteRecordLinkElement = document.querySelector('#btnDeleteRecord');
@@ -205,16 +207,23 @@ bindBackupRestorePage(handler) { // Backup & Restore Page
 	bindSortDate(handler) {
 		this.sortDateLinkElement.addEventListener('click', handler, false);
 	}
-//  bindSortNumber(handler) {
-//    this.sortNumberLinkElement.addEventListener('click', handler, false);
-//  }
-//  bindSortWeight(handler) {
-//    this.sortWeightLinkElement.addEventListener('click', handler, false);
-//  }
+  bindSortNumber(handler) {
+    this.sortNumberLinkElement.addEventListener('click', handler, false);
+  }
+  bindSortWeight(handler) {
+    this.sortWeightLinkElement.addEventListener('click', handler, false);
+  }
+  bindSortCost(handler) {
+    this.sortCostLinkElement.addEventListener('click', handler, false);
+  }
 	//edit, new packets
+	bindBtnCopyRecord(handler) {
+	  this.btnCopyRecordLinkElement.addEventListener('click', handler, false);
+	};
 	bindBtnSubmitEditRecord(handler) {
 		this.btnSubmitEditRecordLinkElement.addEventListener('click', handler, false);
 	};
+
 /*	bindBtnSubmitNewRecord(handler) {
 		this.btnSubmitNewRecordLinkElement.addEventListener('click', handler, false);
 	}*/
@@ -352,13 +361,8 @@ bindBackupRestorePage(handler) { // Backup & Restore Page
 		document.querySelector('#packetId').setAttribute('required', 'required');
 	}
 	showEditPacket() {
-		//document.title = 'Edit Seed Pkt';
 		document.querySelector('#toolbarButtons').style.display = '';
-		//document.querySelector('#headerAddSeedPage').style.display = 'none';
-		//document.querySelector('#new-pkt-buttons').style.display = 'none';
-		//document.querySelector('#scrollRecordsButtons').style.display = 'none';
 		document.querySelector('#homePage').style.display = 'none';
-		//document.querySelector('#headerEditSeedPage').style.display = 'none';
 		document.querySelector('#edit-page').style.display = '';
 		document.querySelector('#maintenance').style.display = 'none';
 		document.querySelector('#instructions-page').style.display = 'none';
@@ -461,20 +465,22 @@ class Controller {
 		this.view.bindSortVariety( () => { this.requestSortedPacketList('variety'); });
 		this.view.bindSortPacketId( () => { this.requestSortedPacketList('packetId'); });
 		this.view.bindSortDate( () => { this.requestSortedPacketList('date'); });
-//    this.view.bindSortNumber( () => { this.requestSortedPacketList('number'); });
-//    this.view.bindSortWeight( () => { this.requestSortedPacketList('weight'); });
+    this.view.bindSortNumber( () => { this.requestSortedPacketList('number'); });
+    this.view.bindSortWeight( () => { this.requestSortedPacketList('weight'); });
+    this.view.bindSortCost( () => { this.requestSortedPacketList('cost'); });
 		// bindings button events
 		this.view.bindBtnSubmitEditRecord( () => { this.requestAddRecord('editRecord'); });
 		//this.view.bindBtnSubmitNewRecord( () => { this.requestAddRecord('newRecord'); });
 		this.view.bindBtnDeleteRecord( () => { this.requestDeleteRecord(); });
 		this.view.bindBtnRetrieveData( () => { this.requestRetrieveAllData(); });
 		this.view.bindBtnReinstall( () => { this.fixCorruptDB(); });
+		this.view.bindBtnCopyRecord( () => { this.unlockPacketId();});
 		//bindings menu ans scroll
 		//this.view.bindMenuButton( () => { this.view.toggleMenu(); });
 		this.view.bindScrollTopBottomEvent( () => { this.view.scrollEvent(); });
 		this.view.bindScrollToBottomPage( () => { this.view.scrollToBottom(); });
 		this.view.bindScrollToTopPage( () => { this.view.scrollToTop(); });
-                this.view.bindBtnUploadBackupFile( this.restoreBackup );
+    this.view.bindBtnUploadBackupFile( this.restoreBackup );
 	}
 	async requestSortedPacketList(sortOn) {
 		if (sortOn !== undefined) {
@@ -553,6 +559,12 @@ class Controller {
 			}
 		}
 	};
+	unlockPacketId() {
+	 const element = document.querySelector('#packetId');
+	 element.removeAttribute('readonly');
+	 element.setAttribute('required', 'required');
+	 element.classList.remove("form__input--gray");
+	}
 	async loadRecord() {
 		// Get the content from the form fields
 		const formData = new FormData(document.getElementById('seed-entry'));
@@ -674,15 +686,3 @@ window.onload = () => { controller.requestPacketListPage() };
 const fileNotes = document.getElementById('fileNotifications'); //=> alias for user msgs retrieving data & backup
 const errorMsg = document.getElementById('dbError');  //=> alias forDB error msgs for the UI
 const msgInstallDb = document.getElementById('installDbMsg'); //=> alias for UI installation msgs
-
-function warning() {
-  var userPreference;
-
-			if (confirm("Do you want to save changes?") == true) {
-				userPreference = "Data saved successfully!";
-			} else {
-				userPreference = "Save Canceled!";
-			}
-
-			document.getElementById("msg").innerHTML = userPreference; 
-		}

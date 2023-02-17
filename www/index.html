@@ -51,9 +51,9 @@
           <th class="table__header--sort" id="sortPacketId">Package Id</th>
           <th class="table__header--sort" id="sortVariety">Variety</th>          
           <th class="table__header--sort" id="sortGroup">Group</th>
-          <th class="table__header--sort" id="">Num</th>
-          <th class="table__header--sort" id="">Gram</th>
-          <th class="table__header--sort" id="">Cost</th>
+          <th class="table__header--sort" id="sortNumber">Num</th>
+          <th class="table__header--sort" id="sortWeight">Gram</th>
+          <th class="table__header--sort" id="sortCost">Cost</th>
           <th class="table__header--sort" id="sortDate">Date</th>
           <th class="table__header--no-sort">Edit</th>
         </tr>
@@ -67,7 +67,7 @@
       <p>*&emsp;Input required.</p>
       <p>**&ensp;Seed Packet Id must be unique!</p>
       <label class="form form__label" for="packetId">**&nbsp;Packet ID:</label>
-      <input onclick="warning()" type="text" class="form form__input 
+      <input type="text" class="form form__input 
       form__input--gray" id="packetId" name="packetId"><br>
       <label class="form form__label" for="variety">*&nbsp;Variety: </label>
       <input type="text" class="form form__input" id="variety" name="variety" 
