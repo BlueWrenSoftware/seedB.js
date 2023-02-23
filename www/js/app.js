@@ -346,14 +346,16 @@ bindBackupRestorePage(handler) { // Backup & Restore Page
 		//document.title = 'SeedB List'; //=> Page at startup being the seed list
 		document.querySelector('#homePage').style.display = '';
 		document.querySelector('#edit-page').style.display = 'none';
+		document.querySelector('#backUp').style.display = 'none';
 		document.querySelector('#maintenance').style.display = 'none';
 		document.querySelector('#instructions-page').style.display = 'none';
 	}
 	showAddNewPacket() {
 
-		document.querySelector('#toolbarButtons').style.display = '';
+		//document.querySelector('#toolbarButtons').style.display = '';
 		document.querySelector('#homePage').style.display = 'none';
 		document.querySelector('#edit-page').style.display = '';
+		document.querySelector('#backUp').style.display = 'none';
 		document.querySelector('#maintenance').style.display = 'none';
 		document.querySelector('#instructions-page').style.display = 'none';
 		// Key packetId readonly removed and is required
@@ -361,16 +363,17 @@ bindBackupRestorePage(handler) { // Backup & Restore Page
 		document.querySelector('#packetId').setAttribute('required', 'required');
 	}
 	showEditPacket() {
-		document.querySelector('#toolbarButtons').style.display = '';
+		//document.querySelector('#toolbarButtons').style.display = '';
 		document.querySelector('#homePage').style.display = 'none';
 		document.querySelector('#edit-page').style.display = '';
+		document.querySelector('#backUp').style.display = 'none';
 		document.querySelector('#maintenance').style.display = 'none';
 		document.querySelector('#instructions-page').style.display = 'none';
 		// Key packetId is read only
 		document.querySelector('#packetId').removeAttribute('required');
 		document.querySelector('#packetId').setAttribute('readonly', 'readonly');
 	}
-	showScrollPackets() {
+/*	showScrollPackets() {
 		this.clearFields();
 		//document.title = 'Scroll Pkt Records';
 		document.querySelector('#new-pkt-buttons').style.display = 'none';
@@ -382,14 +385,20 @@ bindBackupRestorePage(handler) { // Backup & Restore Page
 		document.querySelector('#instructions-page').style.display = 'none';
 		document.querySelector('#packetId').removeAttribute('required');
 		document.querySelector('#packetId').setAttribute('readonly', 'readonly');
-	}
+	}*/
 	showBackupRestore() {
 		//document.title = 'Backup & Restore';
-		document.querySelector('#retrieve-data-button').style.display = '';
+				document.querySelector('#homePage').style.display = 'none';
+		document.querySelector('#edit-page').style.display = 'none';
+		document.querySelector('#backUp').style.display = '';
+		document.querySelector('#maintenance').style.display = 'none';
+		document.querySelector('#instructions-page').style.display = 'none';
+		
+/*		document.querySelector('#retrieve-data-button').style.display = '';
 		document.querySelector('#homePage').style.display = 'none';
 		document.querySelector('#edit-page').style.display = 'none';
 		document.querySelector('#maintenance').style.display = '';
-		document.querySelector('#instructions-page').style.display = 'none';
+		document.querySelector('#instructions-page').style.display = 'none';*/
 		//document.querySelector('#dbError').style.display = ''
 	}
 	showDbError() {
@@ -575,7 +584,7 @@ class Controller {
 			for (const pair of formData.entries()) {
 				const key = pair[0];
 				const value = pair[1];
-				const missingField = value === '';
+        const missingField = value === '';
 				const isRequired = document.getElementById(key).hasAttribute('required');
 				missingRequiredField = missingRequiredField || (missingField && isRequired);
 				if (missingRequiredField) {
@@ -589,6 +598,7 @@ class Controller {
 			//convert string from FormData to integer and float
 			seed.number = parseInt(seed.number);
 			seed.weight = parseFloat(seed.weight);
+			seed.cost = parseFloat(seed.cost);
 			await this.model.loadRecords([seed]);
 			await this.view.showAlert(
 			'Seed Packet Added', 'success', '#pkt-message', '#insert-form-alerts');

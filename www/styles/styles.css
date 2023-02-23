@@ -62,19 +62,24 @@ html:focus {
   background-color: #fdfdf0;
 }
 .screen {}
-.app__screen {
+.screen__app {
+  font-family: vusanswoff, sans-serif;
+  background-color: #fdfdf0;
   width: 500px;
   margin: 0 auto;
   position: relative;
   border: 0.1rem solid #ccc;
-
 }
+.screen__section--indent {
+  margin-left: 1rem;
+}
+.section {};
 /* Menu */
 .menu {}
 .screen__btn-menu {
 /* Outside block settings for btn__menu */
   width: 100%;
-  margin-top: 0.7rem;
+  margin-top: 1rem;
   margin-bottom: 1.8rem;
   margin-left:  0;
 }
@@ -85,8 +90,10 @@ html:focus {
   justify-content: left;
   gap: 0.6rem;
   box-sizing: content-box; 
+  height: 1.9rem;
   align-items: center;
   text-align: center;
+  padding-left: 0.6rem;
 }
 .btn-menu__items {
   display: block;
@@ -100,6 +107,7 @@ html:focus {
   text-align: left;
   /*margin: unset;*/
   /*padding: 0.15rem;*/
+  border: 1px solid #ccc;
   width: 10rem;
   height: 1.9rem;
   font-size: 1.4rem;
@@ -207,7 +215,20 @@ html:focus {
   width: 30%;
   text-align: right;
 }
+/* Backup Page */
+.backup-page {}
+.label--inline{
+  font-size: 1.3rem;
+}
+.ul--js-message {
+  font-size: 1.25rem;
+  padding: 0.7rem 0 0.7rem;
+  list-style-type: square;
+  list-style-position: inside;
+}
 
+
+/*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 /*label.notes {
   vertical-align: top;
 }*/
@@ -229,7 +250,7 @@ label.db-process {
 
 
 ul.message {
-  font-size: 0.85rem;
+  font-size: 1.2rem;
   margin-bottom: 0.7rem;
   list-style-type: square;
   list-style-position: inside;
@@ -267,10 +288,10 @@ section.borders {
   border-bottom: 0.025rem solid #CCCCCC;
 }
 
-section.indent p, nav, ul {
-  margin-left: 1rem;
+.indent {
+  padding-left: 1rem;
 }
-/*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
 h1 {
   font-size: 1.65rem;
   margin-top: 2rem;

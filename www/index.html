@@ -11,38 +11,36 @@
 
 <body>
 
-<body class="app" id="root">
-<div  class="screen app__screen">
-  <!--Menu Button Tool Bar-->
-  <nav class="btn-menu screen__btn-menu" id="toolbarButtons">    
+<body id="root">
+<div  class="screen__app">
 
-    <button class="openHelpPage btn-menu__items" type="button" 
-      title="Help on buttons.">
-      <img src="./images/help-no-circle.svg"></button>
-    <button class="btn-menu__items  openHomePage" type="button" 
-      title="Back to List. Current &#010;record not saved.">
-      <img src="./images/home.svg"></button>
-    <button class="btn-menu__items openBackupRestorePage" type="button" 
-      title="Backup operations.">
-      <img src="./images/tools.svg"></button>
-    <button class="btn-menu__items openNewPacketPage" type="button" 
-      title="Create new record.">
-      <img src="./images/add-page.svg"></button>
-    <button class="btn-menu__items " type="button" id="btnCopyRecord" 
-      title="Copy record, unlock ID. &#010;Create new ID and record."><img 
-      src="./images/copy.svg"></button>
-    <button class="btn-menu__items " type="button" id="btnSubmitEditRecord" 
-      title="Save current record."><img src="./images/save-floppy-disk.svg" ></button>
-    <button class="btn-menu__items" type="button" id="btnDeleteRecord" 
-      title="Delete current record."><img src="./images/bin-full.svg"></button>
-    <input class="btn-menu__items--search" placeholder="Find" type="text" 
-      title="Find entered text."></input>
-    <button class="btn-menu__items" type="button" id="" 
-      title="Find entered text."><img src="./images/input-search.svg"></button>
-  </nav>
   <!-- Pages -->
 <div id="showHide" class="js-all-pages--none">
-  <section id="homePage"> 
+  <section id="homePage">
+    <!--Menu Button Tool Bar-->
+    <nav class="btn-menu screen__btn-menu">
+      <button class="btn-menu__items  openHomePage" type="button" 
+        title="Back to List. Current &#010;record not saved.">
+        <img src="./images/home.svg"></button>    
+      <button class="btn-menu__items" type="button" 
+        title="Previous record." > 
+        <img src="./images/nav-arrow-left.svg"></button>
+      <button class="btn-menu__items" type="button" 
+        title="Next record.">
+        <img src="./images/nav-arrow-right.svg"></button>      
+      <button class="btn-menu__items openBackupRestorePage" type="button" 
+        title="Backup operations.">
+        <img src="./images/tools.svg"></button>  
+      <button class="btn-menu__items openNewPacketPage" type="button" 
+        title="Create new record.">
+        <img src="./images/add-page.svg"></button>
+      <button class="openHelpPage btn-menu__items" type="button" 
+        title="Help on buttons."><img src="./images/help-no-circle.svg"></button>    
+      <input class="btn-menu__items--search" placeholder="Find" type="text" 
+        title="Find entered text."></input>   
+      <button class="btn-menu__items" type="button" id="" 
+        title="Find entered text."><img src="./images/input-search.svg"></button>
+    </nav> 
     <!-- Table of Records -->
     <table  class="home-page__table table
      table-seeds__row-color" >
@@ -61,8 +59,29 @@
       <tbody id="seed-list"></tbody>
     </table>
   </section>
-  <section class="edit-page" id="edit-page">
-    <!-- Data Entry Edit Form -->      
+  <section id="edit-page">
+    <!--Menu Button Tool Bar-->
+    <nav class="btn-menu screen__btn-menu">         
+      <button class="btn-menu__items  openHomePage" type="button" 
+        title="Back to List. Current &#010;record not saved.">
+        <img src="./images/home.svg"></button>
+      <button class="btn-menu__items openNewPacketPage" type="button" 
+        title="Create new record."><img src="./images/add-page.svg"></button>
+      <button class="btn-menu__items " type="button" id="btnCopyRecord" 
+        title="Copy record, unlock ID. &#010;Create new ID and record."><img 
+        src="./images/copy.svg"></button>
+      <button class="btn-menu__items " type="button" id="btnSubmitEditRecord" 
+        title="Save current record."><img src="./images/save-floppy-disk.svg" >
+        </button>
+      <button class="btn-menu__items" type="button" id="btnDeleteRecord" 
+        title="Delete current record."><img src="./images/bin-full.svg"></button>
+      <button class="openHelpPage btn-menu__items" type="button" 
+        title="Help on buttons."><img src="./images/help-no-circle.svg"></button>
+      <input class="btn-menu__items--search" placeholder="Find" type="text" 
+        title="Find entered text."></input>
+      <button class="btn-menu__items" type="button" id="" 
+        title="Find entered text."><img src="./images/input-search.svg"></button>
+    </nav>    <!-- Data Entry Edit Form -->    
     <form class=".form"id="seed-entry">
       <p>*&emsp;Input required.</p>
       <p>**&ensp;Seed Packet Id must be unique!</p>
@@ -99,43 +118,54 @@
     <p id="pkt-message"></p>
     </aside>  
   </section>
+  <div id="backUp">
+    <!--Menu Button Tool Bar-->
+    <nav class="btn-menu screen__btn-menu">         
+      <button class="btn-menu__items  openHomePage" type="button" 
+        title="Back to List. Current &#010;record not saved.">
+        <img src="./images/home.svg"></button>
+      <button class="openHelpPage btn-menu__items" type="button" 
+        title="Help on buttons."><img src="./images/help-no-circle.svg"></button>
+    </nav>
+    <!--Backup Operations-->
+    <!-- Backup Records     -->
+    <h3>
+      Create data backup file.
+    </h3>
+    <section class="screen__section--indent">
+    <nav class="btn-menu">
+    <button class="btn-menu__items" type="button" id="btnRetrieveData" title="">
+      <img src="./images/cloud-upload.svg"></button>
+      <label class="label--inline">Upload backup file to any folder.</label>
+    </nav>
+    <ul id="fileNotifications" class="ul--js-message"></ul>
+    </section>
+  </div>
 
       <!-- Maintenance Page -->
       <section id="maintenance">
+
         <!-- Backup Records     -->
-        <section class="borders indent">
           <h3 class="chapter--h3">
-            Export databse to file
+            Export database to file
           </h3>
-          <p>All records are written to a text file</p>
+          <p class="screen--indent">All records are written to a text file</p>
           <p>See Help Page for more information.</p>
-          <nav class="buttons-db-container">
             <button class="selected-db" type="button" id="btnRetrieveData" title="">
             <img src="./images/database-export.svg"></button>
             <label class="db-process">Export databse to file</label>
-            <button class="selected" type="button" 
-            title="Help on backup.">
-            <img src="./images/help-no-circle.svg"></button>
-          </nav>
+
           <ul id="fileNotifications" class="message"></ul>
-        </section>
         <!-- Restore Records -->
-        <section class="borders indent">
-            <h3 class="chapter--h3">Import file to database</h3>
+            <h3>Import file to database</h3>
             <p>Update the database with data from backup file</p>
-            <nav class="buttons-db-container">
               <input type="file" name="file" id="js-input-file-data" style="display:none">
               <button id="js-file-select" class="selected-db">
               <img src="./images/database-restore.svg" alt=""></button>
               <label class="db-process">Import backup file</label>
-            <button class="selected" type="button" 
-            title="Help on backup.">
-            <img src="./images/help-no-circle.svg"></button>
-            </nav>
-            <ul id="backupNotifications" class="message"></ul>
-          </section>              
+            <ul id="backupNotifications" class="message"></ul>      
           <!-- Reinstall IndedexedDB -->
-          <section class="indent">
+<!--          <section class="indent">
             <h3 class='chapter--h3'>Reset seedB Application</h3>
             <p> WARNING: Only use if database is corrupted-any existing records will be deleted!
             </p>
@@ -143,13 +173,10 @@
               <button class="btnReinstall selected-db" type="button"><img 
               src="./images/db-error-red.svg"></button>
               <label class="db-process">Reset database</label>
-              <button class="selected" type="button" 
-              title="Help on backup.">
-              <img src="./images/help-no-circle.svg"></button>
             </nav> 
             <ul id="installDbMsg" class="message"></ul>
 
-          </section>
+          </section>-->
       </section>
 
       <!-- DB Error Page -->
@@ -186,7 +213,7 @@
     <div id="js-page--to-top" title="Go to Top"></div>
   </div>
   <script src="./js/app.js"></script>
-  <script src="./js/column.js"></script>
+<!--  <script src="./js/column.js"></script>-->
 
 
 </body>
