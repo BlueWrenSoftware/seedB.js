@@ -118,10 +118,10 @@
     <p id="pkt-message"></p>
     </aside>  
   </section>
-  <div id="backUp">
+  <section id="backUp">
     <!--Menu Button Tool Bar-->
     <nav class="btn-menu screen__btn-menu">         
-      <button class="btn-menu__items  openHomePage" type="button" 
+      <button class="btn-menu__items openHomePage" type="button" 
         title="Back to List. Current &#010;record not saved.">
         <img src="./images/home.svg"></button>
       <button class="openHelpPage btn-menu__items" type="button" 
@@ -130,58 +130,42 @@
     <!--Backup Operations-->
     <!-- Backup Records     -->
     <h3>
-      Create data backup file.
+      Create Data Backup File.
     </h3>
     <section class="screen__section--indent">
     <nav class="btn-menu">
-    <button class="btn-menu__items" type="button" id="btnRetrieveData" title="">
+    <button class="btn-menu__items btn-menu__items--larger" type="button" id="btnRetrieveData" title="">
       <img src="./images/cloud-upload.svg"></button>
       <label class="label--inline">Upload backup file to any folder.</label>
     </nav>
     <ul id="fileNotifications" class="ul--js-message"></ul>
     </section>
-  </div>
-
-      <!-- Maintenance Page -->
-      <section id="maintenance">
-
-        <!-- Backup Records     -->
-          <h3 class="chapter--h3">
-            Export database to file
-          </h3>
-          <p class="screen--indent">All records are written to a text file</p>
-          <p>See Help Page for more information.</p>
-            <button class="selected-db" type="button" id="btnRetrieveData" title="">
-            <img src="./images/database-export.svg"></button>
-            <label class="db-process">Export databse to file</label>
-
-          <ul id="fileNotifications" class="message"></ul>
-        <!-- Restore Records -->
-            <h3>Import file to database</h3>
-            <p>Update the database with data from backup file</p>
-              <input type="file" name="file" id="js-input-file-data" style="display:none">
-              <button id="js-file-select" class="selected-db">
-              <img src="./images/database-restore.svg" alt=""></button>
-              <label class="db-process">Import backup file</label>
-            <ul id="backupNotifications" class="message"></ul>      
-          <!-- Reinstall IndedexedDB -->
-<!--          <section class="indent">
-            <h3 class='chapter--h3'>Reset seedB Application</h3>
-            <p> WARNING: Only use if database is corrupted-any existing records will be deleted!
-            </p>
-            <nav class="buttons-db-container">
-              <button class="btnReinstall selected-db" type="button"><img 
-              src="./images/db-error-red.svg"></button>
-              <label class="db-process">Reset database</label>
-            </nav> 
-            <ul id="installDbMsg" class="message"></ul>
-
-          </section>-->
-      </section>
-
-      <!-- DB Error Page -->
-<div id="retrieve-data-button"></div>   
-
+    <!--Restore Records-->
+    <h3>
+      Restore Data from Backup File.
+    </h3>
+    <section class="screen__section--indent">
+    <nav class="btn-menu">
+      <input type="file" name="file" id="backupDataFile" style="display:none">
+      <button id="btnDownloadData" class="btn-menu__items btn-menu__items--larger" type="button" title="">
+      <img src="./images/cloud-download.svg" alt=""></button>
+      <label class="label--inline">Download data from local backup file.</label>
+    </nav>
+    <ul id="backupNotifications" class="ul--js-message"></ul> 
+    </section>
+    <h3>Reset seedB Application</h3>
+    <section class="indent">
+      <p>Use if database is corrupted<br>
+      Any existing records will be deleted!</p>
+      <nav class="btn-menu">
+        <button class="btnReinstall btn-menu__items btn-menu__items--larger" 
+        type="button"><img 
+        src="./images/database-restore.svg"></button>
+        <label class="label--inline">Reset database</label>
+      </nav> 
+      <ul id="installDbMsg" class="ul--js-message"></ul>
+    </section>
+  </section>
 
       <!-- Instructions Page -->
       <section id="instructions-page" class="section--paragraph">

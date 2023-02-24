@@ -103,6 +103,9 @@ html:focus {
   border: none;
   cursor: pointer;
 }
+.btn-menu__items--larger {
+  height: 2.5rem;
+}
 .btn-menu__items--search {
   text-align: left;
   /*margin: unset;*/
@@ -229,45 +232,9 @@ html:focus {
 
 
 /*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-/*label.notes {
-  vertical-align: top;
-}*/
-/*form label {
-  display: inline-block;
-  width: 30%;
-  text-align: right;
-  font-size: 1.2rem;
-}*/
 
-.
-label.db-process {
-  font-size: 0.9rem;
-  display: inline-block;
-}
-
-
-
-
-
-ul.message {
-  font-size: 1.2rem;
-  margin-bottom: 0.7rem;
-  list-style-type: square;
-  list-style-position: inside;
-}
  
-.buttons-db-container {
-  display: flex;
-  flex-grow: wrap;
-  justify-content: left;
-  gap: 0.35rem;
-  box-sizing: content-box; 
-  align-items: center;
-  text-align: center;
-  width: 100%;
-  margin-top: 0.5rem;
-  margin-bottom: 0.7rem;
-}
+
 
 .selected-db {
   display: block;

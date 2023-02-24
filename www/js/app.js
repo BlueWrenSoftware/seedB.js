@@ -256,8 +256,8 @@ bindBackupRestorePage(handler) { // Backup & Restore Page
 	
 	bindBtnUploadBackupFile(handler) {
                 // TODO: move to ctor
-		const btnUploadBackupFile = document.getElementById('js-file-select');
-		const extractFileData = document.getElementById('js-input-file-data');
+		const btnUploadBackupFile = document.getElementById('btnDownloadData');
+		const extractFileData = document.getElementById('backupDataFile');
 		btnUploadBackupFile.addEventListener('click', function () { 
                 	//=> Upload Text File button clicked pageBackupRestore
 			if (extractFileData) { extractFileData.click(); }
@@ -343,83 +343,38 @@ bindBackupRestorePage(handler) { // Backup & Restore Page
 			document.getElementById('showHide').classList.add('js-all-pages--opened');
 			document.getElementById('showHide').classList.remove('js-all-pages--none');
 		}
-		//document.title = 'SeedB List'; //=> Page at startup being the seed list
 		document.querySelector('#homePage').style.display = '';
 		document.querySelector('#edit-page').style.display = 'none';
 		document.querySelector('#backUp').style.display = 'none';
-		document.querySelector('#maintenance').style.display = 'none';
 		document.querySelector('#instructions-page').style.display = 'none';
 	}
 	showAddNewPacket() {
-
-		//document.querySelector('#toolbarButtons').style.display = '';
 		document.querySelector('#homePage').style.display = 'none';
 		document.querySelector('#edit-page').style.display = '';
 		document.querySelector('#backUp').style.display = 'none';
-		document.querySelector('#maintenance').style.display = 'none';
 		document.querySelector('#instructions-page').style.display = 'none';
 		// Key packetId readonly removed and is required
 		document.querySelector('#packetId').removeAttribute('readonly');
 		document.querySelector('#packetId').setAttribute('required', 'required');
 	}
 	showEditPacket() {
-		//document.querySelector('#toolbarButtons').style.display = '';
 		document.querySelector('#homePage').style.display = 'none';
 		document.querySelector('#edit-page').style.display = '';
 		document.querySelector('#backUp').style.display = 'none';
-		document.querySelector('#maintenance').style.display = 'none';
 		document.querySelector('#instructions-page').style.display = 'none';
 		// Key packetId is read only
 		document.querySelector('#packetId').removeAttribute('required');
 		document.querySelector('#packetId').setAttribute('readonly', 'readonly');
 	}
-/*	showScrollPackets() {
-		this.clearFields();
-		//document.title = 'Scroll Pkt Records';
-		document.querySelector('#new-pkt-buttons').style.display = 'none';
-		document.querySelector('#toolbarButtons').style.display = '';
-		document.querySelector('#scrollRecordsButtons').style.display = 'none';
-		document.querySelector('#homePage').style.display = 'none';
-		document.querySelector('#edit-page').style.display = '';
-		document.querySelector('#maintenance').style.display = 'none';
-		document.querySelector('#instructions-page').style.display = 'none';
-		document.querySelector('#packetId').removeAttribute('required');
-		document.querySelector('#packetId').setAttribute('readonly', 'readonly');
-	}*/
 	showBackupRestore() {
-		//document.title = 'Backup & Restore';
-				document.querySelector('#homePage').style.display = 'none';
+		document.querySelector('#homePage').style.display = 'none';
 		document.querySelector('#edit-page').style.display = 'none';
 		document.querySelector('#backUp').style.display = '';
-		document.querySelector('#maintenance').style.display = 'none';
 		document.querySelector('#instructions-page').style.display = 'none';
-		
-/*		document.querySelector('#retrieve-data-button').style.display = '';
-		document.querySelector('#homePage').style.display = 'none';
-		document.querySelector('#edit-page').style.display = 'none';
-		document.querySelector('#maintenance').style.display = '';
-		document.querySelector('#instructions-page').style.display = 'none';*/
-		//document.querySelector('#dbError').style.display = ''
-	}
-	showDbError() {
-		//=> checks if pages are hidden before loading error page on start
-		//document.title = 'DB Error';
-		//=> on start up if db fails this page will be loaded
-		document.querySelector('#retrieve-data-button').style.display = 'none';
-		document.querySelector('#homePage').style.display = 'none';
-		document.querySelector('#edit-page').style.display = 'none';
-		document.querySelector('#maintenance').style.display = '';
-		document.querySelector('#instructions-page').style.display = 'none';
-		document.querySelector('#dbError').style.display = ''
 	}
 	showInstructions() {
-		//=> page for instructions
-		//this.clearFields();
-		//document.title = 'Instructions';
-		//document.querySelector('#seed-entry').style.display = 'none';
 		document.querySelector('#homePage').style.display = 'none';
 		document.querySelector('#edit-page').style.display = 'none';
-		document.querySelector('#maintenance').style.display = 'none';
 		document.querySelector('#instructions-page').style.display = '';
 	}
 	//menu and scroll
@@ -519,7 +474,8 @@ class Controller {
 		const record = await this.model.getRecord(packetId);
 		this.view.clearFields();
 		this.view.showEditPacket();
-		document.getElementById("packetId").classList.add("no-edit");
+		document.getElementById("packetId").classList.add("form__input--gray");
+		 //element.classList.remove("form__input--gray");
 		Object.keys(record).forEach(field => {
 			// -> with the requested seed pkt record for editing
 			//console.log(field);
@@ -535,7 +491,7 @@ class Controller {
 	requestAddNewPacketPage() {
 		this.view.showAddNewPacket();
 		this.view.clearFields();
-		document.getElementById("packetId").classList.remove("no-edit");
+		document.getElementById("packetId").classList.remove("form__input--gray");
 	}
 	requestScrollPacketsPage() {
 		this.view.showScrollPackets();
