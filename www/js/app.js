@@ -131,9 +131,9 @@ class View {
 		this.packetListLinkElements = document.querySelectorAll('.openHomePage');
 		this.addNewPacketLinkElement = document.querySelectorAll('.openNewPacketPage');
 		this.scrollPacketsLinkElement = document.querySelector('.openScrollPacketsPage');
-		this.backupRestoreLinkElement = document.querySelector('.openBackupRestorePage');
+		this.backupRestoreLinkElement = document.querySelectorAll('.openBackupRestorePage');
 		this.dbErrorLinkElement = document.querySelector('.openDbErrorPage');
-		this.instructionsLinkElements = document.querySelectorAll('.openInstructionsPage');
+		this.helpPageLinkElements = document.querySelectorAll('.openHelpPage');
 		//Sort table columns events
 		this.sortGroupLinkElement = document.getElementById('sortGroup');
 		this.sortVarietyLinkElement = document.getElementById('sortVariety');
@@ -174,24 +174,18 @@ class View {
 		'click', packetListRequestHandler, false));
 	}
 	bindAddNewPacketPage(handler) { // Add New Packet Page
-		//can be converted to multiple classes to trigger this event
-		//variable addNewLinkElement is singular as only one class at the moment
 		this.addNewPacketLinkElement.forEach(btn => btn.addEventListener(
 		'click', handler, false));
-		
-		//this.addNewPacketLinkElement.addEventListener('click', handler, false);
 	}
-/*	bindScrollPacketsPage(handler) { // Scroll Packets Page
-		this.scrollPacketsLinkElement.addEventListener('click', handler, false);
-	}*/
-bindBackupRestorePage(handler) { // Backup & Restore Page
-		this.backupRestoreLinkElement.addEventListener('click', handler, false);
+  bindBackupRestorePage(handler) { // Backup & Restore Page
+		this.backupRestoreLinkElement.forEach(btn => btn.addEventListener(
+		'click', handler, false));
 	}
 /*	bindDbErrorPage(handler) { // Reinstall corrupted DB
 		this.dbErrorLinkElement.addEventListener('click', handler, false);
 	}*/
-	bindInstructionsPage(handler) {
-		this.instructionsLinkElements.forEach(request => request.addEventListener(
+	bindHelpPage(handler) {
+		this.helpPageLinkElements.forEach(request => request.addEventListener(
 		'click', handler, false));
 	}
 	//sort list table events
@@ -268,7 +262,7 @@ bindBackupRestorePage(handler) { // Backup & Restore Page
 	// transfer this to Controller
 	requestSpecificHelp() {
 		// designed to show specific instructions when clicked on ? anywhere
-		this.showInstructions();
+		this.showHelpPage();
 		//await this.findHelpTopic();
 	}
 
@@ -346,13 +340,13 @@ bindBackupRestorePage(handler) { // Backup & Restore Page
 		document.querySelector('#homePage').style.display = '';
 		document.querySelector('#edit-page').style.display = 'none';
 		document.querySelector('#backUp').style.display = 'none';
-		document.querySelector('#instructions-page').style.display = 'none';
+		document.querySelector('#helpPage').style.display = 'none';
 	}
 	showAddNewPacket() {
 		document.querySelector('#homePage').style.display = 'none';
 		document.querySelector('#edit-page').style.display = '';
 		document.querySelector('#backUp').style.display = 'none';
-		document.querySelector('#instructions-page').style.display = 'none';
+		document.querySelector('#helpPage').style.display = 'none';
 		// Key packetId readonly removed and is required
 		document.querySelector('#packetId').removeAttribute('readonly');
 		document.querySelector('#packetId').setAttribute('required', 'required');
@@ -361,7 +355,7 @@ bindBackupRestorePage(handler) { // Backup & Restore Page
 		document.querySelector('#homePage').style.display = 'none';
 		document.querySelector('#edit-page').style.display = '';
 		document.querySelector('#backUp').style.display = 'none';
-		document.querySelector('#instructions-page').style.display = 'none';
+		document.querySelector('#helpPage').style.display = 'none';
 		// Key packetId is read only
 		document.querySelector('#packetId').removeAttribute('required');
 		document.querySelector('#packetId').setAttribute('readonly', 'readonly');
@@ -370,12 +364,12 @@ bindBackupRestorePage(handler) { // Backup & Restore Page
 		document.querySelector('#homePage').style.display = 'none';
 		document.querySelector('#edit-page').style.display = 'none';
 		document.querySelector('#backUp').style.display = '';
-		document.querySelector('#instructions-page').style.display = 'none';
+		document.querySelector('#helpPage').style.display = 'none';
 	}
-	showInstructions() {
+	showHelpPage() {
 		document.querySelector('#homePage').style.display = 'none';
 		document.querySelector('#edit-page').style.display = 'none';
-		document.querySelector('#instructions-page').style.display = '';
+		document.querySelector('#helpPage').style.display = '';
 	}
 	//menu and scroll
 /*	toggleMenu() {
@@ -422,7 +416,7 @@ class Controller {
 		//this.view.bindScrollPacketsPage( () => { this.requestScrollPacketsPage(); });
 		this.view.bindBackupRestorePage( () => { this.requestBackupRestorePage(); });
 		//this.view.bindDbErrorPage(() => { this.requestDbErrorPage(); });
-		this.view.bindInstructionsPage( () => { this.requestHelpPage(); });
+		this.view.bindHelpPage( () => { this.requestHelpPage(); });
 		this.view.bindEditPacket( (packetId) => { this.editPacketRequestHandler(packetId); });
 		// bindings table sort
 		this.view.bindSortGroup( () => { this.requestSortedPacketList('group'); });
@@ -504,7 +498,7 @@ class Controller {
 	}
 	requestHelpPage() {
 		// designed to show specific instructions when clicked on ? anywhere
-		this.view.showInstructions();
+		this.view.showHelpPage();
 		//await this.findHelpTopic();
 	}
 	async fixCorruptDB() {
