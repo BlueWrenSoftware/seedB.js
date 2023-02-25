@@ -324,6 +324,7 @@ class View {
                let resultPromise = new Promise((resolve, reject) => {
                     this.bindBtnOkOverwritePacket(() => {resolve('OK')});
                     this.bindBtnCancelOverwritePacket(() => {resolve('Cancel')});
+                    //TODO: Handle ESCAPE key press
                });
                return resultPromise; 
         }
@@ -569,13 +570,10 @@ class Controller {
 			seed.number = parseInt(seed.number);
 			seed.weight = parseFloat(seed.weight);
 			seed.cost = parseFloat(seed.cost);
-                        // check if packedId already exists and warn
-                        console.log(seed);
-                        let existing_record = await this.model.getRecord(seed.packetId);
-                        if (existing_record && this.view.packetIdInputIsEditable()) {
-                           // display warning before continuing
+                        // check if we in create mode & packedId already exists 
+                        if (this.view.packetIdInputIsEditable() && (await this.model.getRecord(seed.packetId))) {
+                           // display warning and wait for feedback before continuing
                            let confirmation_result = await this.view.showConfirmOverwriteDialog();
-                           console.log(confirmation_result);
                            if (confirmation_result == 'Cancel') {
                              // show some message about not updating 
                              return;
