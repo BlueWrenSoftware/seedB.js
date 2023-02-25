@@ -116,7 +116,7 @@
     </form>
     <aside id="insert-form-alerts">
     <p id="pkt-message"></p>
-    </aside>  
+    </aside>
   </section>
   <section id="backUp">
     <!--Menu Button Tool Bar-->
@@ -213,6 +213,13 @@
     <!-- Go to top of page-->
     <div id="js-page--to-top" title="Go to Top"></div>
   </div>
+    <dialog id="confirm-overwrite-dialog">
+       <p>WARNING: ID already exists; this will overwrite</p>
+       <form method="dialog">
+          <button id="btn-cancel-overwrite-packet">Cancel</button>
+          <button id="btn-ok-overwrite-packet">OK</button>
+       </form>   
+    </dialog>  
   <script src="./js/app.js"></script>
 <!--  <script src="./js/column.js"></script>-->
 

@@ -154,6 +154,7 @@ class View {
 		//scroll events
 		this.scrollToBottomPageLinkElement = document.getElementById('js-page--to-bottom');
 		this.scrollToTopPageLinkElement = document.getElementById('js-page--to-top');
+                this.confirmOverwriteDialog = document.getElementById('confirm-overwrite-dialog');
 	}
 	//scroll events
 	bindScrollTopBottomEvent(scrollTopBottomRequestHandler) {
@@ -259,6 +260,12 @@ class View {
 	 	extractFileData.onchange = handler;
         }
 
+        bindBtnOkOverwritePacket(handler) {
+               document.getElementById('btn-ok-overwrite-packet').onclick = handler;
+        }
+        bindBtnCancelOverwritePacket(handler) {
+               document.getElementById('btn-cancel-overwrite-packet').onclick = handler;
+        }
 	// transfer this to Controller
 	requestSpecificHelp() {
 		// designed to show specific instructions when clicked on ? anywhere
@@ -312,6 +319,15 @@ class View {
 		setTimeout(() => document.querySelector('.alert').remove(), 3000);
 	}
 
+        showConfirmOverwriteDialog() {
+               this.confirmOverwriteDialog.showModal();
+               let resultPromise = new Promise((resolve, reject) => {
+                    this.bindBtnOkOverwritePacket(() => {resolve('OK')});
+                    this.bindBtnCancelOverwritePacket(() => {resolve('Cancel')});
+               });
+               return resultPromise; 
+        }
+
 	clearFields() {
 		//=> Clears all the entry fields on the edit/add page
 		document.querySelector('#group').value = '';
@@ -331,6 +347,10 @@ class View {
 		document.querySelector('#timeStamp').value = '';
 		document.querySelector('#seedNotes').value = '';
 	}
+ 
+        packetIdInputIsEditable() {
+                return !document.getElementById('packetId').hasAttribute('readonly');
+        }
 	// Open Pages
 	showHomePage() {
 		if (document.getElementById('showHide').classList.contains('js-all-pages--none')) {
@@ -549,6 +569,18 @@ class Controller {
 			seed.number = parseInt(seed.number);
 			seed.weight = parseFloat(seed.weight);
 			seed.cost = parseFloat(seed.cost);
+                        // check if packedId already exists and warn
+                        console.log(seed);
+                        let existing_record = await this.model.getRecord(seed.packetId);
+                        if (existing_record && this.view.packetIdInputIsEditable()) {
+                           // display warning before continuing
+                           let confirmation_result = await this.view.showConfirmOverwriteDialog();
+                           console.log(confirmation_result);
+                           if (confirmation_result == 'Cancel') {
+                             // show some message about not updating 
+                             return;
+                           }
+                        }
 			await this.model.loadRecords([seed]);
 			await this.view.showAlert(
 			'Seed Packet Added', 'success', '#pkt-message', '#insert-form-alerts');
