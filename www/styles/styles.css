@@ -201,6 +201,8 @@ html:focus {
 }
 .form__input--gray {
   background-color: #E8E8E8;
+}
+.form__input--mono-font {
   font-family: vumonowoff, monospace;
 }
 .form__textarea {
