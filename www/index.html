@@ -199,6 +199,17 @@
       <p></p>
   </section>
 </div>
+<dialog class="modal" id="confirm-overwrite-dialog">
+       <p>WARNING:</p> 
+       <p>ID already exists.</p> 
+       <p>Overwrite this record?</p>
+        <form method="dialog" class="btn-menu btn-menu--right">
+          <button class="btn-menu__items btn-menu__items--outline" 
+          id="btn-cancel-overwrite-packet">Cancel</button>
+          <button class="btn-menu__items btn-menu__items--outline" 
+          id="btn-ok-overwrite-packet">Overwrite</button> 
+        </form> 
+    </dialog>  
 
     <!-- Footer -->
     <section class="bottom-margin">
@@ -213,13 +224,7 @@
     <!-- Go to top of page-->
     <div id="js-page--to-top" title="Go to Top"></div>
   </div>
-    <dialog id="confirm-overwrite-dialog">
-       <p>WARNING: ID already exists; this will overwrite</p>
-       <form method="dialog">
-          <button id="btn-cancel-overwrite-packet">Cancel</button>
-          <button id="btn-ok-overwrite-packet">OK</button>
-       </form>   
-    </dialog>  
+    
   <script src="./js/app.js"></script>
 <!--  <script src="./js/column.js"></script>-->
 

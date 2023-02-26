@@ -95,6 +95,9 @@ html:focus {
   text-align: center;
   padding-left: 0.6rem;
 }
+.btn-menu--right {
+  justify-content: right;
+}
 .btn-menu__items {
   display: block;
   background-color: unset;
@@ -102,6 +105,14 @@ html:focus {
   height: 1.725rem;
   border: none;
   cursor: pointer;
+}
+.btn-menu__items--outline {
+  font-size: 1.3rem;
+  border: 0.1rem solid black;
+  border-radius: 0.4rem;
+  background-color: #E5E4E2;
+  height: 2rem;
+  padding: 0.25rem;
 }
 .btn-menu__items--larger {
   height: 2.5rem;
@@ -231,7 +242,18 @@ html:focus {
   list-style-type: square;
   list-style-position: inside;
 }
-
+.modal {
+  position: fixed;
+  margin: 1rem auto;
+}
+.modal:modal { 
+  padding: 1.5rem;
+  background-color: #fdfdf0;
+  border: 0.1rem solid #ccc;
+}
+.modal::backdrop {
+  background: rgb(0 0 0 /.4);
+}
 
 /*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 

@@ -262,6 +262,7 @@ class View {
 
         bindBtnOkOverwritePacket(handler) {
                document.getElementById('btn-ok-overwrite-packet').onclick = handler;
+               console.log(handler);
         }
         bindBtnCancelOverwritePacket(handler) {
                document.getElementById('btn-cancel-overwrite-packet').onclick = handler;
