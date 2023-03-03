@@ -22,14 +22,14 @@
     "seedNotes": "blah"
   },
   {
-    "group": "Vegetables",
-    "variety": "Artichoke",
     "packetId": "xartichoke-1",
+    "variety": "Artichokes",
+    "group": "Vegetables",
     "number": 100,
     "weight": 200,
-    "cost": "0",
+    "cost": 0,
     "date": "2021-11-19",
-    "timeStamp": 1674974583061,
+    "timeStamp": 1677319554969,
     "seedNotes": "cropping very well. Planted in the large area of the garden."
   },
   {
@@ -55,36 +55,47 @@
     "seedNotes": "from garden"
   },
   {
-    "group": "Vegetables",
+    "packetId": "carrot-20",
     "variety": "Carrot",
+    "group": "Vegetables",
+    "number": 526,
+    "weight": 10,
+    "cost": 0,
+    "date": "2020-05-05",
+    "timeStamp": 1677380278537,
+    "seedNotes": "from garden.\nDoing better then commercial seeds"
+  },
+  {
     "packetId": "carrot-3",
+    "variety": "Carrot",
+    "group": "Vegetables",
     "number": 10,
     "weight": 10,
-    "cost": "0",
+    "cost": 0,
     "date": "2022-07-07",
-    "timeStamp": 1674974577744,
+    "timeStamp": 1677321824320,
     "seedNotes": ""
   },
   {
-    "group": "Vegetables",
+    "packetId": "carrot-30",
     "variety": "Carrot",
+    "group": "Vegetables",
+    "number": 526,
+    "weight": 10,
+    "cost": 0,
+    "date": "2020-05-05",
+    "timeStamp": 1677380390137,
+    "seedNotes": "from garden.\nDoing better then commercial seeds"
+  },
+  {
     "packetId": "carrot-4",
+    "variety": "Carrot",
+    "group": "Vegetables",
     "number": 1,
     "weight": 1,
-    "cost": "10",
+    "cost": 10,
     "date": "2022-07-07",
-    "timeStamp": 1674974598125,
-    "seedNotes": ""
-  },
-  {
-    "group": "Vegetables",
-    "variety": "Carrot",
-    "packetId": "carrot-5",
-    "number": 2,
-    "weight": 2,
-    "cost": "10",
-    "date": "2022-07-07",
-    "timeStamp": 1674974604908,
+    "timeStamp": 1677379523999,
     "seedNotes": ""
   },
   {
@@ -275,15 +286,15 @@
     "seedNotes": ""
   },
   {
-    "group": "Grains",
-    "variety": "Rye",
     "packetId": "rye-1",
+    "variety": "Rye",
+    "group": "Grains",
     "number": 0,
-    "weight": 2000,
-    "cost": "5.80",
-    "date": "2022-07-05",
-    "timeStamp": 1674974810788,
-    "seedNotes": ""
+    "weight": 64,
+    "cost": 0,
+    "date": "2023-02-28",
+    "timeStamp": 1677566179720,
+    "seedNotes": "Grown in the large garden. Seeds are from a handful of ears"
   },
   {
     "group": "Vegetables",

@@ -70,6 +70,12 @@ html:focus {
   position: relative;
   border: 0.1rem solid #ccc;
 }
+.screen__app-pages--show {
+  display: block;
+}
+.screen__app-pages--hide {
+  display: none;
+}
 .screen__section--indent {
   margin-left: 1rem;
 }
@@ -243,8 +249,10 @@ html:focus {
   list-style-position: inside;
 }
 .modal {
-  position: fixed;
-  margin: 1rem auto;
+  position: sticky;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 .modal:modal { 
   padding: 1.5rem;
@@ -253,6 +261,11 @@ html:focus {
 }
 .modal::backdrop {
   background: rgb(0 0 0 /.4);
+}
+.img--border {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
 }
 
 /*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
@@ -480,20 +493,10 @@ ul {
   list-style-type: none;
 }
 
-.js-all-pages--opened {
-  display: block;
-}
-.js-all-pages--none {
-  display: none;
-}
 
 
 
-img {
-  box-sizing: border-box;
-  width: 100%;
-  height: 100%;
-}
+
 
 
 

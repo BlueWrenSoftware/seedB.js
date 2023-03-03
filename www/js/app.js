@@ -322,6 +322,7 @@ class View {
 
         showConfirmOverwriteDialog() {
                this.confirmOverwriteDialog.showModal();
+               //console.log('this is id: ' + seed.packetId);
                let resultPromise = new Promise((resolve, reject) => {
                     this.bindBtnOkOverwritePacket(() => {resolve('OK')});
                     this.bindBtnCancelOverwritePacket(() => {resolve('Cancel')});
@@ -355,9 +356,9 @@ class View {
         }
 	// Open Pages
 	showHomePage() {
-		if (document.getElementById('showHide').classList.contains('js-all-pages--none')) {
-			document.getElementById('showHide').classList.add('js-all-pages--opened');
-			document.getElementById('showHide').classList.remove('js-all-pages--none');
+		if (document.getElementById('showHidePages').classList.contains('screen__app-pages--hide')) {
+			document.getElementById('showHidePages').classList.add('screen__app-pages--show');
+			document.getElementById('showHidePages').classList.remove('screen__app-pages--hide');
 		}
 		document.querySelector('#homePage').style.display = '';
 		document.querySelector('#edit-page').style.display = 'none';
@@ -574,6 +575,7 @@ class Controller {
                         // check if we in create mode & packedId already exists 
                         if (this.view.packetIdInputIsEditable() && (await this.model.getRecord(seed.packetId))) {
                            // display warning and wait for feedback before continuing
+                           console.log('this is id: ' + seed.packetId);
                            let confirmation_result = await this.view.showConfirmOverwriteDialog();
                            if (confirmation_result == 'Cancel') {
                              // show some message about not updating 
