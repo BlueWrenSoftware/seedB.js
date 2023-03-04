@@ -155,6 +155,7 @@ class View {
 		this.scrollToBottomPageLinkElement = document.getElementById('js-page--to-bottom');
 		this.scrollToTopPageLinkElement = document.getElementById('js-page--to-top');
                 this.confirmOverwriteDialog = document.getElementById('confirm-overwrite-dialog');
+		this.bindSearchFilter()
 	}
 	//scroll events
 	bindScrollTopBottomEvent(scrollTopBottomRequestHandler) {
@@ -248,6 +249,7 @@ class View {
 	// async findHelpTopic(topic=all) {
 	//     this.displayHelpTopic()
 	// }
+
 	
 	bindBtnUploadBackupFile(handler) {
                 // TODO: move to ctor
@@ -267,6 +269,26 @@ class View {
         bindBtnCancelOverwritePacket(handler) {
                document.getElementById('btn-cancel-overwrite-packet').onclick = handler;
         }
+
+
+	bindSearchFilter() {
+		document.getElementById('searchFilterPackets').addEventListener('input', this.searchFilter);
+	}
+
+	searchFilter(e) {
+		const tableRows = document.querySelectorAll('#seed-list tr');
+		const isFoundInTableData = td => {
+			return (td.innerHTML || td.textContent).toUpperCase().indexOf(e.target.value.toUpperCase()) > -1;
+		};
+		const isFound = arrayChildren => arrayChildren.some(isFoundInTableData);
+		const setTableRowStyleDisplay = ({ style, children }) => {
+			style.display = isFound([
+				...children // <-- All columns
+			]) ? '' : 'none' 
+		};
+					      
+		tableRows.forEach(setTableRowStyleDisplay);
+		}
 	// transfer this to Controller
 	requestSpecificHelp() {
 		// designed to show specific instructions when clicked on ? anywhere
