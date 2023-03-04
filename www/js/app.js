@@ -272,13 +272,24 @@ class View {
 
 
 	bindSearchFilter() {
-		document.getElementById('searchFilterPackets').addEventListener('input', this.searchFilter);
+		document.getElementById('searchFilterPackets').addEventListener('input', View.searchFilterEventHandler);
 	}
 
-	searchFilter(e) {
+	static searchFilterCall() {
+		const searchTerm = document.getElementById('searchFilterPackets').value;
+		View.searchFilter(searchTerm);
+	}
+
+	static searchFilterEventHandler(e) {
+		const searchTerm = e.target.value;
+                View.searchFilter(searchTerm);
+	}
+
+	static searchFilter(searchTerm) {
+		searchTerm = searchTerm.toUpperCase();
 		const tableRows = document.querySelectorAll('#seed-list tr');
 		const isFoundInTableData = td => {
-			return (td.innerHTML || td.textContent).toUpperCase().indexOf(e.target.value.toUpperCase()) > -1;
+			return (td.innerHTML || td.textContent).toUpperCase().indexOf(searchTerm) > -1;
 		};
 		const isFound = arrayChildren => arrayChildren.some(isFoundInTableData);
 		const setTableRowStyleDisplay = ({ style, children }) => {
@@ -326,6 +337,7 @@ class View {
 			table.deleteRow(0);
 		};
 		packets.forEach((packet) => this.createTableTemplate(packet));
+		View.searchFilterCall();
 	}
 
 	showAlert(message, className, idMessage, idLocation) {
