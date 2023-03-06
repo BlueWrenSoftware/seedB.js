@@ -290,10 +290,10 @@
     "variety": "Rye",
     "group": "Grains",
     "number": 0,
-    "weight": 64,
+    "weight": 2500,
     "cost": 0,
     "date": "2023-02-28",
-    "timeStamp": 1677566179720,
+    "timeStamp": 1677972900793,
     "seedNotes": "Grown in the large garden. Seeds are from a handful of ears"
   },
   {

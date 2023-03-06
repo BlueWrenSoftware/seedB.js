@@ -152,8 +152,8 @@ class View {
 		// Menu events
 		//this.menuButtonLinkElement = document.querySelector('.js-menu-hamburger');
 		//scroll events
-		this.scrollToBottomPageLinkElement = document.getElementById('js-page--to-bottom');
-		this.scrollToTopPageLinkElement = document.getElementById('js-page--to-top');
+		this.scrollToBottomPageLinkElement = document.getElementById('js-page_to-bottom');
+		this.scrollToTopPageLinkElement = document.getElementById('js-page_to-top');
                 this.confirmOverwriteDialog = document.getElementById('confirm-overwrite-dialog');
 		this.bindSearchFilter()
 	}
@@ -238,51 +238,32 @@ class View {
 		this.btnReinstallLinkElements.forEach(btn => btn.addEventListener(
 		'click', handler, false));
 	};
-//	bindBtnReinstall(handler) {
-	//	this.btnReinstallLinkElement.addEventListener('click', handler, false);
-	//};
-	//menu hamburger event
-/*	bindMenuButton(menuButtonRequestHandler) {
-		this.menuButtonLinkElement.addEventListener('click', menuButtonRequestHandler, false);
-	};*/
-
-	// async findHelpTopic(topic=all) {
-	//     this.displayHelpTopic()
-	// }
-
-	
 	bindBtnUploadBackupFile(handler) {
-                // TODO: move to ctor
 		const btnUploadBackupFile = document.getElementById('btnDownloadData');
 		const extractFileData = document.getElementById('backupDataFile');
 		btnUploadBackupFile.addEventListener('click', function () { 
-                	//=> Upload Text File button clicked pageBackupRestore
+		  //=> Upload Text File button clicked pageBackupRestore
 			if (extractFileData) { extractFileData.click(); }
-	 	}, false);
+			}, false);
 	 	extractFileData.onchange = handler;
-        }
-
-        bindBtnOkOverwritePacket(handler) {
-               document.getElementById('btn-ok-overwrite-packet').onclick = handler;
-               console.log(handler);
-        }
-        bindBtnCancelOverwritePacket(handler) {
-               document.getElementById('btn-cancel-overwrite-packet').onclick = handler;
-        }
-
-
+  };
+  bindBtnOkOverwritePacket(handler) {
+    document.getElementById('btn-ok-overwrite-packet').onclick = handler;
+    console.log(handler);
+  };
+  bindBtnCancelOverwritePacket(handler) {
+    document.getElementById('btn-cancel-overwrite-packet').onclick = handler;
+  };
 	bindSearchFilter() {
 		document.getElementById('searchFilterPackets').addEventListener('input', View.searchFilterEventHandler);
 	}
-
 	static searchFilterCall() {
 		const searchTerm = document.getElementById('searchFilterPackets').value;
 		View.searchFilter(searchTerm);
 	}
-
 	static searchFilterEventHandler(e) {
 		const searchTerm = e.target.value;
-                View.searchFilter(searchTerm);
+    View.searchFilter(searchTerm);
 	}
 
 	static searchFilter(searchTerm) {
@@ -296,8 +277,7 @@ class View {
 			style.display = isFound([
 				...children // <-- All columns
 			]) ? '' : 'none' 
-		};
-					      
+		};	      
 		tableRows.forEach(setTableRowStyleDisplay);
 		}
 	// transfer this to Controller
@@ -311,9 +291,9 @@ class View {
 		// Adds a packet as a row to packet list
 		const list = document.querySelector('#seed-list');
 		const row = document.createElement('tr');
-		row.className = `table__row--color`;
+		row.className = `table__row_color`;
 		const edit = document.createElement('td');
-		edit.className = `table__data table__data--edit`;
+		edit.className = `table__data table__data_edit`;
 		//edit.setAttribute("title", "Edit Record");
 		edit.addEventListener('click', () => {this.editPacketRequestHandler(
 		packet.packetId)}, false);
@@ -321,10 +301,10 @@ class View {
 			`<td class="table__data">${packet.packetId}</td>		
 			 <td class="table__data">${packet.variety}</td>
 			 <td class="table__data">${packet.group}</td>
-			 <td class="table__data table__data--center">${packet.number}</td>
-			 <td class="table__data table__data--center">${packet.weight}</td>
-			 <td class="table__data table__data--right">${packet.cost}</td>
-			 <td class="table__data table__data--center">${(packet.date).substring(2)}</td>
+			 <td class="table__data table__data_center">${packet.number}</td>
+			 <td class="table__data table__data_center">${packet.weight}</td>
+			 <td class="table__data table__data_right">${packet.cost}</td>
+			 <td class="table__data table__data_center">${(packet.date).substring(2)}</td>
 			 `;
 		row.appendChild(edit);
 		list.appendChild(row);
@@ -354,16 +334,16 @@ class View {
 		setTimeout(() => document.querySelector('.alert').remove(), 3000);
 	}
 
-        showConfirmOverwriteDialog() {
-               this.confirmOverwriteDialog.showModal();
-               //console.log('this is id: ' + seed.packetId);
-               let resultPromise = new Promise((resolve, reject) => {
-                    this.bindBtnOkOverwritePacket(() => {resolve('OK')});
-                    this.bindBtnCancelOverwritePacket(() => {resolve('Cancel')});
-                    //TODO: Handle ESCAPE key press
-               });
-               return resultPromise; 
-        }
+  showConfirmOverwriteDialog() {
+    this.confirmOverwriteDialog.showModal();
+ //console.log('this is id: ' + seed.packetId);
+    let resultPromise = new Promise((resolve, reject) => {
+      this.bindBtnOkOverwritePacket(() => {resolve('OK')});
+      this.bindBtnCancelOverwritePacket(() => {resolve('Cancel')});
+//TODO: Handle ESCAPE key press
+    });
+    return resultPromise; 
+  }
 
 	clearFields() {
 		//=> Clears all the entry fields on the edit/add page
@@ -390,9 +370,9 @@ class View {
         }
 	// Open Pages
 	showHomePage() {
-		if (document.getElementById('showHidePages').classList.contains('screen__app-pages--hide')) {
-			document.getElementById('showHidePages').classList.add('screen__app-pages--show');
-			document.getElementById('showHidePages').classList.remove('screen__app-pages--hide');
+		if (document.getElementById('showHidePages').classList.contains('screen__app-pages_hide')) {
+			document.getElementById('showHidePages').classList.add('screen__app-pages_show');
+			document.getElementById('showHidePages').classList.remove('screen__app-pages_hide');
 		}
 		document.querySelector('#homePage').style.display = '';
 		document.querySelector('#edit-page').style.display = 'none';
@@ -525,8 +505,8 @@ class Controller {
 		const record = await this.model.getRecord(packetId);
 		this.view.clearFields();
 		this.view.showEditPacket();
-		document.getElementById("packetId").classList.add("form__input--gray");
-		 //element.classList.remove("form__input--gray");
+		document.getElementById("packetId").classList.add("form__input_gray");
+		 //element.classList.remove("form__input_gray");
 		Object.keys(record).forEach(field => {
 			// -> with the requested seed pkt record for editing
 			//console.log(field);
@@ -542,7 +522,7 @@ class Controller {
 	requestAddNewPacketPage() {
 		this.view.showAddNewPacket();
 		this.view.clearFields();
-		document.getElementById("packetId").classList.remove("form__input--gray");
+		document.getElementById("packetId").classList.remove("form__input_gray");
 	}
 	requestScrollPacketsPage() {
 		this.view.showScrollPackets();
@@ -579,7 +559,7 @@ class Controller {
 	 const element = document.querySelector('#packetId');
 	 element.removeAttribute('readonly');
 	 element.setAttribute('required', 'required');
-	 element.classList.remove("form__input--gray");
+	 element.classList.remove("form__input_gray");
 	}
 	async loadRecord() {
 		// Get the content from the form fields

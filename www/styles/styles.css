@@ -2,7 +2,7 @@
   BEM - Block Element Modifier is used in this style sheet.
    - used in names of blocks, elements and modifiers.
    __ followed by an element
-   -- followed by a modifier
+    _ followed by a modifier
    Cascading is kept to a minimum and naming of classes are supporting the 
    semantic structure of the HTML5.
    Names indicating a format (except for the modifier) are avoided and as 
@@ -70,13 +70,13 @@ html:focus {
   position: relative;
   border: 0.1rem solid #ccc;
 }
-.screen__app-pages--show {
+.screen__app-pages_show {
   display: block;
 }
-.screen__app-pages--hide {
+.screen__app-pages_hide {
   display: none;
 }
-.screen__section--indent {
+.screen__section_indent {
   margin-left: 1rem;
 }
 .section {};
@@ -101,7 +101,7 @@ html:focus {
   text-align: center;
   padding-left: 0.6rem;
 }
-.btn-menu--right {
+.btn-menu_right {
   justify-content: right;
 }
 .btn-menu__items {
@@ -112,7 +112,7 @@ html:focus {
   border: none;
   cursor: pointer;
 }
-.btn-menu__items--outline {
+.btn-menu__items_outline {
   font-size: 1.3rem;
   border: 0.1rem solid black;
   border-radius: 0.4rem;
@@ -120,10 +120,10 @@ html:focus {
   height: 2rem;
   padding: 0.25rem;
 }
-.btn-menu__items--larger {
+.btn-menu__items_larger {
   height: 2.5rem;
 }
-.btn-menu__items--search {
+.btn-menu__items_search {
   text-align: left;
   /*margin: unset;*/
   /*padding: 0.15rem;*/
@@ -154,12 +154,12 @@ html:focus {
   font-size: 1.15rem;
 /*  font-weight: bold;*/
 }
-.table__header--sort {
+.table__header_sort {
   padding: 0.2rem;
   border: 2px solid #ccc;
   cursor: pointer;
 }
-.table__header--no-sort {
+.table__header_no-sort {
   padding: 0.2rem;
   border: 2px solid #ccc;
   cursor: pointer;
@@ -170,25 +170,25 @@ html:focus {
   line-height: normal;
   font-size:1.15rem;
 }
-.table__data--center {
+.table__data_center {
   text-align: center;
 }
-.table__data--right {
+.table__data_right {
   text-align: right;
 }
-.table__data--edit {
+.table__data_edit {
   background-image: url(../images/edit-pencil.svg);
   background-repeat: no-repeat;
   background-position: center;
   padding: 0.2rem;
   cursor: pointer;
 }
-.table__row--color {
+.table__row_color {
 }
-.table__row--color:nth-child(even) {
+.table__row_color:nth-child(even) {
   background-color: #E8E8E8;
 }
-.table__row--color:nth-child(odd) {
+.table__row_color:nth-child(odd) {
   background: #fdfdf0;
 }
 /* Edit Page */
@@ -216,10 +216,10 @@ html:focus {
   width: 20%;
   font-family: vumonowoff, monospace;
 }
-.form__input--gray {
+.form__input_gray {
   background-color: #E8E8E8;
 }
-.form__input--mono-font {
+.form__input_mono-font {
   font-family: vumonowoff, monospace;
 }
 .form__textarea {
@@ -239,10 +239,10 @@ html:focus {
 }
 /* Backup Page */
 .backup-page {}
-.label--inline{
+.label_inline{
   font-size: 1.3rem;
 }
-.ul--js-message {
+.ul_js-message {
   font-size: 1.25rem;
   padding: 0.7rem 0 0.7rem;
   list-style-type: square;
@@ -262,7 +262,7 @@ html:focus {
 .modal::backdrop {
   background: rgb(0 0 0 /.4);
 }
-.img--border {
+.img_border {
   box-sizing: border-box;
   width: 100%;
   height: 100%;
@@ -270,31 +270,6 @@ html:focus {
 
 /*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
- 
-
-
-.selected-db {
-  display: block;
-  background-color: unset;
-  color:black;
-  height: 1.5rem;
-  border: none;
-  cursor: pointer;
-}
-
-.selected-db:hover {
-  background-color:#C5C5C5;
-}
-
-section.borders {
-  /*margin-top: 0.3rem;*/
-  /*border-top: 0.025rem solid #CCCCCC;*/
-  border-bottom: 0.025rem solid #CCCCCC;
-}
-
-.indent {
-  padding-left: 1rem;
-}
 
 h1 {
   font-size: 1.65rem;
@@ -354,7 +329,7 @@ a:active {
 
 
 
-.page-img--left {
+.page-img_left {
   display: block;
   margin-left: 1.25rem;
   padding: 0.15rem;
@@ -380,7 +355,7 @@ a:active {
   font-size: 0.75rem;
 }
 
-#js-page--to-top {
+#js-page_to-top {
   display: none;
   position: fixed;
   bottom: 5px;
@@ -399,7 +374,7 @@ a:active {
   border-radius: 4px;
 }
 
-#js-page--to-top:hover {
+#js-page_to-top:hover {
   background-image: url(../images/to_top_red_icon.svg);
   background-repeat: no-repeat;
   background-position: center center;
@@ -449,7 +424,7 @@ div.alert {
   background-color: green;
 }
 
-#js-page--to-bottom { /* fix into rem */
+#js-page_to-bottom { /* fix into rem */
   display: block;
   position: fixed;
   top: -12px;
@@ -467,7 +442,7 @@ div.alert {
   cursor: pointer;
 }
 
-#js-page--to-bottom:hover {
+#js-page_to-bottom:hover {
   background-image: url(../images/to_bottom_red_icon.svg);
   background-repeat: no-repeat;
   background-position: center center;
@@ -481,11 +456,11 @@ div.center {
   text-align: center;
 }
 
-.js-edit-seed-pkt--closed {
+.js-edit-seed-pkt_closed {
   display: none;
 }
 
-.js-edit-seed-pkt--opened {
+.js-edit-seed-pkt_opened {
   display: block;
 }
 

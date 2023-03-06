@@ -15,45 +15,45 @@
 <div  class="screen__app">
 
   <!-- Pages -->
-<div id="showHidePages" class="screen__app-pages--hide">
+<div id="showHidePages" class="screen__app-pages_hide">
   <section id="homePage">
     <!--Menu Button Tool Bar-->
     <nav class="menu btn-menu screen__btn-menu">
       <button class="btn-menu__items  openHomePage" type="button" 
         title="Back to List. Current &#010;record not saved.">
-        <img class="img--border" src="./images/home.svg"></button>    
+        <img class="img_border" src="./images/home.svg"></button>    
       <button class="btn-menu__items" type="button" 
         title="Previous record." > 
-        <img class="img--border" src="./images/nav-arrow-left.svg"></button>
+        <img class="img_border" src="./images/nav-arrow-left.svg"></button>
       <button class="btn-menu__items" type="button" 
         title="Next record.">
-        <img class="img--border" src="./images/nav-arrow-right.svg"></button>      
+        <img class="img_border" src="./images/nav-arrow-right.svg"></button>      
       <button class="btn-menu__items openBackupRestorePage" type="button" 
         title="Backup operations.">
-        <img class="img--border" src="./images/tools.svg"></button>  
+        <img class="img_border" src="./images/tools.svg"></button>  
       <button class="btn-menu__items openNewPacketPage" type="button" 
         title="Create new record.">
-        <img class="img--border" src="./images/add-page.svg"></button>
+        <img class="img_border" src="./images/add-page.svg"></button>
       <button class="openHelpPage btn-menu__items" type="button" 
-        title="Help on buttons."><img class="img--border" src="./images/help-no-circle.svg"></button>    
-      <input class="btn-menu__items--search" placeholder="Find" type="text" 
+        title="Help on buttons."><img class="img_border" src="./images/help-no-circle.svg"></button>    
+      <input class="btn-menu__items_search" placeholder="Find" type="text" 
         title="Find entered text." id="searchFilterPackets"></input>   
       <button class="btn-menu__items" type="button" id="" 
-        title="Find entered text."><img class="img--border" src="./images/input-search.svg"></button>
+        title="Find entered text."><img class="img_border" src="./images/input-search.svg"></button>
     </nav> 
     <!-- Table of Records -->
     <table  class="home-page__table table
      table-seeds__row-color" >
       <thead>
         <tr class="table__header">
-          <th class="table__header--sort" id="sortPacketId">Package Id</th>
-          <th class="table__header--sort" id="sortVariety">Variety</th>          
-          <th class="table__header--sort" id="sortGroup">Group</th>
-          <th class="table__header--sort" id="sortNumber">Num</th>
-          <th class="table__header--sort" id="sortWeight">Gram</th>
-          <th class="table__header--sort" id="sortCost">Cost</th>
-          <th class="table__header--sort" id="sortDate">Date</th>
-          <th class="table__header--no-sort">Edit</th>
+          <th class="table__header_sort" id="sortPacketId">Package Id</th>
+          <th class="table__header_sort" id="sortVariety">Variety</th>          
+          <th class="table__header_sort" id="sortGroup">Group</th>
+          <th class="table__header_sort" id="sortNumber">Num</th>
+          <th class="table__header_sort" id="sortWeight">Gram</th>
+          <th class="table__header_sort" id="sortCost">Cost</th>
+          <th class="table__header_sort" id="sortDate">Date</th>
+          <th class="table__header_no-sort">Edit</th>
         </tr>
       </thead>
       <tbody id="seed-list"></tbody>
@@ -64,30 +64,26 @@
     <nav class="btn-menu screen__btn-menu">         
       <button class="btn-menu__items  openHomePage" type="button" 
         title="Back to List. Current &#010;record not saved.">
-        <img class="img--border" src="./images/home.svg"></button>
+        <img class="img_border" src="./images/home.svg"></button>
       <button class="btn-menu__items openNewPacketPage" type="button" 
-        title="Create new record."><img class="img--border" src="./images/add-page.svg"></button>
+        title="Create new record."><img class="img_border" src="./images/add-page.svg"></button>
       <button class="btn-menu__items " type="button" id="btnCopyRecord" 
         title="Copy record, unlock ID. &#010;Create new ID and record."><img 
-        class="img--border" src="./images/copy.svg"></button>
+        class="img_border" src="./images/copy.svg"></button>
       <button class="btn-menu__items " type="button" id="btnSubmitEditRecord" 
-        title="Save current record."><img class="img--border" src="./images/save-floppy-disk.svg" >
+        title="Save current record."><img class="img_border" src="./images/save-floppy-disk.svg" >
         </button>
       <button class="btn-menu__items" type="button" id="btnDeleteRecord" 
-        title="Delete current record."><img class="img--border" src="./images/bin-full.svg"></button>
+        title="Delete current record."><img class="img_border" src="./images/bin-full.svg"></button>
       <button class="openHelpPage btn-menu__items" type="button" 
-        title="Help on buttons."><img class="img--border" src="./images/help-no-circle.svg"></button>
-      <input class="btn-menu__items--search" placeholder="Find" type="text" 
-        title="Find entered text."></input>
-      <button class="btn-menu__items" type="button" id="" 
-        title="Find entered text."><img class="img--border" src="./images/input-search.svg"></button>
+        title="Help on buttons."><img class="img_border" src="./images/help-no-circle.svg"></button>
     </nav>    <!-- Data Entry Edit Form -->    
     <form class=".form"id="seed-entry">
       <p>*&emsp;Input required.</p>
       <p>**&ensp;Seed Packet Id must be unique!</p>
       <label class="form form__label" for="packetId">**&nbsp;Packet ID:</label>
-      <input type="text" class="form form__input form__input--mono-font
-      form__input--gray" id="packetId" name="packetId"><br>
+      <input type="text" class="form form__input form__input_mono-font
+      form__input_gray" id="packetId" name="packetId"><br>
       <label class="form form__label" for="variety">*&nbsp;Variety: </label>
       <input type="text" class="form form__input" id="variety" name="variety" 
       required="required"><br>
@@ -107,7 +103,7 @@
       <input type="date" class="form form__input" id="date" name="date" 
       required="required"><br>    
       <label class="form form__label" for="timeStamp">Timestamp:</label>
-      <input type="text" class="form form__input form__input--gray" 
+      <input type="text" class="form form__input form__input_gray" 
       readonly="readonly" id="timeStamp" 
       name="timeStamp"><br>     
       <label class="form form__label" for="seedNotes">Notes:</label>
@@ -123,47 +119,47 @@
     <nav class="btn-menu screen__btn-menu">         
       <button class="btn-menu__items openHomePage" type="button" 
         title="Back to List. Current &#010;record not saved.">
-        <img class="img--border" src="./images/home.svg"></button>
+        <img class="img_border" src="./images/home.svg"></button>
       <button class="openHelpPage btn-menu__items" type="button" 
-        title="Help on buttons."><img class="img--border" src="./images/help-no-circle.svg"></button>
+        title="Help on buttons."><img class="img_border" src="./images/help-no-circle.svg"></button>
     </nav>
     <!--Backup Operations-->
     <!-- Backup Records     -->
     <h3>
       Create Data Backup File.
     </h3>
-    <section class="screen__section--indent">
+    <section class="screen__section_indent">
     <nav class="btn-menu">
-    <button class="btn-menu__items btn-menu__items--larger" type="button" id="btnRetrieveData" title="">
-      <img class="img--border" src="./images/cloud-upload.svg"></button>
-      <label class="label--inline">Upload backup file to any folder.</label>
+    <button class="btn-menu__items btn-menu__items_larger" type="button" id="btnRetrieveData" title="">
+      <img class="img_border" src="./images/cloud-upload.svg"></button>
+      <label class="label_inline">Upload backup file to any folder.</label>
     </nav>
-    <ul id="fileNotifications" class="ul--js-message"></ul>
+    <ul id="fileNotifications" class="ul_js-message"></ul>
     </section>
     <!--Restore Records-->
     <h3>
       Restore Data from Backup File.
     </h3>
-    <section class="screen__section--indent">
+    <section class="screen__section_indent">
     <nav class="btn-menu">
       <input type="file" name="file" id="backupDataFile" style="display:none">
-      <button id="btnDownloadData" class="btn-menu__items btn-menu__items--larger" type="button" title="">
-      <img class="img--border" src="./images/cloud-download.svg" alt=""></button>
-      <label class="label--inline">Download data from local backup file.</label>
+      <button id="btnDownloadData" class="btn-menu__items btn-menu__items_larger" type="button" title="">
+      <img class="img_border" src="./images/cloud-download.svg" alt=""></button>
+      <label class="label_inline">Download data from local backup file.</label>
     </nav>
-    <ul id="backupNotifications" class="ul--js-message"></ul> 
+    <ul id="backupNotifications" class="ul_js-message"></ul> 
     </section>
     <h3>Reset seedB Application</h3>
-    <section class="indent">
+    <section class="screen__section_indent">
       <p>Use if database is corrupted<br>
       Any existing records will be deleted!</p>
       <nav class="btn-menu">
-        <button class="btnReinstall btn-menu__items btn-menu__items--larger" 
-        type="button"><img class="img--border" 
+        <button class="btnReinstall btn-menu__items btn-menu__items_larger" 
+        type="button"><img class="img_border" 
         src="./images/database-restore.svg"></button>
-        <label class="label--inline">Reset database</label>
+        <label class="label_inline">Reset database</label>
       </nav> 
-      <ul id="installDbMsg" class="ul--js-message"></ul>
+      <ul id="installDbMsg" class="ul_js-message"></ul>
     </section>
   </section>
 
@@ -173,29 +169,29 @@
     <nav class="btn-menu screen__btn-menu">
       <button class="btn-menu__items  openHomePage" type="button" 
         title="Back to List. Current &#010;record not saved.">
-        <img class="img--border" src="./images/home.svg"></button>    
+        <img class="img_border" src="./images/home.svg"></button>    
       <button class="btn-menu__items" type="button" 
         title="Previous record." > 
-        <img class="img--border" src="./images/nav-arrow-left.svg"></button>
+        <img class="img_border" src="./images/nav-arrow-left.svg"></button>
       <button class="btn-menu__items" type="button" 
         title="Next record.">
-        <img class="img--border" src="./images/nav-arrow-right.svg"></button>      
+        <img class="img_border" src="./images/nav-arrow-right.svg"></button>      
       <button class="btn-menu__items openBackupRestorePage" type="button" 
         title="Backup operations.">
-        <img class="img--border" src="./images/tools.svg"></button>  
+        <img class="img_border" src="./images/tools.svg"></button>  
       <button class="btn-menu__items openNewPacketPage" type="button" 
         title="Create new record.">
-        <img class="img--border" src="./images/add-page.svg"></button>
+        <img class="img_border" src="./images/add-page.svg"></button>
       <button class="openHelpPage btn-menu__items" type="button" 
-        title="Help on buttons."><img class="img--border" src="./images/help-no-circle.svg"></button>    
-      <input class="btn-menu__items--search" placeholder="Find" type="text" 
+        title="Help on buttons."><img class="img_border" src="./images/help-no-circle.svg"></button>    
+      <input class="btn-menu__items_search" placeholder="Find" type="text" 
         title="Find entered text."></input>   
       <button class="btn-menu__items" type="button" id="" 
-        title="Find entered text."><img class="img--border" src="./images/input-search.svg"></button>
+        title="Find entered text."><img class="img_border" src="./images/input-search.svg"></button>
     </nav>    <h2>Documentation</h2>
-      <h3 id="newSeedHelp" class="chapter--h3" id="helpNewSeed">Enter New Seed Packet</h3>
+      <h3 id="newSeedHelp" class="chapter_h3" id="helpNewSeed">Enter New Seed Packet</h3>
       <p></p>
-      <h3 class="chapter--h3" id="helpEditSeed">Edit Existing Seed Packet</h3>
+      <h3 class="chapter_h3" id="helpEditSeed">Edit Existing Seed Packet</h3>
       <p></p>
   </section>
 </div>
@@ -203,10 +199,10 @@
        <p>WARNING:</p> 
        <p>ID already exists.</p> 
        <p>Overwrite this record?</p>
-        <form method="dialog" class="btn-menu btn-menu--right">
-          <button class="btn-menu__items btn-menu__items--outline" 
+        <form method="dialog" class="btn-menu btn-menu_right">
+          <button class="btn-menu__items btn-menu__items_outline" 
           id="btn-cancel-overwrite-packet">Cancel</button>
-          <button class="btn-menu__items btn-menu__items--outline" 
+          <button class="btn-menu__items btn-menu__items_outline" 
           id="btn-ok-overwrite-packet">Overwrite</button> 
         </form> 
     </dialog>  
@@ -219,10 +215,10 @@
     </section><br>
 
     <!-- Go to bottom of page -->
-    <div id="js-page--to-bottom" title="Go To Bottom"></div>
+    <div id="js-page_to-bottom" title="Go To Bottom"></div>
 
     <!-- Go to top of page-->
-    <div id="js-page--to-top" title="Go to Top"></div>
+    <div id="js-page_to-top" title="Go to Top"></div>
   </div>
     
   <script src="./js/app.js"></script>
