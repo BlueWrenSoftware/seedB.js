@@ -149,26 +149,9 @@ class View {
 		this.btnDeleteRecordLinkElement = document.querySelector('#btnDeleteRecord');
 		this.btnRetrieveDataLinkElement = document.querySelector('#btnRetrieveData');
 		this.btnReinstallLinkElements = document.querySelectorAll('.btnReinstall');
-		// Menu events
-		//this.menuButtonLinkElement = document.querySelector('.js-menu-hamburger');
-		//scroll events
-		this.scrollToBottomPageLinkElement = document.getElementById('js-page_to-bottom');
-		this.scrollToTopPageLinkElement = document.getElementById('js-page_to-top');
-                this.confirmOverwriteDialog = document.getElementById('confirm-overwrite-dialog');
+          this.confirmOverwriteDialog = document.getElementById('confirm-overwrite-dialog');
 		this.bindSearchFilter()
 	}
-	//scroll events
-	bindScrollTopBottomEvent(scrollTopBottomRequestHandler) {
-		window.onscroll = scrollTopBottomRequestHandler;
-	};
-	bindScrollToBottomPage(scrollToBottomRequestHandler) {
-		this.scrollToBottomPageLinkElement.addEventListener(
-		'click', scrollToBottomRequestHandler, false);
-	};
-	bindScrollToTopPage(scrollToTopPageRequestHandler) {
-		this.scrollToTopPageLinkElement.addEventListener(
-		'click', scrollToTopPageRequestHandler, false);
-	};
 	//page events
 	bindPacketListPage(packetListRequestHandler) { // Open Home Page
 		// pass on to Controller
@@ -370,9 +353,9 @@ class View {
         }
 	// Open Pages
 	showHomePage() {
-		if (document.getElementById('showHidePages').classList.contains('screen__app-pages_hide')) {
-			document.getElementById('showHidePages').classList.add('screen__app-pages_show');
-			document.getElementById('showHidePages').classList.remove('screen__app-pages_hide');
+		if (document.getElementById('showHidePages').classList.contains('page__section_hide')) {
+			document.getElementById('showHidePages').classList.add('page__section_show');
+			document.getElementById('showHidePages').classList.remove('page__section_hide');
 		}
 		document.querySelector('#homePage').style.display = '';
 		document.querySelector('#edit-page').style.display = 'none';
@@ -407,32 +390,6 @@ class View {
 		document.querySelector('#homePage').style.display = 'none';
 		document.querySelector('#edit-page').style.display = 'none';
 		document.querySelector('#helpPage').style.display = '';
-	}
-	//menu and scroll
-/*	toggleMenu() {
-		//=> toggle function using class lists on click of the hamburger menu
-		const closedMenu = document.querySelector('.js-menu-hamburger--closed');
-		closedMenu.classList.toggle('js-menu-hamburger--opened');
-	}*/
-	scrollToBottom() { //=> function activated on click of down arrow
-		if (document.documentElement.scrollHeight > document.documentElement.clientHeight) {
-			const scrollHeight = document.documentElement.scrollHeight;
-			window.scrollTo(0, scrollHeight);
-		}
-	}
-	scrollToTop() { //=> function activated on click of up arrow
-		document.body.scrollTop = 0; //=> For Safari
-		document.documentElement.scrollTop = 0; //=> For Chrome, Firefox, IE and Opera
-	}
-
-	scrollEvent() {
-		//=> scroll event to hide or show to top button
-		//=> scrolls down 20px, show the up button
-		if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
-			this.scrollToTopPageLinkElement.style.display = 'block';
-		} else {
-			this.scrollToTopPageLinkElement.style.display = 'none';
-		}
 	}
 	showMessage(message) {
 		msgInstallDb.innerHTML = (`<li>${message}.</li>
@@ -470,11 +427,6 @@ class Controller {
 		this.view.bindBtnRetrieveData( () => { this.requestRetrieveAllData(); });
 		this.view.bindBtnReinstall( () => { this.fixCorruptDB(); });
 		this.view.bindBtnCopyRecord( () => { this.unlockPacketId();});
-		//bindings menu ans scroll
-		//this.view.bindMenuButton( () => { this.view.toggleMenu(); });
-		this.view.bindScrollTopBottomEvent( () => { this.view.scrollEvent(); });
-		this.view.bindScrollToBottomPage( () => { this.view.scrollToBottom(); });
-		this.view.bindScrollToTopPage( () => { this.view.scrollToTop(); });
     this.view.bindBtnUploadBackupFile( this.restoreBackup );
 	}
 	async requestSortedPacketList(sortOn) {
@@ -606,20 +558,6 @@ class Controller {
 	};
 	async requestAddRecord() {
 		await this.loadRecord();
-/*		switch (submit) {
-			case 'editRecord':
-				console.log('edit record');
-				this.view.clearFields();
-				this.requestPacketListPage();
-				break;
-			case 'newRecord':
-				console.log('new record');
-				this.view.clearFields();  //=> Clear form fields
-				this.view.showAddNewPacket();
-				break;
-			default:
-				break;
-		};*/
 	};
 	async requestDeleteRecord() {
 		//=> Delete record requested from delete button on edit page

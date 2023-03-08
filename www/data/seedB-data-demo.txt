@@ -33,6 +33,17 @@
     "seedNotes": "cropping very well. Planted in the large area of the garden."
   },
   {
+    "packetId": "barley-1",
+    "variety": "Barley",
+    "group": "Grains",
+    "number": 0,
+    "weight": 2000,
+    "cost": 0,
+    "date": "2023-03-06",
+    "timeStamp": 1678076110603,
+    "seedNotes": "Harvest from front patch large garden"
+  },
+  {
     "group": "Vegetables",
     "variety": "Carrot",
     "packetId": "carrot-1",
@@ -62,7 +73,7 @@
     "weight": 10,
     "cost": 0,
     "date": "2020-05-05",
-    "timeStamp": 1677380278537,
+    "timeStamp": 1678082626648,
     "seedNotes": "from garden.\nDoing better then commercial seeds"
   },
   {
@@ -81,10 +92,10 @@
     "variety": "Carrot",
     "group": "Vegetables",
     "number": 526,
-    "weight": 10,
+    "weight": 11,
     "cost": 0,
     "date": "2020-05-05",
-    "timeStamp": 1677380390137,
+    "timeStamp": 1678062006258,
     "seedNotes": "from garden.\nDoing better then commercial seeds"
   },
   {
@@ -291,10 +302,21 @@
     "group": "Grains",
     "number": 0,
     "weight": 2500,
-    "cost": 0,
+    "cost": 20,
     "date": "2023-02-28",
-    "timeStamp": 1677972900793,
+    "timeStamp": 1677989651348,
     "seedNotes": "Grown in the large garden. Seeds are from a handful of ears"
+  },
+  {
+    "packetId": "rye-2",
+    "variety": "Rye Black",
+    "group": "Grains",
+    "number": 0,
+    "weight": 100,
+    "cost": 0,
+    "date": "2023-03-06",
+    "timeStamp": 1678062203769,
+    "seedNotes": "Just a sample collected from the green manure patch"
   },
   {
     "group": "Vegetables",
