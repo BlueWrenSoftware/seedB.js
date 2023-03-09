@@ -280,13 +280,19 @@ class View {
 		//edit.setAttribute("title", "Edit Record");
 		edit.addEventListener('click', () => {this.editPacketRequestHandler(
 		packet.packetId)}, false);
+		if (packet.weight >= 9999) { 
+		  //console.log(packet.weight);
+		  let expNum = packet.weight.toExponential();
+		  packet.weight = expNum;
+		  
+		};
 		row.innerHTML =
 			`<td class="table__data">${packet.packetId}</td>		
 			 <td class="table__data">${packet.variety}</td>
 			 <td class="table__data">${packet.group}</td>
 			 <td class="table__data table__data_center">${packet.number}</td>
 			 <td class="table__data table__data_center">${packet.weight}</td>
-			 <td class="table__data table__data_right">${packet.cost}</td>
+			 <td class="table__data table__data_right">${packet.cost.toFixed(2)}</td>
 			 <td class="table__data table__data_center">${(packet.date).substring(2)}</td>
 			 `;
 		row.appendChild(edit);
@@ -541,7 +547,7 @@ class Controller {
                         // check if we in create mode & packedId already exists 
                         if (this.view.packetIdInputIsEditable() && (await this.model.getRecord(seed.packetId))) {
                            // display warning and wait for feedback before continuing
-                           console.log('this is id: ' + seed.packetId);
+                           //console.log('this is id: ' + seed.packetId);
                            let confirmation_result = await this.view.showConfirmOverwriteDialog();
                            if (confirmation_result == 'Cancel') {
                              // show some message about not updating 
