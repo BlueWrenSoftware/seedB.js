@@ -116,6 +116,7 @@ class Model {
 		const store = transaction.objectStore('collection');
 		store.delete(packetId);
 	}
+  
 }
 
 class View {
@@ -637,3 +638,35 @@ window.onload = () => { controller.requestPacketListPage() };
 const fileNotes = document.getElementById('fileNotifications'); //=> alias for user msgs retrieving data & backup
 const errorMsg = document.getElementById('dbError');  //=> alias forDB error msgs for the UI
 const msgInstallDb = document.getElementById('installDbMsg'); //=> alias for UI installation msgs
+
+function openDB() {
+  const request = window.indexedDB.open('seedB', 1);
+  request.onsuccess = (event) => {
+    const db = event.target.result;
+    console.log("success");
+    const transaction = db.transaction("collection", "readonly");
+		const store = transaction.objectStore("collection");
+		const cursorRequest = store.openKeyCursor();
+		const packageIds = [];
+		cursorRequest.onsuccess = (event) => {		  
+		  const cursor = event.target.result;
+		  if (cursor) {
+		    packageIds.push(cursor.key);
+		    //console.log(cursor.key);
+		    cursor.continue();
+		  }
+		  else {
+		    console.log("completed");
+		    console.log(packageIds);
+		  }
+		}
+		cursorRequest.onerror = (event) => {
+		  envent.target.errorCode;
+		}   
+  }   
+  request.onerror = (event) => {
+    event.target.errorCode;
+	}
+};
+
+openDB();
