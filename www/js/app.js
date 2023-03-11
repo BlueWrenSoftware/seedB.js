@@ -74,7 +74,7 @@ class Model {
 			};
 		});
 	};
-	getAll(sortOn = 'variety', sortOrder = 'next') {
+	getAll(sortOn = 'variety', sortOrder = 'next', filter='') {
 		return new Promise(async (resolve, reject) => {
 			let cursorRequest;
 			await this.tryOpen();
@@ -90,7 +90,11 @@ class Model {
 			cursorRequest.onsuccess = event => {
 				let cursor = event.target.result;
 				if (cursor) {
-					records.push(cursor.value);
+					let keys = Object.keys(cursor.value);
+					let isFound = keys.some(key=>{return String(cursor.value[key]).toUpperCase().includes(filter.toUpperCase())});
+					if (isFound) {
+						records.push(cursor.value);
+					}
 					cursor.continue();
 				}
 				else {
@@ -151,7 +155,6 @@ class View {
 		this.btnRetrieveDataLinkElement = document.querySelector('#btnRetrieveData');
 		this.btnReinstallLinkElements = document.querySelectorAll('.btnReinstall');
           this.confirmOverwriteDialog = document.getElementById('confirm-overwrite-dialog');
-		this.bindSearchFilter()
 	}
 	//page events
 	bindPacketListPage(packetListRequestHandler) { // Open Home Page
@@ -238,32 +241,9 @@ class View {
   bindBtnCancelOverwritePacket(handler) {
     document.getElementById('btn-cancel-overwrite-packet').onclick = handler;
   };
-	bindSearchFilter() {
-		document.getElementById('searchFilterPackets').addEventListener('input', View.searchFilterEventHandler);
+	bindSearchFilter(handler) {
+		document.getElementById('searchFilterPackets').addEventListener('input', handler);
 	}
-	static searchFilterCall() {
-		const searchTerm = document.getElementById('searchFilterPackets').value;
-		View.searchFilter(searchTerm);
-	}
-	static searchFilterEventHandler(e) {
-		const searchTerm = e.target.value;
-    View.searchFilter(searchTerm);
-	}
-
-	static searchFilter(searchTerm) {
-		searchTerm = searchTerm.toUpperCase();
-		const tableRows = document.querySelectorAll('#seed-list tr');
-		const isFoundInTableData = td => {
-			return (td.innerHTML || td.textContent).toUpperCase().indexOf(searchTerm) > -1;
-		};
-		const isFound = arrayChildren => arrayChildren.some(isFoundInTableData);
-		const setTableRowStyleDisplay = ({ style, children }) => {
-			style.display = isFound([
-				...children // <-- All columns
-			]) ? '' : 'none' 
-		};	      
-		tableRows.forEach(setTableRowStyleDisplay);
-		}
 	// transfer this to Controller
 	requestSpecificHelp() {
 		// designed to show specific instructions when clicked on ? anywhere
@@ -293,7 +273,7 @@ class View {
 			 <td class="table__data">${packet.group}</td>
 			 <td class="table__data table__data_center">${packet.number}</td>
 			 <td class="table__data table__data_center">${packet.weight}</td>
-			 <td class="table__data table__data_right">${packet.cost.toFixed(2)}</td>
+			 <td class="table__data table__data_right">${packet.cost}</td>
 			 <td class="table__data table__data_center">${(packet.date).substring(2)}</td>
 			 `;
 		row.appendChild(edit);
@@ -435,7 +415,14 @@ class Controller {
 		this.view.bindBtnReinstall( () => { this.fixCorruptDB(); });
 		this.view.bindBtnCopyRecord( () => { this.unlockPacketId();});
     this.view.bindBtnUploadBackupFile( this.restoreBackup );
+		this.view.bindSearchFilter((e) => {this.searchFilterHandler(e);})
 	}
+
+	async searchFilterHandler(e) {
+		this.filter = e.target.value;
+		await this.requestSortedPacketList();
+	}
+
 	async requestSortedPacketList(sortOn) {
 		if (sortOn !== undefined) {
 			// if sortOn is supplied, then the user is attempting
@@ -457,7 +444,7 @@ class Controller {
 			this.sortOn = sortOn;
 		}
 		// request the new data from the model
-		const records = await this.model.getAll(this.sortOn, this.sortOrder);
+		const records = await this.model.getAll(this.sortOn, this.sortOrder, this.filter);
 		this.view.displayPacketsList(records);
 	}
 	async editPacketRequestHandler(packetId) {
