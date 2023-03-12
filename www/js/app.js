@@ -287,7 +287,7 @@ class View {
 			table.deleteRow(0);
 		};
 		packets.forEach((packet) => this.createTableTemplate(packet));
-		View.searchFilterCall();
+		//View.searchFilterCall();
 	}
 
 	showAlert(message, className, idMessage, idLocation) {
