@@ -5,7 +5,7 @@
     "packetId": "artichoke-3",
     "number": 10,
     "weight": 10,
-    "cost": 10.00,
+    "cost": 10,
     "date": "2022-07-04",
     "timeStamp": 1674974480195,
     "seedNotes": ""
@@ -49,7 +49,7 @@
     "packetId": "carrot-1",
     "number": 526,
     "weight": 10,
-    "cost": "0",
+    "cost": 0,
     "date": "2020-05-05",
     "timeStamp": 1676263858869,
     "seedNotes": "from garden.\nDoing better then commercial seeds"
@@ -148,7 +148,7 @@
     "group": "Trees",
     "number": 5000,
     "weight": 0,
-    "cost": "168.00",
+    "cost": 168,
     "date": "2022-07-13",
     "timeStamp": 1676615915433,
     "seedNotes": ""
@@ -159,7 +159,7 @@
     "packetId": "kipler-1",
     "number": 200,
     "weight": 0,
-    "cost": 3.60,
+    "cost": 3.6,
     "date": "2022-07-01",
     "timeStamp": 1674974710576,
     "seedNotes": ""
@@ -170,7 +170,7 @@
     "packetId": "kipler-2",
     "number": 100,
     "weight": 0,
-    "cost": 3.60,
+    "cost": 3.6,
     "date": "2022-07-02",
     "timeStamp": 1674974727868,
     "seedNotes": "from last year seed"
@@ -181,7 +181,7 @@
     "packetId": "kipler-3",
     "number": 20,
     "weight": 0,
-    "cost": 3.60,
+    "cost": 3.6,
     "date": "2022-07-01",
     "timeStamp": 1674974732812,
     "seedNotes": ""
@@ -203,7 +203,7 @@
     "packetId": "parsnip-2",
     "number": 90,
     "weight": 0,
-    "cost": 3.60,
+    "cost": 3.6,
     "date": "2022-06-29",
     "timeStamp": 1674974748383,
     "seedNotes": ""
@@ -214,7 +214,7 @@
     "packetId": "parsnip-3",
     "number": 90,
     "weight": 0,
-    "cost": 5.80,
+    "cost": 5.8,
     "date": "2022-05-31",
     "timeStamp": 1674974767261,
     "seedNotes": ""
@@ -225,7 +225,7 @@
     "packetId": "pink-eye-1",
     "number": 50,
     "weight": 0,
-    "cost": 5.80,
+    "cost": 5.8,
     "date": "2022-07-01",
     "timeStamp": 1674974774366,
     "seedNotes": "seed from last year"
@@ -236,7 +236,7 @@
     "packetId": "pink-lady-1",
     "number": 5,
     "weight": 0,
-    "cost": 5.80,
+    "cost": 5.8,
     "date": "2022-07-12",
     "timeStamp": 1674974778998,
     "seedNotes": ""
@@ -247,7 +247,7 @@
     "packetId": "poppy-1",
     "number": 200,
     "weight": 20,
-    "cost": 5.80,
+    "cost": 5.8,
     "date": "2021-12-23",
     "timeStamp": 1674974783039,
     "seedNotes": "from garden"
@@ -258,7 +258,7 @@
     "packetId": "poppy-2",
     "number": 20,
     "weight": 20,
-    "cost": 5.80,
+    "cost": 5.8,
     "date": "2022-03-10",
     "timeStamp": 1674974787015,
     "seedNotes": "from garden"
@@ -269,7 +269,7 @@
     "group": "Vegetables",
     "number": 10,
     "weight": 168,
-    "cost": 5.80,
+    "cost": 5.8,
     "date": "2022-07-05",
     "timeStamp": 1676615814244,
     "seedNotes": ""
@@ -280,7 +280,7 @@
     "packetId": "pumpkin-2",
     "number": 10,
     "weight": 10,
-    "cost": 5.80,
+    "cost": 5.8,
     "date": "2022-07-05",
     "timeStamp": 1674974797217,
     "seedNotes": ""
@@ -291,7 +291,7 @@
     "packetId": "pumpkin-3",
     "number": 20,
     "weight": 20,
-    "cost": 5.80,
+    "cost": 5.8,
     "date": "2022-07-05",
     "timeStamp": 1674974802001,
     "seedNotes": ""
@@ -324,7 +324,7 @@
     "packetId": "Turnip-1",
     "number": 100,
     "weight": 100,
-    "cost": 5.80,
+    "cost": 5.8,
     "date": "2020-11-29",
     "timeStamp": 1674974815604,
     "seedNotes": "from garden"
@@ -335,7 +335,7 @@
     "packetId": "turnip-1",
     "number": 100,
     "weight": 100,
-    "cost": 5.80,
+    "cost": 5.8,
     "date": "2020-11-29",
     "timeStamp": 1674974820349,
     "seedNotes": "from garden"
@@ -346,7 +346,7 @@
     "packetId": "turnip-2",
     "number": 1000,
     "weight": 0,
-    "cost": 5.80,
+    "cost": 5.8,
     "date": "2022-03-10",
     "timeStamp": 1674974826119,
     "seedNotes": "from garden"
@@ -357,7 +357,7 @@
     "packetId": "turnip-3",
     "number": 2,
     "weight": 2,
-    "cost": 5.80,
+    "cost": 5.8,
     "date": "2022-07-07",
     "timeStamp": 1674974831519,
     "seedNotes": ""
