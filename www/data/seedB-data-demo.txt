@@ -1,5 +1,27 @@
  [
   {
+    "packetId": "artichoke-1",
+    "variety": "Artichoke",
+    "group": "Vegetables",
+    "number": 10,
+    "weight": 10,
+    "cost": 2.3,
+    "date": "2022-07-04",
+    "timeStamp": 1678583079544,
+    "seedNotes": ""
+  },
+  {
+    "packetId": "artichoke-2",
+    "variety": "Artichoke",
+    "group": "Vegetables",
+    "number": 10,
+    "weight": 10,
+    "cost": 10,
+    "date": "2022-07-04",
+    "timeStamp": 1678583003111,
+    "seedNotes": ""
+  },
+  {
     "group": "Vegetables",
     "variety": "Artichoke",
     "packetId": "artichoke-3",
@@ -20,17 +42,6 @@
     "date": "2022-07-08",
     "timeStamp": 1674974513855,
     "seedNotes": "blah"
-  },
-  {
-    "packetId": "xartichoke-1",
-    "variety": "Artichokes",
-    "group": "Vegetables",
-    "number": 100,
-    "weight": 200,
-    "cost": 0,
-    "date": "2021-11-19",
-    "timeStamp": 1677319554969,
-    "seedNotes": "cropping very well. Planted in the large area of the garden."
   },
   {
     "packetId": "barley-1",
@@ -301,10 +312,10 @@
     "variety": "Rye",
     "group": "Grains",
     "number": 0,
-    "weight": 2500,
+    "weight": 25000,
     "cost": 20,
     "date": "2023-02-28",
-    "timeStamp": 1677989651348,
+    "timeStamp": 1678582547226,
     "seedNotes": "Grown in the large garden. Seeds are from a handful of ears"
   },
   {

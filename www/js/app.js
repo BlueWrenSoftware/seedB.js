@@ -273,7 +273,7 @@ class View {
 			 <td class="table__data">${packet.group}</td>
 			 <td class="table__data table__data_center">${packet.number}</td>
 			 <td class="table__data table__data_center">${packet.weight}</td>
-			 <td class="table__data table__data_right">${packet.cost}</td>
+			 <td class="table__data table__data_right">${packet.cost.toFixed(2)}</td>
 			 <td class="table__data table__data_center">${(packet.date).substring(2)}</td>
 			 `;
 		row.appendChild(edit);
