@@ -312,10 +312,10 @@
     "variety": "Rye",
     "group": "Grains",
     "number": 0,
-    "weight": 25000,
-    "cost": 20,
+    "weight": 2500,
+    "cost": 0,
     "date": "2023-02-28",
-    "timeStamp": 1678582547226,
+    "timeStamp": 1678590276127,
     "seedNotes": "Grown in the large garden. Seeds are from a handful of ears"
   },
   {
@@ -383,5 +383,16 @@
     "date": "2022-07-01",
     "timeStamp": 1674974739518,
     "seedNotes": ""
+  },
+  {
+    "packetId": "wheat-1",
+    "variety": "Wheat",
+    "group": "Grains",
+    "number": 0,
+    "weight": 350,
+    "cost": 0,
+    "date": "2023-03-08",
+    "timeStamp": 1678590499428,
+    "seedNotes": "From main garden patch front gate"
   }
 ]
