@@ -91,7 +91,8 @@ class Model {
 				let cursor = event.target.result;
 				if (cursor) {
 					let keys = Object.keys(cursor.value);
-					let isFound = keys.some(key=>{return String(cursor.value[key]).toUpperCase().includes(filter.toUpperCase())});
+					let isFound = keys.some(key=>{
+					  return String(cursor.value[key]).toUpperCase().includes(filter.toUpperCase())});
 					if (isFound) {
 						records.push(cursor.value);
 					}
@@ -264,8 +265,7 @@ class View {
 		if (packet.weight >= 9999) { 
 		  //console.log(packet.weight);
 		  let expNum = packet.weight.toExponential();
-		  packet.weight = expNum;
-		  
+		  packet.weight = expNum;		  
 		};
 		row.innerHTML =
 			`<td class="table__data">${packet.packetId}</td>		
@@ -287,7 +287,6 @@ class View {
 			table.deleteRow(0);
 		};
 		packets.forEach((packet) => this.createTableTemplate(packet));
-		//View.searchFilterCall();
 	}
 
 	showAlert(message, className, idMessage, idLocation) {
@@ -391,6 +390,7 @@ class Controller {
 		this.view = view;
 		this.sortOn = 'variety';
 		this.sortOrder = 'next';
+		//this.packetIds = [];
 		// bindings pages
 		this.view.bindPacketListPage( () => { this.requestPacketListPage(); });
 		this.view.bindAddNewPacketPage( () => { this.requestAddNewPacketPage(); });
@@ -446,7 +446,24 @@ class Controller {
 		// request the new data from the model
 		const records = await this.model.getAll(this.sortOn, this.sortOrder, this.filter);
 		this.view.displayPacketsList(records);
+		this.createPacketIdsArray(records);
+		//console.log(this.packetIds);
 	}
+	  createPacketIdsArray(records) {
+    console.log("from this.scrollRecords");
+    let packetIds = [];
+    let index;
+    //console.log(records);
+    Object.values(records).forEach(record => {
+      packetIds.push(record.packetId);
+    });
+    console.log(packetIds);
+    packetIds.forEach((id) => {
+      console.log(id);
+      index = packetIds.indexOf(id);
+      console.log(index);
+      });
+    }
 	async editPacketRequestHandler(packetId) {
 		const record = await this.model.getRecord(packetId);
 		this.view.clearFields();
@@ -656,4 +673,6 @@ function openDB() {
 	}
 };
 
-openDB();
+//openDB();
+//controller.scrollRecords();
+

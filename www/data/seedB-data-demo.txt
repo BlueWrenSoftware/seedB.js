@@ -55,14 +55,14 @@
     "seedNotes": "Harvest from front patch large garden"
   },
   {
-    "group": "Vegetables",
-    "variety": "Carrot",
     "packetId": "carrot-1",
+    "variety": "Carrot",
+    "group": "Vegetables",
     "number": 526,
     "weight": 10,
     "cost": 0,
     "date": "2020-05-05",
-    "timeStamp": 1676263858869,
+    "timeStamp": 1678590934536,
     "seedNotes": "from garden.\nDoing better then commercial seeds"
   },
   {

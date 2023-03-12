@@ -294,12 +294,12 @@ html:focus {
 }
 .modal {
   position: fixed;
-  top: 50%;
+  top: 20%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 .modal:modal {
-  width:450px; 
+  width:200px; 
   padding: 1.5rem;
   background-color: #fdfdf0;
   border: 0.1rem solid #ccc;
