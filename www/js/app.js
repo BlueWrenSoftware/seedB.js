@@ -136,7 +136,6 @@ class View {
 		// Pages events
 		this.packetListLinkElements = document.querySelectorAll('.openHomePage');
 		this.addNewPacketLinkElement = document.querySelectorAll('.openNewPacketPage');
-		this.scrollPacketsLinkElement = document.querySelector('.openScrollPacketsPage');
 		this.backupRestoreLinkElement = document.querySelectorAll('.openBackupRestorePage');
 		this.dbErrorLinkElement = document.querySelector('.openDbErrorPage');
 		this.helpPageLinkElements = document.querySelectorAll('.openHelpPage');
@@ -149,13 +148,15 @@ class View {
 		this.sortWeightLinkElement = document.getElementById('sortWeight');
 		this.sortCostLinkElement = document.getElementById('sortCost');
 		// Button events
+		this.btnScrollBackLinkElement = document.querySelectorAll('.scrollBack');
+		this.btnScrollForwardLinkElement = document.querySelectorAll('.scrollForward');
 		this.btnCopyRecordLinkElement = document.querySelector('#btnCopyRecord');
 		this.btnSubmitEditRecordLinkElement = document.querySelector('#btnSubmitEditRecord');
 		this.btnSubmitNewRecordLinkElement = document.querySelector('#btnSubmitNewRecord');
 		this.btnDeleteRecordLinkElement = document.querySelector('#btnDeleteRecord');
 		this.btnRetrieveDataLinkElement = document.querySelector('#btnRetrieveData');
 		this.btnReinstallLinkElements = document.querySelectorAll('.btnReinstall');
-          this.confirmOverwriteDialog = document.getElementById('confirm-overwrite-dialog');
+    this.confirmOverwriteDialog = document.getElementById('confirm-overwrite-dialog');
 	}
 	//page events
 	bindPacketListPage(packetListRequestHandler) { // Open Home Page
@@ -200,17 +201,20 @@ class View {
   bindSortCost(handler) {
     this.sortCostLinkElement.addEventListener('click', handler, false);
   }
-	//edit, new packets
+	// buttons
+	bindBtnScrollBack(handler) {
+	  this.btnScrollBackLinkElement.forEach(btn => btn.addEventListener('click', handler, false)); 
+	}
+	bindBtnScrollForward(handler) {
+	  this.btnScrollForwardLinkElement.forEach(btn => btn.addEventListener('click', handler, false));
+	  //this.btnScrollForwardLinkElement.addEventListener('click', handler, false);
+	}
 	bindBtnCopyRecord(handler) {
 	  this.btnCopyRecordLinkElement.addEventListener('click', handler, false);
 	};
 	bindBtnSubmitEditRecord(handler) {
 		this.btnSubmitEditRecordLinkElement.addEventListener('click', handler, false);
 	};
-
-/*	bindBtnSubmitNewRecord(handler) {
-		this.btnSubmitNewRecordLinkElement.addEventListener('click', handler, false);
-	}*/
 	bindBtnDeleteRecord(handler) {
 		this.btnDeleteRecordLinkElement.addEventListener('click', handler, false);
 	};
@@ -390,13 +394,13 @@ class Controller {
 		this.view = view;
 		this.sortOn = 'variety';
 		this.sortOrder = 'next';
-		//this.packetIds = [];
+		this.packetIds = [];
+		this.packetIdsIndex = 0;
+		this.filterList = '';
 		// bindings pages
 		this.view.bindPacketListPage( () => { this.requestPacketListPage(); });
 		this.view.bindAddNewPacketPage( () => { this.requestAddNewPacketPage(); });
-		//this.view.bindScrollPacketsPage( () => { this.requestScrollPacketsPage(); });
 		this.view.bindBackupRestorePage( () => { this.requestBackupRestorePage(); });
-		//this.view.bindDbErrorPage(() => { this.requestDbErrorPage(); });
 		this.view.bindHelpPage( () => { this.requestHelpPage(); });
 		this.view.bindEditPacket( (packetId) => { this.editPacketRequestHandler(packetId); });
 		// bindings table sort
@@ -408,8 +412,10 @@ class Controller {
     this.view.bindSortWeight( () => { this.requestSortedPacketList('weight'); });
     this.view.bindSortCost( () => { this.requestSortedPacketList('cost'); });
 		// bindings button events
+		this.view.bindBtnScrollForward( () => { this.requestScrollForward( 
+		this.packetIds, this.packetIdsIndex, this.filter, this.filterList); });
+		this.view.bindBtnScrollBack( () => { this.requestScrollBack(this.packetIds); });
 		this.view.bindBtnSubmitEditRecord( () => { this.requestAddRecord('editRecord'); });
-		//this.view.bindBtnSubmitNewRecord( () => { this.requestAddRecord('newRecord'); });
 		this.view.bindBtnDeleteRecord( () => { this.requestDeleteRecord(); });
 		this.view.bindBtnRetrieveData( () => { this.requestRetrieveAllData(); });
 		this.view.bindBtnReinstall( () => { this.fixCorruptDB(); });
@@ -445,26 +451,68 @@ class Controller {
 		}
 		// request the new data from the model
 		const records = await this.model.getAll(this.sortOn, this.sortOrder, this.filter);
-		this.view.displayPacketsList(records);
-		this.createPacketIdsArray(records);
+		await this.view.displayPacketsList(records);
+		await this.createPacketIdsArray(records);
+		this.records = records;
 		//console.log(this.packetIds);
 	}
-	  createPacketIdsArray(records) {
-    console.log("from this.scrollRecords");
-    let packetIds = [];
-    let index;
-    //console.log(records);
-    Object.values(records).forEach(record => {
-      packetIds.push(record.packetId);
-    });
-    console.log(packetIds);
-    packetIds.forEach((id) => {
-      console.log(id);
-      index = packetIds.indexOf(id);
-      console.log(index);
-      });
+  createPacketIdsArray(records) {
+  let index;
+  const packetIds = [];
+  //console.log(records);
+  Object.values(records).forEach(record => {
+    packetIds.push(record.packetId);
+  });
+  this.packetIds = packetIds;
+  console.log("From createPacketArray; " + packetIds);
+/*    packetIds.forEach((id) => {
+    console.log(id);
+    index = packetIds.indexOf(id);
+    console.log(index);
+    });*/
+  }
+  async requestScrollForward(packetIds, packetIdsIndex, filter, filterList) {
+    console.log("From scrollForward: " + packetIds);
+    console.log("filter: " + filter);
+    const arrayLength = packetIds.length;
+    console.log("arrayLength: " + arrayLength);   
+    console.log("before if: index; " + packetIdsIndex);
+    if (filterList === filter) {
+      console.log("filters are the same");
     }
+    else {
+      console.log("filters are not the same");
+    }
+    if (packetIdsIndex >= (arrayLength - 1) || filterList !== filter) {
+      packetIdsIndex = 0;
+      console.log("if: " + packetIds[packetIdsIndex]);
+      await this.editPacketRequestHandler(packetIds[packetIdsIndex]);
+      packetIdsIndex = packetIdsIndex + 1;
+      this.packetIdsIndex = packetIdsIndex;
+      this.filterList = filter;
+    }
+    else {
+      console.log("else: " + this.packetIds[packetIdsIndex]);
+      await this.editPacketRequestHandler(packetIds[packetIdsIndex]);
+      packetIdsIndex = packetIdsIndex + 1;
+      this.packetIdsIndex = packetIdsIndex;
+    }
+  }
+  
+  requestScrollBack(id) {
+    const packetIdsIndex = this.packetIdsIndex;
+    
+    if (packetIdsIndex === 0) {
+      this.packetIdsIndex = id.length - 1;
+      console.log(id[packetIdsIndex]);
+    }
+    else {
+      this.packetIdsIndex = packetIdsIndex - 1;
+      console.log(id[packetIdsIndex]);
+    }
+  }
 	async editPacketRequestHandler(packetId) {
+	  //console.log(this.packetIds);
 		const record = await this.model.getRecord(packetId);
 		this.view.clearFields();
 		this.view.showEditPacket();
@@ -479,16 +527,18 @@ class Controller {
 	};
 	// Pages requested
 	async requestPacketListPage() {
+	  //this.packetIds = [];
+	  await this.requestSortedPacketList();
+	  /*this.filterList = '';
+	  this.filter='';*/
+	  this.packetIdsIndex = 0;
 		this.view.showHomePage();
-		await this.requestSortedPacketList();
+		//console.log(this.packetIds);
 	}
 	requestAddNewPacketPage() {
 		this.view.showAddNewPacket();
 		this.view.clearFields();
 		document.getElementById("packetId").classList.remove("form__input_gray");
-	}
-	requestScrollPacketsPage() {
-		this.view.showScrollPackets();
 	}
 	requestBackupRestorePage() {
 		this.view.showBackupRestore();
