@@ -148,8 +148,8 @@ class View {
 		this.sortWeightLinkElement = document.getElementById('sortWeight');
 		this.sortCostLinkElement = document.getElementById('sortCost');
 		// Button events
-		this.btnScrollBackLinkElement = document.querySelectorAll('.scrollBack');
-		this.btnScrollForwardLinkElement = document.querySelectorAll('.scrollForward');
+		this.btnScrollBackwardsLinkElement = document.querySelectorAll('.scrollBackwards');
+		this.btnScrollForwardsLinkElement = document.querySelectorAll('.scrollForwards');
 		this.btnCopyRecordLinkElement = document.querySelector('#btnCopyRecord');
 		this.btnSubmitEditRecordLinkElement = document.querySelector('#btnSubmitEditRecord');
 		this.btnSubmitNewRecordLinkElement = document.querySelector('#btnSubmitNewRecord');
@@ -202,12 +202,12 @@ class View {
     this.sortCostLinkElement.addEventListener('click', handler, false);
   }
 	// buttons
-	bindBtnScrollBack(handler) {
-	  this.btnScrollBackLinkElement.forEach(btn => btn.addEventListener('click', handler, false)); 
+	bindBtnScrollBackwards(handler) {
+	  this.btnScrollBackwardsLinkElement.forEach(btn => btn.addEventListener('click', handler, false)); 
 	}
-	bindBtnScrollForward(handler) {
-	  this.btnScrollForwardLinkElement.forEach(btn => btn.addEventListener('click', handler, false));
-	  //this.btnScrollForwardLinkElement.addEventListener('click', handler, false);
+	bindBtnScrollForwards(handler) {
+	  this.btnScrollForwardsLinkElement.forEach(btn => btn.addEventListener('click', handler, false));
+	  //this.btnScrollForwardsLinkElement.addEventListener('click', handler, false);
 	}
 	bindBtnCopyRecord(handler) {
 	  this.btnCopyRecordLinkElement.addEventListener('click', handler, false);
@@ -412,9 +412,9 @@ class Controller {
     this.view.bindSortWeight( () => { this.requestSortedPacketList('weight'); });
     this.view.bindSortCost( () => { this.requestSortedPacketList('cost'); });
 		// bindings button events
-		this.view.bindBtnScrollForward( () => { this.requestScrollForward( 
+		this.view.bindBtnScrollForwards( () => { this.requestScrollForwards( 
 		this.packetIds, this.packetIdsIndex, this.filter, this.filterList); });
-		this.view.bindBtnScrollBack( () => { this.requestScrollBack(this.packetIds); });
+		this.view.bindBtnScrollBackwards( () => { this.requestScrollBackwards(this.packetIds); });
 		this.view.bindBtnSubmitEditRecord( () => { this.requestAddRecord('editRecord'); });
 		this.view.bindBtnDeleteRecord( () => { this.requestDeleteRecord(); });
 		this.view.bindBtnRetrieveData( () => { this.requestRetrieveAllData(); });
@@ -471,8 +471,8 @@ class Controller {
     console.log(index);
     });*/
   }
-  async requestScrollForward(packetIds, packetIdsIndex, filter, filterList) {
-    console.log("From scrollForward: " + packetIds);
+  async requestScrollForwards(packetIds, packetIdsIndex, filter, filterList) {
+    console.log("From scrollForwards: " + packetIds);
     console.log("filter: " + filter);
     const arrayLength = packetIds.length;
     console.log("arrayLength: " + arrayLength);   
@@ -499,7 +499,7 @@ class Controller {
     }
   }
   
-  requestScrollBack(id) {
+  requestScrollBackwards(id) {
     const packetIdsIndex = this.packetIdsIndex;
     
     if (packetIdsIndex === 0) {
