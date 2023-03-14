@@ -413,8 +413,9 @@ class Controller {
     this.view.bindSortCost( () => { this.requestSortedPacketList('cost'); });
 		// bindings button events
 		this.view.bindBtnScrollForwards( () => { this.requestScrollForwards( 
-		this.packetIds, this.packetIdsIndex, this.filter, this.filterList); });
-		this.view.bindBtnScrollBackwards( () => { this.requestScrollBackwards(this.packetIds); });
+		  this.packetIds, this.packetIdsIndex, this.filter, this.filterList); });
+		this.view.bindBtnScrollBackwards( () => { this.requestScrollBackwards(
+		  this.packetIds, this.packetIdsIndex, this.filter, this.filterList); });
 		this.view.bindBtnSubmitEditRecord( () => { this.requestAddRecord('editRecord'); });
 		this.view.bindBtnDeleteRecord( () => { this.requestDeleteRecord(); });
 		this.view.bindBtnRetrieveData( () => { this.requestRetrieveAllData(); });
@@ -464,7 +465,7 @@ class Controller {
     packetIds.push(record.packetId);
   });
   this.packetIds = packetIds;
-  console.log("From createPacketArray; " + packetIds);
+  //console.log("From createPacketArray; " + packetIds);
 /*    packetIds.forEach((id) => {
     console.log(id);
     index = packetIds.indexOf(id);
@@ -499,16 +500,31 @@ class Controller {
     }
   }
   
-  requestScrollBackwards(id) {
-    const packetIdsIndex = this.packetIdsIndex;
-    
-    if (packetIdsIndex === 0) {
-      this.packetIdsIndex = id.length - 1;
-      console.log(id[packetIdsIndex]);
+  async requestScrollBackwards(packetIds, packetIdsIndex, filter, filterList) {    
+    console.log("From scrollBackwards: " + packetIds);
+    console.log("filter: " + filter);
+    const arrayLength = packetIds.length;
+    console.log("arrayLength: " + arrayLength);   
+    console.log("before if: index; " + packetIdsIndex);
+    if (filterList === filter) {
+      console.log("filters are the same");
     }
     else {
-      this.packetIdsIndex = packetIdsIndex - 1;
-      console.log(id[packetIdsIndex]);
+      console.log("filters are not the same");
+    }
+    if ( (packetIdsIndex >= (arrayLength)) || (packetIdsIndex < 0) || (filterList !== filter) ) {
+      packetIdsIndex = (arrayLength - 1);
+      console.log("if: " + packetIds[packetIdsIndex]);
+      await this.editPacketRequestHandler(packetIds[packetIdsIndex]);
+      packetIdsIndex = packetIdsIndex - 1;
+      this.packetIdsIndex = packetIdsIndex;
+      this.filterList = filter;
+    }
+    else {
+      console.log("else: " + this.packetIds[packetIdsIndex]);
+      await this.editPacketRequestHandler(packetIds[packetIdsIndex]);
+      packetIdsIndex = packetIdsIndex - 1;
+      this.packetIdsIndex = packetIdsIndex;
     }
   }
 	async editPacketRequestHandler(packetId) {
