@@ -360,6 +360,8 @@ class View {
 		// Key packetId readonly removed and is required
 		document.querySelector('#packetId').removeAttribute('readonly');
 		document.querySelector('#packetId').setAttribute('required', 'required');
+		document.querySelector('#scrollBackwardsOnOff').style.display = 'none';
+		document.querySelector('#scrollForwardsOnOff').style.display = 'none';
 	}
 	showEditPacket() {
 		document.querySelector('#homePage').style.display = 'none';
@@ -369,6 +371,8 @@ class View {
 		// Key packetId is read only
 		document.querySelector('#packetId').removeAttribute('required');
 		document.querySelector('#packetId').setAttribute('readonly', 'readonly');
+		document.querySelector('#scrollBackwardsOnOff').style.display = '';
+		document.querySelector('#scrollForwardsOnOff').style.display = '';
 	}
 	showBackupRestore() {
 		document.querySelector('#homePage').style.display = 'none';
@@ -397,6 +401,8 @@ class Controller {
 		this.packetIds = [];
 		this.packetIdsIndex = 0;
 		this.filterList = '';
+		this.forwardsClick = false;
+		this.backwardsClick = false;
 		// bindings pages
 		this.view.bindPacketListPage( () => { this.requestPacketListPage(); });
 		this.view.bindAddNewPacketPage( () => { this.requestAddNewPacketPage(); });
@@ -465,53 +471,44 @@ class Controller {
     packetIds.push(record.packetId);
   });
   this.packetIds = packetIds;
-  //console.log("From createPacketArray; " + packetIds);
-/*    packetIds.forEach((id) => {
-    console.log(id);
-    index = packetIds.indexOf(id);
-    console.log(index);
-    });*/
   }
+  
   async requestScrollForwards(packetIds, packetIdsIndex, filter, filterList) {
     console.log("From scrollForwards: " + packetIds);
-    console.log("filter: " + filter);
-    const arrayLength = packetIds.length;
-    console.log("arrayLength: " + arrayLength);   
+    const arrayLength = packetIds.length;  
     console.log("before if: index; " + packetIdsIndex);
-    if (filterList === filter) {
-      console.log("filters are the same");
+    if ( packetIdsIndex >= 0 && packetIdsIndex < arrayLength && filterList === filter) {
+      console.log("if: " + this.packetIds[packetIdsIndex]);
+      await this.editPacketRequestHandler(packetIds[packetIdsIndex]);
+      packetIdsIndex = packetIdsIndex + 1;
+      this.packetIdsIndex = packetIdsIndex;
+      console.log(this.packetIdsIndex);
+      console.log('-------------------');
     }
     else {
-      console.log("filters are not the same");
-    }
-    if (packetIdsIndex >= (arrayLength - 1) || filterList !== filter) {
+      console.log("else: " + packetIds[packetIdsIndex]);
       packetIdsIndex = 0;
-      console.log("if: " + packetIds[packetIdsIndex]);
       await this.editPacketRequestHandler(packetIds[packetIdsIndex]);
       packetIdsIndex = packetIdsIndex + 1;
       this.packetIdsIndex = packetIdsIndex;
+      console.log(this.packetIdsIndex);
+      console.log('-------------------');
       this.filterList = filter;
-    }
-    else {
-      console.log("else: " + this.packetIds[packetIdsIndex]);
-      await this.editPacketRequestHandler(packetIds[packetIdsIndex]);
-      packetIdsIndex = packetIdsIndex + 1;
-      this.packetIdsIndex = packetIdsIndex;
     }
   }
   
   async requestScrollBackwards(packetIds, packetIdsIndex, filter, filterList) {    
     console.log("From scrollBackwards: " + packetIds);
-    console.log("filter: " + filter);
+    //console.log("filter: " + filter);
     const arrayLength = packetIds.length;
-    console.log("arrayLength: " + arrayLength);   
+    //console.log("arrayLength: " + arrayLength);   
     console.log("before if: index; " + packetIdsIndex);
-    if (filterList === filter) {
+    /*if (filterList === filter) {
       console.log("filters are the same");
     }
     else {
       console.log("filters are not the same");
-    }
+    }*/
     if ( (packetIdsIndex >= (arrayLength)) || (packetIdsIndex < 0) || (filterList !== filter) ) {
       packetIdsIndex = (arrayLength - 1);
       console.log("if: " + packetIds[packetIdsIndex]);
@@ -525,6 +522,7 @@ class Controller {
       await this.editPacketRequestHandler(packetIds[packetIdsIndex]);
       packetIdsIndex = packetIdsIndex - 1;
       this.packetIdsIndex = packetIdsIndex;
+      console.log(this.packetIdsIndex)
     }
   }
 	async editPacketRequestHandler(packetId) {
@@ -589,6 +587,8 @@ class Controller {
 	 element.removeAttribute('readonly');
 	 element.setAttribute('required', 'required');
 	 element.classList.remove("form__input_gray");
+	 document.querySelector('#scrollBackwardsOnOff').style.display = 'none';
+	 document.querySelector('#scrollForwardsOnOff').style.display = 'none';
 	}
 	async loadRecord() {
 		// Get the content from the form fields

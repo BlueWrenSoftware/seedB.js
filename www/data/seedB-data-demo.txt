@@ -11,6 +11,17 @@
     "seedNotes": ""
   },
   {
+    "packetId": "artichoke-1100",
+    "variety": "Artichoke",
+    "group": "Vegetables",
+    "number": 10,
+    "weight": 10,
+    "cost": 2.3,
+    "date": "2022-07-04",
+    "timeStamp": 1678751001928,
+    "seedNotes": ""
+  },
+  {
     "packetId": "artichoke-2",
     "variety": "Artichoke",
     "group": "Vegetables",
@@ -253,6 +264,17 @@
     "seedNotes": ""
   },
   {
+    "packetId": "opium-5",
+    "variety": "Poppy",
+    "group": "Drugs",
+    "number": 0,
+    "weight": 20,
+    "cost": 0,
+    "date": "2023-03-13",
+    "timeStamp": 1678676294818,
+    "seedNotes": ""
+  },
+  {
     "group": "Drugs",
     "variety": "Poppy",
     "packetId": "poppy-1",
@@ -389,10 +411,10 @@
     "variety": "Wheat",
     "group": "Grains",
     "number": 0,
-    "weight": 350,
+    "weight": 4000,
     "cost": 0,
-    "date": "2023-03-08",
-    "timeStamp": 1678590499428,
-    "seedNotes": "From main garden patch front gate"
+    "date": "2023-03-15",
+    "timeStamp": 1678863672820,
+    "seedNotes": "From main garden patch front gate. All cleared and winnowed."
   }
 ]
