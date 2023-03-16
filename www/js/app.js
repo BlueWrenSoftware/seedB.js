@@ -401,8 +401,8 @@ class Controller {
 		this.packetIds = [];
 		this.packetIdsIndex = 0;
 		this.filterList = '';
-		this.forwardsClick = false;
-		this.backwardsClick = false;
+		this.forwardsClick = '';
+		this.backwardsClick = '';
 		// bindings pages
 		this.view.bindPacketListPage( () => { this.requestPacketListPage(); });
 		this.view.bindAddNewPacketPage( () => { this.requestAddNewPacketPage(); });
@@ -475,9 +475,20 @@ class Controller {
   
   async requestScrollForwards(packetIds, packetIdsIndex, filter, filterList) {
     console.log("From scrollForwards: " + packetIds);
+    console.log('this.forwardsClick=' + this.forwardsClick);
+    if ( this.forwardsClick === '') {
+      this.forwardsClick = true;
+      this.backwardsClick = false;
+    }
+    if ( this.forwardsClick === false ) {
+      console.log('last click was backwards');
+      this.forwardsClick = true;
+      this.backwardsClick = false;
+      packetIdsIndex = packetIdsIndex + 2;
+    }
     const arrayLength = packetIds.length;  
-    console.log("before if: index; " + packetIdsIndex);
-    if ( packetIdsIndex >= 0 && packetIdsIndex < arrayLength && filterList === filter) {
+    console.log("before if: index=" + packetIdsIndex + ' filterList=' + filterList + ' filter=' + filter);
+    if ( packetIdsIndex > 0 && packetIdsIndex < arrayLength && filterList === filter) {
       console.log("if: " + this.packetIds[packetIdsIndex]);
       await this.editPacketRequestHandler(packetIds[packetIdsIndex]);
       packetIdsIndex = packetIdsIndex + 1;
@@ -486,7 +497,7 @@ class Controller {
       console.log('-------------------');
     }
     else {
-      console.log("else: " + packetIds[packetIdsIndex]);
+      console.log("else index=" + packetIdsIndex);
       packetIdsIndex = 0;
       await this.editPacketRequestHandler(packetIds[packetIdsIndex]);
       packetIdsIndex = packetIdsIndex + 1;
@@ -495,34 +506,39 @@ class Controller {
       console.log('-------------------');
       this.filterList = filter;
     }
-  }
-  
-  async requestScrollBackwards(packetIds, packetIdsIndex, filter, filterList) {    
+  } 
+  async requestScrollBackwards(packetIds, packetIdsIndex, filter, filterList) { 
     console.log("From scrollBackwards: " + packetIds);
-    //console.log("filter: " + filter);
-    const arrayLength = packetIds.length;
-    //console.log("arrayLength: " + arrayLength);   
-    console.log("before if: index; " + packetIdsIndex);
-    /*if (filterList === filter) {
-      console.log("filters are the same");
+    console.log('this.backwardsClick=' + this.backwardsClick);
+    if ( this.backwardsClick === '' ) {
+      this.backwardsClick = true;
+      this.forwardsClick = false;
+    }
+    else if ( this.backwardsClick === false ) {
+      console.log('last click was forwards');
+      this.forwardsClick = false;
+      this.backwardsClick = true;
+      packetIdsIndex = packetIdsIndex - 2;
+    }
+    const arrayLength = packetIds.length; 
+    console.log("before if: index=" + packetIdsIndex + ' filterList=' + filterList + ' filter=' + filter);
+    if ( packetIdsIndex >= 0 && packetIdsIndex < arrayLength && filterList === filter ) {
+      console.log("if: " + this.packetIds[packetIdsIndex]);
+      await this.editPacketRequestHandler(packetIds[packetIdsIndex]);
+      packetIdsIndex = packetIdsIndex - 1;
+      this.packetIdsIndex = packetIdsIndex;
+      console.log(this.packetIdsIndex);
+      console.log('-------------------');
     }
     else {
-      console.log("filters are not the same");
-    }*/
-    if ( (packetIdsIndex >= (arrayLength)) || (packetIdsIndex < 0) || (filterList !== filter) ) {
+      console.log("else index=" + packetIdsIndex);
       packetIdsIndex = (arrayLength - 1);
-      console.log("if: " + packetIds[packetIdsIndex]);
       await this.editPacketRequestHandler(packetIds[packetIdsIndex]);
       packetIdsIndex = packetIdsIndex - 1;
       this.packetIdsIndex = packetIdsIndex;
+      console.log(this.packetIdsIndex);
+      console.log('-------------------');
       this.filterList = filter;
-    }
-    else {
-      console.log("else: " + this.packetIds[packetIdsIndex]);
-      await this.editPacketRequestHandler(packetIds[packetIdsIndex]);
-      packetIdsIndex = packetIdsIndex - 1;
-      this.packetIdsIndex = packetIdsIndex;
-      console.log(this.packetIdsIndex)
     }
   }
 	async editPacketRequestHandler(packetId) {
@@ -546,6 +562,8 @@ class Controller {
 	  /*this.filterList = '';
 	  this.filter='';*/
 	  this.packetIdsIndex = 0;
+	  this.forwardsClick = '';
+	  this.backwardsClick = '';
 		this.view.showHomePage();
 		//console.log(this.packetIds);
 	}
