@@ -22,9 +22,6 @@
       <button class="btn-menu__items  openHomePage" type="button" 
         title="Back to List. Current &#010;record not saved.">
         <img class="img_border" src="./images/home.svg"></button>   
-      <button class="btn-menu__items  openPacketListSearch" type="button" 
-        title="Back to List. Current &#010;record not saved.">
-        <img class="img_border" src="./images/table.svg"></button>   
       <button class="btn-menu__items scrollBackwards" type="button" 
         title="Previous record." > 
         <img class="img_border" src="./images/nav-arrow-left.svg"></button>
@@ -41,8 +38,8 @@
         title="Help on buttons."><img class="img_border" src="./images/help-no-circle.svg"></button>    
       <input class="btn-menu__items_search" placeholder="Find" type="text" 
         title="Find entered text." id="searchFilterPackets"></input> 
-      <button class="btn-menu__items" id="resetSearchInput" type="button"
-        title="Clear search."><img class="img_border" src="./images/reset-input.svg"></button>
+      <button class="btn-menu__items" id="searchInput" type="button"
+        title="Clear search."><img class="img_border" onclick="clearInput()" id="" src="./images/reset-input.svg"></button>
     </nav> 
     <!-- Table of Records -->
     <table  class="home-page__table table
@@ -68,8 +65,8 @@
       <button class="btn-menu__items  openHomePage"  type="button" 
         title="Back to List. Current &#010;record not saved.">
         <img class="img_border" src="./images/home.svg"></button>
-      <button class="btn-menu__items  openPacketListSearch" type="button" 
-        title="Back to List. Current &#010;record not saved.">
+      <button class="btn-menu__items  openSearchPacketList" type="button" 
+        title="Back to Search List. Current &#010;record not saved.">
         <img class="img_border" src="./images/table.svg"></button>   
       <button class="btn-menu__items scrollBackwards" type="button" 
       <button class="btn-menu__items scrollBackwards" id="scrollBackwardsOnOff" type="button" 

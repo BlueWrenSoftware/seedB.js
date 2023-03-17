@@ -209,6 +209,17 @@
     "seedNotes": ""
   },
   {
+    "packetId": "oats-1",
+    "variety": "Oats",
+    "group": "Grains",
+    "number": 0,
+    "weight": 1278,
+    "cost": 0,
+    "date": "2023-03-17",
+    "timeStamp": 1679030856433,
+    "seedNotes": "From the garden near the front gate "
+  },
+  {
     "group": "Vegetables",
     "variety": "Parsnip",
     "packetId": "parsnip-1",

@@ -134,7 +134,8 @@ class View {
 	constructor() {
 		this.app = document.getElementById('#root');
 		// Pages events
-		this.packetListLinkElements = document.querySelectorAll('.openHomePage');
+		this.homePageLinkElements = document.querySelectorAll('.openHomePage');
+		this.searchPacketListLinkElements = document.querySelectorAll('.openSearchPacketList');
 		this.addNewPacketLinkElement = document.querySelectorAll('.openNewPacketPage');
 		this.backupRestoreLinkElement = document.querySelectorAll('.openBackupRestorePage');
 		this.dbErrorLinkElement = document.querySelector('.openDbErrorPage');
@@ -159,10 +160,15 @@ class View {
     this.confirmOverwriteDialog = document.getElementById('confirm-overwrite-dialog');
 	}
 	//page events
-	bindPacketListPage(packetListRequestHandler) { // Open Home Page
+	bindHomePage(handler) { // Open Home Page
 		// pass on to Controller
-		this.packetListLinkElements.forEach(btn => btn.addEventListener(
-		'click', packetListRequestHandler, false));
+		this.homePageLinkElements.forEach(btn => btn.addEventListener(
+		'click', handler, false));
+	}
+	bindSearchPacketList(handler) { // Open Home Page
+		// pass on to Controller
+		this.searchPacketListLinkElements.forEach(btn => btn.addEventListener(
+		'click', handler, false));
 	}
 	bindAddNewPacketPage(handler) { // Add New Packet Page
 		this.addNewPacketLinkElement.forEach(btn => btn.addEventListener(
@@ -386,8 +392,9 @@ class View {
 		document.querySelector('#helpPage').style.display = '';
 	}
 	showMessage(message) {
-		msgInstallDb.innerHTML = (`<li>${message}.</li>
-		                           <li>Manually restore data from backup file.</li>`);
+		msgInstallDb.innerHTML = 
+		  (`<li>${message}.</li>
+		   <li>Manually restore data from backup file.</li>`);
 	}
 }
 
@@ -404,7 +411,8 @@ class Controller {
 		this.forwardsClick = '';
 		this.backwardsClick = '';
 		// bindings pages
-		this.view.bindPacketListPage( () => { this.requestPacketListPage(); });
+		this.view.bindHomePage( () => { this.requestHomePage(); });
+		this.view.bindSearchPacketList( () => { this.requestSearchPacketList(); });
 		this.view.bindAddNewPacketPage( () => { this.requestAddNewPacketPage(); });
 		this.view.bindBackupRestorePage( () => { this.requestBackupRestorePage(); });
 		this.view.bindHelpPage( () => { this.requestHelpPage(); });
@@ -418,10 +426,12 @@ class Controller {
     this.view.bindSortWeight( () => { this.requestSortedPacketList('weight'); });
     this.view.bindSortCost( () => { this.requestSortedPacketList('cost'); });
 		// bindings button events
-		this.view.bindBtnScrollForwards( () => { this.requestScrollForwards( 
-		  this.packetIds, this.packetIdsIndex, this.filter, this.filterList); });
-		this.view.bindBtnScrollBackwards( () => { this.requestScrollBackwards(
-		  this.packetIds, this.packetIdsIndex, this.filter, this.filterList); });
+		this.view.bindBtnScrollForwards( () => 
+		  { this.requestScrollForwards
+		  (this.packetIds, this.packetIdsIndex, this.filter, this.filterList); });
+		this.view.bindBtnScrollBackwards( () => 
+		  { this.requestScrollBackwards
+		  (this.packetIds, this.packetIdsIndex, this.filter, this.filterList); });
 		this.view.bindBtnSubmitEditRecord( () => { this.requestAddRecord('editRecord'); });
 		this.view.bindBtnDeleteRecord( () => { this.requestDeleteRecord(); });
 		this.view.bindBtnRetrieveData( () => { this.requestRetrieveAllData(); });
@@ -460,7 +470,7 @@ class Controller {
 		const records = await this.model.getAll(this.sortOn, this.sortOrder, this.filter);
 		await this.view.displayPacketsList(records);
 		await this.createPacketIdsArray(records);
-		this.records = records;
+		//this.records = records;
 		//console.log(this.packetIds);
 	}
   createPacketIdsArray(records) {
@@ -556,11 +566,26 @@ class Controller {
 		});
 	};
 	// Pages requested
-	async requestPacketListPage() {
+	async requestSearchPacketList() {
+	  console.log('activated');
+	  //this.filterList = '';
+	  //this.filter='';
 	  //this.packetIds = [];
 	  await this.requestSortedPacketList();
-	  /*this.filterList = '';
-	  this.filter='';*/
+	  document.getElementById('searchFilterPackets').value = '';
+	  //this.packetIdsIndex = 0;
+	  //this.forwardsClick = '';
+	  //this.backwardsClick = '';
+		this.view.showHomePage();
+		//console.log(this.packetIds);
+	}
+		async requestHomePage() {
+	  console.log('activated');
+	  //this.filterList = '';
+	  this.filter='';
+	  //this.packetIds = [];
+	  await this.requestSortedPacketList();
+	  document.getElementById('searchFilterPackets').value = '';
 	  this.packetIdsIndex = 0;
 	  this.forwardsClick = '';
 	  this.backwardsClick = '';
@@ -720,14 +745,16 @@ const model = new Model();
 const view = new View();
 const controller = new Controller(model, view);
 //=> Load IndexedDB and check for right store is missing!
-window.onload = () => { controller.requestPacketListPage() };
+window.onload = () => { controller.requestHomePage() };
 //=> Global variables
 //const foundBtnHomePage = document.getElementById('findBtnHomePage'); //=> alias
 const fileNotes = document.getElementById('fileNotifications'); //=> alias for user msgs retrieving data & backup
 const errorMsg = document.getElementById('dbError');  //=> alias forDB error msgs for the UI
 const msgInstallDb = document.getElementById('installDbMsg'); //=> alias for UI installation msgs
 
-function openDB() {
+
+
+/*function openDB() {
   const request = window.indexedDB.open('seedB', 1);
   request.onsuccess = (event) => {
     const db = event.target.result;
@@ -755,7 +782,7 @@ function openDB() {
   request.onerror = (event) => {
     event.target.errorCode;
 	}
-};
+}*/
 
 //openDB();
 //controller.scrollRecords();
