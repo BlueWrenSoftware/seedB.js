@@ -1,0 +1,46 @@
+ [
+  {
+    "packetId": "barley-1",
+    "variety": "barley white",
+    "group": "grains",
+    "number": 0,
+    "weight": 2470,
+    "cost": 0,
+    "date": "2023-03-19",
+    "timeStamp": 1679355890548,
+    "seedNotes": "Grown from barley animal stock feed"
+  },
+  {
+    "packetId": "field-pea-1",
+    "variety": "field pea",
+    "group": "legumes",
+    "number": 0,
+    "weight": 804,
+    "cost": 0,
+    "date": "2023-03-21",
+    "timeStamp": 1679355925167,
+    "seedNotes": "grown from green manure seed"
+  },
+  {
+    "packetId": "wheat-1",
+    "variety": "sprouting wheat",
+    "group": "grains",
+    "number": 0,
+    "weight": 4060,
+    "cost": 0,
+    "date": "2023-03-15",
+    "timeStamp": 1679356189438,
+    "seedNotes": "grown from bought sprouting wheat"
+  },
+  {
+    "packetId": "oats-1",
+    "variety": "white oats",
+    "group": "grains",
+    "number": 0,
+    "weight": 1186,
+    "cost": 0,
+    "date": "2023-03-17",
+    "timeStamp": 1679356505056,
+    "seedNotes": "Grown from green manure seed"
+  }
+]

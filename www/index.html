@@ -39,7 +39,7 @@
       <input class="btn-menu__items_search" placeholder="Find" type="text" 
         title="Find entered text." id="searchFilterPackets"></input> 
       <button class="btn-menu__items" id="searchInput" type="button"
-        title="Clear search."><img class="img_border" onclick="clearInput()" id="" src="./images/reset-input.svg"></button>
+        title="Clear search."><img class="img_border" id="clearFindInput" src="./images/reset-input.svg"></button>
     </nav> 
     <!-- Table of Records -->
     <table  class="home-page__table table
@@ -142,32 +142,44 @@
     <nav class="btn-menu">
     <button class="btn-menu__items btn-menu__items_larger" type="button" id="btnRetrieveData" title="">
       <img class="img_border" src="./images/database-export.svg"></button>
-      <label class="label_inline">Download database backup file to local file system.</label>
+      <label class="label_inline">Download records.</label>
     </nav>
     <ul id="fileNotifications" class="ul_js-message"></ul>
     </section>
     <!--Restore Records-->
     <h3 class="header__level-3">
-      Restore Database Records from Backup File.
+      Merge Database Records with Backup File.
     </h3>
     <section class="page__section_show_indent">
     <nav class="btn-menu">
       <input type="file" name="file" id="backupDataFile" style="display:none">
-      <button id="btnDownloadData" class="btn-menu__items btn-menu__items_larger" type="button" title="">
+      <button id="btnUploadData" class="btn-menu__items btn-menu__items_larger" type="button" title="">
       <img class="img_border" src="./images/database-restore.svg" alt=""></button>
-      <label class="label_inline">Upload database from local backup file.</label>
+      <label class="label_inline">Merge records.</label>
     </nav>
     <ul id="backupNotifications" class="ul_js-message"></ul> 
     </section>
-    <h3 class="header__level-3">Reset seedB Application</h3>
+    <h3 class="header__level-3">
+      Replace All Records Records with Backup File.
+    </h3>
     <section class="page__section_show_indent">
-      <p class="page__paragraph">Use if database is corrupted<br>
+    <nav class="btn-menu">
+      <input type="file" name="file" id="backupDataFile" style="display:none">
+      <button id="btnReplaceAllRecords" class="btn-menu__items btn-menu__items_larger" type="button" title="">
+      <img class="img_border" src="./images/database-replace.svg" alt=""></button>
+      <label class="label_inline">Replace records.</label>
+    </nav>
+    <ul id="backupNotifications" class="ul_js-message"></ul> 
+    </section>
+    <h3 class="header__level-3">Reset seedB Application.</h3>
+    <section class="page__section_show_indent">
+      <p class="page__paragraph">Use if database is corrupted.<br>
       Any existing records will be deleted!</p>
       <nav class="btn-menu">
-        <button class="btnReinstall btn-menu__items btn-menu__items_larger" 
+        <button class="btn-menu__items btn-menu__items_larger" id="btnReinstall" 
         type="button"><img class="img_border" 
         src="./images/db-error.svg"></button>
-        <label class="label_inline">Reset database</label>
+        <label class="label_inline">Reset application.</label>
       </nav> 
       <ul id="installDbMsg" class="ul_js-message"></ul>
     </section>

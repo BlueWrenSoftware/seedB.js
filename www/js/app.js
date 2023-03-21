@@ -33,7 +33,7 @@ class Model {
 				reject(event.target.errorCode);
 			}
 		});
-	};
+	}
 	async tryOpen(version) {
 		if (this.db === null) {
 			await this.open(version);
@@ -59,8 +59,9 @@ class Model {
 			};
 		});
 	}
+	
 	getRecord(id) {
-		return new Promise(async (resolve, reject) => {
+		return new Promise( async (resolve, reject) => {
 			await this.tryOpen();
 			const transaction = this.db.transaction('collection', 'readonly');
 			const objectStore = transaction.objectStore('collection');
@@ -68,12 +69,13 @@ class Model {
 			request.onsuccess = event => {
 				let record = event.target.result;
 				resolve(record)
-			};
+			}
 			request.onerror = (event) => {
 				reject(event.target.errorCode);
-			};
+			}
 		});
-	};
+	}
+
 	getAll(sortOn = 'variety', sortOrder = 'next', filter='') {
 		return new Promise(async (resolve, reject) => {
 			let cursorRequest;
@@ -110,18 +112,28 @@ class Model {
 	async loadRecords(records) {
 		await this.tryOpen();
 		const transaction = this.db.transaction('collection', 'readwrite');
-		const store = transaction.objectStore('collection');
+		const objectStore = transaction.objectStore('collection');
 		records.forEach(record => {
-			store.put(record);
+			objectStore.put(record);
 		});
 	}
 	async deleteRecord(packetId) {
 		await this.tryOpen();
 		const transaction = this.db.transaction('collection', 'readwrite');
-		const store = transaction.objectStore('collection');
-		store.delete(packetId);
+		const objectStore = transaction.objectStore('collection');
+		objectStore.delete(packetId);
 	}
-  
+	async	deleteAllRecords() {
+	  await this.tryOpen();
+	  const transaction = this.db.transaction(['collection'], 'readwrite');
+	  //transaction.oncomplete => 
+	  const objectStore = transaction.objectStore('collection');
+	  const objectStoreRequest = objectStore.clear();
+	  objectStoreRequest.onsuccess = (event) => {
+	    console.log('all records are cleared');
+	    // note.innerHTML += "<li>Request successful.</li>";
+	  }
+	} 
 }
 
 class View {
@@ -155,8 +167,10 @@ class View {
 		this.btnSubmitEditRecordLinkElement = document.querySelector('#btnSubmitEditRecord');
 		this.btnSubmitNewRecordLinkElement = document.querySelector('#btnSubmitNewRecord');
 		this.btnDeleteRecordLinkElement = document.querySelector('#btnDeleteRecord');
+		this.btnReplaceAllRecordsLinkElement = document.getElementById('btnReplaceAllRecords');
 		this.btnRetrieveDataLinkElement = document.querySelector('#btnRetrieveData');
-		this.btnReinstallLinkElements = document.querySelectorAll('.btnReinstall');
+		this.btnClearFindInputLinkElement = document.getElementById('clearFindInput');
+		this.btnReinstallLinkElement = document.getElementById('btnReinstall');
     this.confirmOverwriteDialog = document.getElementById('confirm-overwrite-dialog');
 	}
 	//page events
@@ -217,27 +231,31 @@ class View {
 	}
 	bindBtnCopyRecord(handler) {
 	  this.btnCopyRecordLinkElement.addEventListener('click', handler, false);
-	};
+	}
 	bindBtnSubmitEditRecord(handler) {
 		this.btnSubmitEditRecordLinkElement.addEventListener('click', handler, false);
-	};
+	}
 	bindBtnDeleteRecord(handler) {
 		this.btnDeleteRecordLinkElement.addEventListener('click', handler, false);
-	};
+	}
+	bindBtnReplaceAllRecords(handler) {
+	  this.btnReplaceAllRecordsLinkElement.addEventListener('click', handler, false);
+	}
 	bindEditPacket(editPacketRequestHandler) {
 		this.editPacketRequestHandler = editPacketRequestHandler;
+	}
+	bindClearFindInput(handler) {
+	  this.btnClearFindInputLinkElement.addEventListener('click', handler, false);
 	}
 	//retrieve data, reinstall db
 	bindBtnRetrieveData(handler) {
 		this.btnRetrieveDataLinkElement.addEventListener('click', handler, false);
 	};
 	bindBtnReinstall(handler) {
-		//this.btnReinstallLinkElement.addEventListener('click', handler, false);
-		this.btnReinstallLinkElements.forEach(btn => btn.addEventListener(
-		'click', handler, false));
+		this.btnReinstallLinkElement.addEventListener('click', handler, false);
 	};
 	bindBtnUploadBackupFile(handler) {
-		const btnUploadBackupFile = document.getElementById('btnDownloadData');
+		const btnUploadBackupFile = document.getElementById('btnUploadData');
 		const extractFileData = document.getElementById('backupDataFile');
 		btnUploadBackupFile.addEventListener('click', function () { 
 		  //=> Upload Text File button clicked pageBackupRestore
@@ -434,9 +452,11 @@ class Controller {
 		  (this.packetIds, this.packetIdsIndex, this.filter, this.filterList); });
 		this.view.bindBtnSubmitEditRecord( () => { this.requestAddRecord('editRecord'); });
 		this.view.bindBtnDeleteRecord( () => { this.requestDeleteRecord(); });
+		this.view.bindBtnReplaceAllRecords( () => { this.requestReplaceAllRecords(); });
 		this.view.bindBtnRetrieveData( () => { this.requestRetrieveAllData(); });
 		this.view.bindBtnReinstall( () => { this.fixCorruptDB(); });
 		this.view.bindBtnCopyRecord( () => { this.unlockPacketId();});
+		this.view.bindClearFindInput( () => { this.requestClearInputField(); });
     this.view.bindBtnUploadBackupFile( this.restoreBackup );
 		this.view.bindSearchFilter((e) => {this.searchFilterHandler(e);})
 	}
@@ -579,7 +599,7 @@ class Controller {
 		this.view.showHomePage();
 		//console.log(this.packetIds);
 	}
-		async requestHomePage() {
+	async requestHomePage() {
 	  console.log('activated');
 	  //this.filterList = '';
 	  this.filter='';
@@ -591,6 +611,9 @@ class Controller {
 	  this.backwardsClick = '';
 		this.view.showHomePage();
 		//console.log(this.packetIds);
+	}
+	async requestClearInputField() {
+	  
 	}
 	requestAddNewPacketPage() {
 		this.view.showAddNewPacket();
@@ -691,6 +714,11 @@ class Controller {
 		this.model.getAll();
 		//await this.requestPacketListPage();
 	};
+	async requestReplaceAllRecords() {
+    await this.model.deleteAllRecords();
+    // needs success message or modal
+    document.getElementById('btnUploadData').click();
+	}
 	fileTime() {  //=> Timestamp for file names
 		const date = new Date();
 		const year = date.getFullYear().toString();
