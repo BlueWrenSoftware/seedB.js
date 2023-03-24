@@ -124,18 +124,15 @@
     <p id="pkt-message"></p>
     </aside>
   </section>
-  <section id="backUp">
-    <!--Menu Button Tool Bar-->
-    <nav class="btn-menu page__btn-menu">         
+  <section id="backUp"> <!--Backup Operations-->
+    <nav class="btn-menu page__btn-menu">  <!--Menu Button Tool Bar-->       
       <button class="btn-menu__items openHomePage" type="button" 
         title="Back to List. Current &#010;record not saved.">
         <img class="img_border" src="./images/home.svg"></button>
       <button class="openHelpPage btn-menu__items" type="button" 
         title="Help on buttons."><img class="img_border" src="./images/help-no-circle.svg"></button>
     </nav>
-    <!--Backup Operations-->
-    <!-- Backup Records     -->
-    <h3 class="header__level-3">
+    <h3 class="header__level-3"> <!-- Backup Records     -->
       Create Database Records Backup File.
     </h3>
     <section class="page__section_show_indent">
@@ -146,8 +143,23 @@
     </nav>
     <ul id="fileNotifications" class="ul_js-message"></ul>
     </section>
-    <!--Restore Records-->
-    <h3 class="header__level-3">
+    
+    
+    <h3 class="header__level-3"> <!--Upload backup file test-->
+      Upload Backup File Test.
+    </h3>
+    <section class="page__section_show_indent">
+    <nav class="btn-menu">
+      <input type="file" name="file" id="fileElemInput" style="display:none">
+      <button id="uploadFile" class="btn-menu__items btn-menu__items_larger" type="button" title="">
+      <img class="img_border" src="./images/to_top_red_icon.svg" alt=""></button>
+      <label class="label_inline">Upload backup file test.</label>
+    </nav>
+    <ul id="backupNotifications" class="ul_js-message"></ul> 
+    </section>
+        
+    
+    <h3 class="header__level-3"> <!--Restore Records-->
       Merge Database Records with Backup File.
     </h3>
     <section class="page__section_show_indent">

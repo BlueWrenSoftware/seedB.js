@@ -172,7 +172,14 @@ class View {
 		this.btnClearFindInputLinkElement = document.getElementById('clearFindInput');
 		this.btnReinstallLinkElement = document.getElementById('btnReinstall');
     this.confirmOverwriteDialog = document.getElementById('confirm-overwrite-dialog');
+    
+    this.btnUploadFileLinkElement = document.getElementById('uploadFile');
 	}
+	
+	bindBtnUploadFile(handler) {
+	  this.btnUploadFileLinkElement.addEventListener('click', handler, false);
+	}
+	
 	//page events
 	bindHomePage(handler) { // Open Home Page
 		// pass on to Controller
@@ -428,6 +435,7 @@ class Controller {
 		this.filterList = '';
 		this.forwardsClick = '';
 		this.backwardsClick = '';
+		this.dataFile = [];
 		// bindings pages
 		this.view.bindHomePage( () => { this.requestHomePage(); });
 		this.view.bindSearchPacketList( () => { this.requestSearchPacketList(); });
@@ -458,9 +466,27 @@ class Controller {
 		this.view.bindBtnCopyRecord( () => { this.unlockPacketId();});
 		this.view.bindClearFindInput( () => { this.requestClearInputField(); });
     this.view.bindBtnUploadBackupFile( this.restoreBackup );
-		this.view.bindSearchFilter((e) => {this.searchFilterHandler(e);})
+		this.view.bindSearchFilter((e) => {this.searchFilterHandler(e);});
+		
+		this.view.bindBtnUploadFile( () => { this.requestUploadFile(); });
 	}
 
+  async requestUploadFile() {
+    console.log('clicked');
+    const fileElemInput = document.getElementById('fileElemInput');
+    if (fileElemInput) {fileElemInput.click();}
+    //fileElemInput.click();
+    console.log(onchange);
+    fileElemInput.onchange = function () {
+      const file = this.files[0];
+      const reader = new FileReader();
+      reader.onload = function (progressEvent) {
+        this.dataFile = JSON.parse(this.result);
+        console.log(this.dataFile);    
+      }
+      reader.readAsText(file);
+    }     
+  }
 	async searchFilterHandler(e) {
 		this.filter = e.target.value;
 		await this.requestSortedPacketList();
@@ -716,8 +742,11 @@ class Controller {
 	};
 	async requestReplaceAllRecords() {
     await this.model.deleteAllRecords();
+    await this.requestUploadFile();
+    await console.log(this.dataFile);
+    await model.loadRecords(this.dataFile);
     // needs success message or modal
-    document.getElementById('btnUploadData').click();
+    //document.getElementById('btnUploadData').click();
 	}
 	fileTime() {  //=> Timestamp for file names
 		const date = new Date();
@@ -814,4 +843,28 @@ const msgInstallDb = document.getElementById('installDbMsg'); //=> alias for UI 
 
 //openDB();
 //controller.scrollRecords();
+
+//this.fileElemInput = document.getElementById("fileElemInput");
+
+/*function uploadBackupFile() {
+const fileSelect = document.getElementById("fileSelect");
+const fileElemInput = document.getElementById("fileElemInput");
+fileSelect.addEventListener("click", () => {
+  if (fileElemInput) {fileElemInput.click();}
+  }, false);
+
+fileElemInput.onchange = function () {
+  let dataFile = [];
+  const file = this.files[0];
+  const reader = new FileReader();
+  reader.onload = function (progressEvent) {
+    //console.log(this.result);
+    dataFile = JSON.parse(this.result);
+    console.log(dataFile);
+    console.log(dataFile[4]);
+  };
+  reader.readAsText(file);
+};
+}
+uploadBackupFile();*/
 
