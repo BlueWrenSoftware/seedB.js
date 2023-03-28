@@ -144,25 +144,10 @@
     <ul id="fileNotifications" class="ul_js-message"></ul>
     </section>
     
-    
-    <h3 class="header__level-3"> <!--Upload backup file test-->
-      Upload Backup File Test.
-    </h3>
-    <section class="page__section_show_indent">
-    <nav class="btn-menu">
-      <input type="file" name="file" id="fileElemInput" style="display:none">
-      <button id="uploadFile" class="btn-menu__items btn-menu__items_larger" type="button" title="">
-      <img class="img_border" src="./images/to_top_red_icon.svg" alt=""></button>
-      <label class="label_inline">Upload backup file test.</label>
-    </nav>
-    <ul id="backupNotifications" class="ul_js-message"></ul> 
-    </section>
-        
-    
-    <h3 class="header__level-3"> <!--Restore Records-->
+    <h3 class="header__level-3" style="display:none;"> <!--Restore Records-->
       Merge Database Records with Backup File.
     </h3>
-    <section class="page__section_show_indent">
+    <section class="page__section_show_indent" style="display:none;">
     <nav class="btn-menu">
       <!--<input type="file" name="file" id="backupDataFile" style="display:none">-->
       <button id="btnUploadData" class="btn-menu__items btn-menu__items_larger" type="button" title="">
@@ -171,15 +156,16 @@
     </nav>
     <ul id="backupNotifications" class="ul_js-message"></ul> 
     </section>
+    
     <h3 class="header__level-3">
-      Replace All Records Records with Backup File.
+      Restore Records from a Backup File.
     </h3>
     <section class="page__section_show_indent">
     <nav class="btn-menu">
       <!--<input type="file" name="file" id="backupDataFile" style="display:none">-->
-      <button id="btnReplaceAllRecords" class="btn-menu__items btn-menu__items_larger" type="button" title="">
+      <button id="uploadFile" class="btn-menu__items btn-menu__items_larger" type="button" title="">
       <img class="img_border" src="./images/database-replace.svg" alt=""></button>
-      <label class="label_inline">Replace records.</label>
+      <label class="label_inline">Upload backup file.</label>
     </nav>
     <ul id="backupNotifications" class="ul_js-message"></ul> 
     </section>
@@ -235,13 +221,17 @@
       <p></p>
     </header>
   </section>
-  <input type="file" name="file" id="backupDataFile" style="display:none">
+  
 </div>
   <footer class="page__footer footer">
     <p class="footer__paragraph">
     <img src="./images/bettong-june.svg" class="footer__image" alt="logo">
     Designed by Bettong Applications</p>
   </footer>
+
+<!--<input type="file" name="file" id="backupDataFile" style="display:none">-->  
+<input type="file" name="file" id="fileElemInput" style="display:none">
+
 <dialog class="modal" id="confirm-overwrite-dialog">
   <p class="page__paragraph">WARNING:</p> 
   <p class="page__paragraph">ID already exists.</p> 
