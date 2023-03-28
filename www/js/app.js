@@ -6,10 +6,12 @@ class Model {
 		this.db = null;
 		this.version = null;
 	}
+	
 	close() {
 		this.db.close();
 		this.db = null;
 	}
+	
 	open(version) {
 		return new Promise((resolve, reject) => {
 			const request = window.indexedDB.open('seedB', version);
@@ -34,11 +36,13 @@ class Model {
 			}
 		});
 	}
+	
 	async tryOpen(version) {
 		if (this.db === null) {
 			await this.open(version);
 		};
 	}
+	
 	delete() {
 		return new Promise((resolve, reject) => {
 			if (this.db) {
@@ -117,12 +121,14 @@ class Model {
 			objectStore.put(record);
 		});
 	}
+	
 	async deleteRecord(packetId) {
 		await this.tryOpen();
 		const transaction = this.db.transaction('collection', 'readwrite');
 		const objectStore = transaction.objectStore('collection');
 		objectStore.delete(packetId);
 	}
+	
 	async	deleteAllRecords() {
 	  await this.tryOpen();
 	  const transaction = this.db.transaction(['collection'], 'readwrite');
@@ -187,15 +193,18 @@ class View {
 		this.homePageLinkElements.forEach(btn => btn.addEventListener(
 		'click', handler, false));
 	}
+	
 	bindSearchPacketList(handler) { // Open Home Page
 		// pass on to Controller
 		this.searchPacketListLinkElements.forEach(btn => btn.addEventListener(
 		'click', handler, false));
 	}
+	
 	bindAddNewPacketPage(handler) { // Add New Packet Page
 		this.addNewPacketLinkElement.forEach(btn => btn.addEventListener(
 		'click', handler, false));
 	}
+  
   bindBackupRestorePage(handler) { // Backup & Restore Page
 		this.backupRestoreLinkElement.forEach(btn => btn.addEventListener(
 		'click', handler, false));
@@ -210,41 +219,53 @@ class View {
 		'click', handler, false));
 	}
 	//sort list table events
+	
 	bindSortGroup(handler) {
 		this.sortGroupLinkElement.addEventListener('click', handler, false);
 	}
+	
 	bindSortVariety(handler) {
 		this.sortVarietyLinkElement.addEventListener('click', handler, false);
 	}
+	
 	bindSortPacketId(handler) {
 		this.sortPacketIdLinkElement.addEventListener('click', handler, false);
 	}
+	
 	bindSortDate(handler) {
 		this.sortDateLinkElement.addEventListener('click', handler, false);
 	}
+  
   bindSortNumber(handler) {
     this.sortNumberLinkElement.addEventListener('click', handler, false);
   }
+  
   bindSortWeight(handler) {
     this.sortWeightLinkElement.addEventListener('click', handler, false);
   }
+  
   bindSortCost(handler) {
     this.sortCostLinkElement.addEventListener('click', handler, false);
   }
+	
 	// buttons
 	bindBtnScrollBackwards(handler) {
 	  this.btnScrollBackwardsLinkElement.forEach(btn => btn.addEventListener('click', handler, false)); 
 	}
+	
 	bindBtnScrollForwards(handler) {
 	  this.btnScrollForwardsLinkElement.forEach(btn => btn.addEventListener('click', handler, false));
 	  //this.btnScrollForwardsLinkElement.addEventListener('click', handler, false);
 	}
+	
 	bindBtnCopyRecord(handler) {
 	  this.btnCopyRecordLinkElement.addEventListener('click', handler, false);
 	}
+	
 	bindBtnSubmitEditRecord(handler) {
 		this.btnSubmitEditRecordLinkElement.addEventListener('click', handler, false);
 	}
+	
 	bindBtnDeleteRecord(handler) {
 		this.btnDeleteRecordLinkElement.addEventListener('click', handler, false);
 	}
@@ -256,16 +277,19 @@ class View {
 	bindEditPacket(editPacketRequestHandler) {
 		this.editPacketRequestHandler = editPacketRequestHandler;
 	}
+	
 	bindClearFindInput(handler) {
 	  this.btnClearFindInputLinkElement.addEventListener('click', handler, false);
 	}
+	
 	//retrieve data, reinstall db
 	bindBtnRetrieveData(handler) {
 		this.btnRetrieveDataLinkElement.addEventListener('click', handler, false);
-	};
+	}
+	
 	bindBtnReinstall(handler) {
 		this.btnReinstallLinkElement.addEventListener('click', handler, false);
-	};
+	}
 	
 /*	bindBtnUploadBackupFile(handler) {
 		const btnUploadBackupFile = document.getElementById('btnUploadData');
@@ -280,13 +304,16 @@ class View {
   bindBtnOkOverwritePacket(handler) {
     document.getElementById('btn-ok-overwrite-packet').onclick = handler;
     console.log(handler);
-  };
+  }
+  
   bindBtnCancelOverwritePacket(handler) {
     document.getElementById('btn-cancel-overwrite-packet').onclick = handler;
-  };
+  }
+	
 	bindSearchFilter(handler) {
 		document.getElementById('searchFilterPackets').addEventListener('input', handler);
 	}
+	
 	// transfer this to Controller
 	requestSpecificHelp() {
 		// designed to show specific instructions when clicked on ? anywhere
@@ -376,9 +403,10 @@ class View {
 		document.querySelector('#seedNotes').value = '';
 	}
  
-        packetIdInputIsEditable() {
-                return !document.getElementById('packetId').hasAttribute('readonly');
-        }
+  packetIdInputIsEditable() {
+    return !document.getElementById('packetId').hasAttribute('readonly');
+  }
+	
 	// Open Pages
 	showHomePage() {
 		if (document.getElementById('showHidePages').classList.contains('page__section_hide')) {
@@ -424,6 +452,7 @@ class View {
 		document.querySelector('#backUp').style.display = 'none';
 		document.querySelector('#helpPage').style.display = '';
 	}
+	
 	showMessage(message) {
 		msgInstallDb.innerHTML = 
 		  (`<li>${message}.</li>
@@ -439,6 +468,7 @@ class Controller {
 		this.sortOn = 'variety';
 		this.sortOrder = 'next';
 		this.packetIds = [];
+		//this.packetId = '';
 		this.packetIdsIndex = 0;
 		this.filterList = '';
 		this.forwardsClick = '';
@@ -514,6 +544,7 @@ class Controller {
 		//this.records = records;
 		//console.log(this.packetIds);
 	}
+	
   createPacketIdsArray(records) {
   let index;
   const packetIds = [];
@@ -525,20 +556,29 @@ class Controller {
   }
   
   async requestScrollForwards(packetIds, packetIdsIndex, filter, filterList) {
+    console.log(this.packetId, filterList);
+    console.log(packetIds.indexOf(this.packetId));
     console.log("From scrollForwards: " + packetIds);
     console.log('this.forwardsClick=' + this.forwardsClick);
-    if ( this.forwardsClick === '') {
-      this.forwardsClick = true;
-      this.backwardsClick = false;
+    const clickedPacketIdsIndex = packetIds.indexOf(this.packetId);
+    switch(this.forwardsClick) {
+      case '':
+        console.log('case ""');
+        this.forwardsClick = true;
+        this.backwardsClick = false;
+        packetIdsIndex = clickedPacketIdsIndex;
+        break;
+      case false:
+        console.log('case false');
+        console.log('last click was backwards');
+        this.forwardsClick = true;
+        this.backwardsClick = false;
+        packetIdsIndex = packetIdsIndex + 2;
+        break;
     }
-    if ( this.forwardsClick === false ) {
-      console.log('last click was backwards');
-      this.forwardsClick = true;
-      this.backwardsClick = false;
-      packetIdsIndex = packetIdsIndex + 2;
-    }
+
     const arrayLength = packetIds.length;  
-    console.log("before if: index=" + packetIdsIndex + ' filterList=' + filterList + ' filter=' + filter);
+    console.log("before if: index=" + packetIdsIndex + ' filterList=' + filterList + ' filter=' + filter + ' arrayLength=' + arrayLength);    
     if ( packetIdsIndex > 0 && packetIdsIndex < arrayLength && filterList === filter) {
       console.log("if: " + this.packetIds[packetIdsIndex]);
       await this.editPacketRequestHandler(packetIds[packetIdsIndex]);
@@ -592,8 +632,11 @@ class Controller {
       this.filterList = filter;
     }
   }
+  
 	async editPacketRequestHandler(packetId) {
-	  //console.log(this.packetIds);
+	  console.log(this.packetIds);
+	  console.log(packetId);
+	  this.packetId = packetId;
 		const record = await this.model.getRecord(packetId);
 		this.view.clearFields();
 		this.view.showEditPacket();
@@ -609,22 +652,15 @@ class Controller {
 	// Pages requested
 	async requestSearchPacketList() {
 	  console.log('activated');
-	  //this.filterList = '';
-	  //this.filter='';
-	  //this.packetIds = [];
 	  await this.requestSortedPacketList();
 	  document.getElementById('searchFilterPackets').value = '';
-	  //this.packetIdsIndex = 0;
-	  //this.forwardsClick = '';
-	  //this.backwardsClick = '';
 		this.view.showHomePage();
 		//console.log(this.packetIds);
 	}
+	
 	async requestHomePage() {
 	  console.log('activated');
-	  //this.filterList = '';
 	  this.filter = '';
-	  //this.packetIds = [];
 	  await this.requestSortedPacketList();
 	  document.getElementById('searchFilterPackets').value = '';
 	  this.packetIdsIndex = 0;
@@ -633,10 +669,9 @@ class Controller {
 		this.view.showHomePage();
 		//console.log(this.packetIds);
 	}
+	
 	async requestClearFindInput() {
 	  document.getElementById('searchFilterPackets').value = '';
-	  //this.requestHomePage();
-	  //this.filter = '';
 	}
 	
 	requestAddNewPacketPage() {
@@ -656,7 +691,6 @@ class Controller {
 	requestHelpPage() {
 		// designed to show specific instructions when clicked on ? anywhere
 		this.view.showHelpPage();
-		//await this.findHelpTopic();
 	}
 	
 	async fixCorruptDB() {
@@ -824,6 +858,7 @@ class Controller {
                 reader.readAsText(file);
         }*/
 }
+
 //=> End of Classes
 const model = new Model();
 const view = new View();
@@ -835,63 +870,3 @@ window.onload = () => { controller.requestHomePage() };
 const fileNotes = document.getElementById('fileNotifications'); //=> alias for user msgs retrieving data & backup
 const errorMsg = document.getElementById('dbError');  //=> alias forDB error msgs for the UI
 const msgInstallDb = document.getElementById('installDbMsg'); //=> alias for UI installation msgs
-
-
-
-/*function openDB() {
-  const request = window.indexedDB.open('seedB', 1);
-  request.onsuccess = (event) => {
-    const db = event.target.result;
-    console.log("success");
-    const transaction = db.transaction("collection", "readonly");
-		const store = transaction.objectStore("collection");
-		const cursorRequest = store.openKeyCursor();
-		const packageIds = [];
-		cursorRequest.onsuccess = (event) => {		  
-		  const cursor = event.target.result;
-		  if (cursor) {
-		    packageIds.push(cursor.key);
-		    //console.log(cursor.key);
-		    cursor.continue();
-		  }
-		  else {
-		    console.log("completed");
-		    console.log(packageIds);
-		  }
-		}
-		cursorRequest.onerror = (event) => {
-		  envent.target.errorCode;
-		}   
-  }   
-  request.onerror = (event) => {
-    event.target.errorCode;
-	}
-}*/
-
-//openDB();
-//controller.scrollRecords();
-
-//this.fileElemInput = document.getElementById("fileElemInput");
-
-/*function uploadBackupFile() {
-const fileSelect = document.getElementById("fileSelect");
-const fileElemInput = document.getElementById("fileElemInput");
-fileSelect.addEventListener("click", () => {
-  if (fileElemInput) {fileElemInput.click();}
-  }, false);
-
-fileElemInput.onchange = function () {
-  let dataFile = [];
-  const file = this.files[0];
-  const reader = new FileReader();
-  reader.onload = function (progressEvent) {
-    //console.log(this.result);
-    dataFile = JSON.parse(this.result);
-    console.log(dataFile);
-    console.log(dataFile[4]);
-  };
-  reader.readAsText(file);
-};
-}
-uploadBackupFile();*/
-
