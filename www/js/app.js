@@ -564,13 +564,12 @@ class Controller {
       packetIdsIndex = clickedPacketIdsIndex + 1;
     }    
     else if ( this.forwardsClick === '' ) {
-      console.log('case ""');
+      console.log('forwardsClick=""');
       this.forwardsClick = true;
       this.backwardsClick = false;
       packetIdsIndex = clickedPacketIdsIndex + 1;
     }
     else if ( this.forwardsClick === false ) {
-      console.log('case false');
       console.log('last click was backwards');
       this.forwardsClick = true;
       this.backwardsClick = false;
@@ -598,12 +597,21 @@ class Controller {
     }
   }
    
-  async requestScrollBackwards(packetIds, packetIdsIndex, filter) { 
+  async requestScrollBackwards(packetIds, packetIdsIndex, filter) {
+    console.log(this.packetId, 'filter=',filter);
+    console.log(packetIds.indexOf(this.packetId)); 
     console.log("From scrollBackwards: " + packetIds);
     console.log('this.backwardsClick=' + this.backwardsClick);
-    if ( this.backwardsClick === '' ) {
+    const clickedPacketIdsIndex = packetIds.indexOf(this.packetId);
+    
+    if (this.backwardsClick === true) {
+      packetIdsIndex = clickedPacketIdsIndex - 1;
+    }    
+    else if ( this.backwardsClick === '' ) {
+      console.log('backwardsClick=""');
       this.backwardsClick = true;
       this.forwardsClick = false;
+      packetIdsIndex = clickedPacketIdsIndex - 1;
     }
     else if ( this.backwardsClick === false ) {
       console.log('last click was forwards');
