@@ -180,9 +180,20 @@ class View {
 		this.btnRetrieveDataLinkElement = document.querySelector('#btnRetrieveData');
 		this.btnReinstallLinkElement = document.getElementById('btnReinstall');
     
-    this.confirmOverwriteDialog = document.getElementById('confirm-overwrite-dialog');
+    this.confirmOverwriteDialog = document.getElementById('confirmOverwriteDialog');
+    
+    this.btnPrintLabelDialogLinkElement = document.getElementById('btnPrintLabelDialog');
+    
+    this.btnCloseModalLinkElement = document.querySelectorAll('.btnCloseModal');
 	}
 	
+	bindBtnCloseModal(handler) {
+    this.btnCloseModalLinkElement.forEach(btn => btn.addEventListener('click', handler, false));
+	}
+	
+	bindBtnPrintLabelDialog(handler) {
+	  this.btnPrintLabelDialogLinkElement.addEventListener('click', handler, false);
+	}
 	bindBtnUploadFile(handler) {
 	  this.btnUploadFileLinkElement.addEventListener('click', handler, false);
 	}
@@ -378,9 +389,20 @@ class View {
     let resultPromise = new Promise((resolve, reject) => {
       this.bindBtnOkOverwritePacket(() => {resolve('OK')});
       this.bindBtnCancelOverwritePacket(() => {resolve('Cancel')});
-//TODO: Handle ESCAPE key press
+//TO DO: Handle ESCAPE key press
     });
     return resultPromise; 
+  }
+  
+    showPrintLabelDialog() {
+    document.getElementById('printLabelDialog').showModal();
+ //console.log('this is id: ' + seed.packetId);
+    /*let resultPromise = new Promise((resolve, reject) => {
+      this.bindBtnOkOverwritePacket(() => {resolve('OK')});
+      this.bindBtnCancelOverwritePacket(() => {resolve('Cancel')});
+//TO DO: Handle ESCAPE key press
+    });
+    return resultPromise; */
   }
 
 	clearFields() {
@@ -508,6 +530,19 @@ class Controller {
     //this.view.bindBtnUploadBackupFile( this.restoreBackup );
 		
 		this.view.bindSearchFilter((e) => {this.searchFilterHandler(e);});
+		this.view.bindBtnPrintLabelDialog( () => { this.requestPrintLabelDialog(); });
+		this.view.bindBtnCloseModal( () => { this.closeModal(); });
+	}
+	
+	closeModal() {
+    modal.close();
+	}
+	
+	async requestPrintLabelDialog() {
+	 await view.showPrintLabelDialog();
+	 await window.print();
+	 document.getElementById('printLabelDialog').close();
+	 
 	}
 
 	async searchFilterHandler(e) {

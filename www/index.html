@@ -22,12 +22,6 @@
       <button class="btn-menu__items  openHomePage" type="button" 
         title="Back to List. Current &#010;record not saved.">
         <img class="img_border" src="./images/home.svg"></button>   
-      <button class="btn-menu__items scrollBackwards" type="button" 
-        title="Previous record." > 
-        <img class="img_border" src="./images/nav-arrow-left.svg"></button>
-      <button class="btn-menu__items scrollForwards" type="button" 
-        title="Next record.">
-        <img class="img_border" src="./images/nav-arrow-right.svg"></button>      
       <button class="btn-menu__items openBackupRestorePage" type="button" 
         title="Backup operations.">
         <img class="img_border" src="./images/tools.svg"></button>  
@@ -82,6 +76,9 @@
         class="img_border" src="./images/copy.svg"></button>
       <button class="btn-menu__items " type="button" id="btnSubmitEditRecord" 
         title="Save current record."><img class="img_border" src="./images/save-floppy-disk.svg" >
+        </button>
+      <button class="btn-menu__items" type="button" id="btnPrintLabelDialog" 
+        title="Print label of record."><img class="img_border" src="./images/printer.svg" >
         </button>
       <button class="btn-menu__items" type="button" id="btnDeleteRecord" 
         title="Delete current record."><img class="img_border" src="./images/bin-full.svg"></button>
@@ -232,17 +229,29 @@
 <!--<input type="file" name="file" id="backupDataFile" style="display:none">-->  
 <input type="file" name="file" id="fileElemInput" style="display:none">
 
-<dialog class="modal" id="confirm-overwrite-dialog">
+<dialog class="modal" id="confirmOverwriteDialog">
   <p class="page__paragraph">WARNING:</p> 
   <p class="page__paragraph">ID already exists.</p> 
   <p class="page__paragraph">Overwrite this record?</p>
-  <form method="dialog" class="btn-menu btn-menu_right">
-    <button class="btn-menu__items btn-menu__items_outline" 
-    id="btn-cancel-overwrite-packet">Cancel</button>
-    <button class="btn-menu__items btn-menu__items_outline" 
+  <form method="dialog" class="btn-menu_right">
+    <button class="btn-menu__items btn-menu__items_outline">Cancel</button>
+    <button class="btn-menu__items btn-menu__items_outline" type="button" 
     id="btn-ok-overwrite-packet">Overwrite</button> 
   </form> 
-</dialog>  
+</dialog> 
+<dialog class="modal modal_label-size" id="printLabelDialog">
+  <div class="print-block" id="printBlockLabel">
+    <p class="page__paragraph">Barcode of packetId here</p>
+    <p class="page__paragraph">Variety:</p>
+    <p class="page__paragraph">Group:</p>
+    <p class="page__paragraph">Packet Id:</p>
+    <p class="page__paragraph">Date Collected:</p>
+  </div>
+<!--  <form class="btn-menu_right">
+    <button class="btn-menu__items btn-menu__items_outline" type="submit">Cancel</button>
+    <button class="btn-menu__items btn-menu__items_outline" type="button" onclick="window.print()" id="btnModalPrintLabel">Print Label</button> 
+  </form> -->
+</dialog> 
 
     <!-- Footer -->
 

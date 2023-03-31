@@ -56,6 +56,7 @@ html:focus {
   src: url("../fonts/dejavumono.woff2") format("truetype");
   font-style: normal;
 }
+
 /* End of default settings for this document */
 .page{
   font-family: vusanswoff, sans-serif;
@@ -76,7 +77,7 @@ html:focus {
 }
 .page__paragraph {
   font-size: 1.2rem;
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.5rem;
 }
 .page__header {
 }
@@ -135,14 +136,19 @@ html:focus {
   justify-content: left;
   gap: 0.6rem;
   box-sizing: content-box; 
-  width: 100%;
+  /*width: 100%;*/
   height: 1.9rem;
   align-items: center;
   text-align: center;
   padding-left: 0.6rem;
 }
 .btn-menu_right {
+  display: flex;
+  flex-grow: wrap;
+  gap: 0.6rem;
+  box-sizing: content-box;
   justify-content: right;
+  padding: 1rem;
 }
 .btn-menu__items {
   display: block;
@@ -153,7 +159,7 @@ html:focus {
   cursor: pointer;
 }
 .btn-menu__items_outline {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   border: 0.1rem solid black;
   border-radius: 0.4rem;
   background-color: #E5E4E2;
@@ -281,26 +287,24 @@ html:focus {
   width: 30%;
   text-align: right;
 }
-/* Backup Page */
-.backup-page {}
-.label_inline{
-  font-size: 1.3rem;
-}
-.ul_js-message {
-  font-size: 1.25rem;
-  padding: 0.7rem 0 0.7rem;
-  list-style-type: square;
-  list-style-position: inside;
-}
-.modal {
+
+
+.modal:modal {
+  /*width:200px; */
   position: fixed;
   top: 20%;
   left: 50%;
   transform: translate(-50%, -50%);
-}
-.modal:modal {
-  width:200px; 
   padding: 1.5rem;
+  background-color: #fdfdf0;
+  border: 0.1rem solid #ccc;
+  overflow: hidden;
+}
+.modal_label-size:modal {
+  display: block;
+  width: 67mm;
+  /*height:45mm;*/ 
+  padding: 0rem;
   background-color: #fdfdf0;
   border: 0.1rem solid #ccc;
   overflow: hidden;
@@ -315,9 +319,27 @@ html:focus {
 }
 
 /*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+.print-block {
+  display: block;
+  height: 29mm;
+  width: 62mm;
+  padding: 2mm;
+  border: 0.5mm solid;
+  background-color: white;
+}
 
 
-
+/* Backup Page */
+.backup-page {}
+.label_inline{
+  font-size: 1.3rem;
+}
+.ul_js-message {
+  font-size: 1.25rem;
+  padding: 0.7rem 0 0.7rem;
+  list-style-type: square;
+  list-style-position: inside;
+}
 
 
 
@@ -401,7 +423,10 @@ div.alert {
   margin-right: calc(((100vw - 450px) / 2) - (100vw - 100%));
   border: none;
   outline: none;
-  background-image: url(../images/to_bottom_icon.svg);
+  background-image: url(../images/to_bo<!--<button class="btn-menu__items btn-menu__items_outline" 
+    id="btn-cancel-overwrite-packet">Cancel</button>
+    <button class="btn-menu__items btn-menu__items_outline" 
+    id="">Print Label</button> -->ttom_icon.svg);
   background-repeat: no-repeat;
   background-position: center center;
   cursor: pointer;
