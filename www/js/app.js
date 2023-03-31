@@ -183,12 +183,6 @@ class View {
     this.confirmOverwriteDialog = document.getElementById('confirmOverwriteDialog');
     
     this.btnPrintLabelDialogLinkElement = document.getElementById('btnPrintLabelDialog');
-    
-    this.btnCloseModalLinkElement = document.querySelectorAll('.btnCloseModal');
-	}
-	
-	bindBtnCloseModal(handler) {
-    this.btnCloseModalLinkElement.forEach(btn => btn.addEventListener('click', handler, false));
 	}
 	
 	bindBtnPrintLabelDialog(handler) {
@@ -385,7 +379,7 @@ class View {
 
   showConfirmOverwriteDialog() {
     this.confirmOverwriteDialog.showModal();
- //console.log('this is id: ' + seed.packetId);
+      console.log('this is id: ' + seed.packetId);
     let resultPromise = new Promise((resolve, reject) => {
       this.bindBtnOkOverwritePacket(() => {resolve('OK')});
       this.bindBtnCancelOverwritePacket(() => {resolve('Cancel')});
@@ -394,9 +388,11 @@ class View {
     return resultPromise; 
   }
   
-    showPrintLabelDialog() {
+  showPrintLabelDialog() {
     document.getElementById('printLabelDialog').showModal();
- //console.log('this is id: ' + seed.packetId);
+
+    
+      //console.log('this is id: ' + seed.packetId);
     /*let resultPromise = new Promise((resolve, reject) => {
       this.bindBtnOkOverwritePacket(() => {resolve('OK')});
       this.bindBtnCancelOverwritePacket(() => {resolve('Cancel')});
@@ -531,18 +527,23 @@ class Controller {
 		
 		this.view.bindSearchFilter((e) => {this.searchFilterHandler(e);});
 		this.view.bindBtnPrintLabelDialog( () => { this.requestPrintLabelDialog(); });
-		this.view.bindBtnCloseModal( () => { this.closeModal(); });
-	}
-	
-	closeModal() {
-    modal.close();
 	}
 	
 	async requestPrintLabelDialog() {
+	 const labelContent = document.querySelector('#printBlockLabel');
+	 console.log(this.packetId);
+	 const options = {year: "numeric", month: "long", day: "numeric"};
+	 const record = await this.model.getRecord(this.packetId);
+	 const auDate = new Date(record.date).toLocaleDateString("en-AU", options);
+	 console.log(record);	 
 	 await view.showPrintLabelDialog();
+   labelContent.innerHTML += `<p class="page__paragraph">${this.packetId}</p>`;
+   labelContent.innerHTML += `<p class="page__paragraph">Variety: ${record.variety}</p>`;
+   labelContent.innerHTML += `<p class="page__paragraph">Number: ${record.number}</p>`;
+   labelContent.innerHTML += `<p class="page__paragraph">Weight: ${record.weight}</p>`;
+   labelContent.innerHTML += `<p class="page__paragraph">Date: ${auDate}</p>`;
 	 await window.print();
 	 document.getElementById('printLabelDialog').close();
-	 
 	}
 
 	async searchFilterHandler(e) {
