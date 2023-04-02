@@ -47,19 +47,27 @@ html:focus {
   outline: none;
 }
 @font-face {
-  font-family: vusanswoff;
-  src: url("../fonts/dejavu.woff2") format("woff2");
+  font-family: Book;
+  src: local("DejaVuSans") format("truetype");
+  S
   font-style: normal;
 }
 @font-face {
-  font-family: vumonowoff;
-  src: url("../fonts/dejavumono.woff2") format("truetype");
+  font-family: Book;
+  src: local("DejaVuSansMono") format("truetype");
+  /*src: url("../fonts/dejavumono.woff2") format("woff2");*/
+  font-style: normal
+}
+@font-face {
+  font-family: "Regular";
+  src: local("LibreBarcode39Text-Regular") format("truetype");
+  /*src: url("../fonts/LibreBarcode39-Regular.woff2") format("woff2");*/
   font-style: normal;
 }
-
 /* End of default settings for this document */
+
 .page{
-  font-family: vusanswoff, sans-serif;
+  font-family: "DejaVu Sans", sans-serif;
   background-color: #fdfdf0;
   width: 500px;
   margin: 0 auto;
@@ -176,7 +184,7 @@ html:focus {
   border: 1px solid #ccc;
   width: 10rem;
   height: 1.9rem;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
 }
 .btn-menu__items:hover {
   background-color:#C5C5C5;
@@ -197,7 +205,7 @@ html:focus {
 .table__header {  
   background-color: #F6DA74;
   text-align: center;
-  font-size: 1.15rem;
+  font-size: 1.2rem;
 /*  font-weight: bold;*/
 }
 .table__header_sort {
@@ -211,10 +219,10 @@ html:focus {
   cursor: pointer;
 }
 .table__data {
-  padding:0.2rem;
+  padding:0.2rem 0.4rem 0.2rem 0.4rem;
   border: 2px solid #ccc;
   line-height: normal;
-  font-size:1.15rem;
+  font-size:1.2rem;
 }
 .table__data_center {
   text-align: center;
@@ -260,17 +268,18 @@ html:focus {
 }
 .form__input[type=number] {
   width: 15%;
-  font-family: vumonowoff, monospace;
+  font-family: "DejaVu Sans Mono", monospace;
 }
 .form__input[type=date] {
   width: 20%;
-  font-family: vumonowoff, monospace;
+  font-family: "DejaVu Sans Mono", monospace;
 }
 .form__input_gray {
   background-color: #E8E8E8;
 }
 .form__input_mono-font {
-  font-family: vumonowoff, monospace;
+  width: 20%;
+  font-family: "DejaVu Sans Mono", monospace;
 }
 .form__textarea {
   display: inline-block;
@@ -302,7 +311,7 @@ html:focus {
 }
 .modal_label-size:modal {
   display: block;
-  width: 67mm;
+  width: 85mm;
   /*height:45mm;*/ 
   padding: 0rem;
   background-color: #fdfdf0;
@@ -321,13 +330,16 @@ html:focus {
 /*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 .print-block {
   display: block;
-  height: 29mm;
-  width: 62mm;
+  /*height: 29mm;*/
+  width: 80mm;
   padding: 2mm;
-  border: 0.5mm solid;
+  border: 0.5mm solid #ccc;
   background-color: white;
 }
-
+.barcode {
+  font-family: "Libre Barcode 39 Text";
+  font-size: 2.5rem;
+}
 
 /* Backup Page */
 .backup-page {}

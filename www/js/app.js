@@ -150,6 +150,7 @@ class View {
 	   - updating the database
 	  It does not make requests of the Model */
 	constructor() {
+	  
 		this.app = document.getElementById('#root');
 		// Pages events
 		this.homePageLinkElements = document.querySelectorAll('.openHomePage');
@@ -391,8 +392,6 @@ class View {
   showPrintLabelDialog() {
     document.getElementById('printLabelDialog').showModal();
 
-    
-      //console.log('this is id: ' + seed.packetId);
     /*let resultPromise = new Promise((resolve, reject) => {
       this.bindBtnOkOverwritePacket(() => {resolve('OK')});
       this.bindBtnCancelOverwritePacket(() => {resolve('Cancel')});
@@ -537,7 +536,7 @@ class Controller {
 	 const auDate = new Date(record.date).toLocaleDateString("en-AU", options);
 	 console.log(record);	 
 	 await view.showPrintLabelDialog();
-   labelContent.innerHTML += `<p class="page__paragraph">${this.packetId}</p>`;
+   labelContent.innerHTML += `<p class="page__paragraph barcode">*${this.packetId}*</p>`;
    labelContent.innerHTML += `<p class="page__paragraph">Variety: ${record.variety}</p>`;
    labelContent.innerHTML += `<p class="page__paragraph">Number: ${record.number}</p>`;
    labelContent.innerHTML += `<p class="page__paragraph">Weight: ${record.weight}</p>`;
