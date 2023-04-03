@@ -380,9 +380,9 @@ class View {
 
   showConfirmOverwriteDialog() {
     this.confirmOverwriteDialog.showModal();
-      console.log('this is id: ' + seed.packetId);
+      //console.log('this is id: ' + packetId);
     let resultPromise = new Promise((resolve, reject) => {
-      this.bindBtnOkOverwritePacket(() => {resolve('OK')});
+      this.bindBtnOkOverwritePacket(() => {resolve('Overwrite')});
       this.bindBtnCancelOverwritePacket(() => {resolve('Cancel')});
 //TO DO: Handle ESCAPE key press
     });
@@ -534,7 +534,11 @@ class Controller {
 	 const options = {year: "numeric", month: "long", day: "numeric"};
 	 const record = await this.model.getRecord(this.packetId);
 	 const auDate = new Date(record.date).toLocaleDateString("en-AU", options);
+	 const qrCode = ('ID: ' + this.packetId + '\nVariety: ' + record.variety + '\nGroup: ' + record.group
+	   + '\nProduct Count: ' + record.number + '\nWeight(grams): ' + record.weight + '\nCost: $' + record.cost
+	   + '\nDate created: ' + auDate + '\nTimestamp:' + record.timeStamp + '\nNotes:\n' + record.seedNotes);
 	 console.log(record);	 
+	 console.log(qrCode);
 	 await view.showPrintLabelDialog();
    labelContent.innerHTML += `<p class="page__paragraph barcode">*${this.packetId}*</p>`;
    labelContent.innerHTML += `<p class="page__paragraph">Variety: ${record.variety}</p>`;
@@ -543,6 +547,7 @@ class Controller {
    labelContent.innerHTML += `<p class="page__paragraph">Date: ${auDate}</p>`;
 	 await window.print();
 	 document.getElementById('printLabelDialog').close();
+	 
 	}
 
 	async searchFilterHandler(e) {
@@ -793,11 +798,15 @@ class Controller {
       if (this.view.packetIdInputIsEditable() && (await this.model.getRecord(seed.packetId))) {
          // display warning and wait for feedback before continuing
          //console.log('this is id: ' + seed.packetId);
-         let confirmation_result = await this.view.showConfirmOverwriteDialog();
-         if (confirmation_result == 'Cancel') {
+        let confirmation_result = await this.view.showConfirmOverwriteDialog();
+        if (confirmation_result == 'Cancel') {
+          document.getElementById('confirmOverwriteDialog').close();
            // show some message about not updating 
-           return;
-         }
+          return;
+        }
+        else if (confirmation_result == 'Overwrite') {
+          document.getElementById('confirmOverwriteDialog').close();
+        }
       }
 			await this.model.loadRecords([seed]);
 			await this.view.showAlert(

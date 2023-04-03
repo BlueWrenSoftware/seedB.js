@@ -49,14 +49,12 @@ html:focus {
 @font-face {
   font-family: Book;
   src: local("DejaVuSans") format("truetype");
-  S
   font-style: normal;
 }
 @font-face {
   font-family: Book;
   src: local("DejaVuSansMono") format("truetype");
-  /*src: url("../fonts/dejavumono.woff2") format("woff2");*/
-  font-style: normal
+  font-style: normal;
 }
 @font-face {
   font-family: "Regular";
