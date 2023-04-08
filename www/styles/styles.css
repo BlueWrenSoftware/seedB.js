@@ -329,7 +329,8 @@ html:focus {
 .print-block {
   display: block;
   /*height: 29mm;*/
-  width: 80mm;
+  width: 74mm;
+  /*height: 105mm;*/
   padding: 2mm;
   border: 0.5mm solid #ccc;
   background-color: white;
@@ -341,6 +342,7 @@ html:focus {
 
 /* Backup Page */
 .backup-page {}
+
 .label_inline{
   font-size: 1.3rem;
 }

@@ -529,7 +529,7 @@ class Controller {
 	}
 	
 	async requestPrintLabelDialog() {
-	 const labelContent = document.querySelector('#printBlockLabel');
+	 let labelContent = document.querySelector('#printBlockLabel');
 	 console.log(this.packetId);
 	 const options = {year: "numeric", month: "long", day: "numeric"};
 	 const record = await this.model.getRecord(this.packetId);
@@ -537,16 +537,18 @@ class Controller {
 	 const qrCode = ('ID: ' + this.packetId + '\nVariety: ' + record.variety + '\nGroup: ' + record.group
 	   + '\nProduct Count: ' + record.number + '\nWeight(grams): ' + record.weight + '\nCost: $' + record.cost
 	   + '\nDate created: ' + auDate + '\nTimestamp:' + record.timeStamp + '\nNotes:\n' + record.seedNotes);
-	 console.log(record);	 
+	 //console.log(record);	 
 	 console.log(qrCode);
-	 await view.showPrintLabelDialog();
    labelContent.innerHTML += `<p class="page__paragraph barcode">*${this.packetId}*</p>`;
    labelContent.innerHTML += `<p class="page__paragraph">Variety: ${record.variety}</p>`;
    labelContent.innerHTML += `<p class="page__paragraph">Number: ${record.number}</p>`;
    labelContent.innerHTML += `<p class="page__paragraph">Weight: ${record.weight}</p>`;
    labelContent.innerHTML += `<p class="page__paragraph">Date: ${auDate}</p>`;
+   labelContent.innerHTML += `<p class="page__paragraph">Notes: ${record.seedNotes}</p><br>`;
+   await view.showPrintLabelDialog();
 	 await window.print();
 	 document.getElementById('printLabelDialog').close();
+	 labelContent.innerHTML = "";
 	 
 	}
 
