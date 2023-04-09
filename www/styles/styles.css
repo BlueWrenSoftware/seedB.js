@@ -48,18 +48,21 @@ html:focus {
 }
 @font-face {
   font-family: Book;
-  src: local("DejaVuSans") format("truetype");
+  /*src: local("DejaVuSans") format("truetype");*/
+  src: url("../fonts/DejaVuSans.woff2") format("woff2");
   font-style: normal;
 }
 @font-face {
   font-family: Book;
-  src: local("DejaVuSansMono") format("truetype");
+  /*src: local("DejaVuSansMono") format("truetype");*/
+  /*src: url("../fonts/DejaVuSansMono.ttf") format("truetype");*/
+  src: url("../fonts/DejaVuSansMono.woff2") format("woff2");
   font-style: normal;
 }
 @font-face {
   font-family: "Regular";
-  src: local("LibreBarcode39Text-Regular") format("truetype");
-  /*src: url("../fonts/LibreBarcode39-Regular.woff2") format("woff2");*/
+  /*src: local("LibreBarcode39Text-Regular") format("truetype");*/
+  src: url("../fonts/LibreBarcode39-Regular.woff2") format("woff2");
   font-style: normal;
 }
 /* End of default settings for this document */
