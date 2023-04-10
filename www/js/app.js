@@ -434,12 +434,15 @@ class View {
 		document.querySelector('#edit-page').style.display = 'none';
 		document.querySelector('#backUp').style.display = 'none';
 		document.querySelector('#helpPage').style.display = 'none';
+		document.querySelector('#printBlockLabel').style.display = 'none';
+		
 	}
 	showAddNewPacket() {
 		document.querySelector('#homePage').style.display = 'none';
 		document.querySelector('#edit-page').style.display = '';
 		document.querySelector('#backUp').style.display = 'none';
 		document.querySelector('#helpPage').style.display = 'none';
+		document.querySelector('#printBlockLabel').style.display = 'none';
 		// Key packetId readonly removed and is required
 		document.querySelector('#packetId').removeAttribute('readonly');
 		document.querySelector('#packetId').setAttribute('required', 'required');
@@ -451,6 +454,7 @@ class View {
 		document.querySelector('#edit-page').style.display = '';
 		document.querySelector('#backUp').style.display = 'none';
 		document.querySelector('#helpPage').style.display = 'none';
+		document.querySelector('#printBlockLabel').style.display = 'none';
 		// Key packetId is read only
 		document.querySelector('#packetId').removeAttribute('required');
 		document.querySelector('#packetId').setAttribute('readonly', 'readonly');
@@ -462,12 +466,14 @@ class View {
 		document.querySelector('#edit-page').style.display = 'none';
 		document.querySelector('#backUp').style.display = '';
 		document.querySelector('#helpPage').style.display = 'none';
+		document.querySelector('#printBlockLabel').style.display = 'none';
 	}
 	showHelpPage() {
 		document.querySelector('#homePage').style.display = 'none';
 		document.querySelector('#edit-page').style.display = 'none';
 		document.querySelector('#backUp').style.display = 'none';
 		document.querySelector('#helpPage').style.display = '';
+		document.querySelector('#printBlockLabel').style.display = '';
 	}
 	
 	showMessage(message) {

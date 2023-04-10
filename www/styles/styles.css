@@ -62,7 +62,7 @@ html:focus {
 @font-face {
   font-family: "Regular";
   /*src: local("LibreBarcode39Text-Regular") format("truetype");*/
-  src: url("../fonts/LibreBarcode39-Regular.woff2") format("woff2");
+  src: url("../fonts/LibreBarcode39Text-Regular.woff2") format("woff2");
   font-style: normal;
 }
 /* End of default settings for this document */
@@ -74,6 +74,7 @@ html:focus {
   margin: 0 auto;
   position: relative;
   border: 0.1rem solid #ccc;
+  padding: 0.5rem;
 }
 .page__section_show {
   display: block;
@@ -332,10 +333,9 @@ html:focus {
 .print-block {
   display: block;
   /*height: 29mm;*/
-  width: 74mm;
-  /*height: 105mm;*/
-  padding: 2mm;
-  border: 0.5mm solid #ccc;
+/*  width: 74mm;*/
+  padding: 3rem;
+/*  border: 0.5mm solid #ccc;*/
   background-color: white;
 }
 .barcode {
