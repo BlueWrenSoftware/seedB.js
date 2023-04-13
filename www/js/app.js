@@ -183,11 +183,11 @@ class View {
     
     this.confirmOverwriteDialog = document.getElementById('confirmOverwriteDialog');
     
-    this.btnPrintLabelDialogLinkElement = document.getElementById('btnPrintLabelDialog');
+    this.btnPrintQueueLinkElement = document.getElementById('btnPrintQueue');
 	}
 	
-	bindBtnPrintLabelDialog(handler) {
-	  this.btnPrintLabelDialogLinkElement.addEventListener('click', handler, false);
+	bindBtnPrintQueue(handler) {
+	  this.btnPrintQueueLinkElement.addEventListener('click', handler, false);
 	}
 	bindBtnUploadFile(handler) {
 	  this.btnUploadFileLinkElement.addEventListener('click', handler, false);
@@ -389,8 +389,8 @@ class View {
     return resultPromise; 
   }
   
-  showPrintLabelDialog() {
-    document.getElementById('printLabelDialog').showModal();
+  showPrintQueue() {
+    //document.getElementById('printLabelDialog').showModal();
 
     /*let resultPromise = new Promise((resolve, reject) => {
       this.bindBtnOkOverwritePacket(() => {resolve('OK')});
@@ -531,10 +531,10 @@ class Controller {
     //this.view.bindBtnUploadBackupFile( this.restoreBackup );
 		
 		this.view.bindSearchFilter((e) => {this.searchFilterHandler(e);});
-		this.view.bindBtnPrintLabelDialog( () => { this.requestPrintLabelDialog(); });
+		this.view.bindBtnPrintQueue( () => { this.requestPrintQueue(); });
 	}
 	
-	async requestPrintLabelDialog() {
+	async requestPrintQueue() {
 	 let labelContent = document.querySelector('#printBlockLabel');
 	 console.log(this.packetId);
 	 const options = {year: "numeric", month: "long", day: "numeric"};
@@ -551,10 +551,10 @@ class Controller {
    labelContent.innerHTML += `<p class="page__paragraph">Weight: ${record.weight}</p>`;
    labelContent.innerHTML += `<p class="page__paragraph">Date: ${auDate}</p>`;
    labelContent.innerHTML += `<p class="page__paragraph">Notes: ${record.seedNotes}</p><br>`;
-   await view.showPrintLabelDialog();
-	 await window.print();
-	 document.getElementById('printLabelDialog').close();
-	 labelContent.innerHTML = "";
+   //await view.showPrintQueue();
+	 //await window.print();
+	 //document.getElementById('PrintQueue').close();
+	 //labelContent.innerHTML = "";
 	 
 	}
 
