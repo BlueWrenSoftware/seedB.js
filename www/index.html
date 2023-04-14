@@ -30,7 +30,7 @@
       <button class="btn-menu__items openNewPacketPage" type="button" 
         title="Create new record."><img class="img_border" src="./images/add-page.svg">
       </button>
-      <button class="btn-menu__items printLabelsQueue" type="button" 
+      <button class="btn-menu__items btnPrintLabels" type="button" 
         title="Print label(s) queue."><img class="img_border" src="./images/printing-page.svg">
       </button> 
       <button class="openHelpPage btn-menu__items" type="button" 
@@ -91,15 +91,18 @@
       <button class="btn-menu__items " type="button" id="btnSubmitEditRecord" 
         title="Save current record."><img class="img_border" src="./images/save-floppy-disk.svg" >
       </button>
-      <button class="btn-menu__items" type="button" id="btnPrintQueue" 
+      <button class="btn-menu__items" type="button" id="btnLabelsQueue" 
         title="Add record to label print queue."><img class="img_border" src="./images/label.svg" >
       </button>
-      <button class="btn-menu__items printLabelsQueue" type="button" 
-        title="Print label(s) queue."><img class="img_border" src="./images/printing-page.svg"></button> 
+      <button class="btn-menu__items btnPrintLabels" type="button" 
+        title="Print label(s) queue."><img class="img_border" src="./images/printing-page.svg">
+      </button> 
       <button class="btn-menu__items" type="button" id="btnDeleteRecord" 
-        title="Delete current record."><img class="img_border" src="./images/bin-full.svg"></button>
+        title="Delete current record."><img class="img_border" src="./images/bin-full.svg">
+      </button>
       <button class="openHelpPage btn-menu__items" type="button" 
-        title="Help on buttons."><img class="img_border" src="./images/help-no-circle.svg"></button>
+        title="Help on buttons."><img class="img_border" src="./images/help-no-circle.svg">
+      </button>
     </nav>    <!-- Data Entry Edit Form -->    
     <form class=".form"id="seed-entry">
       <p class="form__paragraph">*&emsp;Input required.</p>
@@ -238,10 +241,9 @@
       <p></p>
     </header>
   </section>
-  
 </div>
-  <footer class="page__footer footer">
- 
+<!-- Footer -->
+  <footer class="page__footer footer" id="pageFooter">
     <p class="footer__paragraph">
     <img src="./images/bettong-june.svg" class="footer__image" alt="logo">
     Designed by Bettong Applications</p>
@@ -260,24 +262,10 @@
     id="btn-ok-overwrite-packet">Overwrite</button> 
   </form> 
 </dialog> 
-
-<!--<dialog class="modal modal_label-size" id="printLabelDialog">
-  <div class="print-block" id="printBlockLabel">
-  </div>-->
-<!--  <form class="btn-menu_right">
-    <button class="btn-menu__items btn-menu__items_outline" type="submit">Cancel</button>
-    <button class="btn-menu__items btn-menu__items_outline" type="button" onclick="window.print()" id="btnModalPrintLabel">Print Label</button> 
-  </form> -->
-<!--</dialog> -->
-
-    <!-- Footer -->
-
+   
 </div>
-  <div class="print-block" id="printBlockLabel"> 
-  <script src="./js/app.js"></script>
+<section id="labelsQueue" class="print-label"></section>
+<script src="./js/app.js"></script>
 <!--  <script src="./js/column.js"></script>-->
-
-
 </body>
-
 </html>

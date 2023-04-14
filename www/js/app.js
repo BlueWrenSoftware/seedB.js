@@ -150,8 +150,7 @@ class View {
 	   - updating the database
 	  It does not make requests of the Model */
 	constructor() {
-	  
-		this.app = document.getElementById('#root');
+		this.app = document.querySelector('#root');
 		// Pages events
 		this.homePageLinkElements = document.querySelectorAll('.openHomePage');
 		this.searchPacketListLinkElements = document.querySelectorAll('.openSearchPacketList');
@@ -160,13 +159,13 @@ class View {
 		this.dbErrorLinkElement = document.querySelector('.openDbErrorPage');
 		this.helpPageLinkElements = document.querySelectorAll('.openHelpPage');
 		//Sort table columns events
-		this.sortGroupLinkElement = document.getElementById('sortGroup');
-		this.sortVarietyLinkElement = document.getElementById('sortVariety');
-		this.sortPacketIdLinkElement = document.getElementById('sortPacketId');
-		this.sortDateLinkElement = document.getElementById('sortDate');
-		this.sortNumberLinkElement = document.getElementById('sortNumber');
-		this.sortWeightLinkElement = document.getElementById('sortWeight');
-		this.sortCostLinkElement = document.getElementById('sortCost');
+		this.sortGroupLinkElement = document.querySelector('#sortGroup');
+		this.sortVarietyLinkElement = document.querySelector('#sortVariety');
+		this.sortPacketIdLinkElement = document.querySelector('#sortPacketId');
+		this.sortDateLinkElement = document.querySelector('#sortDate');
+		this.sortNumberLinkElement = document.querySelector('#sortNumber');
+		this.sortWeightLinkElement = document.querySelector('#sortWeight');
+		this.sortCostLinkElement = document.querySelector('#sortCost');
 		// Button events
 		this.btnScrollBackwardsLinkElement = document.querySelectorAll('.scrollBackwards');
 		this.btnScrollForwardsLinkElement = document.querySelectorAll('.scrollForwards');
@@ -174,21 +173,24 @@ class View {
 		this.btnSubmitEditRecordLinkElement = document.querySelector('#btnSubmitEditRecord');
 		this.btnSubmitNewRecordLinkElement = document.querySelector('#btnSubmitNewRecord');
 		this.btnDeleteRecordLinkElement = document.querySelector('#btnDeleteRecord');
-		this.btnClearFindInputLinkElement = document.getElementById('clearFindInput');
-		
-		this.btnUploadFileLinkElement = document.getElementById('uploadFile');
+		this.btnClearFindInputLinkElement = document.querySelector('#clearFindInput');
+		this.btnUploadFileLinkElement = document.querySelector('#uploadFile');
 		//this.btnReplaceAllRecordsLinkElement = document.getElementById('btnReplaceAllRecords');
 		this.btnRetrieveDataLinkElement = document.querySelector('#btnRetrieveData');
-		this.btnReinstallLinkElement = document.getElementById('btnReinstall');
-    
-    this.confirmOverwriteDialog = document.getElementById('confirmOverwriteDialog');
-    
-    this.btnPrintQueueLinkElement = document.getElementById('btnPrintQueue');
+		this.btnReinstallLinkElement = document.querySelector('#btnReinstall');
+    this.btnLabelsQueueLinkElement = document.querySelector('#btnLabelsQueue');
+    this.btnPrintLabelsLinkElement = document.querySelectorAll('.btnPrintLabels');
+    this.confirmOverwriteDialog = document.querySelector('#confirmOverwriteDialog');   
 	}
 	
-	bindBtnPrintQueue(handler) {
-	  this.btnPrintQueueLinkElement.addEventListener('click', handler, false);
+	bindBtnLabelsQueue(handler) {
+	  this.btnLabelsQueueLinkElement.addEventListener('click', handler, false);
 	}
+	bindBtnPrintLabels(handler) {
+	  this.btnPrintLabelsLinkElement.forEach(btn => btn.addEventListener(
+		'click', handler, false));
+	}
+	
 	bindBtnUploadFile(handler) {
 	  this.btnUploadFileLinkElement.addEventListener('click', handler, false);
 	}
@@ -308,16 +310,16 @@ class View {
   };*/
   
   bindBtnOkOverwritePacket(handler) {
-    document.getElementById('btn-ok-overwrite-packet').onclick = handler;
+    document.querySelector('#btn-ok-overwrite-packet').onclick = handler;
     console.log(handler);
   }
   
   bindBtnCancelOverwritePacket(handler) {
-    document.getElementById('btn-cancel-overwrite-packet').onclick = handler;
+    document.querySelector('#btn-cancel-overwrite-packet').onclick = handler;
   }
 	
 	bindSearchFilter(handler) {
-		document.getElementById('searchFilterPackets').addEventListener('input', handler);
+		document.querySelector('#searchFilterPackets').addEventListener('input', handler);
 	}
 	
 	// transfer this to Controller
@@ -388,17 +390,6 @@ class View {
     });
     return resultPromise; 
   }
-  
-  showPrintQueue() {
-    //document.getElementById('printLabelDialog').showModal();
-
-    /*let resultPromise = new Promise((resolve, reject) => {
-      this.bindBtnOkOverwritePacket(() => {resolve('OK')});
-      this.bindBtnCancelOverwritePacket(() => {resolve('Cancel')});
-//TO DO: Handle ESCAPE key press
-    });
-    return resultPromise; */
-  }
 
 	clearFields() {
 		//=> Clears all the entry fields on the edit/add page
@@ -421,28 +412,27 @@ class View {
 	}
  
   packetIdInputIsEditable() {
-    return !document.getElementById('packetId').hasAttribute('readonly');
+    return !document.querySelector('#packetId').hasAttribute('readonly');
   }
 	
 	// Open Pages
 	showHomePage() {
-		if (document.getElementById('showHidePages').classList.contains('page__section_hide')) {
-			document.getElementById('showHidePages').classList.add('page__section_show');
-			document.getElementById('showHidePages').classList.remove('page__section_hide');
+		if (document.querySelector('#showHidePages').classList.contains('page__section_hide')) {
+			document.querySelector('#showHidePages').classList.add('page__section_show');
+			document.querySelector('#showHidePages').classList.remove('page__section_hide');
 		}
 		document.querySelector('#homePage').style.display = '';
 		document.querySelector('#edit-page').style.display = 'none';
 		document.querySelector('#backUp').style.display = 'none';
 		document.querySelector('#helpPage').style.display = 'none';
-		document.querySelector('#printBlockLabel').style.display = 'none';
-		
+		document.querySelector('#labelsQueue').style.display = 'none';
 	}
 	showAddNewPacket() {
 		document.querySelector('#homePage').style.display = 'none';
 		document.querySelector('#edit-page').style.display = '';
 		document.querySelector('#backUp').style.display = 'none';
 		document.querySelector('#helpPage').style.display = 'none';
-		document.querySelector('#printBlockLabel').style.display = 'none';
+		document.querySelector('#labelsQueue').style.display = 'none';
 		// Key packetId readonly removed and is required
 		document.querySelector('#packetId').removeAttribute('readonly');
 		document.querySelector('#packetId').setAttribute('required', 'required');
@@ -454,7 +444,7 @@ class View {
 		document.querySelector('#edit-page').style.display = '';
 		document.querySelector('#backUp').style.display = 'none';
 		document.querySelector('#helpPage').style.display = 'none';
-		document.querySelector('#printBlockLabel').style.display = 'none';
+		document.querySelector('#labelsQueue').style.display = 'none';
 		// Key packetId is read only
 		document.querySelector('#packetId').removeAttribute('required');
 		document.querySelector('#packetId').setAttribute('readonly', 'readonly');
@@ -466,14 +456,21 @@ class View {
 		document.querySelector('#edit-page').style.display = 'none';
 		document.querySelector('#backUp').style.display = '';
 		document.querySelector('#helpPage').style.display = 'none';
-		document.querySelector('#printBlockLabel').style.display = 'none';
+		document.querySelector('#labelsQueue').style.display = 'none';
 	}
 	showHelpPage() {
 		document.querySelector('#homePage').style.display = 'none';
 		document.querySelector('#edit-page').style.display = 'none';
 		document.querySelector('#backUp').style.display = 'none';
 		document.querySelector('#helpPage').style.display = '';
-		document.querySelector('#printBlockLabel').style.display = '';
+		document.querySelector('#labelsQueue').style.display = 'none';
+	}
+	showPrintLabels() {
+	  document.querySelector('#homePage').style.display = 'none';
+		document.querySelector('#edit-page').style.display = 'none';
+		document.querySelector('#backUp').style.display = 'none';
+		document.querySelector('#helpPage').style.display = 'none';
+		document.querySelector('#labelsQueue').style.display = '';
 	}
 	
 	showMessage(message) {
@@ -495,6 +492,7 @@ class Controller {
 		this.forwardsClick = '';
 		this.backwardsClick = '';
 		this.dataFile = [];
+		this.clicks = 0;
 		// bindings pages
 		this.view.bindHomePage( () => { this.requestHomePage(); });
 		this.view.bindSearchPacketList( () => { this.requestSearchPacketList(); });
@@ -531,11 +529,24 @@ class Controller {
     //this.view.bindBtnUploadBackupFile( this.restoreBackup );
 		
 		this.view.bindSearchFilter((e) => {this.searchFilterHandler(e);});
-		this.view.bindBtnPrintQueue( () => { this.requestPrintQueue(); });
+		this.view.bindBtnLabelsQueue( () => { this.requestLabelsQueue(); });
+		this.view.bindBtnPrintLabels( () => { this.requestPrintLabels(); });
 	}
 	
-	async requestPrintQueue() {
-	 let labelContent = document.querySelector('#printBlockLabel');
+	async requestPrintLabels() {
+	  const pageFooter = document.querySelector('#pageFooter');
+	  pageFooter.style.display = 'none';
+	  let labelContent = document.querySelector('#labelsQueue');
+	  await this.view.showPrintLabels();
+	  await window.print();
+	  //document.getElementById('labelsQueue').close();
+	  labelContent.innerHTML = "";
+	  await this.requestHomePage();
+	  pageFooter.style.display = '';
+	}
+	
+	async requestLabelsQueue() {
+	 let labelContent = document.querySelector('#labelsQueue');
 	 console.log(this.packetId);
 	 const options = {year: "numeric", month: "long", day: "numeric"};
 	 const record = await this.model.getRecord(this.packetId);
@@ -545,17 +556,19 @@ class Controller {
 	   + '\nDate created: ' + auDate + '\nTimestamp:' + record.timeStamp + '\nNotes:\n' + record.seedNotes);
 	 //console.log(record);	 
 	 console.log(qrCode);
-   labelContent.innerHTML += `<p class="page__paragraph barcode">*${this.packetId}*</p>`;
-   labelContent.innerHTML += `<p class="page__paragraph">Variety: ${record.variety}</p>`;
-   labelContent.innerHTML += `<p class="page__paragraph">Number: ${record.number}</p>`;
-   labelContent.innerHTML += `<p class="page__paragraph">Weight: ${record.weight}</p>`;
-   labelContent.innerHTML += `<p class="page__paragraph">Date: ${auDate}</p>`;
-   labelContent.innerHTML += `<p class="page__paragraph">Notes: ${record.seedNotes}</p><br>`;
+	 this.clicks = this.clicks + 1;
+	 console.log('left = ', this.clicks);
+	 labelContent.innerHTML += `<section class="print-label__block_left" >
+   <p class="page__paragraph barcode">*${this.packetId}*</p>
+    <p class="page__paragraph">Variety: ${record.variety}</p>
+   <p class="page__paragraph">Number: ${record.number}</p>
+   <p class="page__paragraph">Weight: ${record.weight}</p>
+   <p class="page__paragraph">Date: ${auDate}</p>
+   <p class="page__paragraph">Notes: ${record.seedNotes}</p></section>`;
    //await view.showPrintQueue();
 	 //await window.print();
 	 //document.getElementById('PrintQueue').close();
 	 //labelContent.innerHTML = "";
-	 
 	}
 
 	async searchFilterHandler(e) {
@@ -697,7 +710,7 @@ class Controller {
 		const record = await this.model.getRecord(packetId);
 		this.view.clearFields();
 		this.view.showEditPacket();
-		document.getElementById("packetId").classList.add("form__input_gray");
+		document.querySelector("#packetId").classList.add("form__input_gray");
 		 //element.classList.remove("form__input_gray");
 		Object.keys(record).forEach(field => {
 			// -> with the requested seed pkt record for editing
@@ -710,7 +723,7 @@ class Controller {
 	async requestSearchPacketList() {
 	  console.log('activated');
 	  await this.requestSortedPacketList();
-	  document.getElementById('searchFilterPackets').value = '';
+	  document.querySelector('#searchFilterPackets').value = '';
 		this.view.showHomePage();
 		//console.log(this.packetIds);
 	}
@@ -719,22 +732,25 @@ class Controller {
 	  console.log('activated');
 	  this.filter = '';
 	  await this.requestSortedPacketList();
-	  document.getElementById('searchFilterPackets').value = '';
+	  document.querySelector('#searchFilterPackets').value = '';
 	  this.packetIdsIndex = 0;
 	  this.forwardsClick = '';
 	  this.backwardsClick = '';
-		this.view.showHomePage();
+		await this.view.showHomePage();
+		document.querySelector('#searchFilterPackets').focus();
 		//console.log(this.packetIds);
 	}
 	
 	async requestClearFindInput() {
-	  document.getElementById('searchFilterPackets').value = '';
+	  document.querySelector('#searchFilterPackets').value = '';
+	  this.requestHomePage();
+	  
 	}
 	
 	requestAddNewPacketPage() {
 		this.view.showAddNewPacket();
 		this.view.clearFields();
-		document.getElementById("packetId").classList.remove("form__input_gray");
+		document.querySelector("#packetId").classList.remove("form__input_gray");
 	}
 	
 	requestBackupRestorePage() {
@@ -779,7 +795,7 @@ class Controller {
 	
 	async loadRecord() {
 		// Get the content from the form fields
-		const formData = new FormData(document.getElementById('seed-entry'));
+		const formData = new FormData(document.querySelector('#seed-entry'));
 		const seed = Object.fromEntries(formData);
 		seed['timeStamp'] = Date.now();
 		let missingRequiredField;
@@ -808,12 +824,12 @@ class Controller {
          //console.log('this is id: ' + seed.packetId);
         let confirmation_result = await this.view.showConfirmOverwriteDialog();
         if (confirmation_result == 'Cancel') {
-          document.getElementById('confirmOverwriteDialog').close();
+          document.querySelector('#confirmOverwriteDialog').close();
            // show some message about not updating 
           return;
         }
         else if (confirmation_result == 'Overwrite') {
-          document.getElementById('confirmOverwriteDialog').close();
+          document.querySelector('#confirmOverwriteDialog').close();
         }
       }
 			await this.model.loadRecords([seed]);
@@ -888,7 +904,7 @@ class Controller {
   async requestUploadFile() {
     await this.model.deleteAllRecords();
     console.log('clicked');
-    const fileElemInput = document.getElementById('fileElemInput');
+    const fileElemInput = document.querySelector('#fileElemInput');
     if (fileElemInput) {fileElemInput.click();}
     //fileElemInput.click();
     console.log(onchange);
@@ -928,6 +944,6 @@ const controller = new Controller(model, view);
 window.onload = () => { controller.requestHomePage() };
 //=> Global variables
 //const foundBtnHomePage = document.getElementById('findBtnHomePage'); //=> alias
-const fileNotes = document.getElementById('fileNotifications'); //=> alias for user msgs retrieving data & backup
-const errorMsg = document.getElementById('dbError');  //=> alias forDB error msgs for the UI
-const msgInstallDb = document.getElementById('installDbMsg'); //=> alias for UI installation msgs
+const fileNotes = document.querySelector('#fileNotifications'); //=> alias for user msgs retrieving data & backup
+const errorMsg = document.querySelector('#dbError');  //=> alias forDB error msgs for the UI
+const msgInstallDb = document.querySelector('#installDbMsg'); //=> alias for UI installation msgs
