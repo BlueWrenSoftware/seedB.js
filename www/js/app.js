@@ -539,7 +539,6 @@ class Controller {
 	  let labelContent = document.querySelector('#labelsQueue');
 	  await this.view.showPrintLabels();
 	  await window.print();
-	  //document.getElementById('labelsQueue').close();
 	  labelContent.innerHTML = "";
 	  await this.requestHomePage();
 	  pageFooter.style.display = '';
