@@ -40,7 +40,7 @@ html{
   margin-left: calc(100vw - 100%);
   margin-right: 0;
   overflow: auto;
-    /* 10px equivalent and this wiil be 1rem. Font root setting*/
+    /* 10px equivalent and this will be 1rem. Font root setting*/
   font-size: 62.5%;
 }
 html:focus {
@@ -73,7 +73,7 @@ html:focus {
   width: 500px;
   margin: 0 auto;
   position: relative;
-  //border: 0.1rem solid #ccc;
+  /*border: 0.1rem solid #ccc;*/
   padding: 0.5rem;
 }
 .page__section_show {
@@ -89,8 +89,9 @@ html:focus {
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
 }
-.page__header {
-}
+/* .page__header {
+  need code
+} */
 .header__level-1 {
   font-size: 1.65rem;
   margin-top: 2rem;
@@ -132,7 +133,7 @@ html:focus {
   width: 30px;
 }
 /* Menu */
-.menu {}
+/* .menu {} */
 .page__btn-menu {
 /* Outside block settings for btn__menu */
   margin-top: 1rem;
@@ -192,7 +193,7 @@ html:focus {
   background-color:#C5C5C5;
 }
 /* Home Page */
-.home-page {}
+/* .home-page {} */
 .home-page__table {
   margin-top: 1rem;
   margin-left: auto;
@@ -239,8 +240,7 @@ html:focus {
   padding: 0.2rem;
   cursor: pointer;
 }
-.table__row_color {
-}
+/* .table__row_color {} */
 .table__row_color:nth-child(even) {
   background-color: #E8E8E8;
 }
@@ -248,9 +248,9 @@ html:focus {
   background: #fdfdf0;
 }
 /* Edit Page */
-.edit-page{
-  /*font-size: 1.2rem;*/
-}
+/* .edit-page{
+  font-size: 1.2rem;
+} */
 .form {
   font-size: 1.2rem;
 }
@@ -351,7 +351,7 @@ html:focus {
 }
 
 /* Backup Page */
-.backup-page {}
+/* .backup-page {} */
 
 .label_inline{
   font-size: 1.3rem;
@@ -424,7 +424,7 @@ div.alert {
   background-image: url(../images/to_bo<!--<button class="btn-menu__items btn-menu__items_outline" 
     id="btn-cancel-overwrite-packet">Cancel</button>
     <button class="btn-menu__items btn-menu__items_outline" 
-    id="">Print Label</button> -->ttom_icon.svg);
+    id="">Print Label</button> -->bottom_icon.svg);
   background-repeat: no-repeat;
   background-position: center center;
   cursor: pointer;
