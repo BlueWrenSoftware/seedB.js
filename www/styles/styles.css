@@ -21,6 +21,23 @@ div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, 
 }*/
 
 /* End of default settings */
+
+@font-face {
+  font-family: "seedB-sans";
+  src: url("fonts/seedB-Sans.woff2") format("woff2");
+  font-style: normal;
+}
+@font-face {
+  font-family: "seedB-mono";
+  src: url("fonts/seedB-Mono.woff2") format("woff2");
+  font-style: normal;
+}
+@font-face {
+  font-family: "seedBarcode";
+  src: url("fonts/seedBarcodeText.woff2") format("woff2");
+  font-style: normal;
+}
+
 header, section, article, figure, figcaption, nav, footer, video, address {
   display: block;
 }
@@ -46,29 +63,10 @@ html{
 html:focus {
   outline: none;
 }
-@font-face {
-  font-family: Book;
-  /*src: local("DejaVuSans") format("truetype");*/
-  src: url("../fonts/DejaVuSans.woff2") format("woff2");
-  font-style: normal;
-}
-@font-face {
-  font-family: Book;
-  /*src: local("DejaVuSansMono") format("truetype");*/
-  /*src: url("../fonts/DejaVuSansMono.ttf") format("truetype");*/
-  src: url("../fonts/DejaVuSansMono.woff2") format("woff2");
-  font-style: normal;
-}
-@font-face {
-  font-family: "Regular";
-  /*src: local("LibreBarcode39Text-Regular") format("truetype");*/
-  src: url("../fonts/LibreBarcode39Text-Regular.woff2") format("woff2");
-  font-style: normal;
-}
 /* End of default settings for this document */
 
 .page{
-  font-family: "DejaVu Sans", sans-serif;
+  font-family: "seedB-sans";
   background-color: #fdfdf0;
   width: 500px;
   margin: 0 auto;
@@ -270,18 +268,18 @@ html:focus {
 }
 .form__input[type=number] {
   width: 15%;
-  font-family: "DejaVu Sans Mono", monospace;
+  font-family: "seedB-mono";
 }
 .form__input[type=date] {
   width: 20%;
-  font-family: "DejaVu Sans Mono", monospace;
+  font-family: "seedB-mono";
 }
 .form__input_gray {
   background-color: #E8E8E8;
 }
 .form__input_mono-font {
   width: 20%;
-  font-family: "DejaVu Sans Mono", monospace;
+  font-family: "seedB-mono";
 }
 .form__textarea {
   display: inline-block;
@@ -346,7 +344,7 @@ html:focus {
 }
 
 .barcode {
-  font-family: "Libre Barcode 39 Text";
+  font-family: "seedBarcode";
   font-size: 2.5rem;
 }
 
