@@ -35,6 +35,7 @@ div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, 
 @font-face {
   font-family: "seedBarcode";
   src: url("fonts/seedBarcodeText.woff2") format("woff2");
+  src: url("fonts/seedB-Hoch.woff2") format("woff2");
   font-style: normal;
 }
 
@@ -335,19 +336,19 @@ html:focus {
   float: left;
   clear: none;
   /*height: 29mm;*/
-  width: 30rem;
-  padding: 2rem;
+  width: 58mm;
+  padding: 2mm;
   border: 0.5mm solid #ccc;
   background-color: white;
-  margin: 1rem;
+  margin: 1mm;
 }
 .print-label {
-  margin-left: 2rem;
+  margin-left: 0mm;
 }
 
 .barcode {
   font-family: "seedBarcode";
-  font-size: 2.5rem;
+  font-size: 2rem;
 }
 
 /* Backup Page */
