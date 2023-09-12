@@ -594,8 +594,7 @@ class Controller {
 			let sortOrder;
 			if (sameSortColumn && this.sortOrder === 'next') {
 				sortOrder = 'prev';
-			} else {Elem
-				sortOrder = 'next';
+			} else {sortOrder = 'next';
 			}
 			// save the new sorting order and column
 			this.sortOrder = sortOrder;
