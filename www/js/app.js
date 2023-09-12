@@ -564,12 +564,12 @@ class Controller {
 		console.log('left = ', this.clicks);
 		labelContent.innerHTML += `<section class="print-label__block_left" >
    		<p class="page__paragraph barcode">*${this.packetId}*</p>
-		  <p class="page__paragraph">ID: ${this.packetId}</p>
+		<p class="page__paragraph">ID: ${this.packetId}</p>
     	<p class="page__paragraph">Variety: ${record.variety}</p>
    		<p class="page__paragraph">Number: ${record.number}</p>
    		<p class="page__paragraph">Weight: ${record.weight}</p>
-   		<p class="page__paragraph">Date: ${auDate}</p>
-   		// <p class="page__paragraph">Notes: ${record.seedNotes}</p></section>`;
+   		<p class="page__paragraph">Date: ${auDate}</p></section>`;
+   		//<p class="page__paragraph">Notes: ${record.seedNotes}</p>
 		//await view.showPrintQueue();
 		//await window.print();
 		//document.getElementById('PrintQueue').close();
