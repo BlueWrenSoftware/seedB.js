@@ -320,8 +320,12 @@ class View {
 	}
 
 	bindSearchFilter(handler) {
-		document.querySelector('#searchFilterPackets').addEventListener('input', handler);
+		document.querySelector('#searchFilter').addEventListener('input', handler);
 	}
+
+  bindSearchPacketEditPage(handler) {
+    document.querySelector('#searchPacketEditPage').addEventListener('input', handler)
+  }
 
 	// transfer this to Controller
 	requestSpecificHelp() {
@@ -727,7 +731,7 @@ class Controller {
 	async requestSearchPacketList() {
 		console.log('activated');
 		await this.requestSortedPacketList();
-		document.querySelector('#searchFilterPackets').value = '';
+		document.querySelector('#searchFilter').value = '';
 		this.view.showHomePage();
 		//console.log(this.packetIds);
 	}
@@ -736,17 +740,17 @@ class Controller {
 		console.log('activated');
 		this.filter = '';
 		await this.requestSortedPacketList();
-		document.querySelector('#searchFilterPackets').value = '';
+		document.querySelector('#searchFilter').value = '';
 		this.packetIdsIndex = 0;
 		this.forwardsClick = '';
 		this.backwardsClick = '';
 		await this.view.showHomePage();
-		document.querySelector('#searchFilterPackets').focus();
+		document.querySelector('#searchFilter').focus();
 		//console.log(this.packetIds);
 	}
 
 	async requestClearFindInput() {
-		document.querySelector('#searchFilterPackets').value = '';
+		document.querySelector('#searchFilter').value = '';
 		this.requestHomePage();
 
 	}
