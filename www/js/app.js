@@ -618,6 +618,8 @@ class Controller {
       if ( inputContent.value !== "" ) {
         inputContent.value = "";
         inputContent.focus();
+      } else {
+        inputContent.focus();
       }
     });
 /*     console.log(barcodeInput.value);
