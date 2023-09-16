@@ -174,18 +174,19 @@ class View {
     this.btnSubmitEditRecordLinkElement = document.querySelector('#btnSubmitEditRecord');
     this.btnSubmitNewRecordLinkElement = document.querySelector('#btnSubmitNewRecord');
     this.btnDeleteRecordLinkElement = document.querySelector('#btnDeleteRecord');
-    this.btnClearFindInputLinkElement = document.querySelector('#clearFindInput');
-    this.btnClrBarcodeInputLinkElement = document.querySelector('#clrBarcodeInput');
     this.btnUploadFileLinkElement = document.querySelector('#uploadFile');
     //this.btnReplaceAllRecordsLinkElement = document.getElementById('btnReplaceAllRecords');
     this.btnRetrieveDataLinkElement = document.querySelector('#btnRetrieveData');
     this.btnReinstallLinkElement = document.querySelector('#btnReinstall');
     this.btnLabelsQueueLinkElement = document.querySelector('#btnLabelsQueue');
     this.btnPrintLabelsLinkElement = document.querySelectorAll('.btnPrintLabels');
-
+    
+    this.btnClearFindInputLinkElement = document.querySelector('#clearFindInput');
+    this.btnClrBarcodeInputLinkElement = document.querySelectorAll('.clrBarcodeInput');
+    
     this.confirmOverwriteDialog = document.querySelector('#confirmOverwriteDialog');
     // Search input events
-    this.searchBarcode = document.querySelector('#searchBarcode');
+    this.searchBarcode = document.querySelectorAll('.searchBarcode');
     this.searchFilter = document.querySelector('#searchFilter');
   }
 
@@ -292,14 +293,6 @@ class View {
     this.editPacketRequestHandler = editPacketRequestHandler;
   }
 
-  bindClearFindInput(handler) {
-    this.btnClearFindInputLinkElement.addEventListener('click', handler, false);
-  }
-  
-  bindClrBarcodeInput(handler) {
-    this.btnClrBarcodeInputLinkElement.addEventListener('click', handler, false);
-  }
-
   //retrieve data, reinstall db
   bindBtnRetrieveData(handler) {
     this.btnRetrieveDataLinkElement.addEventListener('click', handler, false);
@@ -335,9 +328,16 @@ class View {
   bindSearchFilter(handler) {
     this.searchFilter.addEventListener('input', handler, false);
   }
+  bindClearFindInput(handler) {
+    this.btnClearFindInputLinkElement.addEventListener('click', handler, false);
+  }
 
   bindSearchBarcode(handler) {
-    this.searchBarcode.addEventListener('keydown', handler, false);
+    this.searchBarcode.forEach(scan => scan.addEventListener('keyup', handler, false));
+  }
+  bindClrBarcodeInput(handler) {
+    //this.btnClrBarcodeInputLinkElement.forEach(barCodeInput => this.testInput(barCodeInput));
+    this.btnClrBarcodeInputLinkElement.forEach(btn => btn.addEventListener('click', handler, false));
   }
 
   // transfer this to Controller
@@ -356,8 +356,7 @@ class View {
     edit.className = `table__data table__data_edit`;
     //edit.setAttribute("title", "Edit Record");
     edit.addEventListener('click', () => {
-      this.editPacketRequestHandler(packet.packetId)
-    }, false);
+      this.editPacketRequestHandler(packet.packetId)}, false);
     if (packet.weight >= 9999) {
       //console.log(packet.weight);
       let expNum = packet.weight.toExponential();
@@ -542,14 +541,15 @@ class Controller {
     this.view.bindBtnRetrieveData(() => { this.requestRetrieveAllData(); });
     this.view.bindBtnReinstall(() => { this.fixCorruptDB(); });
     this.view.bindBtnCopyRecord(() => { this.unlockPacketId(); });
-    this.view.bindClearFindInput(() => { this.requestClearFindInput(); });
-    this.view.bindClrBarcodeInput(() => {this.requestClrBarcodeInput(); });
     this.view.bindBtnUploadFile(() => { this.requestUploadFile(); });
 
     //this.view.bindBtnUploadBackupFile( this.restoreBackup );
 
     this.view.bindSearchFilter((e) => { this.searchFilterHandler(e); });
     this.view.bindSearchBarcode((e) => { this.searchBarcodeInput(e); });
+    this.view.bindClearFindInput(() => { this.requestClearFindInput(); });
+    this.view.bindClrBarcodeInput(() => {this.requestClrBarcodeInput(); });
+    
     this.view.bindBtnLabelsQueue(() => { this.requestLabelsQueue(); });
     this.view.bindBtnPrintLabels(() => { this.requestPrintLabels(); });
   }
@@ -604,6 +604,30 @@ class Controller {
       await this.requestClrBarcodeInput();
       await this.editPacketRequestHandler(this.inputPacketId);
     }
+  }
+
+  async requestClearFindInput() {
+    document.querySelector('#searchFilter').value = '';
+    this.requestHomePage();
+  }
+
+  async requestClrBarcodeInput() {
+    const barcodeInput = this.view.searchBarcode;
+    barcodeInput.forEach((inputContent) => {
+      console.log(inputContent.value);
+      if ( inputContent.value !== "" ) {
+        inputContent.value = "";
+        inputContent.focus();
+      }
+    });
+/*     console.log(barcodeInput.value);
+    if (barcodeInput.value !== "") {
+      console.log("not clear");
+      barcodeInput.value = "";
+    } else {
+      console.log("clear");
+    } */
+    //this.requestHomePage();
   }
 
   async requestSortedPacketList(sortOn) {
@@ -769,17 +793,6 @@ class Controller {
     await this.view.showHomePage();
     document.querySelector('#searchFilter').focus();
     //console.log(this.packetIds);
-  }
-
-  async requestClearFindInput() {
-    document.querySelector('#searchFilter').value = '';
-    this.requestHomePage();
-  }
-
-  async requestClrBarcodeInput() {
-    document.querySelector('#searchBarcode').value = '';
-    document.querySelector('#searchBarcode').focus();
-    //this.requestHomePage();
   }
 
   requestAddNewPacketPage() {
