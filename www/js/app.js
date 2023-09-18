@@ -443,14 +443,14 @@ class View {
     document.querySelector('#edit-page').style.display = 'none';
     document.querySelector('#backUp').style.display = 'none';
     document.querySelector('#helpPage').style.display = 'none';
-    document.querySelector('#labelsQueue').style.display = 'none';
+    document.querySelector('#labelsQueuePage').style.display = 'none';
   }
   showAddNewPacket() {
     document.querySelector('#homePage').style.display = 'none';
     document.querySelector('#edit-page').style.display = '';
     document.querySelector('#backUp').style.display = 'none';
     document.querySelector('#helpPage').style.display = 'none';
-    document.querySelector('#labelsQueue').style.display = 'none';
+    document.querySelector('#labelsQueuePage').style.display = 'none';
     // Key packetId readonly removed and is required
     document.querySelector('#packetId').removeAttribute('readonly');
     document.querySelector('#packetId').setAttribute('required', 'required');
@@ -462,7 +462,7 @@ class View {
     document.querySelector('#edit-page').style.display = '';
     document.querySelector('#backUp').style.display = 'none';
     document.querySelector('#helpPage').style.display = 'none';
-    document.querySelector('#labelsQueue').style.display = 'none';
+    document.querySelector('#labelsQueuePage').style.display = 'none';
     // Key packetId is read only
     document.querySelector('#packetId').removeAttribute('required');
     document.querySelector('#packetId').setAttribute('readonly', 'readonly');
@@ -474,21 +474,21 @@ class View {
     document.querySelector('#edit-page').style.display = 'none';
     document.querySelector('#backUp').style.display = '';
     document.querySelector('#helpPage').style.display = 'none';
-    document.querySelector('#labelsQueue').style.display = 'none';
+    document.querySelector('#labelsQueuePage').style.display = 'none';
   }
   showHelpPage() {
     document.querySelector('#homePage').style.display = 'none';
     document.querySelector('#edit-page').style.display = 'none';
     document.querySelector('#backUp').style.display = 'none';
     document.querySelector('#helpPage').style.display = '';
-    document.querySelector('#labelsQueue').style.display = 'none';
+    document.querySelector('#labelsQueuePage').style.display = 'none';
   }
   showPrintLabels() {
     document.querySelector('#homePage').style.display = 'none';
     document.querySelector('#edit-page').style.display = 'none';
     document.querySelector('#backUp').style.display = 'none';
     document.querySelector('#helpPage').style.display = 'none';
-    document.querySelector('#labelsQueue').style.display = '';
+    document.querySelector('#labelsQueuePage').style.display = '';
   }
 
   showMessage(message) {
@@ -557,16 +557,16 @@ class Controller {
   async requestPrintLabels() {
     const pageFooter = document.querySelector('#pageFooter');
     pageFooter.style.display = 'none';
-    let labelContent = document.querySelector('#labelsQueue');
+    let labelContent = document.querySelector('#labelsQueuePage');
     await this.view.showPrintLabels();
-    await window.print();
+    window.print();
     labelContent.innerHTML = "";
     await this.requestHomePage();
     pageFooter.style.display = '';
   }
 
   async requestLabelsQueue() {
-    let labelContent = document.querySelector('#labelsQueue');
+    let labelContent = document.querySelector('#labelsQueuePage');
     console.log(this.packetId);
     const options = { year: "numeric", month: "long", day: "numeric" };
     const record = await this.model.getRecord(this.packetId);
@@ -578,7 +578,7 @@ class Controller {
     console.log(qrCode);
     this.clicks = this.clicks + 1;
     console.log('left = ', this.clicks);
-    labelContent.innerHTML += `<section class="print-label__block_left" >
+    labelContent.innerHTML += `<section class="packet-labels-page__block_left" >
         <p class="page__paragraph barcode">*${this.packetId}*</p>
         <p class="page__paragraph">ID: ${this.packetId}</p>
         <p class="page__paragraph">Variety: ${record.variety}</p>

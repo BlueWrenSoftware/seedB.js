@@ -299,7 +299,9 @@ html:focus {
   width: 30%;
   text-align: right;
 }
-
+.input__label_inline{
+  font-size: 1.3rem;
+}
 
 .modal:modal {
   /*width:200px; */
@@ -330,8 +332,7 @@ html:focus {
   height: 100%;
 }
 
-/*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-.print-label__block_left {
+.packet-labels-page__block_left {
   display: inline;
   float: left;
   clear: none;
@@ -342,9 +343,11 @@ html:focus {
   background-color: white;
   margin: 1mm;
 }
-.print-label {
+.packet-labels-page__print {
   margin-left: 0mm;
 }
+/*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
 
 .barcode {
   font-family: "seedBarcode";
@@ -354,9 +357,7 @@ html:focus {
 /* Backup Page */
 /* .backup-page {} */
 
-.label_inline{
-  font-size: 1.3rem;
-}
+
 .ul_js-message {
   font-size: 1.25rem;
   padding: 0.7rem 0 0.7rem;
