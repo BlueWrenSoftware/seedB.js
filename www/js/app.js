@@ -965,11 +965,14 @@ class Controller {
         this.dataFile = await JSON.parse(this.result);
         await model.loadRecords(this.dataFile);
         console.log(this.dataFile);
+        const backupResotrationNotifications = document.getElementById('backupNotifications');  //=> alias for user msgs backup installation
+         backupResotrationNotifications.innerHTML += '<li>All records replaced with backup file:  ' + file.name + '</li>';
+         backupResotrationNotifications.innerHTML += '<li>Backup file was created on:  ' + file.lastModifiedDate.toString().slice(0, 24) + '</li>';
       }
       reader.readAsText(file);
     }
   }
-  /*       restoreBackup() {
+  /*restoreBackup() {
          let dataFile = [];
          const file = this.files[0];
                  // TODO: move backupRestorationNotifications to View object
@@ -983,7 +986,7 @@ class Controller {
              await model.loadRecords(dataFile);
          };
                  reader.readAsText(file);
-         }*/
+  */
 }
 
 //=> End of Classes
