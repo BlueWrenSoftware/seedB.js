@@ -608,6 +608,7 @@ class Controller {
 
   async requestClearFindInput() {
     document.querySelector('#searchFilter').value = '';
+    this.filter = '';
     this.requestHomePage();
   }
 
@@ -786,9 +787,9 @@ class Controller {
 
   async requestHomePage() {
     console.log('activated');
-    this.filter = '';
+    // this.filter = '';
     await this.requestSortedPacketList();
-    document.querySelector('#searchFilter').value = '';
+    // document.querySelector('#searchFilter').value = '';
     this.packetIdsIndex = 0;
     this.forwardsClick = '';
     this.backwardsClick = '';
