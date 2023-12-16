@@ -154,7 +154,6 @@ class View {
     this.app = document.querySelector('#root');
     // Pages events
     this.homePageLinkElements = document.querySelectorAll('.openHomePage');
-    this.searchPacketListLinkElements = document.querySelectorAll('.openSearchPacketList');
     this.addNewPacketLinkElement = document.querySelectorAll('.openNewPacketPage');
     this.backupRestoreLinkElement = document.querySelectorAll('.openBackupRestorePage');
     this.dbErrorLinkElement = document.querySelector('.openDbErrorPage');
@@ -206,12 +205,6 @@ class View {
   bindHomePage(handler) { // Open Home Page
     // pass on to Controller
     this.homePageLinkElements.forEach(btn => btn.addEventListener(
-      'click', handler, false));
-  }
-
-  bindSearchPacketList(handler) { // Open Home Page
-    // pass on to Controller
-    this.searchPacketListLinkElements.forEach(btn => btn.addEventListener(
       'click', handler, false));
   }
 
@@ -513,7 +506,6 @@ class Controller {
     this.clicks = 0;
     // bindings pages
     this.view.bindHomePage(() => { this.requestHomePage(); });
-    this.view.bindSearchPacketList(() => { this.requestSearchPacketList(); });
     this.view.bindAddNewPacketPage(() => { this.requestAddNewPacketPage(); });
     this.view.bindBackupRestorePage(() => { this.requestBackupRestorePage(); });
     this.view.bindHelpPage(() => { this.requestHelpPage(); });
@@ -776,14 +768,6 @@ class Controller {
       document.querySelector('#' + field).value = record[field];
     });
   };
-  // Pages requested
-  async requestSearchPacketList() {
-    console.log('activated');
-    await this.requestSortedPacketList();
-    document.querySelector('#searchFilter').value = '';
-    this.view.showHomePage();
-    //console.log(this.packetIds);
-  }
 
   async requestHomePage() {
     console.log('activated');
