@@ -1,10 +1,10 @@
-## seedB.js
-This project aims to create a database for the seed colllection of a small (hobby?) farm.
-On our farm we collect most of the flower and vegetable seeds.
+## seedB
+A seed databse for people who collect and grow their own seeds.
+
 Features for each record:
 * Group
 * Variety
-* Packet ID (stored) unique record identifyer
+* Packet ID (stored) unique record identifier
 * Weight (seed)
 * Count (seed)
 * Cost (when bought / if bought)
