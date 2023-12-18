@@ -344,42 +344,32 @@ html:focus {
 .packet-labels-page__print {
   margin-left: 0mm;
 }
-/*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-
-
 .msg-in-element__ul {
   font-size: 1.25rem;
   padding: 0.7rem 0 0.7rem;
   list-style-type: square;
   list-style-position: inside;
 }
-
-
+/*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
 a {
   text-decoration: none;
   color: #0000EE;
   cursor: pointer;
 }
-
 a:link {
   color: #0000EE;
   text-decoration: none;
 }
-
 a:visited {
   color: #0000EE;
 }
-
 a:hover {
   color: #00CCFF;
 }
-
 a:active {
   color: #FF0000;
 }
-
-
 
 div.alert {
   display: block;
@@ -406,8 +396,7 @@ div.alert {
   position: fixed;
   top: -12px;
   right: -30px;
-  z-index: 20; /* was 30 */
-/*  width: 30px;
+  z-index: 20;
   height: 55px;
   margin-right: calc(((100vw - 450px) / 2) - (100vw - 100%));
   border: none;
@@ -424,9 +413,8 @@ div.alert {
   background-image: url(../images/to_bottom_red_icon.svg);
   background-repeat: no-repeat;
   background-position: center center;
-}*/
-
-/*#scrollToTopPage {
+}
+#scrollToTopPage {
   display: none;
   position: fixed;
   bottom: 5px;
@@ -444,14 +432,12 @@ div.alert {
   padding: 15px;
   border-radius: 4px;
 }
-
-
 #scrollToTopPage:hover {
   background-image: url(../images/to_top_red_icon.svg);
   background-repeat: no-repeat;
   background-position: center center;
-}*/
-/*.page_scroll-to-top {
+}
+.page_scroll-to-top {
   display: block;
   position: fixed;
   bottom: 5px;
@@ -469,9 +455,3 @@ div.alert {
   padding: 15px;
   border-radius: 4px;
 }*/
-
-
-
-
-
-
