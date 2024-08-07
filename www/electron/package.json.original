@@ -1,0 +1,11 @@
+{
+  "name": "seedB",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Dirk & Laurie Koudstaal",
+  "license": "ISC",
+  "description": "Seed Records"
+}
