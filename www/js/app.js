@@ -950,9 +950,9 @@ class Controller {
         this.dataFile = await JSON.parse(this.result);
         await model.loadRecords(this.dataFile);
         console.log(this.dataFile);
-        const backupResotrationNotifications = document.getElementById('backupNotifications');  //=> alias for user msgs backup installation
-         backupResotrationNotifications.innerHTML += '<li>All records replaced with backup file:  ' + file.name + '</li>';
-         backupResotrationNotifications.innerHTML += '<li>Backup file was created on:  ' + file.lastModifiedDate.toString().slice(0, 24) + '</li>';
+        const backupRestorationNotifications = document.getElementById('backupNotifications');  //=> alias for user msgs backup installation
+         backupRestorationNotifications.innerHTML += '<li>All records replaced with backup file:  ' + file.name + '</li>';
+         backupRestorationNotifications.innerHTML += '<li>Backup file was created on:  ' + file.lastModifiedDate.toString().slice(0, 24) + '</li>';
       }
       reader.readAsText(file);
     }
@@ -961,10 +961,10 @@ class Controller {
          let dataFile = [];
          const file = this.files[0];
                  // TODO: move backupRestorationNotifications to View object
-               const backupResotrationNotifications = document.getElementById('backupNotifications');  //=> alias for user msgs backup installation
-         backupResotrationNotifications.innerHTML += '<li>Backup file used:  ' + file.name + '</li>';
-         backupResotrationNotifications.innerHTML += '<li>Backup file was created on:  ' + file.lastModifiedDate.toString().slice(0, 24) + '</li>';
-         backupResotrationNotifications.innerHTML += '<li>Backup file now merged with seed list already in db</li>';
+               const backupRestorationNotifications = document.getElementById('backupNotifications');  //=> alias for user msgs backup installation
+         backupRestorationNotifications.innerHTML += '<li>Backup file used:  ' + file.name + '</li>';
+         backupRestorationNotifications.innerHTML += '<li>Backup file was created on:  ' + file.lastModifiedDate.toString().slice(0, 24) + '</li>';
+         backupRestorationNotifications.innerHTML += '<li>Backup file now merged with seed list already in db</li>';
          const reader = new FileReader();
          reader.onload = async function (progressEvent) {
              dataFile = JSON.parse(this.result);
