@@ -108,7 +108,7 @@
           title="Clear barcode input."><img class="img_border" id="" src="./images/reset-input.svg">
         </button>
       </nav>    <!-- Data Entry Edit Form -->    
-      <form class=".form"id="seed-entry">
+      <form class=".form" id="seed-entry">
         <p class="form__paragraph">*&emsp;Input required.</p>
         <p class="form__paragraph">**&ensp;Seed Packet Id must be unique!</p>
         <label class="form form__label" for="packetId">**&nbsp;Packet ID:</label>
@@ -227,21 +227,50 @@
         <button class="btn-menu__items" type="button" id="" 
           title="Find entered text."><img class="img_border" src="./images/input-search.svg"></button>
       </nav>
-      <header> 
-        <h2 class="header__level-2">Documentation</h2>
-      </header>
-      <header>
-        <h3 class="header__level-3">Enter New Seed Packet</h3>
-        <p></p>
-      </header>
-      <header>
-        <h3 class="header__level-3">Edit Existing Seed Packet</h3>
-        <p></p>
-      </header>
-      <header>
-        <h3 class="header__level-3">Create Backup File</h3>
-        <p></p>
-      </header>
+      <article>
+        <header class="header">
+          <h1 class="header__level-1">Documentation</h1>
+        </header>
+        <article>
+          <header class="header">
+            <h2 class="header__level-2">Developer's Notes</h2>
+          </header>
+          <header class="header">
+            <h3 class="header__level-3">Nodejs and Electron Installations</h2>
+          </header>
+          <div class="par">
+            <p class="par__text">
+              Software developed using <span class="par__text_code">Ubuntu 20.04</span> and <span class="par__text_code">Electron</span> for deployment.
+            </p>
+            <p class="par__text">
+              It is recommended to install nodejs using <span class="par__text_code">NVM</span> (node version manager). To install <span class="par__text_code">NVM</span> using curl, run the command:<br><br>
+              <span class="par__text_code">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash</span> <br><br>
+              More detailed instructions for the installation of <a href="https://www.linode.com/docs/guides/how-to-install-use-node-version-manager-nvm/?tabs=curl" target="_blank">NVM (Node Version Manager).</a>
+            </p>
+            <p class="par__text">
+              Once <span class="par__text_code">NVM</span> is installed, the latest <span class="par__text_code">nodejs</span> can be installed with:<br><br> 
+              <span class="par__text_code">nvm install --lts</span><br><br>
+              Check nodejs installation with the following commands:<br><br>
+              <span class="par__text_code">nvm use --lts</span> <br>
+              <span class="par__text_code">node -v</span> <br>
+              <span class="par__text_code">npm -v</span> <br><br>
+              In the terminal open directory <span class="par__text_code">./www/electron</span> and install <span class="par__text_code">Electron</span> with the following commands:<br><br>
+              <span class="par__text_code">nvm use --lts</span><br>
+              <span class="par__text_code">npm install --save-dev electron</span><br><br>
+            </p>
+            </p>
+          </div>
+        </article>
+        <header class="header">
+          <h3 class="header__level-3">Enter New Seed Packet</h3>
+        </header>
+        <header class="header">
+          <h3 class="header__level-3">Edit Existing Seed Packet</h3>
+        </header>
+        <header>
+          <h3 class="header__level-3">Create Backup File</h3>
+        </header>
+      </article>
     </section>
   </div>
   <!-- Footer -->

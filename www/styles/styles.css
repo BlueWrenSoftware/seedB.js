@@ -11,14 +11,14 @@
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
-
+*/
 div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,b, u, i, center,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td,article, aside, canvas, details, embed,figure, figcaption, footer, header, hgroup,menu, nav, output, ruby, section, summary,time, mark, audio, video {
 	margin: 0;
 	padding: 0;
 	border: 0;
 	font: inherit;
 	vertical-align: baseline;
-}*/
+}
 
 /* End of default settings */
 
@@ -59,7 +59,7 @@ html{
   margin-right: 0;
   overflow: auto;
     /* 10px equivalent and this will be 1rem. Font root setting*/
-  font-size: 62.5%;
+  font-size: 10px;
 }
 html:focus {
   outline: none;
@@ -69,7 +69,7 @@ html:focus {
 .page{
   font-family: "seedB-sans";
   background-color: #fdfdf0;
-  width: 500px;
+  width: 600px;
   margin: 0 auto;
   position: relative;
   /*border: 0.1rem solid #ccc;*/
@@ -84,33 +84,44 @@ html:focus {
 .page__section_show_indent {
   margin-left: 1rem;
 }
-.page__paragraph {
+.page__paragraph { /*need as own block - not element*/
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
 }
-/* .page__header {
-  need code
-} */
+.header {
+  font-family: seedB-mono;
+}
 .header__level-1 {
-  font-size: 1.65rem;
-  margin-top: 2rem;
-  margin-bottom: 0.6rem;
+  font-size: 1.5rem;
+  text-align: center;
+  padding-bottom: 0.6rem;
 }
 .header__level-2 {
-  font-size: 1.5rem;
-  margin-top: 1rem;
-  margin-bottom: 0.6rem;
+  font-size: 1.4rem;
+  padding-bottom: 0.6rem;
 }
 .header__level-3 {
-  font-size: 1.4rem;
-  margin-top: 1rem;
-  margin-bottom: 0.6rem;
+  font-size: 1.3rem;
+  padding-bottom: 0.6rem;
 }
 .header__level-4 {
   font-size: 1.35rem;
-  margin-top: 0.8rem;
-  margin-bottom: 0.4rem
+  padding-bottom: 0.6rem;
 }
+/* paragraph settings */
+.par {
+  font-family: seedB-sans;
+  font-size: 1.31rem;
+  padding-left: 1rem;
+}
+.par__text {
+  padding-bottom: 0.4rem;
+}
+.par__text_code {
+  font-family: seedB-mono;
+  background-color:	#F0F0F0;
+}
+/* */
 .page__footer {
   clear: both;
   margin-top: 0.5rem;
@@ -203,6 +214,7 @@ html:focus {
   border-collapse: collapse;
   border: 2px solid #ccc;
   table-layout: auto;
+  font-family: seedB-sans;
 }
 .table__header {  
   background-color: #F6DA74;
@@ -359,13 +371,15 @@ a {
 }
 a:link {
   color: #0000EE;
-  text-decoration: none;
+  text-decoration: none; padding-bottom: 0.02rem; border-bottom: 0.05rem solid blue;
 }
 a:visited {
-  color: #0000EE;
+  color: #00CCFF;
+  text-decoration: none; padding-bottom: 0.02rem; border-bottom: 0.05rem solid #00CCFF;
 }
 a:hover {
   color: #00CCFF;
+  text-decoration: none; padding-bottom: 0.02rem; border-bottom: 0.05rem solid #00CCFF;
 }
 a:active {
   color: #FF0000;
