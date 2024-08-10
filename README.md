@@ -35,7 +35,7 @@ In terminal open the directory `./www/electron` and check it has the configurati
     nvm use --lts
     npm install --save-dev electron
 
-Open seedB in Electron from within ./www/electron with the command:
+Open seedB in Electron from within `./www/electron` with the command:
 
     npm start
 
