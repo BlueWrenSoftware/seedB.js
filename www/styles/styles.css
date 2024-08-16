@@ -171,7 +171,7 @@ html:focus {
   justify-content: right;
   padding: 1rem;
 }
-.btn-menu__items {
+.buttons {
   display: block;
   background-color: unset;
   color:black;
@@ -199,7 +199,7 @@ html:focus {
   height: 1.9rem;
   font-size: 1.2rem;
 }
-.btn-menu__items:hover {
+.buttons:hover {
   background-color:#C5C5C5;
 }
 /* Home Page */
@@ -415,9 +415,9 @@ div.alert {
   margin-right: calc(((100vw - 450px) / 2) - (100vw - 100%));
   border: none;
   outline: none;
-  background-image: url(../images/to_bo<!--<button class="btn-menu__items btn-menu__items_outline" 
+  background-image: url(../images/to_bo<!--<button class="buttons btn-menu__items_outline" 
     id="btn-cancel-overwrite-packet">Cancel</button>
-    <button class="btn-menu__items btn-menu__items_outline" 
+    <button class="buttons btn-menu__items_outline" 
     id="">Print Label</button> -->bottom_icon.svg);
   background-repeat: no-repeat;
   background-position: center center;
