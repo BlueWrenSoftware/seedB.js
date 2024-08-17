@@ -23,18 +23,18 @@ div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, 
 /* End of default settings */
 
 @font-face {
-  font-family: "seedB-sans";
+  font-family: "Book";
   src: url("fonts/seedB-Sans.woff2") format("woff2");
   font-style: normal;
 }
 @font-face {
-  font-family: "seedB-mono";
+  font-family: "Book";
   src: url("fonts/seedB-Mono.woff2") format("woff2");
   font-style: normal;
 }
 @font-face {
-  font-family: "seedBarcode";
-  src: url("fonts/seedBarcodeText.woff2") format("woff2");
+  font-family: "Regular";
+  /*src: url("fonts/seedBarcodeText.woff2") format("woff2");*/
   src: url("fonts/seedB-Hoch.woff2") format("woff2");
   font-style: normal;
 }
@@ -67,7 +67,7 @@ html:focus {
 /* End of default settings for this document */
 
 .page{
-  font-family: "seedB-sans";
+  font-family: "DejaVu Sans";
   background-color: #fdfdf0;
   width: 600px;
   margin: 0 auto;
@@ -89,7 +89,7 @@ html:focus {
   margin-bottom: 0.5rem;
 }
 .header {
-  font-family: seedB-mono;
+  font-family: "DejaVu Sans Mono";
 }
 .header__level-1 {
   font-size: 1.5rem;
@@ -110,7 +110,7 @@ html:focus {
 }
 /* paragraph settings */
 .par {
-  font-family: seedB-sans;
+  font-family: "DejaVu Sans";
   font-size: 1.31rem;
   padding-left: 1rem;
 }
@@ -118,8 +118,12 @@ html:focus {
   padding-bottom: 0.4rem;
 }
 .par__text_code {
-  font-family: seedB-mono;
+  font-family: "DejaVu Sans Mono";
   background-color:	#F0F0F0;
+}
+.par__text_code-center {
+  font-family: "DejaVu Sans Mono";
+  text-align: center;
 }
 /* */
 .page__footer {
@@ -214,7 +218,7 @@ html:focus {
   border-collapse: collapse;
   border: 2px solid #ccc;
   table-layout: auto;
-  font-family: seedB-sans;
+  font-family: "DejaVu Sans";
 }
 .table__header {  
   background-color: #F6DA74;
@@ -281,11 +285,11 @@ html:focus {
 }
 .form__input[type=number] {
   width: 15%;
-  font-family: "seedB-mono";
+  font-family: "DejaVu Sans Mono";
 }
 .form__input[type=date] {
   width: 20%;
-  font-family: "seedB-mono";
+  font-family: "DejaVu Sans Mono";
   font-size: 1rem;
 }
 .form__input_gray {
@@ -293,7 +297,7 @@ html:focus {
 }
 .form__input_mono-font {
   width: 20%;
-  font-family: "seedB-mono";
+  font-family: "DejaVu Sans Mono";
   font-size: 1.1rem;
 }
 .form__textarea {
@@ -354,7 +358,8 @@ html:focus {
   margin: 1mm;
 }
 .packet-labels-page__print {
-  margin-left: 0mm;
+  margin-left: 8mm;
+  margin-top: 2mm;
 }
 .msg-in-element__ul {
   font-size: 1.25rem;
@@ -363,6 +368,11 @@ html:focus {
   list-style-position: inside;
 }
 /*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+.barcode {
+  font-family: "Code 39-hoch-Logitogo";
+  text-align: center;
+  font-size: 2em;
+}
 
 a {
   text-decoration: none;
