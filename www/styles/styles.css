@@ -59,7 +59,7 @@ html{
   margin-right: 0;
   overflow: auto;
     /* 10px equivalent and this will be 1rem. Font root setting*/
-  font-size: 10px;
+  font-size: 11px;
 }
 html:focus {
   outline: none;
@@ -167,8 +167,7 @@ html:focus {
   text-align: center;
   padding-left: 0.6rem;
 }
-.right {
-  margin-left:auto;
+.right { margin-left:auto; 
 }
 .btn-menu_right {
   display: flex;
