@@ -158,7 +158,7 @@ html:focus {
 /* Inside generic block settings */
   display: flex;
   flex-grow: wrap;
-  justify-content: left;
+  justify-content: flex-start;
   gap: 0.6rem;
   box-sizing: content-box; 
   /*width: 100%;*/
@@ -167,12 +167,15 @@ html:focus {
   text-align: center;
   padding-left: 0.6rem;
 }
+.right {
+  margin-left:auto;
+}
 .btn-menu_right {
   display: flex;
   flex-grow: wrap;
   gap: 0.6rem;
   box-sizing: content-box;
-  justify-content: right;
+  justify-content: left;
   padding: 1rem;
 }
 .buttons {
