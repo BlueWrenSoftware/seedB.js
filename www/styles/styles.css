@@ -110,20 +110,28 @@ html:focus {
 }
 /* paragraph settings */
 .par {
-  font-family: "DejaVu Sans";
-  font-size: 1.31rem;
-  padding-left: 1rem;
+  font-size: 1.2rem;
 }
 .par__text {
   padding-bottom: 0.4rem;
+  padding-left: 1rem;
 }
 .par__text_code {
   font-family: "DejaVu Sans Mono";
   background-color:	#F0F0F0;
 }
-.par__text_code-center {
+.par__text_label {
+  padding-left: 1rem;
+}
+.par__text_code-label {
+  font-size: 1rem;
   font-family: "DejaVu Sans Mono";
   text-align: center;
+}
+.par__text_barcode-label {
+  font-family: "Code 39-hoch-Logitogo";
+  text-align: center;
+  font-size: 2rem;
 }
 /* */
 .page__footer {
@@ -370,11 +378,7 @@ html:focus {
   list-style-position: inside;
 }
 /*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-.barcode {
-  font-family: "Code 39-hoch-Logitogo";
-  text-align: center;
-  font-size: 2rem;
-}
+
 
 a {
   text-decoration: none;

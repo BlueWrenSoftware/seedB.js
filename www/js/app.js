@@ -570,13 +570,13 @@ class Controller {
     console.log(qrCode);
     this.clicks = this.clicks + 1;
     console.log('left = ', this.clicks);
-    labelContent.innerHTML += `<section class="packet-labels-page__block_left" >
-        <p class="page__paragraph barcode">*${this.packetId}*</p>
-        <p class="par__text_code-center">${this.packetId}</p>
-        <p class="page__paragraph">Variety: ${record.variety}</p>
-        <p class="page__paragraph">Number: ${record.number}</p>
-        <p class="page__paragraph">Weight: ${record.weight}</p>
-        <p class="page__paragraph">Date: ${auDate}</p></section>`;
+    labelContent.innerHTML += `<div class="packet-labels-page__block_left par" >
+        <p class="par__text_barcode-label">*${this.packetId}*</p>
+        <p class="par__text_code-label">${this.packetId}</p>
+        <p class="par__text_label">Variety: ${record.variety}</p>
+        <p class="par__text_label">Number: ${record.number}</p>
+        <p class="par__text_label">Weight: ${record.weight}</p>
+        <p class="par__text_label">Date: ${auDate}</p></div>`;
     //<p class="page__paragraph">Notes: ${record.seedNotes}</p>
     //await view.showPrintQueue();
     //await window.print();
