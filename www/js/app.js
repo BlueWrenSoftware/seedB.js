@@ -179,10 +179,10 @@ class View {
     this.btnReinstallLinkElement = document.querySelector('#btnReinstall');
     this.btnLabelsQueueLinkElement = document.querySelector('#btnLabelsQueue');
     this.btnPrintLabelsLinkElement = document.querySelectorAll('.btnPrintLabels');
-    
+
     this.btnClearFindInputLinkElement = document.querySelector('#clearFindInput');
     this.btnClrBarcodeInputLinkElement = document.querySelectorAll('.clrBarcodeInput');
-    
+
     this.confirmOverwriteDialog = document.querySelector('#confirmOverwriteDialog');
     // Search input events
     this.searchBarcode = document.querySelectorAll('.searchBarcode');
@@ -541,7 +541,7 @@ class Controller {
     this.view.bindSearchBarcode((e) => { this.searchBarcodeInput(e); });
     this.view.bindClearFindInput(() => { this.requestClearFindInput(); });
     this.view.bindClrBarcodeInput(() => {this.requestClrBarcodeInput(); });
-    
+
     this.view.bindBtnLabelsQueue(() => { this.requestLabelsQueue(); });
     this.view.bindBtnPrintLabels(() => { this.requestPrintLabels(); });
   }
@@ -608,20 +608,20 @@ class Controller {
     const barcodeInput = this.view.searchBarcode;
     barcodeInput.forEach((inputContent) => {
       console.log(inputContent.value);
-      if ( inputContent.value !== "" ) {
+      if (inputContent.value !== "") {
         inputContent.value = "";
         inputContent.focus();
       } else {
         inputContent.focus();
       }
     });
-/*     console.log(barcodeInput.value);
-    if (barcodeInput.value !== "") {
-      console.log("not clear");
-      barcodeInput.value = "";
-    } else {
-      console.log("clear");
-    } */
+    /*     console.log(barcodeInput.value);
+        if (barcodeInput.value !== "") {
+          console.log("not clear");
+          barcodeInput.value = "";
+        } else {
+          console.log("clear");
+        } */
     //this.requestHomePage();
   }
 
@@ -951,8 +951,8 @@ class Controller {
         await model.loadRecords(this.dataFile);
         console.log(this.dataFile);
         const backupRestorationNotifications = document.getElementById('backupNotifications');  //=> alias for user msgs backup installation
-         backupRestorationNotifications.innerHTML += '<li>All records replaced with backup file:  ' + file.name + '</li>';
-         backupRestorationNotifications.innerHTML += '<li>Backup file was created on:  ' + file.lastModifiedDate.toString().slice(0, 24) + '</li>';
+        backupRestorationNotifications.innerHTML += '<li>All records replaced with backup file:  ' + file.name + '</li>';
+        backupRestorationNotifications.innerHTML += '<li>Backup file was created on:  ' + file.lastModifiedDate.toString().slice(0, 24) + '</li>';
       }
       reader.readAsText(file);
     }

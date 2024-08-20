@@ -7,22 +7,100 @@
    semantic structure of the HTML5.
    Names indicating a format (except for the modifier) are avoided and as 
    not to confuse the semantic HTML5 tags. 
-*/     
+*/
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
 */
-div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,b, u, i, center,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td,article, aside, canvas, details, embed,figure, figcaption, footer, header, hgroup,menu, nav, output, ruby, section, summary,time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font: inherit;
-	vertical-align: baseline;
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  vertical-align: baseline;
 }
 
 /* End of default settings */
 
-@font-face {
+/* @font-face {
   font-family: "Book";
   src: url("fonts/seedB-Sans.woff2") format("woff2");
   font-style: normal;
@@ -33,40 +111,57 @@ div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, 
   font-style: normal;
 }
 @font-face {
-  font-family: "Regular";
-  /*src: url("fonts/seedBarcodeText.woff2") format("woff2");*/
+  font-family: "barCode";
+  src: url("fonts/seedBarcodeText.woff2") format("woff2");
+  src: url("fonts/Code39-hoch-Logitogo.ttf");  
+  src: url("fonts/Code39-hoch-Logitogo.ttf") format("truetype");  
+}  */
+@font-face {
+  font-family: "barcode39";
   src: url("fonts/seedB-Hoch.woff2") format("woff2");
-  font-style: normal;
+  src: url("fonts/Code39-hoch-Logitogo.ttf") format("truetype");
+  font-display: swap;
 }
 
-header, section, article, figure, figcaption, nav, footer, video, address {
+header,
+section,
+article,
+figure,
+figcaption,
+nav,
+footer,
+video,
+address {
   display: block;
 }
+
 * {
   margin: 0;
   padding: 0;
   border: 0;
-  font:inherit;
-	vertical-align: baseline;
+  font: inherit;
+  vertical-align: baseline;
 }
 
 /* Default element settings for this document */
-html{
+html {
   /* scroll bar fix */
   box-sizing: border-box;
   height: 100%;
   margin-left: calc(100vw - 100%);
   margin-right: 0;
   overflow: auto;
-    /* 10px equivalent and this will be 1rem. Font root setting*/
+  /* 10px equivalent and this will be 1rem. Font root setting*/
   font-size: 11px
 }
+
 html:focus {
   outline: none;
 }
+
 /* End of default settings for this document */
 
-.page{
+.page {
   font-family: "DejaVu Sans";
   background-color: #fdfdf0;
   width: 600px;
@@ -75,108 +170,133 @@ html:focus {
   /*border: 0.1rem solid #ccc;*/
   padding: 0.5rem;
 }
+
 .page__section_show {
   display: block;
 }
+
 .page__section_hide {
   display: none;
 }
+
 .page__section_show_indent {
   margin-left: 1rem;
 }
-.page__paragraph { /*need as own block - not element*/
+
+.page__paragraph {
+  /*need as own block - not element*/
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
 }
+
 .header {
   font-family: "DejaVu Sans Mono";
 }
+
 .header__level-1 {
   font-size: 1.5rem;
   text-align: center;
   padding-bottom: 0.6rem;
 }
+
 .header__level-2 {
   font-size: 1.4rem;
   padding-bottom: 0.6rem;
 }
+
 .header__level-3 {
   font-size: 1.3rem;
   padding-bottom: 0.6rem;
 }
+
 .header__level-4 {
   font-size: 1.35rem;
   padding-bottom: 0.6rem;
 }
+
 /* paragraph settings */
 .par {
   font-size: 1.2rem;
 }
+
 .par__text {
   padding-bottom: 0.4rem;
   padding-left: 1rem;
 }
+
 .par__text_code {
   font-family: "DejaVu Sans Mono";
-  background-color:	#F0F0F0;
+  background-color: #F0F0F0;
 }
+
 .par__text_label {
   padding-left: 1rem;
 }
+
 .par__text_code-label {
   font-size: 1rem;
   font-family: "DejaVu Sans Mono";
   text-align: center;
 }
+
 .par__text_barcode-label {
-  font-family: "Code 39-hoch-Logitogo";
+  font-family: "barcode39", "Code 39-hoch-Logitogo";
   text-align: center;
   font-size: 2rem;
 }
+
 /* */
 .page__footer {
   clear: both;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
 }
+
 .footer {
   border-top: 0.025rem solid #CCC;
   border-bottom: 0.025rem solid #CCC;
   padding-bottom: 0.5rem;
   text-align: center;
 }
+
 .footer__paragraph {
   padding-top: 0.55rem;
   font-size: 1.3rem;
 }
+
 .footer__image {
   display: inline-block;
   vertical-align: middle;
   width: 30px;
 }
+
 /* Menu */
 /* .menu {} */
 .page__menu-bar {
-/* Outside block settings for btn__menu */
+  /* Outside block settings for btn__menu */
   margin-top: 1rem;
   margin-bottom: 1.8rem;
-  margin-left:  0;
+  margin-left: 0;
 }
+
 .btn-menu {
-/* Inside generic block settings */
+  /* Inside generic block settings */
   display: flex;
   flex-grow: wrap;
   justify-content: flex-start;
   gap: 0.6rem;
-  box-sizing: content-box; 
+  box-sizing: content-box;
   /*width: 100%;*/
   height: 1.9rem;
   align-items: center;
   text-align: center;
   padding-left: 0.6rem;
 }
-.right { margin-left:auto; 
+
+.right {
+  margin-left: auto;
 }
+
 .btn-menu_right {
   display: flex;
   flex-grow: wrap;
@@ -185,14 +305,16 @@ html:focus {
   justify-content: left;
   padding: 1rem;
 }
+
 .buttons {
   display: block;
   background-color: unset;
-  color:black;
+  color: black;
   height: 1.725rem;
   border: none;
   cursor: pointer;
 }
+
 .btn-menu__items_outline {
   font-size: 1.2rem;
   border: 0.1rem solid black;
@@ -201,9 +323,11 @@ html:focus {
   height: 2rem;
   padding: 0.25rem;
 }
+
 .btn-menu__items_larger {
   height: 2.5rem;
 }
+
 .btn-menu__items_search {
   text-align: left;
   /*margin: unset;*/
@@ -213,9 +337,11 @@ html:focus {
   height: 1.6rem;
   font-size: 1.2rem;
 }
+
 .buttons:hover {
-  background-color:#C5C5C5;
+  background-color: #C5C5C5;
 }
+
 /* Home Page */
 /* .home-page {} */
 .home-page__table {
@@ -223,6 +349,7 @@ html:focus {
   margin-left: auto;
   margin-right: auto;
 }
+
 .table {
   /*width: 100%;*/
   border-collapse: collapse;
@@ -230,34 +357,41 @@ html:focus {
   table-layout: auto;
   font-family: "DejaVu Sans";
 }
-.table__header {  
+
+.table__header {
   background-color: #F6DA74;
   text-align: center;
   font-size: 1.2rem;
-/*  font-weight: bold;*/
+  /*  font-weight: bold;*/
 }
+
 .table__header_sort {
   padding: 0.2rem;
   border: 2px solid #ccc;
   cursor: pointer;
 }
+
 .table__header_no-sort {
   padding: 0.2rem;
   border: 2px solid #ccc;
   cursor: pointer;
 }
+
 .table__data {
-  padding:0.2rem 0.4rem 0.2rem 0.4rem;
+  padding: 0.2rem 0.4rem 0.2rem 0.4rem;
   border: 2px solid #ccc;
   line-height: normal;
-  font-size:1.2rem;
+  font-size: 1.2rem;
 }
+
 .table__data_center {
   text-align: center;
 }
+
 .table__data_right {
   text-align: right;
 }
+
 .table__data_edit {
   background-image: url(../images/edit-pencil.svg);
   background-repeat: no-repeat;
@@ -265,13 +399,16 @@ html:focus {
   padding: 0.2rem;
   cursor: pointer;
 }
+
 /* .table__row_color {} */
 .table__row_color:nth-child(even) {
   background-color: #E8E8E8;
 }
+
 .table__row_color:nth-child(odd) {
   background: #fdfdf0;
 }
+
 /* Edit Page */
 /* .edit-page{
   font-size: 1.2rem;
@@ -279,10 +416,12 @@ html:focus {
 .form {
   font-size: 1.2rem;
 }
+
 .form__paragraph {
   font-size: 1.2rem;
   padding: 0 0 0.6rem 1.2rem;
 }
+
 .form__input {
   padding: 0.1rem;
   margin: 0.2rem;
@@ -290,26 +429,32 @@ html:focus {
   border: 1px solid #ccc;
   box-sizing: border-box;
 }
+
 .form__input[type=text] {
-  width: 25%; 
+  width: 25%;
 }
+
 .form__input[type=number] {
   width: 15%;
   font-family: "DejaVu Sans Mono";
 }
+
 .form__input[type=date] {
   width: 20%;
   font-family: "DejaVu Sans Mono";
   font-size: 1rem;
 }
+
 .form__input_gray {
   background-color: #E8E8E8;
 }
+
 .form__input_mono-font {
   width: 20%;
   font-family: "DejaVu Sans Mono";
   font-size: 1.1rem;
 }
+
 .form__textarea {
   display: inline-block;
   padding: 0.1rem;
@@ -319,15 +464,18 @@ html:focus {
   border: 1px solid #ccc;
   box-sizing: border-box;
 }
+
 .form__label {
   vertical-align: top;
   display: inline-block;
   width: 30%;
   text-align: right;
 }
-.input__label_inline{
+
+.input__label_inline {
   font-size: 1.3rem;
 }
+
 .modal:modal {
   /*width:200px; */
   position: fixed;
@@ -339,23 +487,27 @@ html:focus {
   border: 0.1rem solid #ccc;
   overflow: hidden;
 }
+
 .modal_label-size:modal {
   display: block;
   width: 85mm;
-  /*height:45mm;*/ 
+  /*height:45mm;*/
   padding: 0rem;
   background-color: #fdfdf0;
   border: 0.1rem solid #ccc;
   overflow: hidden;
 }
+
 .modal::backdrop {
   background: rgb(0 0 0 /.4);
 }
+
 .img_border {
   box-sizing: border-box;
   width: 100%;
   height: 100%;
 }
+
 .packet-labels-page__block_left {
   display: inline;
   float: left;
@@ -367,16 +519,19 @@ html:focus {
   background-color: white;
   margin: 1mm;
 }
+
 .packet-labels-page__print {
   margin-left: 8mm;
   margin-top: 2mm;
 }
+
 .msg-in-element__ul {
   font-size: 1.25rem;
   padding: 0.7rem 0 0.7rem;
   list-style-type: square;
   list-style-position: inside;
 }
+
 /*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
 
@@ -385,18 +540,28 @@ a {
   color: #0000EE;
   cursor: pointer;
 }
+
 a:link {
   color: #0000EE;
-  text-decoration: none; padding-bottom: 0.02rem; border-bottom: 0.05rem solid blue;
+  text-decoration: none;
+  padding-bottom: 0.02rem;
+  border-bottom: 0.05rem solid blue;
 }
+
 a:visited {
   color: #00CCFF;
-  text-decoration: none; padding-bottom: 0.02rem; border-bottom: 0.05rem solid #00CCFF;
+  text-decoration: none;
+  padding-bottom: 0.02rem;
+  border-bottom: 0.05rem solid #00CCFF;
 }
+
 a:hover {
   color: #00CCFF;
-  text-decoration: none; padding-bottom: 0.02rem; border-bottom: 0.05rem solid #00CCFF;
+  text-decoration: none;
+  padding-bottom: 0.02rem;
+  border-bottom: 0.05rem solid #00CCFF;
 }
+
 a:active {
   color: #FF0000;
 }
