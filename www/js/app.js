@@ -571,8 +571,8 @@ class Controller {
     this.clicks = this.clicks + 1;
     console.log('left = ', this.clicks);
     labelContent.innerHTML += `<div class="packet-labels-page__block_left par" >
-        <p class="par__text_barcode-label">*${this.packetId}*</p>
-        <p class="par__text_code-label">${this.packetId}</p>
+        <p class="par__text_label-barcode">*${this.packetId}*</p>
+        <p class="par__text_label-code">${this.packetId}</p>
         <p class="par__text_label">Variety: ${record.variety}</p>
         <p class="par__text_label">Number: ${record.number}</p>
         <p class="par__text_label">Weight: ${record.weight}</p>

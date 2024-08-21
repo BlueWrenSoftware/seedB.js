@@ -12,90 +12,25 @@
    v2.0 | 20110126
    License: none (public domain)
 */
-div,
-span,
-applet,
-object,
-iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-a,
-abbr,
-acronym,
-address,
-big,
-cite,
-code,
-del,
-dfn,
-em,
-img,
-ins,
-kbd,
-q,
-s,
-samp,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-var,
-b,
-u,
-i,
-center,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-details,
-embed,
-figure,
-figcaption,
-footer,
-header,
-hgroup,
-menu,
-nav,
-output,
-ruby,
-section,
-summary,
-time,
-mark,
-audio,
-video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font: inherit;
-  vertical-align: baseline;
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	/* font-size: 100%; */
+	font: inherit;
+	vertical-align: baseline;
 }
 
 /* End of default settings */
@@ -123,15 +58,8 @@ video {
   font-display: swap;
 }
 
-header,
-section,
-article,
-figure,
-figcaption,
-nav,
-footer,
-video,
-address {
+header, section, article, figure, figcaption, 
+nav, footer, video, address {
   display: block;
 }
 
@@ -152,7 +80,7 @@ html {
   margin-right: 0;
   overflow: auto;
   /* 10px equivalent and this will be 1rem. Font root setting*/
-  font-size: 11px
+  font-size: 10px
 }
 
 html:focus {
@@ -194,19 +122,19 @@ html:focus {
 }
 
 .header__level-1 {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   text-align: center;
-  padding-bottom: 0.6rem;
+  padding-bottom: 0.5rem;
 }
 
 .header__level-2 {
-  font-size: 1.4rem;
-  padding-bottom: 0.6rem;
+  font-size: 1.5rem;
+  padding-bottom: 0.5rem;
 }
 
 .header__level-3 {
-  font-size: 1.3rem;
-  padding-bottom: 0.6rem;
+  font-size: 1.4rem;
+  padding-bottom: 0.5rem;
 }
 
 .header__level-4 {
@@ -216,11 +144,11 @@ html:focus {
 
 /* paragraph settings */
 .par {
-  font-size: 1.2rem;
+  font-size: 1.35rem;
 }
 
 .par__text {
-  padding-bottom: 0.4rem;
+  padding-bottom: 0.5rem;
   padding-left: 1rem;
 }
 
@@ -233,22 +161,23 @@ html:focus {
   padding-left: 1rem;
 }
 
-.par__text_code-label {
+.par__text_label-code {
   font-size: 1rem;
+  padding-top: 0.2rem;
   font-family: "DejaVu Sans Mono";
   text-align: center;
 }
 
-.par__text_barcode-label {
+.par__text_label-barcode {
   font-family: "barcode39", "Code 39-hoch-Logitogo";
   text-align: center;
-  font-size: 2rem;
+  font-size: 1.7rem;
 }
 
 /* */
 .page__footer {
   clear: both;
-  margin-top: 0.5rem;
+  margin-top: 1rem;
   margin-bottom: 0.5rem;
 }
 
@@ -260,14 +189,14 @@ html:focus {
 }
 
 .footer__paragraph {
-  padding-top: 0.55rem;
-  font-size: 1.3rem;
+  padding-top: 0.5rem;
+  font-size: 1.2rem;
 }
 
 .footer__image {
   display: inline-block;
   vertical-align: middle;
-  width: 30px;
+  width: 2.65rem;
 }
 
 /* Menu */
@@ -284,10 +213,10 @@ html:focus {
   display: flex;
   flex-grow: wrap;
   justify-content: flex-start;
-  gap: 0.6rem;
+  gap: 1rem;
   box-sizing: content-box;
   /*width: 100%;*/
-  height: 1.9rem;
+  /* height: 1.9rem; height determined by icon size*/
   align-items: center;
   text-align: center;
   padding-left: 0.6rem;
@@ -300,17 +229,17 @@ html:focus {
 .btn-menu_right {
   display: flex;
   flex-grow: wrap;
-  gap: 0.6rem;
+  gap: 1rem;
   box-sizing: content-box;
   justify-content: left;
-  padding: 1rem;
+  padding-left: 1rem;
 }
 
 .buttons {
   display: block;
   background-color: unset;
   color: black;
-  height: 1.725rem;
+  height: 2rem;
   border: none;
   cursor: pointer;
 }
@@ -331,11 +260,13 @@ html:focus {
 .btn-menu__items_search {
   text-align: left;
   /*margin: unset;*/
-  /*padding: 0.15rem;*/
+  padding-bottom: 0.15rem;
+  padding-left: 0.5rem;
+  padding-top: 0;
   border: 1px solid #ccc;
   width: 10rem;
-  height: 1.6rem;
-  font-size: 1.2rem;
+  height: 2rem;
+  font-size: 1.35rem;
 }
 
 .buttons:hover {
@@ -361,7 +292,7 @@ html:focus {
 .table__header {
   background-color: #F6DA74;
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   /*  font-weight: bold;*/
 }
 
@@ -381,7 +312,7 @@ html:focus {
   padding: 0.2rem 0.4rem 0.2rem 0.4rem;
   border: 2px solid #ccc;
   line-height: normal;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
 }
 
 .table__data_center {
@@ -414,12 +345,12 @@ html:focus {
   font-size: 1.2rem;
 } */
 .form {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
 }
 
 .form__paragraph {
   font-size: 1.2rem;
-  padding: 0 0 0.6rem 1.2rem;
+  padding: 0 0 0.5rem 1rem;
 }
 
 .form__input {
@@ -428,6 +359,7 @@ html:focus {
   display: inline-block;
   border: 1px solid #ccc;
   box-sizing: border-box;
+  font-size: 1.3rem;
 }
 
 .form__input[type=text] {
@@ -441,8 +373,7 @@ html:focus {
 
 .form__input[type=date] {
   width: 20%;
-  font-family: "DejaVu Sans Mono";
-  font-size: 1rem;
+  /* font-family: "DejaVu Sans Mono"; */
 }
 
 .form__input_gray {
@@ -452,7 +383,6 @@ html:focus {
 .form__input_mono-font {
   width: 20%;
   font-family: "DejaVu Sans Mono";
-  font-size: 1.1rem;
 }
 
 .form__textarea {
@@ -468,9 +398,12 @@ html:focus {
 .form__label {
   vertical-align: top;
   display: inline-block;
+  padding: 0.1rem;
+  margin: 0.2rem;
   width: 30%;
   text-align: right;
 }
+/* last rem checked */
 
 .input__label_inline {
   font-size: 1.3rem;
