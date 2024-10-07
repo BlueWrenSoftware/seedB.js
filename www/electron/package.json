@@ -6,7 +6,7 @@
     "start": "electron ."
   },
   "author": "Dirk & Laurie Koudstaal",
-  "license": "MIT",
+  "license": "MIT                                                                      ",
   "description": "Seed Records",
   "devDependencies": {
     "electron": "^31.3.1"
