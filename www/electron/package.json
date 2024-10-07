@@ -1,14 +1,15 @@
 {
-  "name": "seedB",
-  "version": "1.0.0",
+  "name": "seed-b",
+  "version": "0.1.0",
+  "description": "Seed Collection Database",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+  	"start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Dirk & Laurie Koudstaal",
-  "license": "MIT                                                                      ",
-  "description": "Seed Records",
+  "author": "Laurie Koudstaal & Dirk Koudstaal",
+  "license": "GPL-3.0",
   "devDependencies": {
-    "electron": "^31.3.1"
+    "electron": "^32.1.2"
   }
 }
