@@ -454,6 +454,8 @@ html:focus {
 }
 
 .packet-labels-page__print {
+  width: 210mm;
+  height: 297mm;
   margin-left: 8mm;
   margin-top: 2mm;
 }

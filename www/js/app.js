@@ -553,8 +553,8 @@ class Controller {
     await this.view.showPrintLabels();
     window.print();
     labelContent.innerHTML = "";
-    await this.requestHomePage();
-    pageFooter.style.display = '';
+    //await this.requestHomePage();
+    //pageFooter.style.display = '';
   }
 
   async requestLabelsQueue() {
