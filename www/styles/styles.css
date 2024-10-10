@@ -456,8 +456,8 @@ html:focus {
 }
 
 .packet-labels-page__print {
- margin-left: 8mm;
- margin-top: 2mm;
+ /* margin-left: 1mm;
+ margin-top: 1mm; */
 }
 
 .msg-in-element__ul {
@@ -472,6 +472,7 @@ html:focus {
 /* to be made BEM compliant */
 .visible {
  display:block;
+ opacity: 0;
 }
 .btn-menu__items_barcode {
  text-align: left;
