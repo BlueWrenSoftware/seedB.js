@@ -1,5 +1,5 @@
 
-# seedB
+# seedB installation
 
 A seed database for people who collect and grow their own seeds.
 
