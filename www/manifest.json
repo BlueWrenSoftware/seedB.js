@@ -1,0 +1,19 @@
+{
+  "name": "Seed Database",
+  "short_name": "seedB",
+  "start_url": ".",
+  "background_color": "white",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "./images/bettong_black_1024.png",
+      "type": "image/svg",
+      "sizes": "256x256"
+    },
+    {
+      "src": "./images/bettong_black_512.png",
+      "type": "image/svg",
+      "sizes": "512x512"
+    }
+  ]
+}
