@@ -1,5 +1,5 @@
 
-# seedB installation
+# seedB
 
 A seed database for people who collect and grow their own seeds.
 
@@ -14,7 +14,17 @@ Features for each record:
 * Date collected
 * Timestamp for each edit of record
 
-## Electron setup instructions
+The software can be deployed in three different configurations of choice on a laptop and/or desktop computer:
+
+* Progressive Web App (PWA).
+* Local Area Network (LAN) Webserver on a Raspberry Py.
+* Electron based for Linux and Android.
+
+## * PWA (Progressive Web Apps) Instructions
+
+## * LAN Web Server Instructions
+
+## * Electron setup Instructions
 
 Software developed using Ubuntu 20.04 and Electron.
 
