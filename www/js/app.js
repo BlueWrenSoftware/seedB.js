@@ -904,13 +904,13 @@ class Controller {
      }*/
 
  fileTime() {  //=> Timestamp for file names
-  const date = new Date();
-  const year = date.getFullYear().toString();
-  const month = '0' + (date.getMonth() + 1)
-  const day = '0' + date.getDate();
-  const hours = '0' + date.getHours();
-  const minutes = '0' + date.getMinutes();
-  const formattedTime = `${year.slice(-2)}-${month.slice(-2)}-${day.slice(-2)}T${hours.slice(-2)}∶${minutes.slice(-2)}`;
+  const date = new Date().toLocaleString('pt-PT');
+  const year  = date.slice(8,10);
+  const month = date.slice(3,5);
+  const day = date.slice(0,2);
+  const hour = date.slice(12,14);
+  const min = date.slice(15,17);
+  const formattedTime = `${year}${month}${day}${hour}${min}`;
   return formattedTime;
  }
 
@@ -932,7 +932,7 @@ class Controller {
   const records = await this.model.getAll();
   const text = JSON.stringify(records, null, 2); //=> array of records objects converted to string
   let time = this.fileTime() + '.txt'; //=> Created file name with timestamp
-  const filename = 'seedB∶' + time;
+  const filename = 'seedB_' + time;
   fileNotes.innerHTML += '<li>Backup file name is: ' + filename + '</li>';
   this.download(filename, text); //=> Save backup file.
  }
