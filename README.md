@@ -22,6 +22,8 @@ The software can be deployed in three different configurations of choice on a la
 
 ## * PWA (Progressive Web Apps) Instructions
 
+![web server localhost](./www/images/instructions/seedB_001.png)
+
 ## * LAN Web Server Instructions
 
 ## * Electron setup Instructions
