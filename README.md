@@ -1,5 +1,7 @@
 
-# seedB
+# seedB 
+
+In development.
 
 A seed database for people who collect and grow their own seeds.
 
@@ -20,13 +22,28 @@ The software can be deployed in three different configurations of choice on a la
 * Local Area Network (LAN) Webserver on a Raspberry Py.
 * Electron based for Linux and Android.
 
-## * PWA (Progressive Web Apps) Instructions
+## PWA (Progressive Web Apps) Instructions
+
+### Using Localhost
+
+<details>
+
+<summary>Instructions</summary>
+
+Open terminal in the same directory as the index.html file.
+Enter the following command `./localhost.sh` to start the Python3 webserver in the localhost:8080.
+
+Use a Chrome (Chromium, SlimJet or any Chromium based browser) and type `localhost:8080` in the address bar.
+
+
 
 ![web server localhost](./www/images/instructions/seedB_001.png)
 
-## * LAN Web Server Instructions
+</details>
 
-## * Electron setup Instructions
+## LAN Web Server Instructions
+
+## Electron setup Instructions
 
 Software developed using Ubuntu 20.04 and Electron.
 
