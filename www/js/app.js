@@ -904,13 +904,21 @@ class Controller {
 		 }*/
 
  fileTime() {  //=> Timestamp for file names
-	const date = new Date().toLocaleString('pt-PT');
-	const year  = date.slice(8, 10);
-	const month = date.slice(3, 5);
-	const day = date.slice(0, 2);
-	const hour = date.slice(12,14);
-	const min = date.slice(15, 17);
-	const sec = date.slice(18, 20);
+	const dateUTC = new Date()
+	const dateLocale = dateUTC.toLocaleString('en-AU', 
+		{hour12: false,
+		year: 'numeric',
+		month: '2-digit',
+		day: '2-digit',
+		hour: '2-digit',
+		minute: '2-digit',
+		second: '2-digit'});
+	const year  = dateLocale.slice(8, 10);
+	const month = dateLocale.slice(3, 5);
+	const day = dateLocale.slice(0, 2);
+	const hour = dateLocale.slice(12,14);
+	const min = dateLocale.slice(15, 17);
+	const sec = dateLocale.slice(18, 20);
 	const formattedTime = `${year}${month}${day}${hour}${min}${sec}`;
 	return formattedTime;
  }
